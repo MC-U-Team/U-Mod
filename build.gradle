@@ -1,0 +1,106 @@
+buildscript {
+    
+	apply from: "https://raw.githubusercontent.com/HyCraftHD/Blank-Forge-Project/master/build.methods"
+	setup()
+		
+	repositories {
+        jcenter()
+        maven { url = "http://files.minecraftforge.net/maven" }
+        maven { url = "https://plugins.gradle.org/m2/" }
+    }
+    dependencies {
+        classpath "net.minecraftforge.gradle:ForgeGradle:${config.forge.gradle}"
+        classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.0.10"
+    }
+}
+
+apply from: "https://raw.githubusercontent.com/HyCraftHD/Blank-Forge-Project/master/build.methods"
+apply from: "https://raw.githubusercontent.com/HyCraftHD/Blank-Forge-Project/master/git.methods"
+setup()
+info()
+
+apply plugin: "net.minecraftforge.gradle.forge"
+apply plugin: "com.matthewprenger.cursegradle"
+
+getBuildNumber()
+
+version = "${config.mod.version}.${config.buildnumber}"
+archivesBaseName = "${config.mod.filename}-${config.forge.mcversion}"
+
+sourceCompatibility = targetCompatibility = "1.8"
+
+compileJava {
+    sourceCompatibility = targetCompatibility = "1.8"
+}
+
+minecraft {
+    version = config.forge.version
+    runDir = "run"
+    mappings = config.forge.mapping
+    makeObfSourceJar = false
+	
+	replace "@VERSION@", "${project.version}"
+}
+
+jar {
+	classifier = ""
+
+    from "LICENSE"
+       
+    manifest.mainAttributes(
+       	"Implementation-Title": config.mod.name,
+    	"Implementation-Version": project.version,
+		"Built-On": minecraft.version
+	)
+}
+
+task deobfJar(type: Jar) {
+	classifier = "dev"
+
+    from sourceSets.main.output
+    from "LICENSE"
+        
+    manifest.mainAttributes(
+       	"Implementation-Title": config.mod.name,
+    	"Implementation-Version": project.version,
+		"Built-On": minecraft.version
+	)
+}
+
+artifacts {
+    archives deobfJar
+    archives jar
+}
+
+sourceSets {
+   	main {
+		java
+		resources
+   	}
+}
+
+dependencies {
+}
+
+curseforge {
+	apiKey = project.properties["token"]
+	
+	tasks.curseforge.dependsOn build
+	tasks.curseforge.dependsOn setBuildNumber
+	
+  	project {
+    	id = config.curse.id
+    	releaseType = config.curse.type
+
+		addGameVersion minecraft.version
+
+    	mainArtifact(jar) {
+      		displayName = "${config.curse.display}-${minecraft.version}-${version}"
+    	}
+    	
+    	addArtifact(deobfJar) {
+    		displayName = "${config.curse.display}-${minecraft.version}-${version}-dev"
+    		changelog = "Mappings: " + config.forge.mapping
+    	}
+  	}
+}
