@@ -1,0 +1,16 @@
+[
+{
+  "modid": "umod",
+  "name": "Umod",
+  "description": "",
+  "version": "0.0.1",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["HycraftHD","MrTroble"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

@@ -1,12 +1,11 @@
 package info.u_team.u_mod;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import javax.annotation.Nullable;
 
-import info.u_team.u_mod.container.UContainer;
 import info.u_team.u_mod.gui.IUGui;
+import info.u_team.u_team_core.container.UContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -21,7 +20,8 @@ public class UGuihandler implements IGuiHandler {
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		try {
 			return _container_list.get(ID).getConstructor(EntityPlayer.class, World.class, BlockPos.class).newInstance(player, world, new BlockPos(x, y, z));
-		} catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NullPointerException e) {
+		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -35,7 +35,8 @@ public class UGuihandler implements IGuiHandler {
 			} else {
 				return _gui_list.get(ID).getConstructor(UContainer.class).newInstance(container);
 			}
-		} catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NullPointerException e) {
+		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
 	}

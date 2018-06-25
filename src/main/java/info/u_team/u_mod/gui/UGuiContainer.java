@@ -1,5 +1,6 @@
 package info.u_team.u_mod.gui;
 
+import info.u_team.u_team_core.container.UContainer;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
 import net.minecraftforge.fml.relauncher.*;
@@ -7,7 +8,7 @@ import net.minecraftforge.fml.relauncher.*;
 @SideOnly(Side.CLIENT)
 public class UGuiContainer extends GuiContainer implements IUGui {
 	
-	public UGuiContainer(Container inventorySlotsIn) {
+	public UGuiContainer(UContainer inventorySlotsIn) {
 		super(inventorySlotsIn);
 	}
 	
