@@ -22,6 +22,12 @@ info()
 apply plugin: "net.minecraftforge.gradle.forge"
 apply plugin: "com.matthewprenger.cursegradle"
 
+repositories {
+	maven { 
+		url = "https://repo.u-team.info"
+	}
+}
+
 getBuildNumber()
 
 version = "${config.mod.version}.${config.buildnumber}"
@@ -80,6 +86,7 @@ sourceSets {
 }
 
 dependencies {
+	compile "info.u-team:u_team_core-1.12.2:2.0.0.74-SNAPSHOT:dev"
 }
 
 curseforge {
