@@ -1,7 +1,7 @@
 {
-    "variants": {
-        "normal": {
-            "model": "umod:pulverizer"
-        }
-    }
+	"variants": {
+		"normal": {
+			"model": "umod:pulverizer"
+		}
+	}
 }

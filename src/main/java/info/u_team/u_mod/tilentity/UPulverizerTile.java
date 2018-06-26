@@ -8,9 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.*;
 import net.minecraft.util.*;
-import net.minecraftforge.fml.common.registry.ItemStackHolderInjector;
 
 public class UPulverizerTile extends UTileEntity implements ITickable, ISidedInventory {
 	
@@ -20,10 +18,10 @@ public class UPulverizerTile extends UTileEntity implements ITickable, ISidedInv
 	private int max_time = 0;
 	private int output_index = -1;
 	
-	private static ArrayList<ItemStack> input_dictionary =  new ArrayList<ItemStack>();
-	private static ArrayList<ItemStack> primary_output_dictionary =  new ArrayList<ItemStack>();
-	private static ArrayList<ItemStack> secondary_output_dictionary =  new ArrayList<ItemStack>();
-
+	private static ArrayList<ItemStack> input_dictionary = new ArrayList<ItemStack>();
+	private static ArrayList<ItemStack> primary_output_dictionary = new ArrayList<ItemStack>();
+	private static ArrayList<ItemStack> secondary_output_dictionary = new ArrayList<ItemStack>();
+	
 	@Override
 	public void readNBT(NBTTagCompound compound) {
 		ItemStackHelper.loadAllItems(compound, itemstacks);
@@ -88,15 +86,15 @@ public class UPulverizerTile extends UTileEntity implements ITickable, ISidedInv
 		if (index == 0 && !flag) {
 			this.hasRecipe(stack);
 			this.markDirty();
-		} else if(index == 0) {
+		} else if (index == 0) {
 			this.output_index = -1;
 		}
 	}
 	
 	public void hasRecipe(ItemStack stack) {
 		int i = 0;
-		for(ItemStack compare : input_dictionary) {
-			if(stack.isItemEqual(compare) && ItemStack.areItemStackTagsEqual(stack, compare) && canCook()) {
+		for (ItemStack compare : input_dictionary) {
+			if (stack.isItemEqual(compare) && ItemStack.areItemStackTagsEqual(stack, compare) && canCook()) {
 				this.max_time = MAX_TIME;
 				this.output_index = i;
 				return;
@@ -180,7 +178,7 @@ public class UPulverizerTile extends UTileEntity implements ITickable, ISidedInv
 	
 	@Override
 	public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
-		if(index == 0) {
+		if (index == 0) {
 			return true;
 		}
 		return false;
@@ -188,7 +186,7 @@ public class UPulverizerTile extends UTileEntity implements ITickable, ISidedInv
 	
 	@Override
 	public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
-		if(index > 0) {
+		if (index > 0) {
 			return true;
 		}
 		return false;
@@ -196,18 +194,18 @@ public class UPulverizerTile extends UTileEntity implements ITickable, ISidedInv
 	
 	@Override
 	public void update() {
-		if(this.output_index >= 0) {
+		if (this.output_index >= 0) {
 			this.max_time--;
-			if(this.max_time <= 0) {
+			if (this.max_time <= 0) {
 				ItemStack stack_primary_out = itemstacks.get(3);
 				ItemStack input = itemstacks.get(0);
 				ItemStack out_primary = primary_output_dictionary.get(output_index);
-				if(!stack_primary_out.isEmpty()) {
+				if (!stack_primary_out.isEmpty()) {
 					stack_primary_out.setCount(stack_primary_out.getCount() + 1);
 				} else {
 					itemstacks.set(3, out_primary);
 				}
-				if(this.canCook() && !input.isEmpty()) {
+				if (this.canCook() && !input.isEmpty()) {
 					this.max_time = MAX_TIME;
 				}
 			}
