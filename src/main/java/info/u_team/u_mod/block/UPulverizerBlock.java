@@ -1,9 +1,9 @@
-package info.u_team.u_mod.blocks;
+package info.u_team.u_mod.block;
 
 import info.u_team.u_mod.*;
 import info.u_team.u_mod.container.UPulverizerContainer;
 import info.u_team.u_mod.gui.UPulverizerGui;
-import info.u_team.u_mod.tileentitys.UPulverizerTile;
+import info.u_team.u_mod.tilentity.UPulverizerTile;
 import info.u_team.u_team_core.block.UBlockTileEntity;
 import info.u_team.u_team_core.tileentity.UTileEntityProvider;
 import net.minecraft.block.material.Material;

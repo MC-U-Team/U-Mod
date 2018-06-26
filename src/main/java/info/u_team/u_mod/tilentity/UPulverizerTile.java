@@ -1,4 +1,4 @@
-package info.u_team.u_mod.tileentitys;
+package info.u_team.u_mod.tilentity;
 
 import java.util.ArrayList;
 import java.util.function.UnaryOperator;

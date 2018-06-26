@@ -1,6 +1,6 @@
 package info.u_team.u_mod;
 
-import info.u_team.u_mod.blocks.UPulverizerBlock;
+import info.u_team.u_mod.block.UPulverizerBlock;
 import info.u_team.u_team_core.block.UBlock;
 import info.u_team.u_team_core.item.UItemBlock;
 import net.minecraft.block.Block;
