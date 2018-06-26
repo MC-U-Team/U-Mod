@@ -1,0 +1,5 @@
+#Creativetabs
+itemGroup.umod:machine=Machines
+
+#Blocks
+tile.pulverizer.name=Pulverizer

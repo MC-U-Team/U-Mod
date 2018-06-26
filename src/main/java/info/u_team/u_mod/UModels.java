@@ -7,6 +7,7 @@ public class UModels {
 	
 	@SubscribeEvent
 	public static void register(ModelRegistryEvent event) {
+		UBlocks.pulverizer.registerModel();
 	}
 	
 }

@@ -12,6 +12,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.*;
 
 public class UPulverizerBlock extends UBlockTileEntity {
 	
@@ -26,12 +27,18 @@ public class UPulverizerBlock extends UBlockTileEntity {
 	
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		playerIn.openGui(UConstants.MODID, _uiid, worldIn, pos.getX(), pos.getZ(), pos.getZ());
-		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
+		playerIn.openGui(UConstants.MODID, _uiid, worldIn, pos.getX(), pos.getY(), pos.getZ());
+		return true;
 	}
 	
 	@Override
 	public boolean isOpaqueCube(IBlockState state) {
 		return false;
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@Override
+	public BlockRenderLayer getBlockLayer() {
+		return BlockRenderLayer.CUTOUT_MIPPED;
 	}
 }
