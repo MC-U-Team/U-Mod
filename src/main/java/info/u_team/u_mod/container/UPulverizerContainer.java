@@ -3,31 +3,62 @@ package info.u_team.u_mod.container;
 import info.u_team.u_mod.container.slots.*;
 import info.u_team.u_team_core.container.UContainer;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.*;
 
 public class UPulverizerContainer extends UContainer {
 	
 	public EntityPlayer player;
 	public World world;
 	public BlockPos pos;
+	public IInventory tile;
+	public int timeleft;
 	
 	public UPulverizerContainer(EntityPlayer player, World world, BlockPos pos) {
 		this.player = player;
 		this.world = world;
 		this.pos = pos;
 		
-		IInventory inventory = (IInventory) world.getTileEntity(pos);
+		tile = (IInventory) world.getTileEntity(pos);
 		
-		addSlotToContainer(new USlotOreInput(inventory, 0, 30, 23));
-		addSlotToContainer(new USlotOutput(inventory, 1, 98, 54));
-		addSlotToContainer(new USlotOutput(inventory, 2, 126, 54));
-		addSlotToContainer(new USlotOutput(inventory, 3, 116, 24));
+		addSlotToContainer(new USlotOreInput(tile, 0, 30, 23));
+		addSlotToContainer(new USlotOutput(tile, 1, 98, 54));
+		addSlotToContainer(new USlotOutput(tile, 2, 126, 54));
+		addSlotToContainer(new USlotOutput(tile, 3, 116, 24));
 		
 		appendPlayerInventory(player.inventory, 8, 84);
 	}
+	
+	@Override
+	public void addListener(IContainerListener listener) {
+		super.addListener(listener);
+        listener.sendAllWindowProperties(this, this.tile);
+	}
+	
+	@Override
+	public void detectAndSendChanges() {
+		super.detectAndSendChanges();
+		
+        for (int i = 0; i < this.listeners.size(); ++i)
+        {
+            IContainerListener icontainerlistener = this.listeners.get(i);
+            if(this.timeleft != this.tile.getField(0)) {
+            	icontainerlistener.sendWindowProperty(this, 0, this.tile.getField(0));
+            }
+        }
+        
+        this.timeleft = this.tile.getField(0);
+	}
+	
+    @SideOnly(Side.CLIENT)
+    public void updateProgressBar(int id, int data)
+    {
+        this.tile.setField(id, data);
+    }
 	
 	// TODO
 	@Override

@@ -3,33 +3,58 @@ package info.u_team.u_mod.tilentity;
 import java.util.ArrayList;
 import java.util.function.UnaryOperator;
 
+import javax.annotation.Nullable;
+
+import info.u_team.u_mod.container.UPulverizerContainer;
 import info.u_team.u_team_core.tileentity.UTileEntity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.*;
 import net.minecraft.util.*;
+import net.minecraft.world.IInteractionObject;
+import net.minecraftforge.common.capabilities.*;
+import net.minecraftforge.common.capabilities.Capability.IStorage;
+import net.minecraftforge.energy.*;
 
-public class UPulverizerTile extends UTileEntity implements ITickable, ISidedInventory {
+public class UPulverizerTile extends UTileEntity implements ITickable, ISidedInventory, IEnergyStorageProvider, IInteractionObject {
 	
 	public static final int MAX_TIME = 100;
+	public static final int ENERGY_CONSUMED = 100;
 	
 	private NonNullList<ItemStack> itemstacks = NonNullList.<ItemStack> withSize(4, ItemStack.EMPTY);
-	private int max_time = 0;
+	private int time_left = MAX_TIME;
 	private int output_index = -1;
 	
 	private static ArrayList<ItemStack> input_dictionary = new ArrayList<ItemStack>();
 	private static ArrayList<ItemStack> primary_output_dictionary = new ArrayList<ItemStack>();
 	private static ArrayList<ItemStack> secondary_output_dictionary = new ArrayList<ItemStack>();
 	
+	public static void addRecipe(ItemStack input, ItemStack output, @Nullable ItemStack second_output) {
+		input_dictionary.add(input);
+		primary_output_dictionary.add(output);
+		secondary_output_dictionary.add(second_output);
+	}
+	
+	@CapabilityInject(IEnergyStorage.class)
+	public static Capability<IEnergyStorage> ENERGY;
+	
+	private final IEnergyStorage energy;
+	
+	public UPulverizerTile() {
+		energy = ENERGY.getDefaultInstance();
+	}
+	
 	@Override
 	public void readNBT(NBTTagCompound compound) {
 		ItemStackHelper.loadAllItems(compound, itemstacks);
+		ENERGY.readNBT(energy, null, compound.getTag("energy"));
 	}
 	
 	@Override
 	public void writeNBT(NBTTagCompound compound) {
 		ItemStackHelper.saveAllItems(compound, itemstacks);
+		compound.setTag("energy", ENERGY.writeNBT(energy, null));
 	}
 	
 	@Override
@@ -94,9 +119,11 @@ public class UPulverizerTile extends UTileEntity implements ITickable, ISidedInv
 	public void hasRecipe(ItemStack stack) {
 		int i = 0;
 		for (ItemStack compare : input_dictionary) {
-			if (stack.isItemEqual(compare) && ItemStack.areItemStackTagsEqual(stack, compare) && canCook()) {
-				this.max_time = MAX_TIME;
-				this.output_index = i;
+			if (stack.isItemEqual(compare) && ItemStack.areItemStackTagsEqual(stack, compare)) {
+				if (canCook(i)) {
+					this.time_left = MAX_TIME;
+					this.output_index = i;
+				}
 				return;
 			}
 			i++;
@@ -104,12 +131,13 @@ public class UPulverizerTile extends UTileEntity implements ITickable, ISidedInv
 		this.output_index = -1;
 	}
 	
-	public boolean canCook() {
+	public boolean canCook(int index) {
 		ItemStack stack1 = getStackInSlot(1);
 		ItemStack stack2 = getStackInSlot(2);
 		ItemStack stack3 = getStackInSlot(3);
+		ItemStack in = input_dictionary.get(index);
 		
-		return ((stack1.isStackable() || stack1.isEmpty()) && stack1.getCount() < stack1.getMaxStackSize()) && ((stack2.isStackable() || stack2.isEmpty()) && stack2.getCount() < stack2.getMaxStackSize()) && ((stack3.isStackable() || stack3.isEmpty()) && stack3.getCount() < stack3.getMaxStackSize());
+		return ((stack1.isStackable() || stack1.isEmpty()) && stack1.getCount() + in.getCount() <= stack1.getMaxStackSize()) && ((stack2.isStackable() || stack2.isEmpty()) && stack2.getCount() + in.getCount() <= stack2.getMaxStackSize()) && ((stack3.isStackable() || stack3.isEmpty()) && stack3.getCount() + in.getCount() <= stack3.getMaxStackSize());
 	}
 	
 	@Override
@@ -140,12 +168,12 @@ public class UPulverizerTile extends UTileEntity implements ITickable, ISidedInv
 	
 	@Override
 	public int getField(int id) {
-		return this.max_time;
+		return this.time_left;
 	}
 	
 	@Override
 	public void setField(int id, int value) {
-		this.max_time = 0;
+		this.time_left = value;
 	}
 	
 	@Override
@@ -194,22 +222,58 @@ public class UPulverizerTile extends UTileEntity implements ITickable, ISidedInv
 	
 	@Override
 	public void update() {
-		if (this.output_index >= 0) {
-			this.max_time--;
-			if (this.max_time <= 0) {
-				ItemStack stack_primary_out = itemstacks.get(3);
-				ItemStack input = itemstacks.get(0);
-				ItemStack out_primary = primary_output_dictionary.get(output_index);
-				if (!stack_primary_out.isEmpty()) {
-					stack_primary_out.setCount(stack_primary_out.getCount() + 1);
-				} else {
-					itemstacks.set(3, out_primary);
-				}
-				if (this.canCook() && !input.isEmpty()) {
-					this.max_time = MAX_TIME;
+		if (!world.isRemote) {
+			if (ENERGY_CONSUMED > energy.getEnergyStored())
+				return;
+			if (this.output_index >= 0) {
+				this.time_left--;
+				if (this.time_left <= 0) {
+					ItemStack stack_primary_out = itemstacks.get(3);
+					ItemStack out_primary = primary_output_dictionary.get(output_index);
+					if (!stack_primary_out.isEmpty()) {
+						stack_primary_out.grow(out_primary.getCount());
+					} else {
+						itemstacks.set(3, out_primary.copy());
+					}
+					
+					ItemStack out_second = secondary_output_dictionary.get(output_index);
+					if (out_second != null) {
+						ItemStack stack_second_out = itemstacks.get(2);
+						if (!stack_second_out.isEmpty()) {
+							stack_second_out.grow(out_second.getCount());
+						} else {
+							itemstacks.set(2, out_second.copy());
+						}
+					}
+					
+					ItemStack input = itemstacks.get(0);
+					input.shrink(1);
+					energy.extractEnergy(ENERGY_CONSUMED, false);
+					this.markDirty();
+					if (this.canCook(this.output_index) && !input.isEmpty()) {
+						this.time_left = MAX_TIME;
+					} else {
+						this.output_index = -1;
+					}
 				}
 			}
 		}
+		
+	}
+	
+	@Override
+	public IEnergyStorage getStorage() {
+		return this.energy;
+	}
+			
+	@Override
+	public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn) {
+		return new UPulverizerContainer(playerIn, this.world, this.pos);
+	}
+
+	@Override
+	public String getGuiID() {
+		return getName();
 	}
 	
 }
