@@ -11,7 +11,7 @@ public class UBlocks {
 	
 	public static final UBlock pulverizer = new UPulverizerBlock("pulverizer");
 	public static final UBlock battery = new UBatteryBlock("battery");
-
+	
 	public static void init() {
 		BlockRegistry.register(UConstants.MODID, RegistryUtil.getRegistryEntries(Block.class, UBlocks.class));
 	}

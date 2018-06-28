@@ -10,12 +10,11 @@ import info.u_team.u_team_core.tileentity.UTileEntity;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.*;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.*;
 import net.minecraft.world.IInteractionObject;
 import net.minecraftforge.common.capabilities.*;
-import net.minecraftforge.common.capabilities.Capability.IStorage;
-import net.minecraftforge.energy.*;
+import net.minecraftforge.energy.IEnergyStorage;
 
 public class UPulverizerTile extends UTileEntity implements ITickable, ISidedInventory, IEnergyStorageProvider, IInteractionObject {
 	

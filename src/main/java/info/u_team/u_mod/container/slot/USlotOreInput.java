@@ -1,4 +1,4 @@
-package info.u_team.u_mod.container.slots;
+package info.u_team.u_mod.container.slot;
 
 import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
