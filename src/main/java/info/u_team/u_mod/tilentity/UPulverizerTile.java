@@ -48,13 +48,19 @@ public class UPulverizerTile extends UTileEntity implements ITickable, ISidedInv
 	@Override
 	public void readNBT(NBTTagCompound compound) {
 		ItemStackHelper.loadAllItems(compound, itemstacks);
-		ENERGY.readNBT(energy, null, compound.getTag("energy"));
+		if (compound.hasKey("energy")) {
+			ENERGY.readNBT(energy, null, compound.getTag("energy"));
+		}
+		this.time_left = compound.getInteger("time");
+		this.output_index = compound.getInteger("output");
 	}
 	
 	@Override
 	public void writeNBT(NBTTagCompound compound) {
 		ItemStackHelper.saveAllItems(compound, itemstacks);
 		compound.setTag("energy", ENERGY.writeNBT(energy, null));
+		compound.setInteger("time", this.time_left);
+		compound.setInteger("output", this.output_index);
 	}
 	
 	@Override
@@ -79,7 +85,6 @@ public class UPulverizerTile extends UTileEntity implements ITickable, ISidedInv
 				return false;
 			}
 		}
-		
 		return true;
 	}
 	
@@ -108,18 +113,21 @@ public class UPulverizerTile extends UTileEntity implements ITickable, ISidedInv
 			stack.setCount(this.getInventoryStackLimit());
 		}
 		
-		if (index == 0 && !flag) {
-			this.hasRecipe(stack);
-			this.markDirty();
-		} else if (index == 0) {
+		if (flag && index == 0) {
 			this.output_index = -1;
+			this.time_left = MAX_TIME;
+		}
+		
+		if (index == 0 || this.output_index < 0) {
+			this.hasRecipe(getStackInSlot(0));
+			this.markDirty();
 		}
 	}
 	
 	public void hasRecipe(ItemStack stack) {
 		int i = 0;
 		for (ItemStack compare : input_dictionary) {
-			if (stack.isItemEqual(compare) && ItemStack.areItemStackTagsEqual(stack, compare)) {
+			if (compare.isItemEqual(stack) && ItemStack.areItemStackTagsEqual(stack, compare)) {
 				if (canCook(i)) {
 					this.time_left = MAX_TIME;
 					this.output_index = i;
@@ -265,12 +273,12 @@ public class UPulverizerTile extends UTileEntity implements ITickable, ISidedInv
 	public IEnergyStorage getStorage() {
 		return this.energy;
 	}
-			
+	
 	@Override
 	public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn) {
 		return new UPulverizerContainer(playerIn, this.world, this.pos);
 	}
-
+	
 	@Override
 	public String getGuiID() {
 		return getName();
