@@ -5,7 +5,6 @@ import info.u_team.u_team_core.container.UContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.*;
@@ -36,29 +35,28 @@ public class UPulverizerContainer extends UContainer {
 	@Override
 	public void addListener(IContainerListener listener) {
 		super.addListener(listener);
-        listener.sendAllWindowProperties(this, this.tile);
+		listener.sendAllWindowProperties(this, this.tile);
 	}
 	
 	@Override
 	public void detectAndSendChanges() {
 		super.detectAndSendChanges();
 		
-        for (int i = 0; i < this.listeners.size(); ++i)
-        {
-            IContainerListener icontainerlistener = this.listeners.get(i);
-            if(this.timeleft != this.tile.getField(0)) {
-            	icontainerlistener.sendWindowProperty(this, 0, this.tile.getField(0));
-            }
-        }
-        
-        this.timeleft = this.tile.getField(0);
+		for (int i = 0; i < this.listeners.size(); ++i) {
+			IContainerListener icontainerlistener = this.listeners.get(i);
+			if (this.timeleft != this.tile.getField(0)) {
+				icontainerlistener.sendWindowProperty(this, 0, this.tile.getField(0));
+			}
+		}
+		
+		this.timeleft = this.tile.getField(0);
 	}
 	
-    @SideOnly(Side.CLIENT)
-    public void updateProgressBar(int id, int data)
-    {
-        this.tile.setField(id, data);
-    }
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void updateProgressBar(int id, int data) {
+		this.tile.setField(id, data);
+	}
 	
 	// TODO
 	@Override

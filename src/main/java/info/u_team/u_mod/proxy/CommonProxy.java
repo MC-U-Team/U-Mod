@@ -17,7 +17,7 @@ public class CommonProxy {
 		
 		UGuis.init();
 		
-		//Just testing
+		// Just testing
 		UPulverizerTile.addRecipe(new ItemStack(Blocks.IRON_ORE), new ItemStack(Items.IRON_INGOT, 2), null);
 	}
 	
