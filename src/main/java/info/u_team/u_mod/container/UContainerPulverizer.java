@@ -9,7 +9,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.*;
 
-public class UPulverizerContainer extends UContainer {
+public class UContainerPulverizer extends UContainer {
 	
 	public EntityPlayer player;
 	public World world;
@@ -17,7 +17,7 @@ public class UPulverizerContainer extends UContainer {
 	public IInventory tile;
 	public int timeleft;
 	
-	public UPulverizerContainer(EntityPlayer player, World world, BlockPos pos) {
+	public UContainerPulverizer(EntityPlayer player, World world, BlockPos pos) {
 		this.player = player;
 		this.world = world;
 		this.pos = pos;

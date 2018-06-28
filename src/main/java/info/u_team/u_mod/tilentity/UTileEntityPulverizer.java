@@ -5,7 +5,7 @@ import java.util.function.UnaryOperator;
 
 import javax.annotation.Nullable;
 
-import info.u_team.u_mod.container.UPulverizerContainer;
+import info.u_team.u_mod.container.UContainerPulverizer;
 import info.u_team.u_team_core.tileentity.UTileEntity;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
@@ -16,7 +16,7 @@ import net.minecraft.world.IInteractionObject;
 import net.minecraftforge.common.capabilities.*;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class UPulverizerTile extends UTileEntity implements ITickable, ISidedInventory, IEnergyStorageProvider, IInteractionObject {
+public class UTileEntityPulverizer extends UTileEntity implements ITickable, ISidedInventory, IEnergyStorageProvider, IInteractionObject {
 	
 	public static final int MAX_TIME = 100;
 	public static final int ENERGY_CONSUMED = 100;
@@ -40,7 +40,7 @@ public class UPulverizerTile extends UTileEntity implements ITickable, ISidedInv
 	
 	private final IEnergyStorage energy;
 	
-	public UPulverizerTile() {
+	public UTileEntityPulverizer() {
 		energy = ENERGY.getDefaultInstance();
 	}
 	
@@ -267,7 +267,7 @@ public class UPulverizerTile extends UTileEntity implements ITickable, ISidedInv
 	
 	@Override
 	public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn) {
-		return new UPulverizerContainer(playerIn, this.world, this.pos);
+		return new UContainerPulverizer(playerIn, this.world, this.pos);
 	}
 	
 	@Override
