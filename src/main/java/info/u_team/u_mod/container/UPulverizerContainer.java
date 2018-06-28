@@ -1,6 +1,6 @@
 package info.u_team.u_mod.container;
 
-import info.u_team.u_mod.container.slots.*;
+import info.u_team.u_mod.container.slot.*;
 import info.u_team.u_team_core.container.UContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.*;
