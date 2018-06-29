@@ -21,7 +21,7 @@ public class UPulverizerTile extends UTileEntity implements ITickable, ISidedInv
 	public static final int MAX_TIME = 100;
 	public static final int ENERGY_CONSUMED = 100;
 	
-	private NonNullList<ItemStack> itemstacks = NonNullList.<ItemStack> withSize(4, ItemStack.EMPTY);
+	private NonNullList<ItemStack> itemstacks = NonNullList.withSize(4, ItemStack.EMPTY);
 	private int time_left = MAX_TIME;
 	private int output_index = -1;
 	

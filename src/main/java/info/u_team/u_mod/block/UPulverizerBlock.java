@@ -7,9 +7,12 @@ import info.u_team.u_mod.init.*;
 import info.u_team.u_mod.tilentity.UPulverizerTile;
 import info.u_team.u_team_core.block.UBlockTileEntity;
 import info.u_team.u_team_core.tileentity.UTileEntityProvider;
+import net.minecraft.block.BlockFurnace;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.tileentity.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -33,6 +36,15 @@ public class UPulverizerBlock extends UBlockTileEntity {
 	@Override
 	public boolean isOpaqueCube(IBlockState state) {
 		return false;
+	}
+	
+	@Override
+	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+		TileEntity tileentity = worldIn.getTileEntity(pos);
+		InventoryHelper.dropInventoryItems(worldIn, pos, (TileEntityFurnace) tileentity);
+		worldIn.updateComparatorOutputLevel(pos, this);
+		
+		super.breakBlock(worldIn, pos, state);
 	}
 	
 	@SideOnly(Side.CLIENT)
