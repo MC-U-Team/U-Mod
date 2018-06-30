@@ -14,7 +14,6 @@ public class UEnergyPipeModelLoader implements ICustomModelLoader {
 	@Override
 	public boolean accepts(ResourceLocation modelLocation) {
 		if (modelLocation.getResourceDomain().equals(UConstants.MODID) && modelLocation.getResourcePath().contains("energy_pipe")) {
-			UConstants.LOGGER.info(modelLocation.getResourcePath());
 			return true;
 		}
 		return false;
@@ -22,7 +21,6 @@ public class UEnergyPipeModelLoader implements ICustomModelLoader {
 	
 	@Override
 	public IModel loadModel(ResourceLocation modelLocation) throws Exception {
-		UConstants.LOGGER.info("Loading model");
 		return new UEnergyPipeModel();
 	}
 	
