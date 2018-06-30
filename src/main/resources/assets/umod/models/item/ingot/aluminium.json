@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "umod:items/dust/aluminum"
+        "layer0": "umod:items/ingot/aluminium"
     }
 }
