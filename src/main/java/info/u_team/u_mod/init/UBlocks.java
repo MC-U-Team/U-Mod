@@ -2,15 +2,16 @@ package info.u_team.u_mod.init;
 
 import info.u_team.u_mod.UConstants;
 import info.u_team.u_mod.block.*;
-import info.u_team.u_team_core.block.*;
+import info.u_team.u_mod.resources.EnumOres;
+import info.u_team.u_team_core.block.UBlock;
 import info.u_team.u_team_core.registry.BlockRegistry;
-import info.u_team.u_team_core.util.*;
+import info.u_team.u_team_core.util.RegistryUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 
 public class UBlocks {
 	
-	public static final UBlock ore = new UBlockMetaData("ore", Material.ROCK, UCreativeTabs.MATERIAL, NonNullListUtil.createMeta("alluminum", "cadmium", "chromium", "cobalt", "copper", "lead", "molybdenum", "nickel", "platinum", "silver", "tantalum", "tin", "tungsten", "zinc"));
+	public static final UBlock ore1 = new UBlockOre("ore1", EnumOres.createList(EnumOres.Type.ORE1));
+	public static final UBlock ore2 = new UBlockOre("ore2", EnumOres.createList(EnumOres.Type.ORE2));
 	
 	public static final UBlock pulverizer = new UBlockPulveriser("pulverizer");
 	public static final UBlock battery = new UBlockBattery("battery");

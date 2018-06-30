@@ -5,12 +5,12 @@ import info.u_team.u_team_core.creativetab.UCreativeTab;
 
 public class UCreativeTabs {
 	
+	public static final UCreativeTab RESOURCES = new UCreativeTab(UConstants.MODID, "resources");
 	public static final UCreativeTab MACHINE = new UCreativeTab(UConstants.MODID, "machine");
-	public static final UCreativeTab MATERIAL = new UCreativeTab(UConstants.MODID, "material");
 	
 	public static void init() {
 		MACHINE.setIcon(UBlocks.pulverizer);
-		MATERIAL.setIcon(UBlocks.ore);
+		RESOURCES.setIcon(UBlocks.ore1);
 	}
 	
 }
