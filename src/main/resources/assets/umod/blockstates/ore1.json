@@ -1,0 +1,52 @@
+﻿{
+	"variants": {
+		"meta=aluminium": {
+			"model": "umod:ore1/aluminium"
+		},
+		"meta=beryllium": {
+			"model": "umod:ore1/beryllium"
+		},
+		"meta=cadmium": {
+			"model": "umod:ore1/cadmium"
+		},
+		"meta=chromium": {
+			"model": "umod:ore1/chromium"
+		},
+		"meta=cobalt": {
+			"model": "umod:ore1/cobalt"
+		},
+		"meta=copper": {
+			"model": "umod:ore1/copper"
+		},
+		"meta=gallium": {
+			"model": "umod:ore1/gallium"
+		},
+		"meta=iridium": {
+			"model": "umod:ore1/iridium"
+		},
+		"meta=lead": {
+			"model": "umod:ore1/lead"
+		},
+		"meta=magnesium": {
+			"model": "umod:ore1/magnesium"
+		},
+		"meta=molybdenum": {
+			"model": "umod:ore1/molybdenum"
+		},
+		"meta=nickel": {
+			"model": "umod:ore1/nickel"
+		},
+		"meta=palladium": {
+			"model": "umod:ore1/palladium"
+		},
+		"meta=platinum": {
+			"model": "umod:ore1/platinum"
+		},
+		"meta=potassium": {
+			"model": "umod:ore1/potassium"
+		},
+		"meta=silver": {
+			"model": "umod:ore1/silver"
+		}
+	}
+}

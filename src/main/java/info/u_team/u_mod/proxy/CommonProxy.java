@@ -1,7 +1,7 @@
 package info.u_team.u_mod.proxy;
 
 import info.u_team.u_mod.init.*;
-import info.u_team.u_mod.tilentity.UPulverizerTile;
+import info.u_team.u_mod.tilentity.UTileEntityPulverizer;
 import net.minecraft.init.*;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.event.*;
@@ -12,11 +12,10 @@ public class CommonProxy {
 		
 		UBlocks.init();
 		UItems.init();
-				
 		UGuis.init();
 		
 		// Just testing
-		UPulverizerTile.addRecipe(new ItemStack(Blocks.IRON_ORE), new ItemStack(Items.IRON_INGOT, 2), null);
+		UTileEntityPulverizer.addRecipe(new ItemStack(Blocks.IRON_ORE), new ItemStack(Items.IRON_INGOT, 2), null);
 	}
 	
 	public void init(FMLInitializationEvent event) {

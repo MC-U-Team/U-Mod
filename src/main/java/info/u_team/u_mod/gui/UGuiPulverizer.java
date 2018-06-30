@@ -1,19 +1,19 @@
 package info.u_team.u_mod.gui;
 
 import info.u_team.u_mod.UConstants;
-import info.u_team.u_mod.container.UPulverizerContainer;
-import info.u_team.u_mod.tilentity.UPulverizerTile;
+import info.u_team.u_mod.container.UContainerPulverizer;
+import info.u_team.u_mod.tilentity.UTileEntityPulverizer;
 import info.u_team.u_team_core.container.UContainer;
 import net.minecraft.util.ResourceLocation;
 
-public class UPulverizerGui extends UGuiContainer {
+public class UGuiPulverizer extends UGuiContainer {
 	
-	private UPulverizerTile tile;
+	private UTileEntityPulverizer tile;
 	
-	public UPulverizerGui(UContainer inventorySlotsIn) {
+	public UGuiPulverizer(UContainer inventorySlotsIn) {
 		super(inventorySlotsIn);
-		UPulverizerContainer container = ((UPulverizerContainer) this.inventorySlots);
-		tile = (UPulverizerTile) container.world.getTileEntity(container.pos);
+		UContainerPulverizer container = ((UContainerPulverizer) this.inventorySlots);
+		tile = (UTileEntityPulverizer) container.world.getTileEntity(container.pos);
 		
 		BACKGROUND = new ResourceLocation(UConstants.MODID, "textures/gui/pulverizer.png");
 	}

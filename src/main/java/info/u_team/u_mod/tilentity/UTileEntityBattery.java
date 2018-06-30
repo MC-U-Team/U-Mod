@@ -7,14 +7,14 @@ import net.minecraft.util.*;
 import net.minecraftforge.common.capabilities.*;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class UBatteryTile extends UTileEntity implements ITickable {
+public class UTileEntityBattery extends UTileEntity implements ITickable {
 	
 	@CapabilityInject(IEnergyStorage.class)
 	public static Capability<IEnergyStorage> ENERGY;
 	
 	private IEnergyStorage energy;
 	
-	public UBatteryTile() {
+	public UTileEntityBattery() {
 		energy = ENERGY.getDefaultInstance();
 	}
 	

@@ -1,21 +1,24 @@
 package info.u_team.u_mod.model;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.EnumMap;
+import java.util.List;
 import java.util.function.Function;
 
-import javax.vecmath.Vector4f;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
-import com.google.common.collect.*;
-
-import info.u_team.u_mod.UConstants;
 import info.u_team.u_mod.block.UEnergyPipeBlock;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.EnumFaceDirection;
-import net.minecraft.client.renderer.block.model.*;
+import net.minecraft.client.renderer.block.model.BakedQuad;
+import net.minecraft.client.renderer.block.model.IBakedModel;
+import net.minecraft.client.renderer.block.model.ItemOverrideList;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.VertexFormat;
-import net.minecraft.util.*;
-import net.minecraftforge.client.model.*;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.client.model.pipeline.UnpackedBakedQuad;
 import net.minecraftforge.common.model.IModelState;
 
@@ -43,7 +46,7 @@ public class UEnergyPipeModel implements IModel {
 		
 		private static final float eps = 1e-3f;
 		
-		private final EnumMap<EnumFacing,  EnumMap<EnumFacing, List<BakedQuad>>> faceQuads;
+		private final EnumMap<EnumFacing, EnumMap<EnumFacing, List<BakedQuad>>> faceQuads;
 		private final EnumMap<EnumFacing, List<BakedQuad>> base;
 		private final TextureAtlasSprite particle;
 		private final TextureAtlasSprite texture;
@@ -114,7 +117,7 @@ public class UEnergyPipeModel implements IModel {
 						break;
 					}
 				case NORMAL:
-					builder.put(e, (float) side.getFrontOffsetX(), (float) side.getFrontOffsetY(), (float) side.getFrontOffsetZ(), 0f);
+					builder.put(e, side.getFrontOffsetX(), side.getFrontOffsetY(), side.getFrontOffsetZ(), 0f);
 					break;
 				default:
 					builder.put(e);
@@ -125,7 +128,7 @@ public class UEnergyPipeModel implements IModel {
 		
 		@Override
 		public List<BakedQuad> getQuads(IBlockState state, EnumFacing side, long rand) {
-			if(side == null || state == null)
+			if (side == null || state == null)
 				return ImmutableList.of();
 			List<BakedQuad> quads = Lists.newArrayList();
 			if (state.getValue(UEnergyPipeBlock.UP)) {
