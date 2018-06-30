@@ -9,7 +9,8 @@ public class UCreativeTabs {
 	public static final UCreativeTab MATERIAL = new UCreativeTab(UConstants.MODID, "material");
 	
 	public static void init() {
-		MACHINE.setIcon(UBlocks.pulverizer); // TODO pulverizer is not displayed, why?? Maybe model error
+		MACHINE.setIcon(UBlocks.pulverizer);
+		MATERIAL.setIcon(UBlocks.ore);
 	}
 	
 }

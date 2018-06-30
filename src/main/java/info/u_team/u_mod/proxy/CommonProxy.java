@@ -13,8 +13,6 @@ public class CommonProxy {
 		UBlocks.init();
 		UItems.init();
 		
-		UCreativeTabs.init();
-		
 		UGuis.init();
 		
 		// Just testing
@@ -22,6 +20,7 @@ public class CommonProxy {
 	}
 	
 	public void init(FMLInitializationEvent event) {
+		UCreativeTabs.init();
 	}
 	
 	public void postinit(FMLPostInitializationEvent event) {
