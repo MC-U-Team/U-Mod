@@ -69,7 +69,12 @@ public class UEnergyPipeModel implements IModel {
 			this.texture = texture;
 			
 			addCube(0.2F, 0.2F, 0.2F, 0.4F, 0.4F, 0.4F, base);
-			addCube(0.2F, 0.2F, 0.2F, 0.0F, 0.4F, 0.4F, EnumFacing.UP);
+			addCube(0.2F, 0.4F, 0.2F, 0.4F, 0.6F, 0.4F, EnumFacing.UP);
+			addCube(0.2F, 0.4F, 0.2F, 0.4F, 0.0F, 0.4F, EnumFacing.DOWN);
+			addCube(0.2F, 0.2F, 0.4F, 0.4F, 0.4F, 0.6F, EnumFacing.NORTH);
+			addCube(0.2F, 0.2F, 0.4F, 0.4F, 0.4F, 0.0F, EnumFacing.SOUTH);
+			addCube(0.4F, 0.2F, 0.2F, 0.6F, 0.4F, 0.4F, EnumFacing.EAST);
+			addCube(0.4F, 0.2F, 0.2F, 0.0F, 0.4F, 0.4F, EnumFacing.WEST);
 		}
 		
 		private void addCube(float x_size, float y_size, float z_size, float x_offset, float y_offset, float z_offset, EnumFacing face) {
@@ -131,6 +136,7 @@ public class UEnergyPipeModel implements IModel {
 			if (side == null || state == null)
 				return ImmutableList.of();
 			List<BakedQuad> quads = Lists.newArrayList();
+			quads.addAll(base.get(side));
 			if (state.getValue(UEnergyPipeBlock.UP)) {
 				quads.addAll(this.faceQuads.get(EnumFacing.UP).get(side));
 			}

@@ -40,7 +40,7 @@ public class UBlockPulveriser extends UBlockTileEntity {
 	@Override
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
 		TileEntity tileentity = worldIn.getTileEntity(pos);
-		InventoryHelper.dropInventoryItems(worldIn, pos, (TileEntityFurnace) tileentity);
+		InventoryHelper.dropInventoryItems(worldIn, pos, (UTileEntityPulverizer) tileentity);
 		worldIn.updateComparatorOutputLevel(pos, this);
 		
 		super.breakBlock(worldIn, pos, state);
