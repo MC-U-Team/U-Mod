@@ -1,6 +1,6 @@
 ﻿{
 	"variants": {
-		"meta=aluminum": {
+		"meta=aluminium": {
 			"model": "umod:ore1/aluminium"
 		},
 		"meta=beryllium": {
