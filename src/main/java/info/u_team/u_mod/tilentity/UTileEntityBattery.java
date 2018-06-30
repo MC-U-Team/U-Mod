@@ -32,6 +32,8 @@ public class UTileEntityBattery extends UTileEntity implements ITickable {
 	
 	@Override
 	public void update() {
+		if (world.isRemote)
+			return;
 		for (EnumFacing facing : EnumFacing.VALUES) {
 			TileEntity entity = world.getTileEntity(pos.offset(facing));
 			if (entity instanceof IEnergyStorageProvider) {

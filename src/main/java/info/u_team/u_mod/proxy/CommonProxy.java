@@ -12,7 +12,6 @@ public class CommonProxy {
 		
 		UBlocks.init();
 		UItems.init();
-		
 		UGuis.init();
 		
 		// Just testing
