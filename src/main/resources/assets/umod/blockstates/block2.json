@@ -1,0 +1,25 @@
+﻿{
+	"variants": {
+		"meta=potassium": {
+	"model": "umod:block2/potassium"
+},"meta=silver": {
+	"model": "umod:block2/silver"
+},"meta=sodium": {
+	"model": "umod:block2/sodium"
+},"meta=tantalum": {
+	"model": "umod:block2/tantalum"
+},"meta=tin": {
+	"model": "umod:block2/tin"
+},"meta=tungsten": {
+	"model": "umod:block2/tungsten"
+},"meta=uranium": {
+	"model": "umod:block2/uranium"
+},"meta=vanadium": {
+	"model": "umod:block2/vanadium"
+},"meta=zinc": {
+	"model": "umod:block2/zinc"
+},"meta=zirconium": {
+	"model": "umod:block2/zirconium"
+}
+	}
+}
