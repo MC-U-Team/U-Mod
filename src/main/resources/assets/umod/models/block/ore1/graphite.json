@@ -1,6 +1,6 @@
 ﻿{
 	"parent": "block/cube_all",
 	"textures": {
-		"all": "umod:blocks/ore1/potassium"
+		"all": "umod:blocks/ore1/graphite"
 	}
 }

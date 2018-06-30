@@ -1,5 +1,11 @@
 ﻿{
 	"variants": {
+		"meta=potassium": {
+			"model": "umod:ore2/potassium"
+		},
+		"meta=silver": {
+			"model": "umod:ore2/silver"
+		},
 		"meta=sodium": {
 			"model": "umod:ore2/sodium"
 		},
