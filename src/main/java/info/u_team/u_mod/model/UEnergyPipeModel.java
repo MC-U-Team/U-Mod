@@ -8,7 +8,9 @@ import javax.vecmath.Vector4f;
 import com.google.common.collect.*;
 
 import info.u_team.u_mod.UConstants;
+import info.u_team.u_mod.block.UEnergyPipeBlock;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.EnumFaceDirection;
 import net.minecraft.client.renderer.block.model.*;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.VertexFormat;
@@ -41,7 +43,8 @@ public class UEnergyPipeModel implements IModel {
 		
 		private static final float eps = 1e-3f;
 		
-		private final EnumMap<EnumFacing, List<BakedQuad>> faceQuads;
+		private final EnumMap<EnumFacing,  EnumMap<EnumFacing, List<BakedQuad>>> faceQuads;
+		private final EnumMap<EnumFacing, List<BakedQuad>> base;
 		private final TextureAtlasSprite particle;
 		private final TextureAtlasSprite texture;
 		private final VertexFormat format;
@@ -49,19 +52,28 @@ public class UEnergyPipeModel implements IModel {
 		
 		public UEnergyPipeBakedModel(VertexFormat format, TextureAtlasSprite particle, TextureAtlasSprite texture, int color) {
 			this.faceQuads = Maps.newEnumMap(EnumFacing.class);
+			this.base = Maps.newEnumMap(EnumFacing.class);
 			for (EnumFacing side : EnumFacing.values()) {
-				faceQuads.put(side, Lists.newArrayList());
+				EnumMap<EnumFacing, List<BakedQuad>> enumlist = Maps.newEnumMap(EnumFacing.class);
+				for (EnumFacing side2 : EnumFacing.values()) {
+					enumlist.put(side2, Lists.newArrayList());
+				}
+				faceQuads.put(side, enumlist);
 			}
 			this.particle = particle;
 			this.format = format;
 			this.color = color;
 			this.texture = texture;
 			
-			addCube(0.2F, 0.2F, 0.2F, 0.4F, 0.4F, 0.4F);
-			
+			addCube(0.2F, 0.2F, 0.2F, 0.4F, 0.4F, 0.4F, base);
+			addCube(0.2F, 0.2F, 0.2F, 0.0F, 0.4F, 0.4F, EnumFacing.UP);
 		}
 		
-		private void addCube(float x_size, float y_size, float z_size, float x_offset, float y_offset, float z_offset) {
+		private void addCube(float x_size, float y_size, float z_size, float x_offset, float y_offset, float z_offset, EnumFacing face) {
+			this.addCube(x_size, y_size, z_size, x_offset, y_offset, z_offset, this.faceQuads.get(face));
+		}
+		
+		private void addCube(float x_size, float y_size, float z_size, float x_offset, float y_offset, float z_offset, EnumMap<EnumFacing, List<BakedQuad>> base) {
 			// Wired matrix
 			final float[][] x = { { x_size, x_size, 0, 0 }, { 0, x_size, x_size, 0 }, { 0, x_size, x_size, 0 }, { x_size, x_size, 0, 0 }, { 0, 0, 0, 0 }, { x_size, x_size, x_size, x_size } };
 			final float[][] y = { { 0, 0, 0, 0 }, { y_size, y_size, y_size, y_size }, { y_size, y_size, 0, 0 }, { 0, y_size, y_size, 0 }, { 0, y_size, y_size, 0 }, { y_size, y_size, 0, 0 } };
@@ -78,10 +90,10 @@ public class UEnergyPipeModel implements IModel {
 					putVertex(builder, side, x_offset + x[i][j], y_offset + y[i][j], z_offset + z[i][j], texture.getInterpolatedU(u[i][j] * 16), texture.getInterpolatedV(v[i][j] * 16));
 				}
 				List<BakedQuad> quads;
-				if ((quads = faceQuads.get(side)) != null)
+				if ((quads = base.get(side)) != null)
 					quads.add(builder.build());
 				else
-					faceQuads.put(side, Lists.newArrayList(builder.build()));
+					base.put(side, Lists.newArrayList(builder.build()));
 				i++;
 			}
 		}
@@ -113,9 +125,28 @@ public class UEnergyPipeModel implements IModel {
 		
 		@Override
 		public List<BakedQuad> getQuads(IBlockState state, EnumFacing side, long rand) {
-			if (side == null)
+			if(side == null || state == null)
 				return ImmutableList.of();
-			return this.faceQuads.get(side);
+			List<BakedQuad> quads = Lists.newArrayList();
+			if (state.getValue(UEnergyPipeBlock.UP)) {
+				quads.addAll(this.faceQuads.get(EnumFacing.UP).get(side));
+			}
+			if (state.getValue(UEnergyPipeBlock.DOWN)) {
+				quads.addAll(this.faceQuads.get(EnumFacing.DOWN).get(side));
+			}
+			if (state.getValue(UEnergyPipeBlock.NORTH)) {
+				quads.addAll(this.faceQuads.get(EnumFacing.NORTH).get(side));
+			}
+			if (state.getValue(UEnergyPipeBlock.SOUTH)) {
+				quads.addAll(this.faceQuads.get(EnumFacing.SOUTH).get(side));
+			}
+			if (state.getValue(UEnergyPipeBlock.EAST)) {
+				quads.addAll(this.faceQuads.get(EnumFacing.EAST).get(side));
+			}
+			if (state.getValue(UEnergyPipeBlock.WEST)) {
+				quads.addAll(this.faceQuads.get(EnumFacing.WEST).get(side));
+			}
+			return quads;
 		}
 		
 		@Override
