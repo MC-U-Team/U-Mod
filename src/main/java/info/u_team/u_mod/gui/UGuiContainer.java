@@ -1,5 +1,6 @@
 package info.u_team.u_mod.gui;
 
+import info.u_team.u_mod.api.IUGui;
 import info.u_team.u_team_core.container.UContainer;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;

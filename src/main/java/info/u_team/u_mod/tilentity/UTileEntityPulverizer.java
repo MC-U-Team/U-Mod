@@ -5,6 +5,7 @@ import java.util.function.UnaryOperator;
 
 import javax.annotation.Nullable;
 
+import info.u_team.u_mod.api.ICableExceptor;
 import info.u_team.u_mod.container.UContainerPulverizer;
 import info.u_team.u_team_core.tileentity.UTileEntity;
 import net.minecraft.entity.player.*;
@@ -16,7 +17,7 @@ import net.minecraft.world.IInteractionObject;
 import net.minecraftforge.common.capabilities.*;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class UTileEntityPulverizer extends UTileEntity implements ITickable, ISidedInventory, IEnergyStorageProvider, IInteractionObject {
+public class UTileEntityPulverizer extends UTileEntity implements ITickable, ISidedInventory, ICableExceptor, IInteractionObject {
 	
 	public static final int MAX_TIME = 100;
 	public static final int ENERGY_CONSUMED = 100;
@@ -281,6 +282,21 @@ public class UTileEntityPulverizer extends UTileEntity implements ITickable, ISi
 	@Override
 	public String getGuiID() {
 		return getName();
+	}
+
+	@Override
+	public boolean takesEnergy() {
+		return true;
+	}
+
+	@Override
+	public boolean givesEnergy() {
+		return false;
+	}
+
+	@Override
+	public int rate() {
+		return 5;
 	}
 	
 }

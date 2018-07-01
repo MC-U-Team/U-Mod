@@ -1,5 +1,6 @@
 package info.u_team.u_mod.gui;
 
+import info.u_team.u_mod.api.IUGui;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;

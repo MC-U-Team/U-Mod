@@ -3,9 +3,11 @@ package info.u_team.u_mod.block;
 import java.util.List;
 
 import info.u_team.u_mod.UConstants;
+import info.u_team.u_mod.api.ICable;
+import info.u_team.u_mod.api.ICableExceptor;
+import info.u_team.u_mod.api.IEnergyStorageProvider;
 import info.u_team.u_mod.init.UCreativeTabs;
 import info.u_team.u_mod.model.UEnergyPipeModelLoader;
-import info.u_team.u_mod.tilentity.IEnergyStorageProvider;
 import info.u_team.u_mod.tilentity.UEnergyPipeTile;
 import info.u_team.u_team_core.block.UBlockTileEntity;
 import info.u_team.u_team_core.tileentity.UTileEntityProvider;
@@ -177,7 +179,7 @@ public class UEnergyPipeBlock extends UBlockTileEntity {
 		int i = 0;
 		for (EnumFacing face : EnumFacing.VALUES) {
 			TileEntity entity = worldIn.getTileEntity(pos.offset(face.getOpposite()));
-			if (entity != null && entity instanceof IEnergyStorageProvider) {
+			if (entity != null && (entity instanceof ICableExceptor || entity instanceof ICable)) {
 				state = state.withProperty(properties[i], true);
 			} else {
 				state = state.withProperty(properties[i], false);

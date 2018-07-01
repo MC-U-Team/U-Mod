@@ -1,7 +1,7 @@
 package info.u_team.u_mod.handler;
 
 import info.u_team.u_mod.UConstants;
-import info.u_team.u_mod.gui.IUGui;
+import info.u_team.u_mod.api.IUGui;
 import info.u_team.u_mod.init.UGuis;
 import info.u_team.u_team_core.container.UContainer;
 import net.minecraft.entity.player.EntityPlayer;

@@ -5,7 +5,7 @@ import java.util.*;
 import javax.annotation.Nullable;
 
 import info.u_team.u_mod.UConstants;
-import info.u_team.u_mod.gui.IUGui;
+import info.u_team.u_mod.api.IUGui;
 import info.u_team.u_mod.handler.UGuiHandler;
 import info.u_team.u_team_core.container.UContainer;
 import net.minecraftforge.fml.common.network.NetworkRegistry;

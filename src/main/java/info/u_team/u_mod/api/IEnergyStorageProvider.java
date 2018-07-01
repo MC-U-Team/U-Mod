@@ -1,4 +1,4 @@
-package info.u_team.u_mod.tilentity;
+package info.u_team.u_mod.api;
 
 import net.minecraftforge.energy.IEnergyStorage;
 

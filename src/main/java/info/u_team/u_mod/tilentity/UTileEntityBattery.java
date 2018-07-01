@@ -1,5 +1,6 @@
 package info.u_team.u_mod.tilentity;
 
+import info.u_team.u_mod.api.IEnergyStorageProvider;
 import info.u_team.u_team_core.tileentity.UTileEntity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
