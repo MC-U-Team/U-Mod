@@ -1,5 +1,9 @@
 #Creativetabs
 itemGroup.umod:machine=Machines
 
+#Modetabs
+modetab.NORMAL.name=Normal
+modetab.ENERGY.name=Energy
+
 #Blocks
 tile.umod:pulverizer.name=Pulverizer
