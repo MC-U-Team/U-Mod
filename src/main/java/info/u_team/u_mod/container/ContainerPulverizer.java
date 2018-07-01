@@ -31,13 +31,7 @@ public class ContainerPulverizer extends UContainer {
 		
 		appendPlayerInventory(player.inventory, 8, 84);
 	}
-	
-	@Override
-	public void addListener(IContainerListener listener) {
-		super.addListener(listener);
-		listener.sendAllWindowProperties(this, this.tile);
-	}
-	
+		
 	@Override
 	public void detectAndSendChanges() {
 		super.detectAndSendChanges();

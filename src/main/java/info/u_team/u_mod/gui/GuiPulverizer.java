@@ -15,15 +15,13 @@ public class GuiPulverizer extends UGuiContainer {
 		ContainerPulverizer container = ((ContainerPulverizer) this.inventorySlots);
 		tile = (TileEntityPulverizer) container.world.getTileEntity(container.pos);
 		
-		BACKGROUND = new ResourceLocation(UConstants.MODID, "textures/gui/pulverizer.png");
+		this.setBackground(new ResourceLocation(UConstants.MODID, "textures/gui/pulverizer.png"));
 	}
 	
 	@Override
-	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-		super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
-		int i = (this.width - this.xSize) / 2;
-		int j = (this.height - this.ySize) / 2;
-		
-		this.drawTexturedModalRect(i + 47, j + 28, 0, 166, Math.round(64 * (100 - tile.getField(0)) / 100), 7);
+	protected void drawInBackground(EnumModeTab tab, int mouseX, int mouseY, int x_offset, int y_offset) {
+		if (tab == EnumModeTab.NORMAL)
+			this.drawTexturedModalRect(x_offset + 47, y_offset + 28, 0, 166, Math.round(64 * (100 - tile.getField(0)) / 100), 7);
 	}
+	
 }
