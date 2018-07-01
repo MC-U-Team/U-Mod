@@ -5,6 +5,7 @@ import java.util.List;
 import info.u_team.u_mod.UConstants;
 import info.u_team.u_mod.api.ICable;
 import info.u_team.u_mod.api.ICableExceptor;
+import info.u_team.u_mod.api.TunnelHandler;
 import info.u_team.u_mod.init.UCreativeTabs;
 import info.u_team.u_mod.model.UEnergyPipeModelLoader;
 import info.u_team.u_mod.tilentity.TileEntityEnergyPipe;
@@ -186,6 +187,23 @@ public class EnergyPipeBlock extends UBlockTileEntity {
 			i++;
 		}
 		return state;
+	}
+	
+	@Override
+	public void onBlockAdded(World world, BlockPos pos, IBlockState state) {
+	}
+	
+	@Override
+	public void onNeighborChange(IBlockAccess world, BlockPos pos, BlockPos neighbor) {
+		if (world instanceof World) {
+			TunnelHandler.onStateChange(world.getBlockState(pos), (World) world, pos);
+		}
+	}
+	
+	@Override
+	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+		TunnelHandler.notifyOfDestruction(state, worldIn, pos);
+		super.breakBlock(worldIn, pos, state);
 	}
 	
 	@Override

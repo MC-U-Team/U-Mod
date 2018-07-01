@@ -1,5 +1,6 @@
 package info.u_team.u_mod.api;
 
+import net.minecraft.util.math.BlockPos;
 
 public interface ICable {
 	
@@ -13,4 +14,5 @@ public interface ICable {
 	
 	int rate();
 	
+	BlockPos getPos();
 }

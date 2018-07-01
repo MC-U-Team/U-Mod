@@ -2,7 +2,10 @@ package info.u_team.u_mod.tilentity;
 
 import info.u_team.u_mod.api.ICable;
 import info.u_team.u_mod.api.ICableExceptor;
+import info.u_team.u_mod.api.TunnelHandler;
+import info.u_team.u_mod.block.EnergyPipeBlock;
 import info.u_team.u_team_core.tileentity.UTileEntity;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -14,14 +17,39 @@ public class TileEntityEnergyPipe extends UTileEntity implements ICable, ITickab
 	
 	@Override
 	public void readNBT(NBTTagCompound compound) {
-		// TODO Auto-generated method stub
-		
+		id = compound.getInteger("tunnel");
+		TunnelHandler.registerTunnel(id, pos, world);
 	}
 	
 	@Override
 	public void writeNBT(NBTTagCompound compound) {
-		// TODO Auto-generated method stub
-		
+		compound.setInteger("tunnel", this.id);
+	}
+	
+	@Override
+	public void onLoad() {
+		if (!this.world.isRemote && this.id == -1) {
+			IBlockState state = this.world.getBlockState(pos).getActualState(world, pos);
+			state.getBlock().onNeighborChange(world, pos, null);
+			if (state.getValue(EnergyPipeBlock.UP)) {
+				world.getBlockState(pos.up()).getBlock().onNeighborChange(world, pos.up(), pos);
+			}
+			if (state.getValue(EnergyPipeBlock.DOWN)) {
+				world.getBlockState(pos.down()).getBlock().onNeighborChange(world, pos.down(), pos);
+			}
+			if (state.getValue(EnergyPipeBlock.EAST)) {
+				world.getBlockState(pos.east()).getBlock().onNeighborChange(world, pos.east(), pos);
+			}
+			if (state.getValue(EnergyPipeBlock.WEST)) {
+				world.getBlockState(pos.west()).getBlock().onNeighborChange(world, pos.west(), pos);
+			}
+			if (state.getValue(EnergyPipeBlock.NORTH)) {
+				world.getBlockState(pos.north()).getBlock().onNeighborChange(world, pos.north(), pos);
+			}
+			if (state.getValue(EnergyPipeBlock.SOUTH)) {
+				world.getBlockState(pos.south()).getBlock().onNeighborChange(world, pos.south(), pos);
+			}
+		}
 	}
 	
 	@Override
