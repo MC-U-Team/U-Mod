@@ -21,6 +21,9 @@
 		"meta=gallium": {
 			"model": "umod:ore1/gallium"
 		},
+		"meta=graphite": {
+			"model": "umod:ore1/graphite"
+		},
 		"meta=iridium": {
 			"model": "umod:ore1/iridium"
 		},
@@ -42,11 +45,8 @@
 		"meta=platinum": {
 			"model": "umod:ore1/platinum"
 		},
-		"meta=potassium": {
-			"model": "umod:ore1/potassium"
-		},
-		"meta=silver": {
-			"model": "umod:ore1/silver"
+		"meta=plutonium": {
+			"model": "umod:ore1/plutonium"
 		}
 	}
 }

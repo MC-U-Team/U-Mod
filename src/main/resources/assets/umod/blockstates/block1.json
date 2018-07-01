@@ -1,0 +1,37 @@
+﻿{
+	"variants": {
+		"meta=aluminium": {
+	"model": "umod:block1/aluminium"
+},"meta=beryllium": {
+	"model": "umod:block1/beryllium"
+},"meta=cadmium": {
+	"model": "umod:block1/cadmium"
+},"meta=chromium": {
+	"model": "umod:block1/chromium"
+},"meta=cobalt": {
+	"model": "umod:block1/cobalt"
+},"meta=copper": {
+	"model": "umod:block1/copper"
+},"meta=gallium": {
+	"model": "umod:block1/gallium"
+},"meta=graphite": {
+	"model": "umod:block1/graphite"
+},"meta=iridium": {
+	"model": "umod:block1/iridium"
+},"meta=lead": {
+	"model": "umod:block1/lead"
+},"meta=magnesium": {
+	"model": "umod:block1/magnesium"
+},"meta=molybdenum": {
+	"model": "umod:block1/molybdenum"
+},"meta=nickel": {
+	"model": "umod:block1/nickel"
+},"meta=palladium": {
+	"model": "umod:block1/palladium"
+},"meta=platinum": {
+	"model": "umod:block1/platinum"
+},"meta=plutonium": {
+	"model": "umod:block1/plutonium"
+}
+	}
+}

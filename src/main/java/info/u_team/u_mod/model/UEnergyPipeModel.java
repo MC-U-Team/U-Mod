@@ -9,7 +9,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-import info.u_team.u_mod.block.UEnergyPipeBlock;
+import info.u_team.u_mod.block.EnergyPipeBlock;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
@@ -137,22 +137,22 @@ public class UEnergyPipeModel implements IModel {
 				return ImmutableList.of();
 			List<BakedQuad> quads = Lists.newArrayList();
 			quads.addAll(base.get(side));
-			if (state.getValue(UEnergyPipeBlock.UP)) {
+			if (state.getValue(EnergyPipeBlock.UP)) {
 				quads.addAll(this.faceQuads.get(EnumFacing.UP).get(side));
 			}
-			if (state.getValue(UEnergyPipeBlock.DOWN)) {
+			if (state.getValue(EnergyPipeBlock.DOWN)) {
 				quads.addAll(this.faceQuads.get(EnumFacing.DOWN).get(side));
 			}
-			if (state.getValue(UEnergyPipeBlock.NORTH)) {
+			if (state.getValue(EnergyPipeBlock.NORTH)) {
 				quads.addAll(this.faceQuads.get(EnumFacing.NORTH).get(side));
 			}
-			if (state.getValue(UEnergyPipeBlock.SOUTH)) {
+			if (state.getValue(EnergyPipeBlock.SOUTH)) {
 				quads.addAll(this.faceQuads.get(EnumFacing.SOUTH).get(side));
 			}
-			if (state.getValue(UEnergyPipeBlock.EAST)) {
+			if (state.getValue(EnergyPipeBlock.EAST)) {
 				quads.addAll(this.faceQuads.get(EnumFacing.EAST).get(side));
 			}
-			if (state.getValue(UEnergyPipeBlock.WEST)) {
+			if (state.getValue(EnergyPipeBlock.WEST)) {
 				quads.addAll(this.faceQuads.get(EnumFacing.WEST).get(side));
 			}
 			return quads;
