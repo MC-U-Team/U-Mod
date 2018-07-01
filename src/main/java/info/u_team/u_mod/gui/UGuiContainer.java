@@ -24,6 +24,8 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 		int i = (this.width - this.xSize) / 2;
 		int j = (this.height - this.ySize) / 2;
 		this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
+		
+		//Test
 	}
 	
 }
