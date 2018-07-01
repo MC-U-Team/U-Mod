@@ -1,12 +1,13 @@
 package info.u_team.u_mod.api;
 
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 
 public interface ICable {
 	
-	boolean isOutput();
+	EnumFacing[] isOutput();
 	
-	boolean isInput();
+	EnumFacing[] isInput();
 	
 	void setID(int id);
 	

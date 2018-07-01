@@ -2,16 +2,24 @@ package info.u_team.u_mod.api;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import com.google.common.collect.Lists;
+import com.google.common.eventbus.Subscribe;
 
 import info.u_team.u_mod.UConstants;
 import info.u_team.u_mod.block.EnergyPipeBlock;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
 
 public class TunnelHandler {
 	
@@ -195,4 +203,47 @@ public class TunnelHandler {
 		}
 	}
 	
+	private static int energy_available;
+	private static int energy_needed;
+	
+	@SubscribeEvent
+	public static void onWorldTIck(WorldTickEvent event) {
+		if (event.world.isRemote)
+			return;
+		TUNNELS.forEach((id, array) -> {
+			energy_needed = 0;
+			energy_available = 0;
+			array.forEach(pos -> {
+				ICable entity = (ICable) event.world.getTileEntity(pos);
+				EnumFacing[] facings = entity.isInput();
+				for (EnumFacing face : facings) {
+					ICableExceptor exceptor = (ICableExceptor) event.world.getTileEntity(pos.offset(face));
+					int rate = Math.min(exceptor.rate(), entity.rate());
+					IEnergyStorage storage = exceptor.getStorage();
+					energy_available += storage.extractEnergy(rate, true);
+				}
+			});
+			array.forEach(pos -> {
+				ICable entity = (ICable) event.world.getTileEntity(pos);
+				EnumFacing[] facings = entity.isOutput();
+				for (EnumFacing face : facings) {
+					ICableExceptor exceptor = (ICableExceptor) event.world.getTileEntity(pos.offset(face));
+					int rate = Math.min(energy_available, Math.min(exceptor.rate(), entity.rate()));
+					IEnergyStorage storage = exceptor.getStorage();
+					energy_needed += storage.receiveEnergy(rate, false);
+				}
+			});
+			array.forEach(pos -> {
+				ICable entity = (ICable) event.world.getTileEntity(pos);
+				EnumFacing[] facings = entity.isInput();
+				for (EnumFacing face : facings) {
+					ICableExceptor exceptor = (ICableExceptor) event.world.getTileEntity(pos.offset(face));
+					int rate = Math.min(energy_needed, Math.min(exceptor.rate(), entity.rate()));
+					IEnergyStorage storage = exceptor.getStorage();
+					energy_needed -= storage.extractEnergy(rate, false);
+				}
+			});
+		});
+	}
+		
 }

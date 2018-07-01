@@ -1,5 +1,6 @@
 package info.u_team.u_mod.tilentity;
 
+import info.u_team.u_mod.api.ICableExceptor;
 import info.u_team.u_mod.api.IEnergyStorageProvider;
 import info.u_team.u_team_core.tileentity.UTileEntity;
 import net.minecraft.nbt.NBTTagCompound;
@@ -8,7 +9,7 @@ import net.minecraft.util.*;
 import net.minecraftforge.common.capabilities.*;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class TileEntityBattery extends UTileEntity implements ITickable {
+public class TileEntityBattery extends UTileEntity implements ITickable, ICableExceptor{
 	
 	@CapabilityInject(IEnergyStorage.class)
 	public static Capability<IEnergyStorage> ENERGY;
@@ -35,13 +36,27 @@ public class TileEntityBattery extends UTileEntity implements ITickable {
 	public void update() {
 		if (world.isRemote)
 			return;
-		for (EnumFacing facing : EnumFacing.VALUES) {
-			TileEntity entity = world.getTileEntity(pos.offset(facing));
-			if (entity instanceof IEnergyStorageProvider) {
-				IEnergyStorage storage = ((IEnergyStorageProvider) entity).getStorage();
-				storage.receiveEnergy(2, false);
-			}
-		}
+		energy.receiveEnergy(10, false);
+	}
+
+	@Override
+	public IEnergyStorage getStorage() {
+		return this.energy;
+	}
+
+	@Override
+	public boolean takesEnergy() {
+		return false;
+	}
+
+	@Override
+	public boolean givesEnergy() {
+		return true;
+	}
+
+	@Override
+	public int rate() {
+		return 8;
 	}
 	
 }

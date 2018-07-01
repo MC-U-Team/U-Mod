@@ -1,5 +1,7 @@
 package info.u_team.u_mod.tilentity;
 
+import java.util.ArrayList;
+
 import info.u_team.u_mod.api.ICable;
 import info.u_team.u_mod.api.ICableExceptor;
 import info.u_team.u_mod.api.TunnelHandler;
@@ -53,31 +55,33 @@ public class TileEntityEnergyPipe extends UTileEntity implements ICable, ITickab
 	}
 	
 	@Override
-	public boolean isOutput() {
+	public EnumFacing[] isOutput() {
+		ArrayList<EnumFacing> facings = new ArrayList<>();
 		for (EnumFacing face : EnumFacing.VALUES) {
 			TileEntity entity = world.getTileEntity(pos.offset(face));
 			if (entity != null && entity instanceof ICableExceptor) {
 				ICableExceptor exceptor = (ICableExceptor) entity;
 				if (exceptor.takesEnergy()) {
-					return true;
+					facings.add(face);
 				}
 			}
 		}
-		return false;
+		return facings.toArray(new EnumFacing[facings.size()]);
 	}
 	
 	@Override
-	public boolean isInput() {
+	public EnumFacing[] isInput() {
+		ArrayList<EnumFacing> facings = new ArrayList<>();
 		for (EnumFacing face : EnumFacing.VALUES) {
 			TileEntity entity = world.getTileEntity(pos.offset(face));
 			if (entity != null && entity instanceof ICableExceptor) {
 				ICableExceptor exceptor = (ICableExceptor) entity;
 				if (exceptor.givesEnergy()) {
-					return true;
+					facings.add(face);
 				}
 			}
 		}
-		return false;
+		return facings.toArray(new EnumFacing[facings.size()]);
 	}
 	
 	@Override
