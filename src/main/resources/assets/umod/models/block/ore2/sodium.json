@@ -1,6 +1,0 @@
-﻿{
-	"parent": "block/cube_all",
-	"textures": {
-		"all": "umod:blocks/ore2/sodium"
-	}
-}
