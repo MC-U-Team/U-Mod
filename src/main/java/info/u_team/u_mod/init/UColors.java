@@ -2,6 +2,7 @@ package info.u_team.u_mod.init;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.color.*;
+import net.minecraft.item.*;
 import net.minecraftforge.fml.relauncher.*;
 
 @SideOnly(Side.CLIENT)
@@ -22,7 +23,13 @@ public class UColors {
 	}
 	
 	private static void item() {
-		
+		itemcolors.registerItemColorHandler(new IItemColor() {
+			
+			@Override
+			public int colorMultiplier(ItemStack stack, int tintIndex) {
+				return EnumDyeColor.WHITE.getColorValue();
+			}
+		}, UItems.test);
 	}
 	
 }

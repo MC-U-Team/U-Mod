@@ -10,7 +10,7 @@ public class UCreativeTabs {
 	
 	public static void init() {
 		MACHINE.setIcon(UBlocks.pulverizer);
-		RESOURCES.setIcon(UBlocks.ore1);
+		// RESOURCES.setIcon(UBlocks.ore1);
 	}
 	
 }
