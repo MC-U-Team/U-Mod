@@ -10,12 +10,16 @@ import net.minecraft.block.Block;
 
 public class UBlocks {
 	
-	public static final UBlock ore1 = new BlockOre("ore1", EnumResources1.VALUES);
-	public static final UBlock ore2 = new BlockOre("ore2", EnumResources2.VALUES);
+	// Resources
+	public static final UBlock resource_ore1 = new BlockOre("resource_ore1", EnumResources1.VALUES);
+	public static final UBlock resource_ore2 = new BlockOre("resource_ore2", EnumResources2.VALUES);
 	
-	public static final UBlock block1 = new BlockBlock("block1", EnumResources1.VALUES);
-	public static final UBlock block2 = new BlockBlock("block2", EnumResources2.VALUES);
+	public static final UBlock resource_block1 = new BlockBlock("resource_block1", EnumResources1.VALUES);
+	public static final UBlock resource_block2 = new BlockBlock("resource_block2", EnumResources2.VALUES);
 	
+	public static final UBlock alloy_block1 = new BlockBlock("alloy_block1", EnumAlloys1.VALUES);
+	
+	// Machines
 	public static final UBlock pulverizer = new BlockPulveriser("pulverizer");
 	public static final UBlock battery = new BlockBattery("battery");
 	public static final UBlock energy_pipe = new EnergyPipeBlock("energy_pipe");

@@ -1,6 +1,8 @@
 package info.u_team.u_mod.block;
 
-import java.util.Random;
+import java.util.*;
+
+import com.google.common.collect.Maps;
 
 import info.u_team.u_mod.UConstants;
 import info.u_team.u_mod.init.*;
@@ -11,10 +13,13 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.particle.ParticleManager;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.statemap.IStateMapper;
 import net.minecraft.entity.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.*;
 
 public class BlockOre extends UBlockMetaData {
@@ -30,11 +35,21 @@ public class BlockOre extends UBlockMetaData {
 		return BlockRenderLayer.CUTOUT_MIPPED;
 	}
 	
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerModel() {
 		for (int i = 0; i < getList().length; i++) {
 			setModel(getItem(), i, new ResourceLocation(UConstants.MODID, "ore"));
 		}
+		ModelLoader.setCustomStateMapper(this, new IStateMapper() {
+			
+			@Override
+			public Map<IBlockState, ModelResourceLocation> putStateModelLocations(Block block) {
+				Map<IBlockState, ModelResourceLocation> models = Maps.newLinkedHashMap();
+				block.getBlockState().getValidStates().forEach(state -> models.put(state, new ModelResourceLocation(new ResourceLocation(UConstants.MODID, "ore"), "normal")));
+				return models;
+			}
+		});
 	}
 	
 	// Bad and confusing code, but that are just vanilla methods for our custom

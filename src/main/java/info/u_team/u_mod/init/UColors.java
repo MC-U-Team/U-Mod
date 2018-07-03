@@ -20,72 +20,36 @@ public class UColors {
 	}
 	
 	private static void block() {
-		// Ore
+		// Resources
 		blockcolors.registerBlockColorHandler((state, world, pos, index) -> {
 			return EnumResources1.byMetadata(state.getBlock().getMetaFromState(state)).getColor();
-		}, UBlocks.ore1);
+		}, UBlocks.resource_ore1, UBlocks.resource_block1);
 		
 		blockcolors.registerBlockColorHandler((state, world, pos, index) -> {
 			return EnumResources2.byMetadata(state.getBlock().getMetaFromState(state)).getColor();
-		}, UBlocks.ore2);
+		}, UBlocks.resource_ore2, UBlocks.resource_block2);
 		
-		// Block
+		// Alloys
 		blockcolors.registerBlockColorHandler((state, world, pos, index) -> {
-			return EnumResources1.byMetadata(state.getBlock().getMetaFromState(state)).getColor();
-		}, UBlocks.block1);
-		
-		blockcolors.registerBlockColorHandler((state, world, pos, index) -> {
-			return EnumResources2.byMetadata(state.getBlock().getMetaFromState(state)).getColor();
-		}, UBlocks.block2);
+			return EnumAlloys1.byMetadata(state.getBlock().getMetaFromState(state)).getColor();
+		}, UBlocks.alloy_block1);
 		
 	}
 	
 	private static void item() {
-		// Ore
+		// Resources
 		itemcolors.registerItemColorHandler((stack, index) -> {
 			return EnumResources1.byMetadata(stack.getMetadata()).getColor();
-		}, UBlocks.ore1);
+		}, UBlocks.resource_ore1.getItem(), UBlocks.resource_block1.getItem(), UItems.resource_dust1, UItems.resource_nugget1, UItems.resource_ingot1);
 		
 		itemcolors.registerItemColorHandler((stack, index) -> {
 			return EnumResources2.byMetadata(stack.getMetadata()).getColor();
-		}, UBlocks.ore2);
+		}, UBlocks.resource_ore2.getItem(), UBlocks.resource_block2.getItem(), UItems.resource_dust2, UItems.resource_nugget2, UItems.resource_ingot2);
 		
-		// Block
+		// Alloys
 		itemcolors.registerItemColorHandler((stack, index) -> {
-			return EnumResources1.byMetadata(stack.getMetadata()).getColor();
-		}, UBlocks.block1);
-		
-		itemcolors.registerItemColorHandler((stack, index) -> {
-			return EnumResources2.byMetadata(stack.getMetadata()).getColor();
-		}, UBlocks.block2);
-		
-		// Dust
-		itemcolors.registerItemColorHandler((stack, index) -> {
-			return EnumResources1.byMetadata(stack.getMetadata()).getColor();
-		}, UItems.dust1);
-		
-		itemcolors.registerItemColorHandler((stack, index) -> {
-			return EnumResources2.byMetadata(stack.getMetadata()).getColor();
-		}, UItems.dust2);
-		
-		// Nugget
-		itemcolors.registerItemColorHandler((stack, index) -> {
-			return EnumResources1.byMetadata(stack.getMetadata()).getColor();
-		}, UItems.nugget1);
-		
-		itemcolors.registerItemColorHandler((stack, index) -> {
-			return EnumResources2.byMetadata(stack.getMetadata()).getColor();
-		}, UItems.nugget2);
-		
-		// Ingot
-		itemcolors.registerItemColorHandler((stack, index) -> {
-			return EnumResources1.byMetadata(stack.getMetadata()).getColor();
-		}, UItems.ingot1);
-		
-		itemcolors.registerItemColorHandler((stack, index) -> {
-			return EnumResources2.byMetadata(stack.getMetadata()).getColor();
-		}, UItems.ingot2);
-		
+			return EnumAlloys1.byMetadata(stack.getMetadata()).getColor();
+		}, UBlocks.alloy_block1.getItem(), UItems.alloy_nugget1, UItems.alloy_ingot1);
 	}
 	
 }
