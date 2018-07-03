@@ -1,4 +1,4 @@
-package info.u_team.u_mod.resources;
+package info.u_team.u_mod.resource;
 
 import java.util.*;
 
