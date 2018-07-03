@@ -2,12 +2,16 @@ package info.u_team.u_mod.init;
 
 import info.u_team.u_mod.UConstants;
 import info.u_team.u_mod.block.*;
+import info.u_team.u_mod.resource.*;
 import info.u_team.u_team_core.block.UBlock;
 import info.u_team.u_team_core.registry.BlockRegistry;
 import info.u_team.u_team_core.util.RegistryUtil;
 import net.minecraft.block.Block;
 
 public class UBlocks {
+	
+	public static final UBlock ore1 = new BlockOre("ore1", EnumResources1.VALUES);
+	public static final UBlock ore2 = new BlockOre("ore2", EnumResources2.VALUES);
 	
 	// public static final UBlock ore1 = new BlockOre("ore1",
 	// EnumResources.BLOCK1_LIST);

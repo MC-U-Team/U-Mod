@@ -1,12 +1,6 @@
 
 package info.u_team.u_mod.resource;
 
-import java.util.*;
-
-import info.u_team.u_team_core.api.IUMetaType;
-import info.u_team.u_team_core.util.NonNullListCustom;
-import net.minecraft.util.NonNullList;
-
 public enum EnumAlloys {
 	
 	ALNICO(BlockType.BLOCK1, "alnico"),
@@ -36,36 +30,6 @@ public enum EnumAlloys {
 	
 	public BlockType getBlockType() {
 		return blocktype;
-	}
-	
-	public static NonNullList<IUMetaType> createBlockList(BlockType type) {
-		List<IUMetaType> list = new ArrayList<>();
-		for (EnumAlloys entry : values()) {
-			if (entry.getBlockType() == type) {
-				list.add(new IUMetaType() {
-					
-					@Override
-					public String getName() {
-						return entry.getName();
-					}
-				});
-			}
-		}
-		return new NonNullListCustom<>(list, null);
-	}
-	
-	public static NonNullList<IUMetaType> createItemList() {
-		List<IUMetaType> list = new ArrayList<>();
-		for (EnumAlloys entry : values()) {
-			list.add(new IUMetaType() {
-				
-				@Override
-				public String getName() {
-					return entry.getName();
-				}
-			});
-		}
-		return new NonNullListCustom<>(list, null);
 	}
 	
 	public static enum BlockType {

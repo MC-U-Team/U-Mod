@@ -13,7 +13,7 @@ public class UItems {
 	// public static final UItem ingot = new ItemDust("ingot",
 	// EnumResources.ITEM_LIST);
 	
-	public static final UItem test = new UItem("test", UCreativeTabs.MACHINE);
+//	public static final UItem test = new UItem("test", UCreativeTabs.MACHINE);
 	
 	public static void init() {
 		ItemRegistry.register(UConstants.MODID, RegistryUtil.getRegistryEntries(Item.class, UItems.class));

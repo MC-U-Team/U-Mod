@@ -1,26 +1,29 @@
 package info.u_team.u_mod.resource;
 
-import info.u_team.u_team_core.api.IUMetaType;
+import info.u_team.u_mod.api.IColored;
+import info.u_team.u_team_core.api.IMetaType;
 
-public enum EnumResources2 implements IUMetaType {
+public enum EnumResources2 implements IMetaType, IColored {
 	
-	POTASSIUM(0, "potassium"),
-	SILVER(1, "silver"),
-	SODIUM(2, "sodium"),
-	TANTALUM(3, "tantalum"),
-	TIN(4, "tin"),
-	TUNGSTEN(5, "tungsten"),
-	URANIUM(6, "uranium"),
-	VANADIUM(7, "vanadium"),
-	ZINC(8, "zinc"),
-	ZIRCONIUM(9, "zirconium");
+	POTASSIUM(0, "potassium", 0xFFAAAA),
+	SILVER(1, "silver", 0xFFAAAA),
+	SODIUM(2, "sodium", 0xFFAAAA),
+	TANTALUM(3, "tantalum", 0xFFAAAA),
+	TIN(4, "tin", 0xFFAAAA),
+	TUNGSTEN(5, "tungsten", 0xFFAAAA),
+	URANIUM(6, "uranium", 0xFFAAAA),
+	VANADIUM(7, "vanadium", 0xFFAAAA),
+	ZINC(8, "zinc", 0xFFAAAA),
+	ZIRCONIUM(9, "zirconium", 0xFFAAAA);
 	
 	private int metadata;
 	private String name;
+	private int color;
 	
-	private EnumResources2(int metadata, String name) {
+	private EnumResources2(int metadata, String name, int color) {
 		this.metadata = metadata;
 		this.name = name;
+		this.color = color;
 	}
 	
 	public int getMetadata() {
@@ -32,20 +35,25 @@ public enum EnumResources2 implements IUMetaType {
 		return name;
 	}
 	
-	private static final EnumResources2[] META_LOOKUP = new EnumResources2[values().length];
+	@Override
+	public int getColor() {
+		return color;
+	}
+	
+	public static final EnumResources2[] VALUES = new EnumResources2[values().length];
 	
 	static {
 		for (EnumResources2 entry : values()) {
-			META_LOOKUP[entry.getMetadata()] = entry;
+			VALUES[entry.getMetadata()] = entry;
 		}
 	}
 	
 	public static EnumResources2 byMetadata(int meta) {
-		if (meta < 0 || meta >= META_LOOKUP.length) {
+		if (meta < 0 || meta >= VALUES.length) {
 			meta = 0;
 		}
 		
-		return META_LOOKUP[meta];
+		return VALUES[meta];
 	}
 	
 }

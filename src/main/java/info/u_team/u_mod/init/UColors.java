@@ -1,8 +1,8 @@
 package info.u_team.u_mod.init;
 
+import info.u_team.u_mod.resource.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.color.*;
-import net.minecraft.item.*;
 import net.minecraftforge.fml.relauncher.*;
 
 @SideOnly(Side.CLIENT)
@@ -20,16 +20,36 @@ public class UColors {
 	}
 	
 	private static void block() {
+		blockcolors.registerBlockColorHandler((state, world, pos, index) -> {
+			if (index == 1) {
+				return EnumResources1.byMetadata(state.getBlock().getMetaFromState(state)).getColor();
+			}
+			return 0xFFFFFF; // Particle are now only stone textured. Dont know how to fix that without
+								// custom particle
+		}, UBlocks.ore1);
+		
+		blockcolors.registerBlockColorHandler((state, world, pos, index) -> {
+			if (index == 1) {
+				return EnumResources2.byMetadata(state.getBlock().getMetaFromState(state)).getColor();
+			}
+			return 0xFFFFFF;
+		}, UBlocks.ore2);
 	}
 	
 	private static void item() {
-		itemcolors.registerItemColorHandler(new IItemColor() {
-			
-			@Override
-			public int colorMultiplier(ItemStack stack, int tintIndex) {
-				return EnumDyeColor.WHITE.getColorValue();
+		itemcolors.registerItemColorHandler((stack, index) -> {
+			if (index == 1) {
+				return EnumResources1.byMetadata(stack.getMetadata()).getColor();
 			}
-		}, UItems.test);
+			return 0xFFFFFF;
+		}, UBlocks.ore1);
+		
+		itemcolors.registerItemColorHandler((stack, index) -> {
+			if (index == 1) {
+				return EnumResources2.byMetadata(stack.getMetadata()).getColor();
+			}
+			return 0xFFFFFF;
+		}, UBlocks.ore2);
 	}
 	
 }
