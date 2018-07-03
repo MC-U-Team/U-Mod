@@ -1,5 +1,6 @@
 #Creativetabs
-itemGroup.umod:machine=Machines
+itemGroup.umod:machine=UMod Machines
+itemGroup.umod:resources=UMod Resources
 
 #Modetabs
 modetab.NORMAL.name=Normal

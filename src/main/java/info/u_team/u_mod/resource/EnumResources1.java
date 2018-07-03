@@ -11,7 +11,7 @@ public enum EnumResources1 implements IMetaType, IColored {
 	CHROMIUM(3, "chromium", 0xCEDFE8),
 	COBALT(4, "cobalt", 0x4545D3),
 	COPPER(5, "copper", 0xD17B0A),
-	GALLIUM(6, "gallium", 0xE5CDAE),
+	GALLIUM(6, "gallium", 0xE0A1C3),
 	GRAPHITE(7, "graphite", 0x332F2E),
 	IRIDIUM(8, "iridium", 0xEAEFEF),
 	LEAD(9, "lead", 0x63639B),

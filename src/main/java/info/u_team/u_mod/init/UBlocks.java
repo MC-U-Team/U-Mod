@@ -13,16 +13,9 @@ public class UBlocks {
 	public static final UBlock ore1 = new BlockOre("ore1", EnumResources1.VALUES);
 	public static final UBlock ore2 = new BlockOre("ore2", EnumResources2.VALUES);
 	
-	// public static final UBlock ore1 = new BlockOre("ore1",
-	// EnumResources.BLOCK1_LIST);
-	// public static final UBlock ore2 = new BlockOre("ore2",
-	// EnumResources.BLOCK2_LIST);
-	//
-	// public static final UBlock block1 = new BlockOre("block1",
-	// EnumResources.BLOCK1_LIST);
-	// public static final UBlock block2 = new BlockOre("block2",
-	// EnumResources.BLOCK2_LIST);
-	//
+	public static final UBlock block1 = new BlockBlock("block1", EnumResources1.VALUES);
+	public static final UBlock block2 = new BlockBlock("block2", EnumResources2.VALUES);
+	
 	public static final UBlock pulverizer = new BlockPulveriser("pulverizer");
 	public static final UBlock battery = new BlockBattery("battery");
 	public static final UBlock energy_pipe = new EnergyPipeBlock("energy_pipe");

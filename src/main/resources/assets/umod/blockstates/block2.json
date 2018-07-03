@@ -1,34 +1,34 @@
 {
 	"variants": {
 		"meta=potassium": {
-			"model": "umod:ore"
+			"model": "umod:block"
 		},
 		"meta=silver": {
-			"model": "umod:ore"
+			"model": "umod:block"
 		},
 		"meta=sodium": {
-			"model": "umod:ore"
+			"model": "umod:block"
 		},
 		"meta=tantalum": {
-			"model": "umod:ore"
+			"model": "umod:block"
 		},
 		"meta=tin": {
-			"model": "umod:ore"
+			"model": "umod:block"
 		},
 		"meta=tungsten": {
-			"model": "umod:ore"
+			"model": "umod:block"
 		},
 		"meta=uranium": {
-			"model": "umod:ore"
+			"model": "umod:block"
 		},
 		"meta=vanadium": {
-			"model": "umod:ore"
+			"model": "umod:block"
 		},
 		"meta=zinc": {
-			"model": "umod:ore"
+			"model": "umod:block"
 		},
 		"meta=zirconium": {
-			"model": "umod:ore"
+			"model": "umod:block"
 		}
 	}
 }
