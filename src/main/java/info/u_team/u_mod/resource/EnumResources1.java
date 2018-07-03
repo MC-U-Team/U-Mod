@@ -5,22 +5,22 @@ import info.u_team.u_team_core.api.IMetaType;
 
 public enum EnumResources1 implements IMetaType, IColored {
 	
-	ALUMINUM(0, "aluminium", 0xFFAAAA),
-	BERYLLIUM(1, "beryllium", 0xFFFFAA),
-	CADMIUM(2, "cadmium", 0xFFAAFF),
-	CHROMIUM(3, "chromium", 0xFFAAAA),
-	COBALT(4, "cobalt", 0xFFAAAA),
-	COPPER(5, "copper", 0xFFAAAA),
-	GALLIUM(6, "gallium", 0xFFAAAA),
-	GRAPHITE(7, "graphite", 0xFFAAAA),
-	IRIDIUM(8, "iridium", 0xFFAAAA),
-	LEAD(9, "lead", 0xFFAAAA),
-	MAGNESIUM(10, "magnesium", 0xFFAAAA),
-	MOLYBDENUM(11, "molybdenum", 0xFFAAAA),
-	NICKEL(12, "nickel", 0xFFAAAA),
-	PALLADIUM(13, "palladium", 0xFFAAAA),
-	PLATINUM(14, "platinum", 0xFFAAAA),
-	PLUTONIUM(15, "plutonium", 0xFFAAAA);
+	ALUMINUM(0, "aluminium", 0xF9F9F9),
+	BERYLLIUM(1, "beryllium", 0xA9B2BA),
+	CADMIUM(2, "cadmium", 0x686166),
+	CHROMIUM(3, "chromium", 0xCEDFE8),
+	COBALT(4, "cobalt", 0x4545D3),
+	COPPER(5, "copper", 0xD17B0A),
+	GALLIUM(6, "gallium", 0xE5CDAE),
+	GRAPHITE(7, "graphite", 0x332F2E),
+	IRIDIUM(8, "iridium", 0xEAEFEF),
+	LEAD(9, "lead", 0x63639B),
+	MAGNESIUM(10, "magnesium", 0xF7F7F9),
+	MOLYBDENUM(11, "molybdenum", 0xC7DFE8),
+	NICKEL(12, "nickel", 0xA1C693),
+	PALLADIUM(13, "palladium", 0xEEEFAE),
+	PLATINUM(14, "platinum", 0xE8DBB9),
+	PLUTONIUM(15, "plutonium", 0x75915A);
 	
 	private int metadata;
 	private String name;
