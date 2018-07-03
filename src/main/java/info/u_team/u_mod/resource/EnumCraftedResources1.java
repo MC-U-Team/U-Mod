@@ -1,21 +1,18 @@
 package info.u_team.u_mod.resource;
 
-import info.u_team.u_mod.api.IColored;
 import info.u_team.u_team_core.api.IMetaType;
 
-public enum EnumCraftedResources1 implements IMetaType, IColored {
+public enum EnumCraftedResources1 implements IMetaType {
 	
-	COALCHUNK(0, "coalchunk", 0xF9F9F9),
-	CARBON(1, "carbon", 0xF9F9F9);
+	COALCHUNK(0, "coalchunk"),
+	CARBON(1, "carbon");
 	
 	private int metadata;
 	private String name;
-	private int color;
 	
-	private EnumCraftedResources1(int metadata, String name, int color) {
+	private EnumCraftedResources1(int metadata, String name) {
 		this.metadata = metadata;
 		this.name = name;
-		this.color = color;
 	}
 	
 	@Override
@@ -26,11 +23,6 @@ public enum EnumCraftedResources1 implements IMetaType, IColored {
 	@Override
 	public String getName() {
 		return name;
-	}
-	
-	@Override
-	public int getColor() {
-		return color;
 	}
 	
 	public static final EnumCraftedResources1[] VALUES = new EnumCraftedResources1[values().length];
