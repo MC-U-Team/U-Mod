@@ -1,6 +1,7 @@
 package info.u_team.u_mod.init;
 
 import info.u_team.u_mod.UConstants;
+import info.u_team.u_mod.resource.EnumResources1;
 import info.u_team.u_team_core.creativetab.UCreativeTab;
 
 public class UCreativeTabs {
@@ -10,7 +11,7 @@ public class UCreativeTabs {
 	
 	public static void init() {
 		MACHINE.setIcon(UBlocks.pulverizer);
-		RESOURCES.setIcon(UBlocks.ore1);
+		RESOURCES.setIcon(UBlocks.resource_ore1, EnumResources1.COPPER.getMetadata());
 	}
 	
 }
