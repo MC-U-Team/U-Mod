@@ -2,8 +2,7 @@
 	"parent": "block/block",
 	"textures": {
 		"stone": "umod:blocks/ore_stone",
-		"ore": "umod:blocks/ore_overlay",
-		"particle": "umod:blocks/ore_stone"
+		"ore": "umod:blocks/ore_overlay"
 	},
 	"elements": [
 		{
@@ -93,7 +92,7 @@
 						16,
 						16
 					],
-					"tintindex": 1,
+					"tintindex": 0,
 					"texture": "#ore"
 				},
 				"east": {
@@ -103,7 +102,7 @@
 						16,
 						16
 					],
-					"tintindex": 1,
+					"tintindex": 0,
 					"texture": "#ore"
 				},
 				"south": {
@@ -113,7 +112,7 @@
 						16,
 						16
 					],
-					"tintindex": 1,
+					"tintindex": 0,
 					"texture": "#ore"
 				},
 				"west": {
@@ -123,7 +122,7 @@
 						16,
 						16
 					],
-					"tintindex": 1,
+					"tintindex": 0,
 					"texture": "#ore"
 				},
 				"up": {
@@ -133,7 +132,7 @@
 						16,
 						16
 					],
-					"tintindex": 1,
+					"tintindex": 0,
 					"texture": "#ore"
 				},
 				"down": {
@@ -143,7 +142,7 @@
 						16,
 						16
 					],
-					"tintindex": 1,
+					"tintindex": 0,
 					"texture": "#ore"
 				}
 			}

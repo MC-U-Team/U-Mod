@@ -22,18 +22,11 @@ public class UColors {
 	private static void block() {
 		// Ore
 		blockcolors.registerBlockColorHandler((state, world, pos, index) -> {
-			if (index == 1) {
-				return EnumResources1.byMetadata(state.getBlock().getMetaFromState(state)).getColor();
-			}
-			return 0xFFFFFF; // Particle are now only stone textured. Dont know how to fix that without
-								// custom particle
+			return EnumResources1.byMetadata(state.getBlock().getMetaFromState(state)).getColor();
 		}, UBlocks.ore1);
 		
 		blockcolors.registerBlockColorHandler((state, world, pos, index) -> {
-			if (index == 1) {
-				return EnumResources2.byMetadata(state.getBlock().getMetaFromState(state)).getColor();
-			}
-			return 0xFFFFFF;
+			return EnumResources2.byMetadata(state.getBlock().getMetaFromState(state)).getColor();
 		}, UBlocks.ore2);
 		
 		// Block
@@ -50,17 +43,11 @@ public class UColors {
 	private static void item() {
 		// Ore
 		itemcolors.registerItemColorHandler((stack, index) -> {
-			if (index == 1) {
-				return EnumResources1.byMetadata(stack.getMetadata()).getColor();
-			}
-			return 0xFFFFFF;
+			return EnumResources1.byMetadata(stack.getMetadata()).getColor();
 		}, UBlocks.ore1);
 		
 		itemcolors.registerItemColorHandler((stack, index) -> {
-			if (index == 1) {
-				return EnumResources2.byMetadata(stack.getMetadata()).getColor();
-			}
-			return 0xFFFFFF;
+			return EnumResources2.byMetadata(stack.getMetadata()).getColor();
 		}, UBlocks.ore2);
 		
 		// Block

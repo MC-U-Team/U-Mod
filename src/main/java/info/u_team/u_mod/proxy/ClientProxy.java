@@ -1,6 +1,6 @@
 package info.u_team.u_mod.proxy;
 
-import info.u_team.u_mod.init.UColors;
+import info.u_team.u_mod.init.*;
 import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.relauncher.*;
 
@@ -16,6 +16,7 @@ public class ClientProxy extends CommonProxy {
 	public void init(FMLInitializationEvent event) {
 		super.init(event);
 		UColors.init();
+		UParticles.init();
 	}
 	
 	@Override
