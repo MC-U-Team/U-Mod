@@ -16,6 +16,7 @@ public class UGuiHandler implements IGuiHandler {
 		try {
 			return UGuis.getContainer(ID).getConstructor(EntityPlayer.class, World.class, BlockPos.class).newInstance(player, world, new BlockPos(x, y, z));
 		} catch (Exception ex) {
+			UConstants.LOGGER.error("Some gui container seems to be wrong.", ex);
 			return null;
 		}
 	}
@@ -31,7 +32,7 @@ public class UGuiHandler implements IGuiHandler {
 				return gui.getConstructor(UContainer.class).newInstance(container);
 			}
 		} catch (Exception ex) {
-			UConstants.LOGGER.error("Some gui container seems to be wrong.", ex);
+			UConstants.LOGGER.error("Some gui seems to be wrong.", ex);
 			return null;
 		}
 	}

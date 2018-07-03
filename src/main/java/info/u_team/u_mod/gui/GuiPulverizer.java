@@ -1,7 +1,9 @@
 package info.u_team.u_mod.gui;
 
 import info.u_team.u_mod.UConstants;
+import info.u_team.u_mod.container.ContainerBase;
 import info.u_team.u_mod.container.ContainerPulverizer;
+import info.u_team.u_mod.resource.EnumModeTab;
 import info.u_team.u_mod.tilentity.TileEntityPulverizer;
 import info.u_team.u_team_core.container.UContainer;
 import net.minecraft.util.ResourceLocation;
@@ -11,7 +13,7 @@ public class GuiPulverizer extends UGuiContainer {
 	private TileEntityPulverizer tile;
 	
 	public GuiPulverizer(UContainer inventorySlotsIn) {
-		super(inventorySlotsIn);
+		super((ContainerBase) inventorySlotsIn);
 		ContainerPulverizer container = ((ContainerPulverizer) this.inventorySlots);
 		tile = (TileEntityPulverizer) container.world.getTileEntity(container.pos);
 		

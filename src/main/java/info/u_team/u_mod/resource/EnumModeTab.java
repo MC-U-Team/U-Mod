@@ -1,4 +1,4 @@
-package info.u_team.u_mod.gui;
+package info.u_team.u_mod.resource;
 
 
 public enum EnumModeTab {
