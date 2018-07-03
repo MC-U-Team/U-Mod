@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import info.u_team.u_mod.UConstants;
 import info.u_team.u_mod.api.IUGui;
+import info.u_team.u_mod.container.ContainerBase;
 import info.u_team.u_team_core.container.UContainer;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -23,7 +24,6 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 	
 	private ResourceLocation normal_background;
 	private ResourceLocation used_background;
-	private EnumModeTab tab = EnumModeTab.NORMAL;
 	
 	public UGuiContainer(UContainer inventorySlotsIn) {
 		super(inventorySlotsIn);
@@ -37,7 +37,7 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 		int j = (this.height - this.ySize) / 2;
 		this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
 		
-		this.drawInBackground(tab, mouseX, mouseY, i, j);
+		this.drawInBackground(this.getTab(), mouseX, mouseY, i, j);
 	}
 	
 	protected void drawInBackground(EnumModeTab tab, int mouseX, int mouseY, int x_offset, int y_offset) {
@@ -47,9 +47,9 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		this.drawDefaultBackground();
 		drawTabs(mouseX, mouseY);
-		if (tab == EnumModeTab.NORMAL) {
+		if (this.getTab() == EnumModeTab.NORMAL) {
 			super.drawScreen(mouseX, mouseY, partialTicks);
-		} else if (tab == EnumModeTab.ENERGY) {
+		} else if (this.getTab() == EnumModeTab.ENERGY) {
 			this.drawEnergyTab(partialTicks, mouseX, mouseY);
 		}
 		drawForgroundTab();
@@ -89,7 +89,7 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 		this.mc.getTextureManager().bindTexture(CREATIVE_INVENTORY_TABS);
 		int i = (this.width - this.xSize) / 2;
 		int j = (this.height - this.ySize) / 2 - 28;
-		this.drawTexturedModalRect(i + (28 * tab.ordinal()), j, 28 * tab.ordinal(), 32, 28, 32);
+		this.drawTexturedModalRect(i + (28 * this.getTab().ordinal()), j, 28 * this.getTab().ordinal(), 32, 28, 32);
 	}
 	
 	private void drawTabs(int mouseX, int mouseY) {
@@ -101,17 +101,17 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 	
 	public final void setBackground(ResourceLocation background) {
 		this.normal_background = background;
-		if (tab == EnumModeTab.NORMAL) {
+		if (this.getTab() == EnumModeTab.NORMAL) {
 			this.used_background = this.normal_background;
 		}
 	}
 	
 	public final EnumModeTab getTab() {
-		return tab;
+		return this.getContainer().getTab();
 	}
 	
 	public final void setModeTab(EnumModeTab tab) {
-		this.tab = tab;
+		this.getContainer().setTab(tab);
 		initTab(tab);
 	}
 	
@@ -126,6 +126,11 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 	private void drawEnergyTab(float partialTicks, int mouseX, int mouseY) {
 		this.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
 		
+	}
+	
+	@Override
+	public ContainerBase getContainer() {
+		return (ContainerBase) this.inventorySlots;
 	}
 	
 }
