@@ -2,16 +2,12 @@ package info.u_team.u_mod.container;
 
 import info.u_team.u_mod.gui.EnumModeTab;
 import info.u_team.u_team_core.container.UContainer;
-import info.u_team.u_team_core.tileentity.UTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.ClickType;
-import net.minecraft.inventory.IContainerListener;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.*;
 
 public class ContainerBase extends UContainer {
 	
@@ -21,7 +17,7 @@ public class ContainerBase extends UContainer {
 	public IInventory tile;
 	public final int[] fields;
 	private EnumModeTab tab = EnumModeTab.NORMAL;
-
+	
 	public ContainerBase(EntityPlayer player, World world, BlockPos pos) {
 		this.player = player;
 		this.world = world;
@@ -59,7 +55,7 @@ public class ContainerBase extends UContainer {
 			this.fields[j] = this.tile.getField(0);
 		}
 	}
-
+	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void updateProgressBar(int id, int data) {
@@ -68,17 +64,17 @@ public class ContainerBase extends UContainer {
 	
 	@Override
 	public void putStackInSlot(int slotID, ItemStack stack) {
-		if(this.tab.equals(EnumModeTab.NORMAL)) {
+		if (this.tab.equals(EnumModeTab.NORMAL)) {
 			super.putStackInSlot(slotID, stack);
 		}
 	}
 	
 	@Override
 	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player) {
-		if(this.tab.equals(EnumModeTab.NORMAL)) {
+		if (this.tab.equals(EnumModeTab.NORMAL)) {
 			return super.slotClick(slotId, dragType, clickTypeIn, player);
 		}
 		return ItemStack.EMPTY;
 	}
-
+	
 }

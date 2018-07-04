@@ -58,7 +58,7 @@ public class BlockOre extends UBlockMetaData {
 	@Override
 	public boolean addLandingEffects(IBlockState state, WorldServer world, BlockPos pos, IBlockState state2, EntityLivingBase entity, int numberOfParticles) {
 		if (world instanceof WorldServer) {
-			((WorldServer) world).spawnParticle(UParticles.oredust, entity.posX, entity.posY, entity.posZ, numberOfParticles, 0.0D, 0.0D, 0.0D, 0.15000000596046448D, Block.getStateId(state));
+			world.spawnParticle(UParticles.oredust, entity.posX, entity.posY, entity.posZ, numberOfParticles, 0.0D, 0.0D, 0.0D, 0.15000000596046448D, Block.getStateId(state));
 		}
 		return true;
 	}
@@ -68,7 +68,7 @@ public class BlockOre extends UBlockMetaData {
 		Random rand = new Random();
 		double posX = entity.posX;
 		double posZ = entity.posZ;
-		world.spawnParticle(UParticles.oredigging, posX + ((double) rand.nextFloat() - 0.5D) * (double) entity.width, entity.getEntityBoundingBox().minY + 0.1D, posZ + ((double) rand.nextFloat() - 0.5D) * (double) entity.width, -entity.motionX * 4.0D, 1.5D, -entity.motionZ * 4.0D, Block.getStateId(state));
+		world.spawnParticle(UParticles.oredigging, posX + (rand.nextFloat() - 0.5D) * entity.width, entity.getEntityBoundingBox().minY + 0.1D, posZ + (rand.nextFloat() - 0.5D) * entity.width, -entity.motionX * 4.0D, 1.5D, -entity.motionZ * 4.0D, Block.getStateId(state));
 		return true;
 	}
 	
@@ -82,32 +82,32 @@ public class BlockOre extends UBlockMetaData {
 		int k = pos.getZ();
 		AxisAlignedBB axisalignedbb = state.getBoundingBox(world, pos);
 		Random rand = new Random();
-		double d0 = (double) i + rand.nextDouble() * (axisalignedbb.maxX - axisalignedbb.minX - 0.20000000298023224D) + 0.10000000149011612D + axisalignedbb.minX;
-		double d1 = (double) j + rand.nextDouble() * (axisalignedbb.maxY - axisalignedbb.minY - 0.20000000298023224D) + 0.10000000149011612D + axisalignedbb.minY;
-		double d2 = (double) k + rand.nextDouble() * (axisalignedbb.maxZ - axisalignedbb.minZ - 0.20000000298023224D) + 0.10000000149011612D + axisalignedbb.minZ;
+		double d0 = i + rand.nextDouble() * (axisalignedbb.maxX - axisalignedbb.minX - 0.20000000298023224D) + 0.10000000149011612D + axisalignedbb.minX;
+		double d1 = j + rand.nextDouble() * (axisalignedbb.maxY - axisalignedbb.minY - 0.20000000298023224D) + 0.10000000149011612D + axisalignedbb.minY;
+		double d2 = k + rand.nextDouble() * (axisalignedbb.maxZ - axisalignedbb.minZ - 0.20000000298023224D) + 0.10000000149011612D + axisalignedbb.minZ;
 		
 		if (side == EnumFacing.DOWN) {
-			d1 = (double) j + axisalignedbb.minY - 0.10000000149011612D;
+			d1 = j + axisalignedbb.minY - 0.10000000149011612D;
 		}
 		
 		if (side == EnumFacing.UP) {
-			d1 = (double) j + axisalignedbb.maxY + 0.10000000149011612D;
+			d1 = j + axisalignedbb.maxY + 0.10000000149011612D;
 		}
 		
 		if (side == EnumFacing.NORTH) {
-			d2 = (double) k + axisalignedbb.minZ - 0.10000000149011612D;
+			d2 = k + axisalignedbb.minZ - 0.10000000149011612D;
 		}
 		
 		if (side == EnumFacing.SOUTH) {
-			d2 = (double) k + axisalignedbb.maxZ + 0.10000000149011612D;
+			d2 = k + axisalignedbb.maxZ + 0.10000000149011612D;
 		}
 		
 		if (side == EnumFacing.WEST) {
-			d0 = (double) i + axisalignedbb.minX - 0.10000000149011612D;
+			d0 = i + axisalignedbb.minX - 0.10000000149011612D;
 		}
 		
 		if (side == EnumFacing.EAST) {
-			d0 = (double) i + axisalignedbb.maxX + 0.10000000149011612D;
+			d0 = i + axisalignedbb.maxX + 0.10000000149011612D;
 		}
 		
 		manager.addEffect((new ParticleOreDigging(world, d0, d1, d2, 0.0D, 0.0D, 0.0D, state)).setBlockPos(pos).multiplyVelocity(0.2F).multipleParticleScaleBy(0.6F));
@@ -121,10 +121,10 @@ public class BlockOre extends UBlockMetaData {
 		for (int j = 0; j < 4; ++j) {
 			for (int k = 0; k < 4; ++k) {
 				for (int l = 0; l < 4; ++l) {
-					double d0 = ((double) j + 0.5D) / 4.0D;
-					double d1 = ((double) k + 0.5D) / 4.0D;
-					double d2 = ((double) l + 0.5D) / 4.0D;
-					manager.addEffect((new ParticleOreDigging(world, (double) pos.getX() + d0, (double) pos.getY() + d1, (double) pos.getZ() + d2, d0 - 0.5D, d1 - 0.5D, d2 - 0.5D, state)).setBlockPos(pos));
+					double d0 = (j + 0.5D) / 4.0D;
+					double d1 = (k + 0.5D) / 4.0D;
+					double d2 = (l + 0.5D) / 4.0D;
+					manager.addEffect((new ParticleOreDigging(world, pos.getX() + d0, pos.getY() + d1, pos.getZ() + d2, d0 - 0.5D, d1 - 0.5D, d2 - 0.5D, state)).setBlockPos(pos));
 				}
 			}
 		}

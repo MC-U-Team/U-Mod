@@ -116,6 +116,7 @@ public class ParticleOreDigging extends Particle {
 	@SideOnly(Side.CLIENT)
 	public static class Factory implements IParticleFactory {
 		
+		@Override
 		public Particle createParticle(int id, World world, double xCoord, double yCoord, double zCoord, double xSpeed, double ySpeed, double zSpeed, int... parameter) {
 			return (new ParticleOreDigging(world, xCoord, yCoord, zCoord, xSpeed, ySpeed, zSpeed, Block.getStateById(parameter[0]))).init();
 		}

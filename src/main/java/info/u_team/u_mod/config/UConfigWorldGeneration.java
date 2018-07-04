@@ -37,7 +37,7 @@ public class UConfigWorldGeneration {
 	public static GeneratableOre oreMolybdenum = new GeneratableOre(6, 1, 2, GenerationType.MINMAX, 16, 64);
 	@Comment("Ore generation nickel")
 	public static GeneratableOre oreNickel = new GeneratableOre(6, 1, 2, GenerationType.MINMAX, 16, 64);
-	@Comment("Ore generation palladium" )
+	@Comment("Ore generation palladium")
 	public static GeneratableOre orePalladium = new GeneratableOre(6, 1, 2, GenerationType.MINMAX, 16, 64);
 	@Comment("Ore generation platinum")
 	public static GeneratableOre orePlatinum = new GeneratableOre(6, 1, 2, GenerationType.MINMAX, 16, 64);

@@ -7,14 +7,10 @@ import info.u_team.u_mod.api.IUGui;
 import info.u_team.u_mod.container.ContainerBase;
 import info.u_team.u_team_core.container.UContainer;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.inventory.ClickType;
-import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.*;
 
 @SideOnly(Side.CLIENT)
 public class UGuiContainer extends GuiContainer implements IUGui {

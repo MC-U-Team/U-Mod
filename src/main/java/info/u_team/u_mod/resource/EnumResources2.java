@@ -26,6 +26,7 @@ public enum EnumResources2 implements IMetaType, IColored {
 		this.color = color;
 	}
 	
+	@Override
 	public int getMetadata() {
 		return metadata;
 	}
