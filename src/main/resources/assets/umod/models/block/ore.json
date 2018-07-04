@@ -17,59 +17,29 @@
 				16
 			],
 			"faces": {
-				"north": {
-					"uv": [
-						0,
-						0,
-						16,
-						16
-					],
-					"texture": "#stone"
-				},
-				"east": {
-					"uv": [
-						0,
-						0,
-						16,
-						16
-					],
-					"texture": "#stone"
-				},
-				"south": {
-					"uv": [
-						0,
-						0,
-						16,
-						16
-					],
-					"texture": "#stone"
-				},
-				"west": {
-					"uv": [
-						0,
-						0,
-						16,
-						16
-					],
-					"texture": "#stone"
+				"down": {
+					"texture": "#stone",
+					"cullface": "down"
 				},
 				"up": {
-					"uv": [
-						0,
-						0,
-						16,
-						16
-					],
-					"texture": "#stone"
+					"texture": "#stone",
+					"cullface": "up"
 				},
-				"down": {
-					"uv": [
-						0,
-						0,
-						16,
-						16
-					],
-					"texture": "#stone"
+				"north": {
+					"texture": "#stone",
+					"cullface": "north"
+				},
+				"south": {
+					"texture": "#stone",
+					"cullface": "south"
+				},
+				"west": {
+					"texture": "#stone",
+					"cullface": "west"
+				},
+				"east": {
+					"texture": "#stone",
+					"cullface": "east"
 				}
 			}
 		},
@@ -85,65 +55,35 @@
 				16
 			],
 			"faces": {
-				"north": {
-					"uv": [
-						0,
-						0,
-						16,
-						16
-					],
-					"tintindex": 0,
-					"texture": "#ore"
-				},
-				"east": {
-					"uv": [
-						0,
-						0,
-						16,
-						16
-					],
-					"tintindex": 0,
-					"texture": "#ore"
-				},
-				"south": {
-					"uv": [
-						0,
-						0,
-						16,
-						16
-					],
-					"tintindex": 0,
-					"texture": "#ore"
-				},
-				"west": {
-					"uv": [
-						0,
-						0,
-						16,
-						16
-					],
-					"tintindex": 0,
-					"texture": "#ore"
+				"down": {
+					"texture": "#ore",
+					"cullface": "down",
+					"tintindex": 0
 				},
 				"up": {
-					"uv": [
-						0,
-						0,
-						16,
-						16
-					],
-					"tintindex": 0,
-					"texture": "#ore"
+					"texture": "#ore",
+					"cullface": "up",
+					"tintindex": 0
 				},
-				"down": {
-					"uv": [
-						0,
-						0,
-						16,
-						16
-					],
-					"tintindex": 0,
-					"texture": "#ore"
+				"north": {
+					"texture": "#ore",
+					"cullface": "north",
+					"tintindex": 0
+				},
+				"south": {
+					"texture": "#ore",
+					"cullface": "south",
+					"tintindex": 0
+				},
+				"west": {
+					"texture": "#ore",
+					"cullface": "west",
+					"tintindex": 0
+				},
+				"east": {
+					"texture": "#ore",
+					"cullface": "east",
+					"tintindex": 0
 				}
 			}
 		}
