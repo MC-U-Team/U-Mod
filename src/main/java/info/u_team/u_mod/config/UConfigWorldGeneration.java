@@ -11,58 +11,67 @@ public class UConfigWorldGeneration {
 	@Comment("If world generation is enabled or not")
 	public static boolean enabled = true;
 	
-	@Comment("Ore generation aluminium")
-	public static GeneratableOre oreAluminium = new GeneratableOre(6, 1, 8, GenerationType.MINMAX, 16, 64);
-	@Comment("Ore generation beryllium")
-	public static GeneratableOre oreBeryllium = new GeneratableOre(6, 1, 8, GenerationType.MINMAX, 16, 64);
-	@Comment("Ore generation cadmium")
-	public static GeneratableOre oreCadmium = new GeneratableOre(6, 1, 8, GenerationType.MINMAX, 16, 64);
-	@Comment("Ore generation chromium")
-	public static GeneratableOre oreChromium = new GeneratableOre(6, 1, 8, GenerationType.MINMAX, 16, 64);
-	@Comment("Ore generation cobalt")
-	public static GeneratableOre oreCobalt = new GeneratableOre(6, 1, 8, GenerationType.MINMAX, 16, 64);
-	@Comment("Ore generation copper")
-	public static GeneratableOre oreCopper = new GeneratableOre(6, 1, 8, GenerationType.MINMAX, 16, 64);
-	@Comment("Ore generation gallium")
-	public static GeneratableOre oreGallium = new GeneratableOre(6, 1, 8, GenerationType.MINMAX, 16, 64);
-	@Comment("Ore generation graphite")
-	public static GeneratableOre oreGraphite = new GeneratableOre(6, 1, 8, GenerationType.MINMAX, 16, 64);
-	@Comment("Ore generation iridium")
-	public static GeneratableOre oreIridium = new GeneratableOre(6, 1, 8, GenerationType.MINMAX, 16, 64);
-	@Comment("Ore generation lead")
-	public static GeneratableOre oreLead = new GeneratableOre(6, 1, 8, GenerationType.MINMAX, 16, 64);
-	@Comment("Ore generation magnesium")
-	public static GeneratableOre oreMagnesium = new GeneratableOre(6, 1, 8, GenerationType.MINMAX, 16, 64);
-	@Comment("Ore generation molybdenum")
-	public static GeneratableOre oreMolybdenum = new GeneratableOre(6, 1, 8, GenerationType.MINMAX, 16, 64);
-	@Comment("Ore generation nickel")
-	public static GeneratableOre oreNickel = new GeneratableOre(6, 1, 8, GenerationType.MINMAX, 16, 64);
-	@Comment("Ore generation palladium")
-	public static GeneratableOre orePalladium = new GeneratableOre(6, 1, 8, GenerationType.MINMAX, 16, 64);
-	@Comment("Ore generation platinum")
-	public static GeneratableOre orePlatinum = new GeneratableOre(6, 1, 8, GenerationType.MINMAX, 16, 64);
-	@Comment("Ore generation plutonium")
-	public static GeneratableOre orePlutonium = new GeneratableOre(6, 1, 8, GenerationType.MINMAX, 16, 64);
-	@Comment("Ore generation potassium")
-	public static GeneratableOre orePotassium = new GeneratableOre(6, 1, 8, GenerationType.MINMAX, 16, 64);
-	@Comment("Ore generation silver")
-	public static GeneratableOre oreSilver = new GeneratableOre(6, 1, 8, GenerationType.MINMAX, 16, 64);
-	@Comment("Ore generation sodium")
-	public static GeneratableOre oreSodium = new GeneratableOre(6, 1, 8, GenerationType.MINMAX, 16, 64);
-	@Comment("Ore generation tantalum")
-	public static GeneratableOre oreTantalum = new GeneratableOre(6, 1, 8, GenerationType.MINMAX, 16, 64);
-	@Comment("Ore generation tin")
-	public static GeneratableOre oreTin = new GeneratableOre(6, 1, 8, GenerationType.MINMAX, 16, 64);
-	@Comment("Ore generation tungsten")
-	public static GeneratableOre oreTungsten = new GeneratableOre(6, 1, 8, GenerationType.MINMAX, 16, 64);
-	@Comment("Ore generation uranium")
-	public static GeneratableOre oreUranium = new GeneratableOre(6, 1, 8, GenerationType.MINMAX, 16, 64);
-	@Comment("Ore generation vanadium")
-	public static GeneratableOre oreVanadium = new GeneratableOre(6, 1, 8, GenerationType.MINMAX, 16, 64);
-	@Comment("Ore generation zinc")
-	public static GeneratableOre oreZinc = new GeneratableOre(6, 1, 8, GenerationType.MINMAX, 16, 64);
-	@Comment("Ore generation zirconium")
-	public static GeneratableOre oreZirconium = new GeneratableOre(6, 1, 8, GenerationType.MINMAX, 16, 64);
+	@Comment("Generation in overworld")
+	public static GenerationOverworld overworld = new GenerationOverworld();
+	
+	public static class GenerationOverworld {
+		
+		@Comment("If world generation in overworld is enabled or not")
+		public boolean enabled = true;
+		
+		@Comment("Ore generation aluminium")
+		public GeneratableOre oreAluminium = new GeneratableOre(25, 0.5, 5, GenerationType.MINMAX, 24, 128);
+		@Comment("Ore generation beryllium")
+		public GeneratableOre oreBeryllium = new GeneratableOre(6, 0.8, 8, GenerationType.CENTERSPREAD, 30, 10);
+		@Comment("Ore generation cadmium")
+		public GeneratableOre oreCadmium = new GeneratableOre(1, 0.75, 6, GenerationType.MINMAX, 2, 20);
+		@Comment("Ore generation chromium")
+		public GeneratableOre oreChromium = new GeneratableOre(8, 1, 5, GenerationType.MINMAX, 0, 48);
+		@Comment("Ore generation cobalt")
+		public GeneratableOre oreCobalt = new GeneratableOre(2, 0.75, 7, GenerationType.MINMAX, 2, 30);
+		@Comment("Ore generation copper")
+		public GeneratableOre oreCopper = new GeneratableOre(35, 0.75, 10, GenerationType.MINMAX, 0, 128);
+		@Comment("Ore generation gallium")
+		public GeneratableOre oreGallium = new GeneratableOre(2, 0.75, 8, GenerationType.MINMAX, 3, 30);
+		@Comment("Ore generation graphite")
+		public GeneratableOre oreGraphite = new GeneratableOre(8, 1, 20, GenerationType.MINMAX, 0, 128);
+		@Comment("Ore generation iridium")
+		public GeneratableOre oreIridium = new GeneratableOre(1, 0.5, 15, GenerationType.CENTERSPREAD, 8, 5);
+		@Comment("Ore generation lead")
+		public GeneratableOre oreLead = new GeneratableOre(15, 1, 6, GenerationType.MINMAX, 0, 48);
+		@Comment("Ore generation magnesium")
+		public GeneratableOre oreMagnesium = new GeneratableOre(6, 1, 6, GenerationType.MINMAX, 0, 64);
+		@Comment("Ore generation molybdenum")
+		public GeneratableOre oreMolybdenum = new GeneratableOre(3, 1, 6, GenerationType.MINMAX, 2, 30);
+		@Comment("Ore generation nickel")
+		public GeneratableOre oreNickel = new GeneratableOre(6, 0.5, 6, GenerationType.MINMAX, 1, 10);
+		@Comment("Ore generation palladium")
+		public GeneratableOre orePalladium = new GeneratableOre(2, 1, 5, GenerationType.MINMAX, 32, 64);
+		@Comment("Ore generation platinum")
+		public GeneratableOre orePlatinum = new GeneratableOre(1, 0.95, 6, GenerationType.CENTERSPREAD, 8, 6);
+		@Comment("Ore generation plutonium")
+		public GeneratableOre orePlutonium = new GeneratableOre(1, 0.25, 5, GenerationType.MINMAX, 5, 50);
+		@Comment("Ore generation potassium")
+		public GeneratableOre orePotassium = new GeneratableOre(12, 1, 8, GenerationType.MINMAX, 0, 64);
+		@Comment("Ore generation silver")
+		public GeneratableOre oreSilver = new GeneratableOre(4, 0.85, 9, GenerationType.MINMAX, 0, 32);
+		@Comment("Ore generation sodium")
+		public GeneratableOre oreSodium = new GeneratableOre(12, 1, 6, GenerationType.MINMAX, 16, 64);
+		@Comment("Ore generation tantalum")
+		public GeneratableOre oreTantalum = new GeneratableOre(4, 0.75, 8, GenerationType.CENTERSPREAD, 16, 8);
+		@Comment("Ore generation tin")
+		public GeneratableOre oreTin = new GeneratableOre(30, 0.75, 10, GenerationType.MINMAX, 0, 128);
+		@Comment("Ore generation tungsten")
+		public GeneratableOre oreTungsten = new GeneratableOre(1, 0.8, 8, GenerationType.MINMAX, 0, 20);
+		@Comment("Ore generation uranium")
+		public GeneratableOre oreUranium = new GeneratableOre(8, 0.75, 6, GenerationType.MINMAX, 0, 32);
+		@Comment("Ore generation vanadium")
+		public GeneratableOre oreVanadium = new GeneratableOre(8, 1, 5, GenerationType.MINMAX, 0, 48);
+		@Comment("Ore generation zinc")
+		public GeneratableOre oreZinc = new GeneratableOre(12, 0.75, 8, GenerationType.MINMAX, 0, 64);
+		@Comment("Ore generation zirconium")
+		public GeneratableOre oreZirconium = new GeneratableOre(8, 1, 5, GenerationType.MINMAX, 0, 48);
+	}
 	
 	public static class GeneratableOre {
 		

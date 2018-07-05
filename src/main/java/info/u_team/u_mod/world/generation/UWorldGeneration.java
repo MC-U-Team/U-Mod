@@ -21,40 +21,47 @@ public class UWorldGeneration implements IWorldGenerator {
 	
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
-		BlockPos chunkpos = new BlockPos(chunkX * 16, 0, chunkZ * 16); // Not shift the position here, cause WorldGenMinable is doing this already.
+		if (!enabled) {
+			return;
+		}
+		BlockPos chunkpos = new BlockPos(chunkX * 16, 0, chunkZ * 16); // Not shifting the position here, cause WorldGenMinable is doing this already.
 		DimensionType dimension = world.provider.getDimensionType();
 		
 		if (dimension == DimensionType.OVERWORLD) {
 			
+			if (!overworld.enabled) {
+				return;
+			}
+			
 			// Ores
 			// 1
-			generateOreFromConfig(oreAluminium, ALUMINUM.getBlockState(UBlocks.resource_ore1), chunkpos, world, random);
-			generateOreFromConfig(oreBeryllium, BERYLLIUM.getBlockState(UBlocks.resource_ore1), chunkpos, world, random);
-			generateOreFromConfig(oreCadmium, CADMIUM.getBlockState(UBlocks.resource_ore1), chunkpos, world, random);
-			generateOreFromConfig(oreChromium, CHROMIUM.getBlockState(UBlocks.resource_ore1), chunkpos, world, random);
-			generateOreFromConfig(oreCobalt, COBALT.getBlockState(UBlocks.resource_ore1), chunkpos, world, random);
-			generateOreFromConfig(oreCopper, COPPER.getBlockState(UBlocks.resource_ore1), chunkpos, world, random);
-			generateOreFromConfig(oreGallium, GALLIUM.getBlockState(UBlocks.resource_ore1), chunkpos, world, random);
-			generateOreFromConfig(oreGraphite, GRAPHITE.getBlockState(UBlocks.resource_ore1), chunkpos, world, random);
-			generateOreFromConfig(oreIridium, IRIDIUM.getBlockState(UBlocks.resource_ore1), chunkpos, world, random);
-			generateOreFromConfig(oreLead, LEAD.getBlockState(UBlocks.resource_ore1), chunkpos, world, random);
-			generateOreFromConfig(oreMagnesium, MAGNESIUM.getBlockState(UBlocks.resource_ore1), chunkpos, world, random);
-			generateOreFromConfig(oreMolybdenum, MOLYBDENUM.getBlockState(UBlocks.resource_ore1), chunkpos, world, random);
-			generateOreFromConfig(oreNickel, NICKEL.getBlockState(UBlocks.resource_ore1), chunkpos, world, random);
-			generateOreFromConfig(orePalladium, PALLADIUM.getBlockState(UBlocks.resource_ore1), chunkpos, world, random);
-			generateOreFromConfig(orePlatinum, PLATINUM.getBlockState(UBlocks.resource_ore1), chunkpos, world, random);
-			generateOreFromConfig(orePlutonium, PLUTONIUM.getBlockState(UBlocks.resource_ore1), chunkpos, world, random);
+			generateOreFromConfig(overworld.oreAluminium, ALUMINUM.getBlockState(UBlocks.resource_ore1), chunkpos, world, random);
+			generateOreFromConfig(overworld.oreBeryllium, BERYLLIUM.getBlockState(UBlocks.resource_ore1), chunkpos, world, random);
+			generateOreFromConfig(overworld.oreCadmium, CADMIUM.getBlockState(UBlocks.resource_ore1), chunkpos, world, random);
+			generateOreFromConfig(overworld.oreChromium, CHROMIUM.getBlockState(UBlocks.resource_ore1), chunkpos, world, random);
+			generateOreFromConfig(overworld.oreCobalt, COBALT.getBlockState(UBlocks.resource_ore1), chunkpos, world, random);
+			generateOreFromConfig(overworld.oreCopper, COPPER.getBlockState(UBlocks.resource_ore1), chunkpos, world, random);
+			generateOreFromConfig(overworld.oreGallium, GALLIUM.getBlockState(UBlocks.resource_ore1), chunkpos, world, random);
+			generateOreFromConfig(overworld.oreGraphite, GRAPHITE.getBlockState(UBlocks.resource_ore1), chunkpos, world, random);
+			generateOreFromConfig(overworld.oreIridium, IRIDIUM.getBlockState(UBlocks.resource_ore1), chunkpos, world, random);
+			generateOreFromConfig(overworld.oreLead, LEAD.getBlockState(UBlocks.resource_ore1), chunkpos, world, random);
+			generateOreFromConfig(overworld.oreMagnesium, MAGNESIUM.getBlockState(UBlocks.resource_ore1), chunkpos, world, random);
+			generateOreFromConfig(overworld.oreMolybdenum, MOLYBDENUM.getBlockState(UBlocks.resource_ore1), chunkpos, world, random);
+			generateOreFromConfig(overworld.oreNickel, NICKEL.getBlockState(UBlocks.resource_ore1), chunkpos, world, random);
+			generateOreFromConfig(overworld.orePalladium, PALLADIUM.getBlockState(UBlocks.resource_ore1), chunkpos, world, random);
+			generateOreFromConfig(overworld.orePlatinum, PLATINUM.getBlockState(UBlocks.resource_ore1), chunkpos, world, random);
+			generateOreFromConfig(overworld.orePlutonium, PLUTONIUM.getBlockState(UBlocks.resource_ore1), chunkpos, world, random);
 			// 2
-			generateOreFromConfig(orePotassium, POTASSIUM.getBlockState(UBlocks.resource_ore2), chunkpos, world, random);
-			generateOreFromConfig(oreSilver, SILVER.getBlockState(UBlocks.resource_ore2), chunkpos, world, random);
-			generateOreFromConfig(oreSodium, SODIUM.getBlockState(UBlocks.resource_ore2), chunkpos, world, random);
-			generateOreFromConfig(oreTantalum, TANTALUM.getBlockState(UBlocks.resource_ore2), chunkpos, world, random);
-			generateOreFromConfig(oreTin, TIN.getBlockState(UBlocks.resource_ore2), chunkpos, world, random);
-			generateOreFromConfig(oreTungsten, TUNGSTEN.getBlockState(UBlocks.resource_ore2), chunkpos, world, random);
-			generateOreFromConfig(oreUranium, URANIUM.getBlockState(UBlocks.resource_ore2), chunkpos, world, random);
-			generateOreFromConfig(oreVanadium, VANADIUM.getBlockState(UBlocks.resource_ore2), chunkpos, world, random);
-			generateOreFromConfig(oreZinc, ZINC.getBlockState(UBlocks.resource_ore2), chunkpos, world, random);
-			generateOreFromConfig(oreZirconium, ZIRCONIUM.getBlockState(UBlocks.resource_ore2), chunkpos, world, random);
+			generateOreFromConfig(overworld.orePotassium, POTASSIUM.getBlockState(UBlocks.resource_ore2), chunkpos, world, random);
+			generateOreFromConfig(overworld.oreSilver, SILVER.getBlockState(UBlocks.resource_ore2), chunkpos, world, random);
+			generateOreFromConfig(overworld.oreSodium, SODIUM.getBlockState(UBlocks.resource_ore2), chunkpos, world, random);
+			generateOreFromConfig(overworld.oreTantalum, TANTALUM.getBlockState(UBlocks.resource_ore2), chunkpos, world, random);
+			generateOreFromConfig(overworld.oreTin, TIN.getBlockState(UBlocks.resource_ore2), chunkpos, world, random);
+			generateOreFromConfig(overworld.oreTungsten, TUNGSTEN.getBlockState(UBlocks.resource_ore2), chunkpos, world, random);
+			generateOreFromConfig(overworld.oreUranium, URANIUM.getBlockState(UBlocks.resource_ore2), chunkpos, world, random);
+			generateOreFromConfig(overworld.oreVanadium, VANADIUM.getBlockState(UBlocks.resource_ore2), chunkpos, world, random);
+			generateOreFromConfig(overworld.oreZinc, ZINC.getBlockState(UBlocks.resource_ore2), chunkpos, world, random);
+			generateOreFromConfig(overworld.oreZirconium, ZIRCONIUM.getBlockState(UBlocks.resource_ore2), chunkpos, world, random);
 			
 		}
 	}
@@ -100,5 +107,4 @@ public class UWorldGeneration implements IWorldGenerator {
 			}
 		}
 	}
-	
 }
