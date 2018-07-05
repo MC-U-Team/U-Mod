@@ -19,7 +19,7 @@ public class UWorldGeneration implements IWorldGenerator {
 	
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
-		BlockPos chunkpos = new BlockPos(chunkX * 16, 0, chunkZ * 16);
+		BlockPos chunkpos = new BlockPos(chunkX * 16, 0, chunkZ * 16); // Not shift the position here, cause WorldGenMinable is doing this already.
 		DimensionType dimension = world.provider.getDimensionType();
 		
 		if (dimension == DimensionType.OVERWORLD) {
@@ -58,7 +58,10 @@ public class UWorldGeneration implements IWorldGenerator {
 	}
 	
 	private void generateOreFromConfig(GeneratableOre configore, IBlockState state, BlockPos pos, World world, Random random) {
-		if (configore.type == UConfigWorldGeneration.GeneratableOre.GenerationType.MINMAX) {
+		if (!configore.enabled) {
+			return;
+		}
+		if (configore.type == GenerationType.MINMAX) {
 			generateOreMinMax(state, pos, world, random, configore.count, configore.chance, configore.veinsize, configore.height1, configore.height2);
 		} else if (configore.type == GenerationType.CENTERSPREAD) {
 			generateOreCenterSpread(state, pos, world, random, configore.count, configore.chance, configore.veinsize, configore.height1, configore.height2);

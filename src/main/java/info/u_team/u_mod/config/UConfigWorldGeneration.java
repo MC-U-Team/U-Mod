@@ -77,8 +77,8 @@ public class UConfigWorldGeneration {
 		@RangeDouble(min = 0, max = 1)
 		public double chance;
 		
-		@Comment("Average vein size")
-		@RangeInt(min = 1, max = 500)
+		@Comment("Maximum vein size (need at least to be 4 cause WorldGenMinable won't generate something under that. Why?)")
+		@RangeInt(min = 4, max = 500)
 		public int veinsize;
 		
 		@Comment("The type of the generation")
