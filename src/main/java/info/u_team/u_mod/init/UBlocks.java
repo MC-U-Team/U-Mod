@@ -24,7 +24,7 @@ public class UBlocks {
 	public static final UBlock battery = new BlockBattery("battery");
 	public static final UBlock energy_pipe = new EnergyPipeBlock("energy_pipe");
 	
-	public static void init() {
+	public static void preinit() {
 		BlockRegistry.register(UConstants.MODID, RegistryUtil.getRegistryEntries(Block.class, UBlocks.class));
 	}
 	

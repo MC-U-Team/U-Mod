@@ -24,7 +24,7 @@ public class UItems {
 	
 	public static final UItem alloy_ingot1 = new ItemIngot("alloy_ingot1", EnumAlloys1.VALUES);
 	
-	public static void init() {
+	public static void preinit() {
 		ItemRegistry.register(UConstants.MODID, RegistryUtil.getRegistryEntries(Item.class, UItems.class));
 	}
 	

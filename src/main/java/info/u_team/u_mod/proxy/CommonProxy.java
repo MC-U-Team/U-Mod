@@ -13,9 +13,10 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class CommonProxy {
 	
 	public void preinit(FMLPreInitializationEvent event) {
-		UBlocks.init();
-		UItems.init();
-		UGuis.init();
+		UBlocks.preinit();
+		UItems.preinit();
+		UGuis.preinit();
+		UBiomes.preinit();
 		
 		CommonRegistry.registerEventHandler(TunnelHandler.class);
 		
@@ -25,6 +26,7 @@ public class CommonProxy {
 	
 	public void init(FMLInitializationEvent event) {
 		UCreativeTabs.init();
+		UBiomes.init();
 		GameRegistry.registerWorldGenerator(new UWorldGeneration(), 0);
 	}
 	
