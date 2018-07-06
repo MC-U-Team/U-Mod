@@ -15,7 +15,7 @@ public class UGuis {
 	private static final List<Class<? extends IUGui>> gui_list = new ArrayList<Class<? extends IUGui>>();
 	private static final List<Class<? extends UContainer>> container_list = new ArrayList<Class<? extends UContainer>>();
 	
-	public static void init() {
+	public static void preinit() {
 		NetworkRegistry.INSTANCE.registerGuiHandler(UConstants.MODID, new UGuiHandler());
 	}
 	
