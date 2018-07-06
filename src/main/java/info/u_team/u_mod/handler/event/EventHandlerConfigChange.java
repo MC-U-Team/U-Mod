@@ -1,4 +1,4 @@
-package info.u_team.u_mod.handler;
+package info.u_team.u_mod.handler.event;
 
 import info.u_team.u_mod.UConstants;
 import net.minecraftforge.common.config.Config.Type;
@@ -8,7 +8,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.*;
 
 @SideOnly(Side.CLIENT)
-public class UClientEventHandler {
+public class EventHandlerConfigChange {
 	
 	@SubscribeEvent
 	public void onConfigChangedEvent(OnConfigChangedEvent event) {
