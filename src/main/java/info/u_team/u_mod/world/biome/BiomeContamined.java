@@ -9,6 +9,13 @@ public class BiomeContamined extends UBiome {
 	
 	public BiomeContamined(String name) {
 		super(name, new BiomeProperties("Radioactively Contaminated").setBaseHeight(0.2F).setHeightVariation(0.4F).setRainDisabled().setSnowEnabled().setWaterColor(0x19C619));
+		// Add custom grass and dirt
+		// Add trees
+		// Add dimension portal there
+		// Add structure
+		// Add mobs
+		// In dimension more biomes maybe
+		// We'll see
 	}
 	
 	@Override
