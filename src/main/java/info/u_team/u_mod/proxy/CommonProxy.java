@@ -8,7 +8,6 @@ import info.u_team.u_team_core.registry.CommonRegistry;
 import net.minecraft.init.*;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.event.*;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class CommonProxy {
 	
@@ -27,7 +26,7 @@ public class CommonProxy {
 	public void init(FMLInitializationEvent event) {
 		UCreativeTabs.init();
 		UBiomes.init();
-		GameRegistry.registerWorldGenerator(new UWorldGeneration(), 0);
+		CommonRegistry.registerWorldGeneration(new UWorldGeneration(), 0);
 	}
 	
 	public void postinit(FMLPostInitializationEvent event) {
