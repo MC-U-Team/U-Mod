@@ -23,7 +23,7 @@ public class UBiomes {
 	
 	public static void init() {
 		addOverworldSpawn(contamined, BiomeType.WARM, 10, WET, FOREST, HILLS);
-		addOverworldSpawn(oredesert, BiomeType.DESERT, 10, HOT, SPARSE, DRY, DEAD, SANDY);
+		addOverworldSpawn(oredesert, BiomeType.ICY, 5, COLD, SNOWY, MOUNTAIN);
 	}
 	
 	private static void addOverworldSpawn(Biome biome, BiomeManager.BiomeType type, int weight, BiomeDictionary.Type... types) {

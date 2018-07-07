@@ -3,7 +3,6 @@ package info.u_team.u_mod.proxy;
 import info.u_team.u_mod.api.TunnelHandler;
 import info.u_team.u_mod.init.*;
 import info.u_team.u_mod.tilentity.TileEntityPulverizer;
-import info.u_team.u_mod.world.generation.UWorldGeneration;
 import info.u_team.u_team_core.registry.CommonRegistry;
 import net.minecraft.init.*;
 import net.minecraft.item.ItemStack;
@@ -26,7 +25,7 @@ public class CommonProxy {
 	public void init(FMLInitializationEvent event) {
 		UCreativeTabs.init();
 		UBiomes.init();
-		CommonRegistry.registerWorldGeneration(new UWorldGeneration(), 0);
+		UGeneration.init();
 	}
 	
 	public void postinit(FMLPostInitializationEvent event) {
