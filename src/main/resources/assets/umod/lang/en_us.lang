@@ -1,10 +1,204 @@
-#Creativetabs
+#---------------------------------------------
+# Creativetabs
+#---------------------------------------------
+
 itemGroup.umod:machine=UMod Machines
 itemGroup.umod:resources=UMod Resources
 
-#Modetabs
+
+#---------------------------------------------
+# Modetabs
+#---------------------------------------------
+
 modetab.NORMAL.name=Normal
 modetab.ENERGY.name=Energy
 
-#Blocks
+#---------------------------------------------
+# Blocks
+#---------------------------------------------
+
+#Machines
 tile.umod:pulverizer.name=Pulverizer
+
+#Resources
+tile.umod:resource_ore1.aluminium.name=Aluminium Ore
+tile.umod:resource_ore1.beryllium.name=Beryllium Ore
+tile.umod:resource_ore1.cadmium.name=Cadmium Ore
+tile.umod:resource_ore1.chromium.name=Chromium Ore
+tile.umod:resource_ore1.cobalt.name=Cobalt Ore
+tile.umod:resource_ore1.copper.name=Copper Ore
+tile.umod:resource_ore1.gallium.name=Gallium Ore
+tile.umod:resource_ore1.graphite.name=Graphite Ore
+tile.umod:resource_ore1.iridium.name=Iridium Ore
+tile.umod:resource_ore1.lead.name=Lead Ore
+tile.umod:resource_ore1.magnesium.name=Magnesium Ore
+tile.umod:resource_ore1.molybdenum.name=Molybdenum Ore
+tile.umod:resource_ore1.nickel.name=Nickel Ore
+tile.umod:resource_ore1.palladium.name=Palladium Ore
+tile.umod:resource_ore1.platinum.name=Platinum Ore
+tile.umod:resource_ore1.plutonium.name=Plutonium Ore
+tile.umod:resource_ore2.potassium.name=Potassium Ore
+tile.umod:resource_ore2.silver.name=Silver Ore
+tile.umod:resource_ore2.sodium.name=Sodium Ore
+tile.umod:resource_ore2.tantalum.name=Tantalum Ore
+tile.umod:resource_ore2.tin.name=Tin Ore
+tile.umod:resource_ore2.tungsten.name=Tungsten Ore
+tile.umod:resource_ore2.uranium.name=Uranium Ore
+tile.umod:resource_ore2.vanadium.name=Vanadium Ore
+tile.umod:resource_ore2.zinc.name=Zinc Ore
+tile.umod:resource_ore2.zirconium.name=Zirconium Ore
+
+tile.umod:resource_block1.aluminium.name=Aluminium Block
+tile.umod:resource_block1.beryllium.name=Beryllium Block
+tile.umod:resource_block1.cadmium.name=Cadmium Block
+tile.umod:resource_block1.chromium.name=Chromium Block
+tile.umod:resource_block1.cobalt.name=Cobalt Block
+tile.umod:resource_block1.copper.name=Copper Block
+tile.umod:resource_block1.gallium.name=Gallium Block
+tile.umod:resource_block1.graphite.name=Graphite Block
+tile.umod:resource_block1.iridium.name=Iridium Block
+tile.umod:resource_block1.lead.name=Lead Block
+tile.umod:resource_block1.magnesium.name=Magnesium Block
+tile.umod:resource_block1.molybdenum.name=Molybdenum Block
+tile.umod:resource_block1.nickel.name=Nickel Block
+tile.umod:resource_block1.palladium.name=Palladium Block
+tile.umod:resource_block1.platinum.name=Platinum Block
+tile.umod:resource_block1.plutonium.name=Plutonium Block
+tile.umod:resource_block2.potassium.name=Potassium Block
+tile.umod:resource_block2.silver.name=Silver Block
+tile.umod:resource_block2.sodium.name=Sodium Block
+tile.umod:resource_block2.tantalum.name=Tantalum Block
+tile.umod:resource_block2.tin.name=Tin Block
+tile.umod:resource_block2.tungsten.name=Tungsten Block
+tile.umod:resource_block2.uranium.name=Uranium Block
+tile.umod:resource_block2.vanadium.name=Vanadium Block
+tile.umod:resource_block2.zinc.name=Zinc Block
+tile.umod:resource_block2.zirconium.name=Zirconium Block
+
+#Alloys
+tile.umod:alloy_block1.alnico.name=Alnico Block
+tile.umod:alloy_block1.berylliumcopper.name=Beryllium Copper Block
+tile.umod:alloy_block1.brass.name=Brass Block
+tile.umod:alloy_block1.bronze.name=Bronze Block
+tile.umod:alloy_block1.constantan.name=Constantan Block
+tile.umod:alloy_block1.electrum.name=Electrum Block
+tile.umod:alloy_block1.fernico.name=Fernico Block
+tile.umod:alloy_block1.ferro.name=Ferro Block
+tile.umod:alloy_block1.invar.name=Invar Block
+tile.umod:alloy_block1.nichrome.name=Nichrome Block
+tile.umod:alloy_block1.pigiron.name=Pig Iron Block
+tile.umod:alloy_block1.steel.name=Steel Block
+
+#---------------------------------------------
+# Items
+#---------------------------------------------
+
+#Resources
+item.umod:resource_dust1.aluminium.name=Aluminium Dust
+item.umod:resource_dust1.beryllium.name=Beryllium Dust
+item.umod:resource_dust1.cadmium.name=Cadmium Dust
+item.umod:resource_dust1.chromium.name=Chromium Dust
+item.umod:resource_dust1.cobalt.name=Cobalt Dust
+item.umod:resource_dust1.copper.name=Copper Dust
+item.umod:resource_dust1.gallium.name=Gallium Dust
+item.umod:resource_dust1.graphite.name=Graphite Dust
+item.umod:resource_dust1.iridium.name=Iridium Dust
+item.umod:resource_dust1.lead.name=Lead Dust
+item.umod:resource_dust1.magnesium.name=Magnesium Dust
+item.umod:resource_dust1.molybdenum.name=Molybdenum Dust
+item.umod:resource_dust1.nickel.name=Nickel Dust
+item.umod:resource_dust1.palladium.name=Palladium Dust
+item.umod:resource_dust1.platinum.name=Platinum Dust
+item.umod:resource_dust1.plutonium.name=Plutonium Dust
+item.umod:resource_dust2.potassium.name=Potassium Dust
+item.umod:resource_dust2.silver.name=Silver Dust
+item.umod:resource_dust2.sodium.name=Sodium Dust
+item.umod:resource_dust2.tantalum.name=Tantalum Dust
+item.umod:resource_dust2.tin.name=Tin Dust
+item.umod:resource_dust2.tungsten.name=Tungsten Dust
+item.umod:resource_dust2.uranium.name=Uranium Dust
+item.umod:resource_dust2.vanadium.name=Vanadium Dust
+item.umod:resource_dust2.zinc.name=Zinc Dust
+item.umod:resource_dust2.zirconium.name=Zirconium Dust
+
+item.umod:resource_nugget1.aluminium.name=Aluminium Nugget
+item.umod:resource_nugget1.beryllium.name=Beryllium Nugget
+item.umod:resource_nugget1.cadmium.name=Cadmium Nugget
+item.umod:resource_nugget1.chromium.name=Chromium Nugget
+item.umod:resource_nugget1.cobalt.name=Cobalt Nugget
+item.umod:resource_nugget1.copper.name=Copper Nugget
+item.umod:resource_nugget1.gallium.name=Gallium Nugget
+item.umod:resource_nugget1.graphite.name=Graphite Nugget
+item.umod:resource_nugget1.iridium.name=Iridium Nugget
+item.umod:resource_nugget1.lead.name=Lead Nugget
+item.umod:resource_nugget1.magnesium.name=Magnesium Nugget
+item.umod:resource_nugget1.molybdenum.name=Molybdenum Nugget
+item.umod:resource_nugget1.nickel.name=Nickel Nugget
+item.umod:resource_nugget1.palladium.name=Palladium Nugget
+item.umod:resource_nugget1.platinum.name=Platinum Nugget
+item.umod:resource_nugget1.plutonium.name=Plutonium Nugget
+item.umod:resource_nugget2.potassium.name=Potassium Nugget
+item.umod:resource_nugget2.silver.name=Silver Nugget
+item.umod:resource_nugget2.sodium.name=Sodium Nugget
+item.umod:resource_nugget2.tantalum.name=Tantalum Nugget
+item.umod:resource_nugget2.tin.name=Tin Nugget
+item.umod:resource_nugget2.tungsten.name=Tungsten Nugget
+item.umod:resource_nugget2.uranium.name=Uranium Nugget
+item.umod:resource_nugget2.vanadium.name=Vanadium Nugget
+item.umod:resource_nugget2.zinc.name=Zinc Nugget
+item.umod:resource_nugget2.zirconium.name=Zirconium Nugget
+
+item.umod:resource_ingot1.aluminium.name=Aluminium Ingot
+item.umod:resource_ingot1.beryllium.name=Beryllium Ingot
+item.umod:resource_ingot1.cadmium.name=Cadmium Ingot
+item.umod:resource_ingot1.chromium.name=Chromium Ingot
+item.umod:resource_ingot1.cobalt.name=Cobalt Ingot
+item.umod:resource_ingot1.copper.name=Copper Ingot
+item.umod:resource_ingot1.gallium.name=Gallium Ingot
+item.umod:resource_ingot1.graphite.name=Graphite Ingot
+item.umod:resource_ingot1.iridium.name=Iridium Ingot
+item.umod:resource_ingot1.lead.name=Lead Ingot
+item.umod:resource_ingot1.magnesium.name=Magnesium Ingot
+item.umod:resource_ingot1.molybdenum.name=Molybdenum Ingot
+item.umod:resource_ingot1.nickel.name=Nickel Ingot
+item.umod:resource_ingot1.palladium.name=Palladium Ingot
+item.umod:resource_ingot1.platinum.name=Platinum Ingot
+item.umod:resource_ingot1.plutonium.name=Plutonium Ingot
+item.umod:resource_ingot2.potassium.name=Potassium Ingot
+item.umod:resource_ingot2.silver.name=Silver Ingot
+item.umod:resource_ingot2.sodium.name=Sodium Ingot
+item.umod:resource_ingot2.tantalum.name=Tantalum Ingot
+item.umod:resource_ingot2.tin.name=Tin Ingot
+item.umod:resource_ingot2.tungsten.name=Tungsten Ingot
+item.umod:resource_ingot2.uranium.name=Uranium Ingot
+item.umod:resource_ingot2.vanadium.name=Vanadium Ingot
+item.umod:resource_ingot2.zinc.name=Zinc Ingot
+item.umod:resource_ingot2.zirconium.name=Zirconium Ingot
+
+#Alloys
+item.umod:alloy_nugget1.alnico.name=Alnico Nugget
+item.umod:alloy_nugget1.berylliumcopper.name=Beryllium Copper Nugget
+item.umod:alloy_nugget1.brass.name=Brass Nugget
+item.umod:alloy_nugget1.bronze.name=Bronze Nugget
+item.umod:alloy_nugget1.constantan.name=Constantan Nugget
+item.umod:alloy_nugget1.electrum.name=Electrum Nugget
+item.umod:alloy_nugget1.fernico.name=Fernico Nugget
+item.umod:alloy_nugget1.ferro.name=Ferro Nugget
+item.umod:alloy_nugget1.invar.name=Invar Nugget
+item.umod:alloy_nugget1.nichrome.name=Nichrome Nugget
+item.umod:alloy_nugget1.pigiron.name=Pig Iron Nugget
+item.umod:alloy_nugget1.steel.name=Steel Nugget
+
+item.umod:alloy_ingot1.alnico.name=Alnico Ingot
+item.umod:alloy_ingot1.berylliumcopper.name=Beryllium Copper Ingot
+item.umod:alloy_ingot1.brass.name=Brass Ingot
+item.umod:alloy_ingot1.bronze.name=Bronze Ingot
+item.umod:alloy_ingot1.constantan.name=Constantan Ingot
+item.umod:alloy_ingot1.electrum.name=Electrum Ingot
+item.umod:alloy_ingot1.fernico.name=Fernico Ingot
+item.umod:alloy_ingot1.ferro.name=Ferro Ingot
+item.umod:alloy_ingot1.invar.name=Invar Ingot
+item.umod:alloy_ingot1.nichrome.name=Nichrome Ingot
+item.umod:alloy_ingot1.pigiron.name=Pig Iron Ingot
+item.umod:alloy_ingot1.steel.name=Steel Ingot
+
