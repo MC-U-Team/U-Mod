@@ -26,6 +26,7 @@ public class CommonProxy {
 		UCreativeTabs.init();
 		UBiomes.init();
 		UGeneration.init();
+		URecipes.init();
 	}
 	
 	public void postinit(FMLPostInitializationEvent event) {
