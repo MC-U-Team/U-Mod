@@ -26,6 +26,9 @@ repositories {
 	maven { 
 		url = "https://repo.u-team.info"
 	}
+	maven {
+		url = "http://dvs1.progwml6.com/files/maven"
+	}
 }
 
 getBuildNumber()
@@ -87,6 +90,7 @@ sourceSets {
 
 dependencies {
 	compile "info.u-team:u_team_core-1.12.2:+:dev"
+	runtime "mezz.jei:jei_1.12.2:4.11.0.204"
 }
 
 curseforge {
