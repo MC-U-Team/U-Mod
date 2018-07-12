@@ -1,11 +1,10 @@
 package info.u_team.u_mod.resource;
 
-import info.u_team.u_mod.api.IColored;
-import info.u_team.u_team_core.api.IMetaType;
+import info.u_team.u_mod.api.IResource;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 
-public enum EnumResources2 implements IMetaType, IColored {
+public enum EnumResources2 implements IResource {
 	
 	POTASSIUM(0, "potassium", 0xCE5F5F),
 	SILVER(1, "silver", 0xC2E2ED),
@@ -43,9 +42,15 @@ public enum EnumResources2 implements IMetaType, IColored {
 		return color;
 	}
 	
+	@Override
 	@SuppressWarnings("deprecation")
 	public IBlockState getBlockState(Block block) {
 		return block.getStateFromMeta(getMetadata());
+	}
+	
+	@Override
+	public int getEnumCount() {
+		return 1;
 	}
 	
 	public static final EnumResources2[] VALUES = new EnumResources2[values().length];

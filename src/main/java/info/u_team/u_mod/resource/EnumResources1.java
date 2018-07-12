@@ -1,11 +1,10 @@
 package info.u_team.u_mod.resource;
 
-import info.u_team.u_mod.api.IColored;
-import info.u_team.u_team_core.api.IMetaType;
+import info.u_team.u_mod.api.IResource;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 
-public enum EnumResources1 implements IMetaType, IColored {
+public enum EnumResources1 implements IResource {
 	
 	ALUMINUM(0, "aluminium", 0xF9F9F9),
 	BERYLLIUM(1, "beryllium", 0xA9B2BA),
@@ -49,9 +48,15 @@ public enum EnumResources1 implements IMetaType, IColored {
 		return color;
 	}
 	
+	@Override
 	@SuppressWarnings("deprecation")
 	public IBlockState getBlockState(Block block) {
 		return block.getStateFromMeta(getMetadata());
+	}
+	
+	@Override
+	public int getEnumCount() {
+		return 1;
 	}
 	
 	public static final EnumResources1[] VALUES = new EnumResources1[values().length];
