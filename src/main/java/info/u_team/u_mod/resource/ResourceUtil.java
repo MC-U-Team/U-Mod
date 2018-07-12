@@ -3,6 +3,8 @@ package info.u_team.u_mod.resource;
 import java.util.*;
 import java.util.function.Consumer;
 
+import org.apache.commons.lang3.StringUtils;
+
 import info.u_team.u_mod.api.IResource;
 import info.u_team.u_mod.init.*;
 import info.u_team.u_team_core.block.UBlock;
@@ -41,6 +43,18 @@ public class ResourceUtil {
 		
 		public IResource getResource() {
 			return resource;
+		}
+		
+		public String getName() {
+			return getResource().getName();
+		}
+		
+		public String getCapitalizedName() {
+			return StringUtils.capitalize(getName());
+		}
+		
+		public int getMetadata() {
+			return getResource().getMetadata();
 		}
 		
 		public UBlock getOreBlock() {
