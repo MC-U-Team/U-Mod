@@ -3,6 +3,8 @@ package info.u_team.u_mod.gui;
 import java.io.IOException;
 import java.util.Set;
 
+import org.lwjgl.input.Keyboard;
+
 import com.google.common.collect.Sets;
 
 import info.u_team.u_mod.UConstants;
@@ -11,6 +13,7 @@ import info.u_team.u_mod.container.ContainerBase;
 import info.u_team.u_mod.resource.EnumModeTab;
 import info.u_team.u_team_core.container.UContainer;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -84,11 +87,78 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 	}
 	
 	/**
+	 * Adds the buttons (and other controls) to the screen in question. Called when
+	 * the GUI is displayed and when the window resizes, the buttonList is cleared
+	 * beforehand.
+	 */
+	public void initGui() {
+		super.initGui();
+		this.mc.player.openContainer = this.inventorySlots;
+		this.guiLeft = (this.width - this.xSize) / 2;
+		this.guiTop = (this.height - this.ySize) / 2;
+	}
+	
+	private void drawOverlay(int mouseX, int mouseY) {
+		int i = (this.width - this.xSize) / 2;
+		int j = (this.height - this.ySize) / 2 - 28;
+		
+		for (EnumModeTab ttab : EnumModeTab.values()) {
+			if (mouseX > i + 28 * ttab.ordinal() && mouseX < i + 28 * ttab.ordinal() + 28 && mouseY > j && mouseY < j + 28) {
+				this.drawHoveringText(I18n.format("modetab." + ttab.name() + ".name"), mouseX, mouseY);
+			}
+		}
+	}
+	
+	private void drawForgroundTab() {
+		RenderHelper.disableStandardItemLighting();
+		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+		this.mc.getTextureManager().bindTexture(CREATIVE_INVENTORY_TABS);
+		int i = (this.width - this.xSize) / 2;
+		int j = (this.height - this.ySize) / 2 - 28;
+		this.drawTexturedModalRect(i + (28 * this.getTab().ordinal()), j, 28 * this.getTab().ordinal(), 32, 28, 32);
+	}
+	
+	private void drawTabs(int mouseX, int mouseY) {
+		this.mc.getTextureManager().bindTexture(CREATIVE_INVENTORY_TABS);
+		int i = (this.width - this.xSize) / 2;
+		int j = (this.height - this.ySize) / 2 - 24;
+		this.drawTexturedModalRect(i, j, 0, 2, 28 * EnumModeTab.values().length, 32);
+	}
+	
+	public final void setBackground(ResourceLocation background) {
+		this.normal_background = background;
+		if (this.getTab() == EnumModeTab.NORMAL) {
+			this.used_background = this.normal_background;
+		}
+	}
+	
+	public final EnumModeTab getTab() {
+		return this.getContainer().getTab();
+	}
+	
+	public final void setModeTab(EnumModeTab tab) {
+		this.getContainer().setTab(tab);
+		initTab(tab);
+	}
+	
+	private void initTab(EnumModeTab tab) {
+		if (tab == EnumModeTab.NORMAL) {
+			this.used_background = normal_background;
+		} else if (tab == EnumModeTab.ENERGY) {
+			this.used_background = ENERGY;
+		}
+	}
+	
+	private void drawEnergyTab(float partialTicks, int mouseX, int mouseY) {
+		this.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
+	}
+	
+	/**
 	 * Draws the screen and all the components in it.
 	 */
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		this.drawDefaultBackground();
-		drawTabs(mouseX, mouseY);
+		this.drawTabs(mouseX, mouseY);
 		
 		if (this.getTab() == EnumModeTab.NORMAL) {
 			int i = this.guiLeft;
@@ -110,26 +180,24 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240.0F, 240.0F);
 			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 			
-			for (EnumModeTab key : EnumModeTab.values()) {
-				for (int i1 = 0; i1 < this.getContainer().slots.get(key).size(); ++i1) {
-					Slot slot = this.getContainer().slots.get(key).get(i1);
-					
-					if (slot.isEnabled()) {
-						this.drawSlot(slot);
-					}
-					
-					if (this.isMouseOverSlot(slot, mouseX, mouseY) && slot.isEnabled()) {
-						this.hoveredSlot = slot;
-						GlStateManager.disableLighting();
-						GlStateManager.disableDepth();
-						int j1 = slot.xPos;
-						int k1 = slot.yPos;
-						GlStateManager.colorMask(true, true, true, false);
-						this.drawGradientRect(j1, k1, j1 + 16, k1 + 16, -2130706433, -2130706433);
-						GlStateManager.colorMask(true, true, true, true);
-						GlStateManager.enableLighting();
-						GlStateManager.enableDepth();
-					}
+			for (int i1 = 0; i1 < this.getContainer().slots.get(getTab()).size(); ++i1) {
+				Slot slot = this.getContainer().slots.get(getTab()).get(i1);
+				
+				if (slot.isEnabled()) {
+					this.drawSlot(slot);
+				}
+				
+				if (this.isMouseOverSlot(slot, mouseX, mouseY) && slot.isEnabled()) {
+					this.hoveredSlot = slot;
+					GlStateManager.disableLighting();
+					GlStateManager.disableDepth();
+					int j1 = slot.xPos;
+					int k1 = slot.yPos;
+					GlStateManager.colorMask(true, true, true, false);
+					this.drawGradientRect(j1, k1, j1 + 16, k1 + 16, -2130706433, -2130706433);
+					GlStateManager.colorMask(true, true, true, true);
+					GlStateManager.enableLighting();
+					GlStateManager.enableDepth();
 				}
 			}
 			
@@ -179,7 +247,6 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 			GlStateManager.enableLighting();
 			GlStateManager.enableDepth();
 			RenderHelper.enableStandardItemLighting();
-			
 		} else if (this.getTab() == EnumModeTab.ENERGY) {
 			this.drawEnergyTab(partialTicks, mouseX, mouseY);
 		}
@@ -189,11 +256,36 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 		this.renderHoveredToolTip(mouseX, mouseY);
 	}
 	
+	protected void renderHoveredToolTip(int p_191948_1_, int p_191948_2_) {
+		if (this.mc.player.inventory.getItemStack().isEmpty() && this.hoveredSlot != null && this.hoveredSlot.getHasStack()) {
+			this.renderToolTip(this.hoveredSlot.getStack(), p_191948_1_, p_191948_2_);
+		}
+	}
+	
 	/**
-	 * Returns whether the mouse is over the given slot.
+	 * Draws an ItemStack.
+	 * 
+	 * The z index is increased by 32 (and not decreased afterwards), and the item
+	 * is then rendered at z=200.
 	 */
-	private boolean isMouseOverSlot(Slot slotIn, int mouseX, int mouseY) {
-		return this.isPointInRegion(slotIn.xPos, slotIn.yPos, 16, 16, mouseX, mouseY);
+	private void drawItemStack(ItemStack stack, int x, int y, String altText) {
+		GlStateManager.translate(0.0F, 0.0F, 32.0F);
+		this.zLevel = 200.0F;
+		this.itemRender.zLevel = 200.0F;
+		net.minecraft.client.gui.FontRenderer font = stack.getItem().getFontRenderer(stack);
+		if (font == null)
+			font = fontRenderer;
+		this.itemRender.renderItemAndEffectIntoGUI(stack, x, y);
+		this.itemRender.renderItemOverlayIntoGUI(font, stack, x, y - (this.draggedStack.isEmpty() ? 0 : 8), altText);
+		this.zLevel = 0.0F;
+		this.itemRender.zLevel = 0.0F;
+	}
+	
+	/**
+	 * Draw the foreground layer for the GuiContainer (everything in front of the
+	 * items)
+	 */
+	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 	}
 	
 	/**
@@ -262,25 +354,6 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 		this.zLevel = 0.0F;
 	}
 	
-	/**
-	 * Draws an ItemStack.
-	 * 
-	 * The z index is increased by 32 (and not decreased afterwards), and the item
-	 * is then rendered at z=200.
-	 */
-	private void drawItemStack(ItemStack stack, int x, int y, String altText) {
-		GlStateManager.translate(0.0F, 0.0F, 32.0F);
-		this.zLevel = 200.0F;
-		this.itemRender.zLevel = 200.0F;
-		net.minecraft.client.gui.FontRenderer font = stack.getItem().getFontRenderer(stack);
-		if (font == null)
-			font = fontRenderer;
-		this.itemRender.renderItemAndEffectIntoGUI(stack, x, y);
-		this.itemRender.renderItemOverlayIntoGUI(font, stack, x, y - (this.draggedStack.isEmpty() ? 0 : 8), altText);
-		this.zLevel = 0.0F;
-		this.itemRender.zLevel = 0.0F;
-	}
-	
 	private void updateDragSplitting() {
 		ItemStack itemstack = this.mc.player.inventory.getItemStack();
 		
@@ -307,75 +380,362 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 		}
 	}
 	
-	private void drawOverlay(int mouseX, int mouseY) {
-		int i = (this.width - this.xSize) / 2;
-		int j = (this.height - this.ySize) / 2 - 28;
-		
-		for (EnumModeTab ttab : EnumModeTab.values()) {
-			if (mouseX > i + 28 * ttab.ordinal() && mouseX < i + 28 * ttab.ordinal() + 28 && mouseY > j && mouseY < j + 28) {
-				this.drawHoveringText(I18n.format("modetab." + ttab.name() + ".name"), mouseX, mouseY);
+	/**
+	 * Returns the slot at the given coordinates or null if there is none.
+	 */
+	private Slot getSlotAtPosition(int x, int y) {
+		for (int i = 0; i < this.getContainer().slots.get(getTab()).size(); ++i) {
+			Slot slot = this.getContainer().slots.get(getTab()).get(i);
+			
+			if (this.isMouseOverSlot(slot, x, y) && slot.isEnabled()) {
+				return slot;
 			}
 		}
+		
+		return null;
 	}
 	
-	@Override
+	/**
+	 * Called when the mouse is clicked. Args : mouseX, mouseY, clickedButton
+	 */
 	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
 		super.mouseClicked(mouseX, mouseY, mouseButton);
-		int i = (this.width - this.xSize) / 2;
-		int j = (this.height - this.ySize) / 2 - 28;
+		boolean flag = this.mc.gameSettings.keyBindPickBlock.isActiveAndMatches(mouseButton - 100);
+		Slot slot = this.getSlotAtPosition(mouseX, mouseY);
+		long i = Minecraft.getSystemTime();
+		this.doubleClick = this.lastClickSlot == slot && i - this.lastClickTime < 250L && this.lastClickButton == mouseButton;
+		this.ignoreMouseUp = false;
+		
+		if (mouseButton == 0 || mouseButton == 1 || flag) {
+			int j = this.guiLeft;
+			int k = this.guiTop;
+			boolean flag1 = this.hasClickedOutside(mouseX, mouseY, j, k);
+			if (slot != null)
+				flag1 = false; // Forge, prevent dropping of items through slots outside of GUI boundaries
+			int l = -1;
+			
+			if (slot != null) {
+				l = slot.slotNumber;
+			}
+			
+			if (flag1) {
+				l = -999;
+			}
+			
+			if (this.mc.gameSettings.touchscreen && flag1 && this.mc.player.inventory.getItemStack().isEmpty()) {
+				this.mc.displayGuiScreen((GuiScreen) null);
+				return;
+			}
+			
+			if (l != -1) {
+				if (this.mc.gameSettings.touchscreen) {
+					if (slot != null && slot.getHasStack()) {
+						this.clickedSlot = slot;
+						this.draggedStack = ItemStack.EMPTY;
+						this.isRightMouseClick = mouseButton == 1;
+					} else {
+						this.clickedSlot = null;
+					}
+				} else if (!this.dragSplitting) {
+					if (this.mc.player.inventory.getItemStack().isEmpty()) {
+						if (this.mc.gameSettings.keyBindPickBlock.isActiveAndMatches(mouseButton - 100)) {
+							this.handleMouseClick(slot, l, mouseButton, ClickType.CLONE);
+						} else {
+							boolean flag2 = l != -999 && (Keyboard.isKeyDown(42) || Keyboard.isKeyDown(54));
+							ClickType clicktype = ClickType.PICKUP;
+							
+							if (flag2) {
+								this.shiftClickedSlot = slot != null && slot.getHasStack() ? slot.getStack().copy() : ItemStack.EMPTY;
+								clicktype = ClickType.QUICK_MOVE;
+							} else if (l == -999) {
+								clicktype = ClickType.THROW;
+							}
+							
+							this.handleMouseClick(slot, l, mouseButton, clicktype);
+						}
+						
+						this.ignoreMouseUp = true;
+					} else {
+						this.dragSplitting = true;
+						this.dragSplittingButton = mouseButton;
+						this.dragSplittingSlots.clear();
+						
+						if (mouseButton == 0) {
+							this.dragSplittingLimit = 0;
+						} else if (mouseButton == 1) {
+							this.dragSplittingLimit = 1;
+						} else if (this.mc.gameSettings.keyBindPickBlock.isActiveAndMatches(mouseButton - 100)) {
+							this.dragSplittingLimit = 2;
+						}
+					}
+				}
+			}
+		}
+		
+		this.lastClickSlot = slot;
+		this.lastClickTime = i;
+		this.lastClickButton = mouseButton;
+		
+		int d = (this.width - this.xSize) / 2;
+		int f = (this.height - this.ySize) / 2 - 28;
 		
 		if (mouseButton == 0) {
 			for (EnumModeTab ttab : EnumModeTab.values()) {
-				if (mouseX > i + 28 * ttab.ordinal() && mouseX < i + 28 * ttab.ordinal() + 28 && mouseY > j && mouseY < j + 28) {
+				if (mouseX > d + 28 * ttab.ordinal() && mouseX < d + 28 * ttab.ordinal() + 28 && mouseY > f && mouseY < f + 28) {
 					this.setModeTab(ttab);
 				}
 			}
 		}
 	}
 	
-	private void drawForgroundTab() {
-		RenderHelper.disableStandardItemLighting();
-		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-		this.mc.getTextureManager().bindTexture(CREATIVE_INVENTORY_TABS);
-		int i = (this.width - this.xSize) / 2;
-		int j = (this.height - this.ySize) / 2 - 28;
-		this.drawTexturedModalRect(i + (28 * this.getTab().ordinal()), j, 28 * this.getTab().ordinal(), 32, 28, 32);
+	protected boolean hasClickedOutside(int p_193983_1_, int p_193983_2_, int p_193983_3_, int p_193983_4_) {
+		return p_193983_1_ < p_193983_3_ || p_193983_2_ < p_193983_4_ || p_193983_1_ >= p_193983_3_ + this.xSize || p_193983_2_ >= p_193983_4_ + this.ySize;
 	}
 	
-	private void drawTabs(int mouseX, int mouseY) {
-		this.mc.getTextureManager().bindTexture(CREATIVE_INVENTORY_TABS);
-		int i = (this.width - this.xSize) / 2;
-		int j = (this.height - this.ySize) / 2 - 24;
-		this.drawTexturedModalRect(i, j, 0, 2, 28 * EnumModeTab.values().length, 32);
-	}
-	
-	public final void setBackground(ResourceLocation background) {
-		this.normal_background = background;
-		if (this.getTab() == EnumModeTab.NORMAL) {
-			this.used_background = this.normal_background;
-		}
-	}
-	
-	public final EnumModeTab getTab() {
-		return this.getContainer().getTab();
-	}
-	
-	public final void setModeTab(EnumModeTab tab) {
-		this.getContainer().setTab(tab);
-		initTab(tab);
-	}
-	
-	private void initTab(EnumModeTab tab) {
-		if (tab == EnumModeTab.NORMAL) {
-			this.used_background = normal_background;
-		} else if (tab == EnumModeTab.ENERGY) {
-			this.used_background = ENERGY;
-		}
-	}
-	
-	private void drawEnergyTab(float partialTicks, int mouseX, int mouseY) {
-		this.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
+	/**
+	 * Called when a mouse button is pressed and the mouse is moved around.
+	 * Parameters are : mouseX, mouseY, lastButtonClicked & timeSinceMouseClick.
+	 */
+	protected void mouseClickMove(int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick) {
+		Slot slot = this.getSlotAtPosition(mouseX, mouseY);
+		ItemStack itemstack = this.mc.player.inventory.getItemStack();
 		
+		if (this.clickedSlot != null && this.mc.gameSettings.touchscreen) {
+			if (clickedMouseButton == 0 || clickedMouseButton == 1) {
+				if (this.draggedStack.isEmpty()) {
+					if (slot != this.clickedSlot && !this.clickedSlot.getStack().isEmpty()) {
+						this.draggedStack = this.clickedSlot.getStack().copy();
+					}
+				} else if (this.draggedStack.getCount() > 1 && slot != null && Container.canAddItemToSlot(slot, this.draggedStack, false)) {
+					long i = Minecraft.getSystemTime();
+					
+					if (this.currentDragTargetSlot == slot) {
+						if (i - this.dragItemDropDelay > 500L) {
+							this.handleMouseClick(this.clickedSlot, this.clickedSlot.slotNumber, 0, ClickType.PICKUP);
+							this.handleMouseClick(slot, slot.slotNumber, 1, ClickType.PICKUP);
+							this.handleMouseClick(this.clickedSlot, this.clickedSlot.slotNumber, 0, ClickType.PICKUP);
+							this.dragItemDropDelay = i + 750L;
+							this.draggedStack.shrink(1);
+						}
+					} else {
+						this.currentDragTargetSlot = slot;
+						this.dragItemDropDelay = i;
+					}
+				}
+			}
+		} else if (this.dragSplitting && slot != null && !itemstack.isEmpty() && (itemstack.getCount() > this.dragSplittingSlots.size() || this.dragSplittingLimit == 2) && Container.canAddItemToSlot(slot, itemstack, true) && slot.isItemValid(itemstack) && this.inventorySlots.canDragIntoSlot(slot)) {
+			this.dragSplittingSlots.add(slot);
+			this.updateDragSplitting();
+		}
+	}
+	
+	/**
+	 * Called when a mouse button is released.
+	 */
+	protected void mouseReleased(int mouseX, int mouseY, int state) {
+		super.mouseReleased(mouseX, mouseY, state); // Forge, Call parent to release buttons
+		Slot slot = this.getSlotAtPosition(mouseX, mouseY);
+		int i = this.guiLeft;
+		int j = this.guiTop;
+		boolean flag = this.hasClickedOutside(mouseX, mouseY, i, j);
+		if (slot != null)
+			flag = false; // Forge, prevent dropping of items through slots outside of GUI boundaries
+		int k = -1;
+		
+		if (slot != null) {
+			k = slot.slotNumber;
+		}
+		
+		if (flag) {
+			k = -999;
+		}
+		
+		if (this.doubleClick && slot != null && state == 0 && this.inventorySlots.canMergeSlot(ItemStack.EMPTY, slot)) {
+			if (isShiftKeyDown()) {
+				if (!this.shiftClickedSlot.isEmpty()) {
+					for (Slot slot2 : this.getContainer().slots.get(getTab())) {
+						if (slot2 != null && slot2.canTakeStack(this.mc.player) && slot2.getHasStack() && slot2.isSameInventory(slot) && Container.canAddItemToSlot(slot2, this.shiftClickedSlot, true)) {
+							this.handleMouseClick(slot2, slot2.slotNumber, state, ClickType.QUICK_MOVE);
+						}
+					}
+				}
+			} else {
+				this.handleMouseClick(slot, k, state, ClickType.PICKUP_ALL);
+			}
+			
+			this.doubleClick = false;
+			this.lastClickTime = 0L;
+		} else {
+			if (this.dragSplitting && this.dragSplittingButton != state) {
+				this.dragSplitting = false;
+				this.dragSplittingSlots.clear();
+				this.ignoreMouseUp = true;
+				return;
+			}
+			
+			if (this.ignoreMouseUp) {
+				this.ignoreMouseUp = false;
+				return;
+			}
+			
+			if (this.clickedSlot != null && this.mc.gameSettings.touchscreen) {
+				if (state == 0 || state == 1) {
+					if (this.draggedStack.isEmpty() && slot != this.clickedSlot) {
+						this.draggedStack = this.clickedSlot.getStack();
+					}
+					
+					boolean flag2 = Container.canAddItemToSlot(slot, this.draggedStack, false);
+					
+					if (k != -1 && !this.draggedStack.isEmpty() && flag2) {
+						this.handleMouseClick(this.clickedSlot, this.clickedSlot.slotNumber, state, ClickType.PICKUP);
+						this.handleMouseClick(slot, k, 0, ClickType.PICKUP);
+						
+						if (this.mc.player.inventory.getItemStack().isEmpty()) {
+							this.returningStack = ItemStack.EMPTY;
+						} else {
+							this.handleMouseClick(this.clickedSlot, this.clickedSlot.slotNumber, state, ClickType.PICKUP);
+							this.touchUpX = mouseX - i;
+							this.touchUpY = mouseY - j;
+							this.returningStackDestSlot = this.clickedSlot;
+							this.returningStack = this.draggedStack;
+							this.returningStackTime = Minecraft.getSystemTime();
+						}
+					} else if (!this.draggedStack.isEmpty()) {
+						this.touchUpX = mouseX - i;
+						this.touchUpY = mouseY - j;
+						this.returningStackDestSlot = this.clickedSlot;
+						this.returningStack = this.draggedStack;
+						this.returningStackTime = Minecraft.getSystemTime();
+					}
+					
+					this.draggedStack = ItemStack.EMPTY;
+					this.clickedSlot = null;
+				}
+			} else if (this.dragSplitting && !this.dragSplittingSlots.isEmpty()) {
+				this.handleMouseClick((Slot) null, -999, Container.getQuickcraftMask(0, this.dragSplittingLimit), ClickType.QUICK_CRAFT);
+				
+				for (Slot slot1 : this.dragSplittingSlots) {
+					this.handleMouseClick(slot1, slot1.slotNumber, Container.getQuickcraftMask(1, this.dragSplittingLimit), ClickType.QUICK_CRAFT);
+				}
+				
+				this.handleMouseClick((Slot) null, -999, Container.getQuickcraftMask(2, this.dragSplittingLimit), ClickType.QUICK_CRAFT);
+			} else if (!this.mc.player.inventory.getItemStack().isEmpty()) {
+				if (this.mc.gameSettings.keyBindPickBlock.isActiveAndMatches(state - 100)) {
+					this.handleMouseClick(slot, k, state, ClickType.CLONE);
+				} else {
+					boolean flag1 = k != -999 && (Keyboard.isKeyDown(42) || Keyboard.isKeyDown(54));
+					
+					if (flag1) {
+						this.shiftClickedSlot = slot != null && slot.getHasStack() ? slot.getStack().copy() : ItemStack.EMPTY;
+					}
+					
+					this.handleMouseClick(slot, k, state, flag1 ? ClickType.QUICK_MOVE : ClickType.PICKUP);
+				}
+			}
+		}
+		
+		if (this.mc.player.inventory.getItemStack().isEmpty()) {
+			this.lastClickTime = 0L;
+		}
+		
+		this.dragSplitting = false;
+	}
+	
+	/**
+	 * Returns whether the mouse is over the given slot.
+	 */
+	private boolean isMouseOverSlot(Slot slotIn, int mouseX, int mouseY) {
+		return this.isPointInRegion(slotIn.xPos, slotIn.yPos, 16, 16, mouseX, mouseY);
+	}
+	
+	/**
+	 * Test if the 2D point is in a rectangle (relative to the GUI). Args : rectX,
+	 * rectY, rectWidth, rectHeight, pointX, pointY
+	 */
+	protected boolean isPointInRegion(int rectX, int rectY, int rectWidth, int rectHeight, int pointX, int pointY) {
+		int i = this.guiLeft;
+		int j = this.guiTop;
+		pointX = pointX - i;
+		pointY = pointY - j;
+		return pointX >= rectX - 1 && pointX < rectX + rectWidth + 1 && pointY >= rectY - 1 && pointY < rectY + rectHeight + 1;
+	}
+	
+	/**
+	 * Called when the mouse is clicked over a slot or outside the gui.
+	 */
+	protected void handleMouseClick(Slot slotIn, int slotId, int mouseButton, ClickType type) {
+		if (slotIn != null) {
+			slotId = slotIn.slotNumber;
+		}
+		
+		this.mc.playerController.windowClick(this.inventorySlots.windowId, slotId, mouseButton, type, this.mc.player);
+	}
+	
+	/**
+	 * Fired when a key is typed (except F11 which toggles full screen). This is the
+	 * equivalent of KeyListener.keyTyped(KeyEvent e). Args : character (character
+	 * on the key), keyCode (lwjgl Keyboard key code)
+	 */
+	protected void keyTyped(char typedChar, int keyCode) throws IOException {
+		if (keyCode == 1 || this.mc.gameSettings.keyBindInventory.isActiveAndMatches(keyCode)) {
+			this.mc.player.closeScreen();
+		}
+		
+		this.checkHotbarKeys(keyCode);
+		
+		if (this.hoveredSlot != null && this.hoveredSlot.getHasStack()) {
+			if (this.mc.gameSettings.keyBindPickBlock.isActiveAndMatches(keyCode)) {
+				this.handleMouseClick(this.hoveredSlot, this.hoveredSlot.slotNumber, 0, ClickType.CLONE);
+			} else if (this.mc.gameSettings.keyBindDrop.isActiveAndMatches(keyCode)) {
+				this.handleMouseClick(this.hoveredSlot, this.hoveredSlot.slotNumber, isCtrlKeyDown() ? 1 : 0, ClickType.THROW);
+			}
+		}
+	}
+	
+	/**
+	 * Checks whether a hotbar key (to swap the hovered item with an item in the
+	 * hotbar) has been pressed. If so, it swaps the given items. Returns true if a
+	 * hotbar key was pressed.
+	 */
+	protected boolean checkHotbarKeys(int keyCode) {
+		if (this.mc.player.inventory.getItemStack().isEmpty() && this.hoveredSlot != null) {
+			for (int i = 0; i < 9; ++i) {
+				if (this.mc.gameSettings.keyBindsHotbar[i].isActiveAndMatches(keyCode)) {
+					this.handleMouseClick(this.hoveredSlot, this.hoveredSlot.slotNumber, i, ClickType.SWAP);
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Called when the screen is unloaded. Used to disable keyboard repeat events
+	 */
+	public void onGuiClosed() {
+		if (this.mc.player != null) {
+			this.inventorySlots.onContainerClosed(this.mc.player);
+		}
+	}
+	
+	/**
+	 * Returns true if this GUI should pause the game when it is displayed in
+	 * single-player
+	 */
+	public boolean doesGuiPauseGame() {
+		return false;
+	}
+	
+	/**
+	 * Called from the main game loop to update the screen.
+	 */
+	public void updateScreen() {
+		super.updateScreen();
+		
+		if (!this.mc.player.isEntityAlive() || this.mc.player.isDead) {
+			this.mc.player.closeScreen();
+		}
 	}
 	
 	@Override

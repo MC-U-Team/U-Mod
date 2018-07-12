@@ -22,8 +22,7 @@ public class GuiPulverizer extends UGuiContainer {
 	
 	@Override
 	protected void drawInBackground(EnumModeTab tab, int mouseX, int mouseY, int x_offset, int y_offset) {
-		if (tab == EnumModeTab.NORMAL)
-			this.drawTexturedModalRect(x_offset + 47, y_offset + 28, 0, 166, Math.round(64 * (100 - tile.getField(0)) / 100), 7);
+		this.drawTexturedModalRect(x_offset + 47, y_offset + 28, 0, 166, Math.round(64 * (100 - tile.getField(0)) / 100), 7);
 	}
 	
 }
