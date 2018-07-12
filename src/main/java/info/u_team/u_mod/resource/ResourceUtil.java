@@ -1,5 +1,6 @@
 package info.u_team.u_mod.resource;
 
+import java.util.*;
 import java.util.function.Consumer;
 
 import info.u_team.u_mod.api.IResource;
@@ -11,13 +12,23 @@ import net.minecraft.item.ItemStack;
 
 public class ResourceUtil {
 	
-	public static void iterate(Consumer<Resource> consumer) {
+	private static final HashMap<IResource, Resource> map = new HashMap<>();
+	
+	static {
 		for (EnumResources1 resource : EnumResources1.VALUES) {
-			consumer.accept(new Resource(resource));
+			map.put(resource, new Resource(resource));
 		}
 		for (EnumResources2 resource : EnumResources2.VALUES) {
-			consumer.accept(new Resource(resource));
+			map.put(resource, new Resource(resource));
 		}
+	}
+	
+	public static Resource get(IResource resource) {
+		return map.get(resource);
+	}
+	
+	public static void iterate(Consumer<Resource> consumer) {
+		map.values().forEach(consumer);
 	}
 	
 	public static class Resource {
