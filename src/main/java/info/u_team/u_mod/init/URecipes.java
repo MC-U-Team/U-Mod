@@ -7,7 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import info.u_team.u_mod.UConstants;
 import info.u_team.u_mod.resource.*;
-import info.u_team.u_team_core.util.*;
+import info.u_team.u_team_core.util.NonNullListUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.*;
 import net.minecraft.util.*;

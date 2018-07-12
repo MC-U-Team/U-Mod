@@ -50,7 +50,7 @@ public enum EnumResources2 implements IResource {
 	
 	@Override
 	public int getEnumCount() {
-		return 1;
+		return 2;
 	}
 	
 	public static final EnumResources2[] VALUES = new EnumResources2[values().length];
