@@ -27,13 +27,8 @@ public class BiomeOreDesert extends UBiome {
 		decorator.reedsPerChunk = 0;
 		spawnableCreatureList.clear();
 		
-		for (EnumResources1 resource : EnumResources1.VALUES) {
-			states.add(resource.getBlockState(UBlocks.resource_ore1));
-		}
+		ResourceUtil.iterate(resource -> states.add(resource.getOreBlockState()));
 		
-		for (EnumResources2 resource : EnumResources2.VALUES) {
-			states.add(resource.getBlockState(UBlocks.resource_ore1));
-		}
 		for (int i = 0; i < 50; i++) {
 			states.add(Blocks.STONE.getStateFromMeta(BlockStone.EnumType.STONE.getMetadata()));
 		}
