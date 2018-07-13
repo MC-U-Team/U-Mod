@@ -1,25 +1,20 @@
 package info.u_team.u_mod.proxy;
 
 import info.u_team.u_mod.api.TunnelHandler;
-import info.u_team.u_mod.init.UBlocks;
-import info.u_team.u_mod.init.UCreativeTabs;
-import info.u_team.u_mod.init.UGuis;
-import info.u_team.u_mod.init.UItems;
+import info.u_team.u_mod.init.*;
 import info.u_team.u_mod.tilentity.TileEntityPulverizer;
 import info.u_team.u_team_core.registry.CommonRegistry;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
+import net.minecraft.init.*;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.*;
 
 public class CommonProxy {
 	
 	public void preinit(FMLPreInitializationEvent event) {
-		UBlocks.init();
-		UItems.init();
-		UGuis.init();
+		UBlocks.preinit();
+		UItems.preinit();
+		UGuis.preinit();
+		UBiomes.preinit();
 		
 		CommonRegistry.registerEventHandler(TunnelHandler.class);
 		
@@ -29,6 +24,10 @@ public class CommonProxy {
 	
 	public void init(FMLInitializationEvent event) {
 		UCreativeTabs.init();
+		UBiomes.init();
+		UGeneration.init();
+		UOreDirectory.init();
+		URecipes.init();
 	}
 	
 	public void postinit(FMLPostInitializationEvent event) {

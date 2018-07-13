@@ -1,6 +1,8 @@
 package info.u_team.u_mod.proxy;
 
-import info.u_team.u_mod.init.UColors;
+import info.u_team.u_mod.handler.event.EventHandlerConfigChange;
+import info.u_team.u_mod.init.*;
+import info.u_team.u_team_core.registry.CommonRegistry;
 import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.relauncher.*;
 
@@ -10,12 +12,14 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void preinit(FMLPreInitializationEvent event) {
 		super.preinit(event);
+		CommonRegistry.registerEventHandler(new EventHandlerConfigChange());
 	}
 	
 	@Override
 	public void init(FMLInitializationEvent event) {
 		super.init(event);
 		UColors.init();
+		UParticles.init();
 	}
 	
 	@Override

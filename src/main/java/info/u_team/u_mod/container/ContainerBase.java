@@ -12,16 +12,10 @@ import com.google.common.collect.Sets;
 import info.u_team.u_mod.container.slot.SlotPlayerInventory;
 import info.u_team.u_mod.resource.EnumModeTab;
 import info.u_team.u_team_core.container.UContainer;
-import info.u_team.u_team_core.tileentity.UTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.ClickType;
-import net.minecraft.inventory.IContainerListener;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.InventoryCraftResult;
-import net.minecraft.inventory.InventoryCrafting;
-import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
@@ -31,8 +25,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.*;
 
 public class ContainerBase extends UContainer {
 	
@@ -42,6 +35,7 @@ public class ContainerBase extends UContainer {
 	public IInventory tile;
 	public final int[] fields;
 	private EnumModeTab tab = EnumModeTab.NORMAL;
+
 	public final EnumMap<EnumModeTab, List<Slot>> slots = new EnumMap<>(EnumModeTab.class);
 	public final EnumMap<EnumModeTab, NonNullList<ItemStack>> items = new EnumMap<>(EnumModeTab.class);
 	
@@ -193,8 +187,8 @@ public class ContainerBase extends UContainer {
 			if (slot.isHere(inv, slotIn)) {
 				return slot;
 			}
+
 		}
-		
 		return null;
 	}
 	
