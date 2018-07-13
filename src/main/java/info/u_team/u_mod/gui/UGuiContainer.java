@@ -12,18 +12,23 @@ import info.u_team.u_mod.api.IUGui;
 import info.u_team.u_mod.container.ContainerBase;
 import info.u_team.u_mod.resource.EnumModeTab;
 import info.u_team.u_team_core.container.UContainer;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.block.model.IBakedModel;
+import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
@@ -116,7 +121,59 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 		int i = (this.width - this.xSize) / 2;
 		int j = (this.height - this.ySize) / 2 - 28;
 		this.drawTexturedModalRect(i + (28 * this.getTab().ordinal()), j, 28 * this.getTab().ordinal(), 32, 28, 32);
+		RenderHelper.enableGUIStandardItemLighting();
+		GlStateManager.translate(16, 0, 0);
+		
+		for (EnumModeTab ttab : EnumModeTab.values()) {
+			Block item = ttab.item;
+			if(item != null) {
+				this.renderItemModelIntoGUI(new ItemStack(item), i + (28 * this.getTab().ordinal()) + 14, j);
+			} else {
+				this.renderItemModelIntoGUI(new ItemStack(this.getContainer().world.getBlockState(this.getContainer().pos).getBlock()), i + (28 * ttab.ordinal()) - 10, j + 10);
+			}
+		}
 	}
+	
+    protected void renderItemModelIntoGUI(ItemStack stack, int x, int y)
+    {
+    	IBakedModel bakedmodel = this.itemRender.getItemModelWithOverrides(stack, null, null);
+        GlStateManager.pushMatrix();
+        Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+        Minecraft.getMinecraft().getTextureManager().getTexture(TextureMap.LOCATION_BLOCKS_TEXTURE).setBlurMipmap(false, false);
+        GlStateManager.enableRescaleNormal();
+        GlStateManager.enableAlpha();
+        GlStateManager.alphaFunc(516, 0.1F);
+        GlStateManager.enableBlend();
+        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        this.setupGuiTransform(x, y, bakedmodel.isGui3d());
+        bakedmodel = net.minecraftforge.client.ForgeHooksClient.handleCameraTransforms(bakedmodel, ItemCameraTransforms.TransformType.GUI, false);
+        this.itemRender.renderItem(stack, bakedmodel);
+        GlStateManager.disableAlpha();
+        GlStateManager.disableRescaleNormal();
+        GlStateManager.disableLighting();
+        GlStateManager.popMatrix();
+        Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+        Minecraft.getMinecraft().getTextureManager().getTexture(TextureMap.LOCATION_BLOCKS_TEXTURE).restoreLastBlurMipmap();
+    }
+
+    private void setupGuiTransform(int xPosition, int yPosition, boolean isGui3d)
+    {
+        GlStateManager.translate((float)xPosition, (float)yPosition, 100.0F + this.zLevel);
+        GlStateManager.translate(8.0F, 8.0F, 0.0F);
+        GlStateManager.scale(1.0F, -1.0F, 1.0F);
+        GlStateManager.scale(18.0F, 18.0F, 18.0F);
+
+        if (isGui3d)
+        {
+            GlStateManager.enableLighting();
+        }
+        else
+        {
+            GlStateManager.disableLighting();
+        }
+    }
+
 	
 	private void drawTabs(int mouseX, int mouseY) {
 		this.mc.getTextureManager().bindTexture(CREATIVE_INVENTORY_TABS);

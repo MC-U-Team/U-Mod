@@ -22,6 +22,9 @@ import net.minecraft.world.IInteractionObject;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityPulverizer extends UTileEntity implements ITickable, ISidedInventory, ICableExceptor, IInteractionObject {
 	
@@ -31,6 +34,8 @@ public class TileEntityPulverizer extends UTileEntity implements ITickable, ISid
 	private NonNullList<ItemStack> itemstacks = NonNullList.withSize(4, ItemStack.EMPTY);
 	private int time_left = MAX_TIME;
 	private int output_index = -1;
+	
+	public int impl_energy;
 	
 	private static ArrayList<ItemStack> input_dictionary = new ArrayList<ItemStack>();
 	private static ArrayList<ItemStack> primary_output_dictionary = new ArrayList<ItemStack>();
@@ -182,17 +187,27 @@ public class TileEntityPulverizer extends UTileEntity implements ITickable, ISid
 	
 	@Override
 	public int getField(int id) {
-		return this.time_left;
+		if (id == 0) {
+			return this.time_left;
+		} else if (id == 1) {
+			return this.energy.getEnergyStored();
+		} else {
+			return 0;
+		}
 	}
 	
 	@Override
 	public void setField(int id, int value) {
-		this.time_left = value;
+		if (id == 0) {
+			this.time_left = value;
+		} else if (id == 1) {
+			this.impl_energy = value;
+		}
 	}
 	
 	@Override
 	public int getFieldCount() {
-		return 1;
+		return 2;
 	}
 	
 	@Override
@@ -271,8 +286,7 @@ public class TileEntityPulverizer extends UTileEntity implements ITickable, ISid
 					}
 				}
 			}
-		}
-		
+		}		
 	}
 	
 	@Override
