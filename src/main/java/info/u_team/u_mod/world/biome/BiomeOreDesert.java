@@ -2,8 +2,8 @@ package info.u_team.u_mod.world.biome;
 
 import java.util.*;
 
-import info.u_team.u_mod.init.*;
-import info.u_team.u_mod.resource.*;
+import info.u_team.u_mod.init.UGeneration;
+import info.u_team.u_mod.resource.ResourceUtil;
 import info.u_team.u_team_core.biome.UBiome;
 import net.minecraft.block.BlockStone;
 import net.minecraft.block.material.Material;
