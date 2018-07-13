@@ -34,8 +34,10 @@ public class URecipes {
 	private static void furnace() {
 		// Resources
 		ResourceUtil.iterate(resource -> {
+			// Ore -> Ingot
 			registerSmelting(resource.getOreItemStack(), resource.getIngotItemStack(), 0.75F);
-			registerSmelting(resource.getDustItemStack(), resource.getIngotItemStack(), 0.75F);
+			// Dust -> Ingot
+			registerSmelting(resource.getDustItemStack(), resource.getIngotItemStack(), 0.5F);
 		});
 	}
 	
