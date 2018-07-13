@@ -2,7 +2,8 @@ package info.u_team.u_mod.proxy;
 
 import info.u_team.u_mod.api.TunnelHandler;
 import info.u_team.u_mod.init.*;
-import info.u_team.u_mod.tilentity.TileEntityPulverizer;
+import info.u_team.u_mod.recipe.InputStack;
+import info.u_team.u_mod.tilentity.pulverizer.*;
 import info.u_team.u_team_core.registry.CommonRegistry;
 import net.minecraft.init.*;
 import net.minecraft.item.ItemStack;
@@ -18,8 +19,6 @@ public class CommonProxy {
 		
 		CommonRegistry.registerEventHandler(TunnelHandler.class);
 		
-		// Just testing
-		TileEntityPulverizer.addRecipe(new ItemStack(Blocks.IRON_ORE), new ItemStack(Items.IRON_INGOT, 2), null);
 	}
 	
 	public void init(FMLInitializationEvent event) {
@@ -28,6 +27,10 @@ public class CommonProxy {
 		UGeneration.init();
 		UOreDirectory.init();
 		URecipes.init();
+		
+		// Just testing
+		RecipeManagerPulverizer.addRecipe(new InputStack("oreUranium"), new ItemStack(Items.IRON_INGOT, 2), null);
+		RecipeManagerPulverizer.addRecipe(new InputStack(new ItemStack(Blocks.IRON_ORE)), new ItemStack(Items.IRON_INGOT, 2), null);
 	}
 	
 	public void postinit(FMLPostInitializationEvent event) {

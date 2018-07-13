@@ -1,12 +1,10 @@
-package info.u_team.u_mod.tilentity;
+package info.u_team.u_mod.tilentity.pulverizer;
 
-import java.util.ArrayList;
-import java.util.function.UnaryOperator;
-
-import javax.annotation.Nullable;
+import static info.u_team.u_mod.tilentity.pulverizer.RecipeManagerPulverizer.*;
 
 import info.u_team.u_mod.api.ICableExceptor;
 import info.u_team.u_mod.container.ContainerPulverizer;
+import info.u_team.u_mod.recipe.InputStack;
 import info.u_team.u_team_core.tileentity.UTileEntity;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
@@ -30,16 +28,6 @@ public class TileEntityPulverizer extends UTileEntity implements ITickable, ISid
 	private int output_index = -1;
 	
 	public int impl_energy;
-	
-	private static ArrayList<ItemStack> input_dictionary = new ArrayList<ItemStack>();
-	private static ArrayList<ItemStack> primary_output_dictionary = new ArrayList<ItemStack>();
-	private static ArrayList<ItemStack> secondary_output_dictionary = new ArrayList<ItemStack>();
-	
-	public static void addRecipe(ItemStack input, ItemStack output, @Nullable ItemStack second_output) {
-		input_dictionary.add(input);
-		primary_output_dictionary.add(output);
-		secondary_output_dictionary.add(second_output);
-	}
 	
 	@CapabilityInject(IEnergyStorage.class)
 	public static Capability<IEnergyStorage> ENERGY;
@@ -131,8 +119,8 @@ public class TileEntityPulverizer extends UTileEntity implements ITickable, ISid
 	
 	public void hasRecipe(ItemStack stack) {
 		int i = 0;
-		for (ItemStack compare : input_dictionary) {
-			if (compare.isItemEqual(stack) && ItemStack.areItemStackTagsEqual(stack, compare)) {
+		for (InputStack recipes : input_dictionary) {
+			if (recipes.contains(stack)) {
 				if (canCook(i)) {
 					this.time_left = MAX_TIME;
 					this.output_index = i;
@@ -148,7 +136,7 @@ public class TileEntityPulverizer extends UTileEntity implements ITickable, ISid
 		ItemStack stack1 = getStackInSlot(1);
 		ItemStack stack2 = getStackInSlot(2);
 		ItemStack stack3 = getStackInSlot(3);
-		ItemStack in = input_dictionary.get(index);
+		InputStack in = input_dictionary.get(index);
 		
 		return ((stack1.isStackable() || stack1.isEmpty()) && stack1.getCount() + in.getCount() <= stack1.getMaxStackSize()) && ((stack2.isStackable() || stack2.isEmpty()) && stack2.getCount() + in.getCount() <= stack2.getMaxStackSize()) && ((stack3.isStackable() || stack3.isEmpty()) && stack3.getCount() + in.getCount() <= stack3.getMaxStackSize());
 	}
@@ -206,13 +194,7 @@ public class TileEntityPulverizer extends UTileEntity implements ITickable, ISid
 	
 	@Override
 	public void clear() {
-		itemstacks.replaceAll(new UnaryOperator<ItemStack>() {
-			
-			@Override
-			public ItemStack apply(ItemStack arg0) {
-				return ItemStack.EMPTY;
-			}
-		});
+		itemstacks.replaceAll(stack -> ItemStack.EMPTY);
 	}
 	
 	public static final int[] OUT = { 1, 2, 3 }, IN = { 0 };
