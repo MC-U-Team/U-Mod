@@ -14,9 +14,6 @@ import net.minecraft.util.*;
 import net.minecraft.world.IInteractionObject;
 import net.minecraftforge.common.capabilities.*;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityPulverizer extends UTileEntity implements ITickable, ISidedInventory, ICableExceptor, IInteractionObject {
 	
@@ -262,7 +259,7 @@ public class TileEntityPulverizer extends UTileEntity implements ITickable, ISid
 					}
 				}
 			}
-		}		
+		}
 	}
 	
 	@Override

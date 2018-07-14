@@ -1,7 +1,6 @@
 package info.u_team.u_mod.container.slot;
 
-import info.u_team.u_mod.resource.EnumModeTab;
-import net.minecraft.inventory.*;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 
 public class SlotOreInput extends SlotBase {

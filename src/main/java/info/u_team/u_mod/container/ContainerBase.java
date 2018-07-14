@@ -1,29 +1,22 @@
 package info.u_team.u_mod.container;
 
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import javax.annotation.Nullable;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
+import com.google.common.collect.*;
 
 import info.u_team.u_mod.container.slot.SlotPlayerInventory;
 import info.u_team.u_mod.resource.EnumModeTab;
 import info.u_team.u_team_core.container.UContainer;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
-import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.*;
 import net.minecraft.network.play.server.SPacketSetSlot;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.*;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.*;
 
@@ -35,7 +28,7 @@ public class ContainerBase extends UContainer {
 	public IInventory tile;
 	public final int[] fields;
 	private EnumModeTab tab = EnumModeTab.NORMAL;
-
+	
 	public final EnumMap<EnumModeTab, List<Slot>> slots = new EnumMap<>(EnumModeTab.class);
 	public final EnumMap<EnumModeTab, NonNullList<ItemStack>> items = new EnumMap<>(EnumModeTab.class);
 	
@@ -123,11 +116,12 @@ public class ContainerBase extends UContainer {
 	/**
 	 * returns a list if itemStacks, for each slot.
 	 */
+	@Override
 	public NonNullList<ItemStack> getInventory() {
 		NonNullList<ItemStack> nonnulllist = NonNullList.<ItemStack> create();
 		
 		for (int i = 0; i < this.slots.get(tab).size(); ++i) {
-			nonnulllist.add(((Slot) this.slots.get(tab).get(i)).getStack());
+			nonnulllist.add(this.slots.get(tab).get(i).getStack());
 		}
 		
 		return nonnulllist;
@@ -136,6 +130,7 @@ public class ContainerBase extends UContainer {
 	/**
 	 * Remove the given Listener. Method name is for legacy.
 	 */
+	@Override
 	@SideOnly(Side.CLIENT)
 	public void removeListener(IContainerListener listener) {
 		this.listeners.remove(listener);
@@ -144,9 +139,10 @@ public class ContainerBase extends UContainer {
 	/**
 	 * Looks for changes made in the container, sends them to every listener.
 	 */
+	@Override
 	public void detectAndSendChanges() {
 		for (int i = 0; i < this.slots.get(tab).size(); ++i) {
-			ItemStack itemstack = ((Slot) this.slots.get(tab).get(i)).getStack();
+			ItemStack itemstack = this.slots.get(tab).get(i).getStack();
 			ItemStack itemstack1 = this.items.get(tab).get(i);
 			
 			if (!ItemStack.areItemStacksEqual(itemstack1, itemstack)) {
@@ -156,7 +152,7 @@ public class ContainerBase extends UContainer {
 				
 				if (clientStackChanged)
 					for (int j = 0; j < this.listeners.size(); ++j) {
-						((IContainerListener) this.listeners.get(j)).sendSlotContents(this, i, itemstack1);
+						this.listeners.get(j).sendSlotContents(this, i, itemstack1);
 					}
 			}
 		}
@@ -175,10 +171,12 @@ public class ContainerBase extends UContainer {
 	 * Handles the given Button-click on the server, currently only used by
 	 * enchanting. Name is for legacy.
 	 */
+	@Override
 	public boolean enchantItem(EntityPlayer playerIn, int id) {
 		return false;
 	}
 	
+	@Override
 	@Nullable
 	public Slot getSlotFromInventory(IInventory inv, int slotIn) {
 		for (int i = 0; i < this.slots.get(tab).size(); ++i) {
@@ -187,13 +185,15 @@ public class ContainerBase extends UContainer {
 			if (slot.isHere(inv, slotIn)) {
 				return slot;
 			}
-
+			
 		}
 		return null;
 	}
 	
+	@Override
 	public Slot getSlot(int slotId) {
-		if(this.slots.get(tab).size() <= slotId) return null;
+		if (this.slots.get(tab).size() <= slotId)
+			return null;
 		return this.slots.get(tab).get(slotId);
 	}
 	
@@ -201,11 +201,13 @@ public class ContainerBase extends UContainer {
 	 * Handle when the stack in slot {@code index} is shift-clicked. Normally this
 	 * moves the stack between the player inventory and the other inventory(s).
 	 */
+	@Override
 	public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
 		Slot slot = this.slots.get(tab).get(index);
 		return slot != null ? slot.getStack() : ItemStack.EMPTY;
 	}
 	
+	@Override
 	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player) {
 		ItemStack itemstack = ItemStack.EMPTY;
 		InventoryPlayer inventoryplayer = player.inventory;
@@ -469,6 +471,7 @@ public class ContainerBase extends UContainer {
 	 * (double-click) code. The stack passed in is null for the initial slot that
 	 * was double-clicked.
 	 */
+	@Override
 	public boolean canMergeSlot(ItemStack stack, Slot slotIn) {
 		return true;
 	}
@@ -476,6 +479,7 @@ public class ContainerBase extends UContainer {
 	/**
 	 * Called when the container is closed.
 	 */
+	@Override
 	public void onContainerClosed(EntityPlayer playerIn) {
 		InventoryPlayer inventoryplayer = playerIn.inventory;
 		
@@ -485,6 +489,7 @@ public class ContainerBase extends UContainer {
 		}
 	}
 	
+	@Override
 	protected void clearContainer(EntityPlayer playerIn, World worldIn, IInventory inventoryIn) {
 		if (!playerIn.isEntityAlive() || playerIn instanceof EntityPlayerMP && ((EntityPlayerMP) playerIn).hasDisconnected()) {
 			for (int j = 0; j < inventoryIn.getSizeInventory(); ++j) {
@@ -500,6 +505,7 @@ public class ContainerBase extends UContainer {
 	/**
 	 * Callback for when the crafting matrix is changed.
 	 */
+	@Override
 	public void onCraftMatrixChanged(IInventory inventoryIn) {
 		this.detectAndSendChanges();
 	}
@@ -507,10 +513,12 @@ public class ContainerBase extends UContainer {
 	/**
 	 * Puts an ItemStack in a slot.
 	 */
+	@Override
 	public void putStackInSlot(int slotID, ItemStack stack) {
 		this.getSlot(slotID).putStack(stack);
 	}
 	
+	@Override
 	@SideOnly(Side.CLIENT)
 	public void setAll(List<ItemStack> p_190896_1_) {
 		for (int i = 0; i < p_190896_1_.size(); ++i) {
@@ -521,6 +529,7 @@ public class ContainerBase extends UContainer {
 	/**
 	 * Gets a unique transaction ID. Parameter is unused.
 	 */
+	@Override
 	@SideOnly(Side.CLIENT)
 	public short getNextTransactionID(InventoryPlayer invPlayer) {
 		++this.transactionID;
@@ -530,6 +539,7 @@ public class ContainerBase extends UContainer {
 	/**
 	 * gets whether or not the player can craft in this inventory or not
 	 */
+	@Override
 	public boolean getCanCraft(EntityPlayer player) {
 		return !this.playerList.contains(player);
 	}
@@ -537,6 +547,7 @@ public class ContainerBase extends UContainer {
 	/**
 	 * sets whether the player can craft in this inventory or not
 	 */
+	@Override
 	public void setCanCraft(EntityPlayer player, boolean canCraft) {
 		if (canCraft) {
 			this.playerList.remove(player);
@@ -551,6 +562,7 @@ public class ContainerBase extends UContainer {
 	 * (excluded). Args : stack, minIndex, maxIndex, negativDirection. /!\ the
 	 * Container implementation do not check if the item is valid for the slot
 	 */
+	@Override
 	protected boolean mergeItemStack(ItemStack stack, int startIndex, int endIndex, boolean reverseDirection) {
 		boolean flag = false;
 		int i = startIndex;
@@ -672,6 +684,7 @@ public class ContainerBase extends UContainer {
 	/**
 	 * Reset the drag fields
 	 */
+	@Override
 	protected void resetDrag() {
 		this.dragEvent = 0;
 		this.dragSlots.clear();
@@ -714,6 +727,7 @@ public class ContainerBase extends UContainer {
 	 * true by default. Called to check if the slot can be added to a list of Slots
 	 * to split the held ItemStack across.
 	 */
+	@Override
 	public boolean canDragIntoSlot(Slot slotIn) {
 		return true;
 	}
@@ -742,11 +756,12 @@ public class ContainerBase extends UContainer {
 				}
 			}
 			
-			f = f / (float) inv.getSizeInventory();
+			f = f / inv.getSizeInventory();
 			return MathHelper.floor(f * 14.0F) + (i > 0 ? 1 : 0);
 		}
 	}
 	
+	@Override
 	protected void slotChangedCraftingGrid(World p_192389_1_, EntityPlayer p_192389_2_, InventoryCrafting p_192389_3_, InventoryCraftResult p_192389_4_) {
 		if (!p_192389_1_.isRemote) {
 			EntityPlayerMP entityplayermp = (EntityPlayerMP) p_192389_2_;
