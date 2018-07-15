@@ -38,7 +38,7 @@ public class TunnelHandler {
 	}
 	
 	public static void registerTunnel(int id, BlockPos pos, World world) {
-		if (world.isRemote)
+		if (world != null && world.isRemote)
 			return;
 		ArrayList<BlockPos> posses;
 		if ((posses = TUNNELS.get(id)) == null) {
@@ -198,16 +198,21 @@ public class TunnelHandler {
 	
 	private static int energy_available;
 	private static int energy_needed;
+	private static HashMap<Integer, ArrayList<BlockPos>> __impl_transform;
+	private static ArrayList<BlockPos> posses;
 	
 	@SubscribeEvent
 	public static void onWorldTIck(WorldTickEvent event) {
 		if (event.world.isRemote)
 			return;
-		TUNNELS.forEach((id, array) -> {
+		__impl_transform = (HashMap<Integer, ArrayList<BlockPos>>) TUNNELS.clone();
+		__impl_transform.forEach((id, array) -> {
 			energy_needed = 0;
 			energy_available = 0;
-			array.forEach(pos -> {
+			posses = (ArrayList<BlockPos>) array.clone();
+			posses.forEach(pos -> {
 				ICable entity = (ICable) event.world.getTileEntity(pos);
+				if(entity == null) return;
 				EnumFacing[] facings = entity.isInput();
 				for (EnumFacing face : facings) {
 					ICableExceptor exceptor = (ICableExceptor) event.world.getTileEntity(pos.offset(face));
@@ -216,8 +221,9 @@ public class TunnelHandler {
 					energy_available += storage.extractEnergy(rate, true);
 				}
 			});
-			array.forEach(pos -> {
+			posses.forEach(pos -> {
 				ICable entity = (ICable) event.world.getTileEntity(pos);
+				if(entity == null) return;
 				EnumFacing[] facings = entity.isOutput();
 				for (EnumFacing face : facings) {
 					ICableExceptor exceptor = (ICableExceptor) event.world.getTileEntity(pos.offset(face));
@@ -226,8 +232,9 @@ public class TunnelHandler {
 					energy_needed += storage.receiveEnergy(rate, false);
 				}
 			});
-			array.forEach(pos -> {
+			posses.forEach(pos -> {
 				ICable entity = (ICable) event.world.getTileEntity(pos);
+				if(entity == null) return;
 				EnumFacing[] facings = entity.isInput();
 				for (EnumFacing face : facings) {
 					ICableExceptor exceptor = (ICableExceptor) event.world.getTileEntity(pos.offset(face));
