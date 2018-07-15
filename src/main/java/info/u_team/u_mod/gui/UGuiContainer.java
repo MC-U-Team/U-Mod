@@ -15,24 +15,17 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.block.model.IBakedModel;
-import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.block.model.*;
+import net.minecraft.client.renderer.texture.*;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.ClickType;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.*;
 
 @SideOnly(Side.CLIENT)
 public class UGuiContainer extends GuiContainer implements IUGui {
@@ -94,6 +87,7 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 	 * the GUI is displayed and when the window resizes, the buttonList is cleared
 	 * beforehand.
 	 */
+	@Override
 	public void initGui() {
 		super.initGui();
 		this.mc.player.openContainer = this.inventorySlots;
@@ -124,7 +118,7 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 		
 		for (EnumModeTab ttab : EnumModeTab.values()) {
 			Block item = ttab.item;
-			if(item != null) {
+			if (item != null) {
 				this.renderItemModelIntoGUI(new ItemStack(item), i + (28 * this.getTab().ordinal()) + 14, j);
 			} else {
 				this.renderItemModelIntoGUI(new ItemStack(this.getContainer().world.getBlockState(this.getContainer().pos).getBlock()), i + (28 * ttab.ordinal()) - 10, j + 10);
@@ -132,46 +126,40 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 		}
 	}
 	
-    protected void renderItemModelIntoGUI(ItemStack stack, int x, int y)
-    {
-    	IBakedModel bakedmodel = this.itemRender.getItemModelWithOverrides(stack, null, null);
-        GlStateManager.pushMatrix();
-        Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-        Minecraft.getMinecraft().getTextureManager().getTexture(TextureMap.LOCATION_BLOCKS_TEXTURE).setBlurMipmap(false, false);
-        GlStateManager.enableRescaleNormal();
-        GlStateManager.enableAlpha();
-        GlStateManager.alphaFunc(516, 0.1F);
-        GlStateManager.enableBlend();
-        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        this.setupGuiTransform(x, y, bakedmodel.isGui3d());
-        bakedmodel = net.minecraftforge.client.ForgeHooksClient.handleCameraTransforms(bakedmodel, ItemCameraTransforms.TransformType.GUI, false);
-        this.itemRender.renderItem(stack, bakedmodel);
-        GlStateManager.disableAlpha();
-        GlStateManager.disableRescaleNormal();
-        GlStateManager.disableLighting();
-        GlStateManager.popMatrix();
-        Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-        Minecraft.getMinecraft().getTextureManager().getTexture(TextureMap.LOCATION_BLOCKS_TEXTURE).restoreLastBlurMipmap();
-    }
-
-    private void setupGuiTransform(int xPosition, int yPosition, boolean isGui3d)
-    {
-        GlStateManager.translate((float)xPosition, (float)yPosition, 100.0F + this.zLevel);
-        GlStateManager.translate(8.0F, 8.0F, 0.0F);
-        GlStateManager.scale(1.0F, -1.0F, 1.0F);
-        GlStateManager.scale(18.0F, 18.0F, 18.0F);
-
-        if (isGui3d)
-        {
-            GlStateManager.enableLighting();
-        }
-        else
-        {
-            GlStateManager.disableLighting();
-        }
-    }
-
+	protected void renderItemModelIntoGUI(ItemStack stack, int x, int y) {
+		IBakedModel bakedmodel = this.itemRender.getItemModelWithOverrides(stack, null, null);
+		GlStateManager.pushMatrix();
+		Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+		Minecraft.getMinecraft().getTextureManager().getTexture(TextureMap.LOCATION_BLOCKS_TEXTURE).setBlurMipmap(false, false);
+		GlStateManager.enableRescaleNormal();
+		GlStateManager.enableAlpha();
+		GlStateManager.alphaFunc(516, 0.1F);
+		GlStateManager.enableBlend();
+		GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+		this.setupGuiTransform(x, y, bakedmodel.isGui3d());
+		bakedmodel = net.minecraftforge.client.ForgeHooksClient.handleCameraTransforms(bakedmodel, ItemCameraTransforms.TransformType.GUI, false);
+		this.itemRender.renderItem(stack, bakedmodel);
+		GlStateManager.disableAlpha();
+		GlStateManager.disableRescaleNormal();
+		GlStateManager.disableLighting();
+		GlStateManager.popMatrix();
+		Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+		Minecraft.getMinecraft().getTextureManager().getTexture(TextureMap.LOCATION_BLOCKS_TEXTURE).restoreLastBlurMipmap();
+	}
+	
+	private void setupGuiTransform(int xPosition, int yPosition, boolean isGui3d) {
+		GlStateManager.translate(xPosition, yPosition, 100.0F + this.zLevel);
+		GlStateManager.translate(8.0F, 8.0F, 0.0F);
+		GlStateManager.scale(1.0F, -1.0F, 1.0F);
+		GlStateManager.scale(18.0F, 18.0F, 18.0F);
+		
+		if (isGui3d) {
+			GlStateManager.enableLighting();
+		} else {
+			GlStateManager.disableLighting();
+		}
+	}
 	
 	private void drawTabs(int mouseX, int mouseY) {
 		this.mc.getTextureManager().bindTexture(CREATIVE_INVENTORY_TABS);
@@ -211,6 +199,7 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 	/**
 	 * Draws the screen and all the components in it.
 	 */
+	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		this.drawDefaultBackground();
 		this.drawTabs(mouseX, mouseY);
@@ -226,7 +215,7 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 			super.drawScreen(mouseX, mouseY, partialTicks);
 			RenderHelper.enableGUIStandardItemLighting();
 			GlStateManager.pushMatrix();
-			GlStateManager.translate((float) i, (float) j, 0.0F);
+			GlStateManager.translate(i, j, 0.0F);
 			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 			GlStateManager.enableRescaleNormal();
 			this.hoveredSlot = null;
@@ -270,7 +259,7 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 				
 				if (!this.draggedStack.isEmpty() && this.isRightMouseClick) {
 					itemstack = itemstack.copy();
-					itemstack.setCount(MathHelper.ceil((float) itemstack.getCount() / 2.0F));
+					itemstack.setCount(MathHelper.ceil(itemstack.getCount() / 2.0F));
 				} else if (this.dragSplitting && this.dragSplittingSlots.size() > 1) {
 					itemstack = itemstack.copy();
 					itemstack.setCount(this.dragSplittingRemnant);
@@ -284,7 +273,7 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 			}
 			
 			if (!this.returningStack.isEmpty()) {
-				float f = (float) (Minecraft.getSystemTime() - this.returningStackTime) / 100.0F;
+				float f = (Minecraft.getSystemTime() - this.returningStackTime) / 100.0F;
 				
 				if (f >= 1.0F) {
 					f = 1.0F;
@@ -293,8 +282,8 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 				
 				int l2 = this.returningStackDestSlot.xPos - this.touchUpX;
 				int i3 = this.returningStackDestSlot.yPos - this.touchUpY;
-				int l1 = this.touchUpX + (int) ((float) l2 * f);
-				int i2 = this.touchUpY + (int) ((float) i3 * f);
+				int l1 = this.touchUpX + (int) (l2 * f);
+				int i2 = this.touchUpY + (int) (i3 * f);
 				this.drawItemStack(this.returningStack, l1, i2, (String) null);
 			}
 			
@@ -311,6 +300,7 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 		this.renderHoveredToolTip(mouseX, mouseY);
 	}
 	
+	@Override
 	protected void renderHoveredToolTip(int p_191948_1_, int p_191948_2_) {
 		if (this.mc.player.inventory.getItemStack().isEmpty() && this.hoveredSlot != null && this.hoveredSlot.getHasStack()) {
 			this.renderToolTip(this.hoveredSlot.getStack(), p_191948_1_, p_191948_2_);
@@ -340,6 +330,7 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 	 * Draw the foreground layer for the GuiContainer (everything in front of the
 	 * items)
 	 */
+	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 	}
 	
@@ -453,6 +444,7 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 	/**
 	 * Called when the mouse is clicked. Args : mouseX, mouseY, clickedButton
 	 */
+	@Override
 	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
 		super.mouseClicked(mouseX, mouseY, mouseButton);
 		boolean flag = this.mc.gameSettings.keyBindPickBlock.isActiveAndMatches(mouseButton - 100);
@@ -543,6 +535,7 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 		}
 	}
 	
+	@Override
 	protected boolean hasClickedOutside(int p_193983_1_, int p_193983_2_, int p_193983_3_, int p_193983_4_) {
 		return p_193983_1_ < p_193983_3_ || p_193983_2_ < p_193983_4_ || p_193983_1_ >= p_193983_3_ + this.xSize || p_193983_2_ >= p_193983_4_ + this.ySize;
 	}
@@ -551,6 +544,7 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 	 * Called when a mouse button is pressed and the mouse is moved around.
 	 * Parameters are : mouseX, mouseY, lastButtonClicked & timeSinceMouseClick.
 	 */
+	@Override
 	protected void mouseClickMove(int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick) {
 		Slot slot = this.getSlotAtPosition(mouseX, mouseY);
 		ItemStack itemstack = this.mc.player.inventory.getItemStack();
@@ -587,6 +581,7 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 	/**
 	 * Called when a mouse button is released.
 	 */
+	@Override
 	protected void mouseReleased(int mouseX, int mouseY, int state) {
 		super.mouseReleased(mouseX, mouseY, state); // Forge, Call parent to release buttons
 		Slot slot = this.getSlotAtPosition(mouseX, mouseY);
@@ -707,6 +702,7 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 	 * Test if the 2D point is in a rectangle (relative to the GUI). Args : rectX,
 	 * rectY, rectWidth, rectHeight, pointX, pointY
 	 */
+	@Override
 	protected boolean isPointInRegion(int rectX, int rectY, int rectWidth, int rectHeight, int pointX, int pointY) {
 		int i = this.guiLeft;
 		int j = this.guiTop;
@@ -718,6 +714,7 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 	/**
 	 * Called when the mouse is clicked over a slot or outside the gui.
 	 */
+	@Override
 	protected void handleMouseClick(Slot slotIn, int slotId, int mouseButton, ClickType type) {
 		if (slotIn != null) {
 			slotId = slotIn.slotNumber;
@@ -731,6 +728,7 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 	 * equivalent of KeyListener.keyTyped(KeyEvent e). Args : character (character
 	 * on the key), keyCode (lwjgl Keyboard key code)
 	 */
+	@Override
 	protected void keyTyped(char typedChar, int keyCode) throws IOException {
 		if (keyCode == 1 || this.mc.gameSettings.keyBindInventory.isActiveAndMatches(keyCode)) {
 			this.mc.player.closeScreen();
@@ -752,6 +750,7 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 	 * hotbar) has been pressed. If so, it swaps the given items. Returns true if a
 	 * hotbar key was pressed.
 	 */
+	@Override
 	protected boolean checkHotbarKeys(int keyCode) {
 		if (this.mc.player.inventory.getItemStack().isEmpty() && this.hoveredSlot != null) {
 			for (int i = 0; i < 9; ++i) {
@@ -768,6 +767,7 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 	/**
 	 * Called when the screen is unloaded. Used to disable keyboard repeat events
 	 */
+	@Override
 	public void onGuiClosed() {
 		if (this.mc.player != null) {
 			this.inventorySlots.onContainerClosed(this.mc.player);
@@ -778,6 +778,7 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 	 * Returns true if this GUI should pause the game when it is displayed in
 	 * single-player
 	 */
+	@Override
 	public boolean doesGuiPauseGame() {
 		return false;
 	}
@@ -785,6 +786,7 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 	/**
 	 * Called from the main game loop to update the screen.
 	 */
+	@Override
 	public void updateScreen() {
 		super.updateScreen();
 		
