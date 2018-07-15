@@ -3,7 +3,7 @@ package info.u_team.u_mod.tilentity;
 import java.util.ArrayList;
 
 import info.u_team.u_mod.api.*;
-import info.u_team.u_mod.block.EnergyPipeBlock;
+import info.u_team.u_mod.block.BlockEnergyPipe;
 import info.u_team.u_team_core.tileentity.UTileEntity;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
@@ -30,22 +30,22 @@ public class TileEntityEnergyPipe extends UTileEntity implements ICable, ITickab
 		if (!this.world.isRemote && this.id == -1) {
 			IBlockState state = this.world.getBlockState(pos).getActualState(world, pos);
 			state.getBlock().onNeighborChange(world, pos, null);
-			if (state.getValue(EnergyPipeBlock.UP)) {
+			if (state.getValue(BlockEnergyPipe.UP)) {
 				world.getBlockState(pos.up()).getBlock().onNeighborChange(world, pos.up(), pos);
 			}
-			if (state.getValue(EnergyPipeBlock.DOWN)) {
+			if (state.getValue(BlockEnergyPipe.DOWN)) {
 				world.getBlockState(pos.down()).getBlock().onNeighborChange(world, pos.down(), pos);
 			}
-			if (state.getValue(EnergyPipeBlock.EAST)) {
+			if (state.getValue(BlockEnergyPipe.EAST)) {
 				world.getBlockState(pos.east()).getBlock().onNeighborChange(world, pos.east(), pos);
 			}
-			if (state.getValue(EnergyPipeBlock.WEST)) {
+			if (state.getValue(BlockEnergyPipe.WEST)) {
 				world.getBlockState(pos.west()).getBlock().onNeighborChange(world, pos.west(), pos);
 			}
-			if (state.getValue(EnergyPipeBlock.NORTH)) {
+			if (state.getValue(BlockEnergyPipe.NORTH)) {
 				world.getBlockState(pos.north()).getBlock().onNeighborChange(world, pos.north(), pos);
 			}
-			if (state.getValue(EnergyPipeBlock.SOUTH)) {
+			if (state.getValue(BlockEnergyPipe.SOUTH)) {
 				world.getBlockState(pos.south()).getBlock().onNeighborChange(world, pos.south(), pos);
 			}
 		}
