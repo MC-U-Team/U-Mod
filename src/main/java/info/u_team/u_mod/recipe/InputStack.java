@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
+@Deprecated
 public class InputStack {
 	
 	private ArrayList<ItemStack> stacks = new ArrayList<>();

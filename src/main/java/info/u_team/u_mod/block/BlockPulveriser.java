@@ -4,7 +4,7 @@ import info.u_team.u_mod.UConstants;
 import info.u_team.u_mod.container.ContainerPulverizer;
 import info.u_team.u_mod.gui.GuiPulverizer;
 import info.u_team.u_mod.init.*;
-import info.u_team.u_mod.tilentity.pulverizer.TileEntityPulverizer;
+import info.u_team.u_mod.tilentity.TileEntityPulverizer;
 import info.u_team.u_team_core.block.UBlockTileEntity;
 import info.u_team.u_team_core.tileentity.UTileEntityProvider;
 import net.minecraft.block.material.Material;

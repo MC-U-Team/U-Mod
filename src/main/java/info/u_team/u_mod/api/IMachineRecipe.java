@@ -4,8 +4,8 @@ import info.u_team.u_mod.util.NonNullSlot;
 
 public interface IMachineRecipe {
 	
-	public NonNullSlot<IRecipeSlot> getInput();
+	public NonNullSlot<IRecipeIngredient> getInput();
 	
-	public NonNullSlot<IRecipeSlot> getOutput();
+	public NonNullSlot<IRecipeOutput> getOutput();
 	
 }

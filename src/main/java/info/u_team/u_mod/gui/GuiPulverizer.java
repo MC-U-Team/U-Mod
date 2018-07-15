@@ -3,7 +3,7 @@ package info.u_team.u_mod.gui;
 import info.u_team.u_mod.UConstants;
 import info.u_team.u_mod.container.*;
 import info.u_team.u_mod.resource.EnumModeTab;
-import info.u_team.u_mod.tilentity.pulverizer.TileEntityPulverizer;
+import info.u_team.u_mod.tilentity.TileEntityPulverizer;
 import info.u_team.u_team_core.container.UContainer;
 import net.minecraft.util.ResourceLocation;
 

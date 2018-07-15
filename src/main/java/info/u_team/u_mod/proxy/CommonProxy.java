@@ -2,7 +2,7 @@ package info.u_team.u_mod.proxy;
 
 import info.u_team.u_mod.api.TunnelHandler;
 import info.u_team.u_mod.init.*;
-import info.u_team.u_mod.tilentity.pulverizer.*;
+import info.u_team.u_mod.recipe.*;
 import info.u_team.u_team_core.registry.CommonRegistry;
 import net.minecraft.init.*;
 import net.minecraft.item.ItemStack;
@@ -29,9 +29,10 @@ public class CommonProxy {
 		
 		// Just testing
 		
-		RecipeManagerPulverizer.add(new RecipePulverizer(new ItemStack(Blocks.IRON_ORE), new ItemStack(Items.IRON_INGOT, 2), null, null));
-		RecipeManagerPulverizer.add(new RecipePulverizer(new ItemStack(Blocks.ACTIVATOR_RAIL, 2), new ItemStack(Items.IRON_INGOT, 2), null, null));
-		RecipeManagerPulverizer.add(new RecipePulverizer(new ItemStack(Blocks.ACACIA_FENCE_GATE, 2), new ItemStack(Items.IRON_INGOT, 2), null, null));
+		RecipeManager.registerPulverizer(new RecipePulverizer(new ItemStack(Blocks.IRON_ORE), new ItemStack(Items.IRON_INGOT, 2)));
+		RecipeManager.registerPulverizer(new RecipePulverizer(new ItemStack(Blocks.BARRIER, 2), new ItemStack(Items.IRON_INGOT, 2)));
+		RecipeManager.registerPulverizer(new RecipePulverizer(new ItemStack(Blocks.ACACIA_FENCE_GATE, 2), new ItemStack(Items.IRON_INGOT, 2)));
+		RecipeManager.registerPulverizer(new RecipePulverizer("oreUranium", new ItemStack(Items.IRON_INGOT, 2)));
 		
 		// RecipeManagerPulverizer.addRecipe(new InputStack("oreUranium"), new
 		// ItemStack(Items.IRON_INGOT, 2), null);
