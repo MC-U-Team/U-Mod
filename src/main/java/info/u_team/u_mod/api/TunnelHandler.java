@@ -4,7 +4,7 @@ import java.util.*;
 
 import com.google.common.collect.Lists;
 
-import info.u_team.u_mod.block.EnergyPipeBlock;
+import info.u_team.u_mod.block.BlockEnergyPipe;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -24,6 +24,8 @@ public class TunnelHandler {
 		int max = Math.max(id, id2);
 		ArrayList<BlockPos> first = TUNNELS.get(min);
 		ArrayList<BlockPos> second = TUNNELS.get(max);
+		if (first == null || second == null)
+			return -1;
 		first.addAll(second);
 		second.forEach(pos -> {
 			TileEntity entity = world.getTileEntity(pos);
@@ -54,7 +56,7 @@ public class TunnelHandler {
 			return false;
 		int id = cable1.getID();
 		state = state.getActualState(world, pos);
-		if (state.getValue(EnergyPipeBlock.UP)) {
+		if (state.getValue(BlockEnergyPipe.UP)) {
 			TileEntity entity = world.getTileEntity(pos.down());
 			if (entity != null && entity instanceof ICable) {
 				ICable cable = (ICable) entity;
@@ -65,7 +67,7 @@ public class TunnelHandler {
 				}
 			}
 		}
-		if (state.getValue(EnergyPipeBlock.DOWN)) {
+		if (state.getValue(BlockEnergyPipe.DOWN)) {
 			TileEntity entity = world.getTileEntity(pos.up());
 			if (entity != null && entity instanceof ICable) {
 				ICable cable = (ICable) entity;
@@ -78,7 +80,7 @@ public class TunnelHandler {
 				}
 			}
 		}
-		if (state.getValue(EnergyPipeBlock.EAST)) {
+		if (state.getValue(BlockEnergyPipe.EAST)) {
 			TileEntity entity = world.getTileEntity(pos.west());
 			if (entity != null && entity instanceof ICable) {
 				ICable cable = (ICable) entity;
@@ -91,7 +93,7 @@ public class TunnelHandler {
 				}
 			}
 		}
-		if (state.getValue(EnergyPipeBlock.WEST)) {
+		if (state.getValue(BlockEnergyPipe.WEST)) {
 			TileEntity entity = world.getTileEntity(pos.east());
 			if (entity != null && entity instanceof ICable) {
 				ICable cable = (ICable) entity;
@@ -104,7 +106,7 @@ public class TunnelHandler {
 				}
 			}
 		}
-		if (state.getValue(EnergyPipeBlock.NORTH)) {
+		if (state.getValue(BlockEnergyPipe.NORTH)) {
 			TileEntity entity = world.getTileEntity(pos.south());
 			if (entity != null && entity instanceof ICable) {
 				ICable cable = (ICable) entity;
@@ -117,7 +119,7 @@ public class TunnelHandler {
 				}
 			}
 		}
-		if (state.getValue(EnergyPipeBlock.SOUTH)) {
+		if (state.getValue(BlockEnergyPipe.SOUTH)) {
 			TileEntity entity = world.getTileEntity(pos.north());
 			if (entity != null && entity instanceof ICable) {
 				ICable cable = (ICable) entity;
@@ -136,7 +138,12 @@ public class TunnelHandler {
 				id = (highestid += 1);
 				TUNNELS.put(id, Lists.newArrayList(pos));
 			} else {
-				TUNNELS.get(id).add(pos);
+				ArrayList<BlockPos> blocks = TUNNELS.get(id);
+				if (blocks != null) {
+					blocks.add(pos);
+				} else {
+					return onStateChange(world.getBlockState(pos), world, pos);
+				}
 			}
 			
 			cable1.setID(id);
@@ -152,28 +159,32 @@ public class TunnelHandler {
 		state = state.getActualState(world, pos);
 		ICable cable = (ICable) world.getTileEntity(pos);
 		
-		if (state.getValue(EnergyPipeBlock.UP)) {
+		if (state.getValue(BlockEnergyPipe.UP)) {
 			x++;
 		}
-		if (state.getValue(EnergyPipeBlock.DOWN)) {
+		if (state.getValue(BlockEnergyPipe.DOWN)) {
 			x++;
 		}
-		if (state.getValue(EnergyPipeBlock.EAST)) {
+		if (state.getValue(BlockEnergyPipe.EAST)) {
 			x++;
 		}
-		if (state.getValue(EnergyPipeBlock.WEST)) {
+		if (state.getValue(BlockEnergyPipe.WEST)) {
 			x++;
 		}
-		if (state.getValue(EnergyPipeBlock.NORTH)) {
+		if (state.getValue(BlockEnergyPipe.NORTH)) {
 			x++;
 		}
-		if (state.getValue(EnergyPipeBlock.SOUTH)) {
+		if (state.getValue(BlockEnergyPipe.SOUTH)) {
 			x++;
 		}
 		
 		int id1 = cable.getID();
 		if (x > 1) {
-			ArrayList<BlockPos> tunnel = TUNNELS.get(id1);
+			ArrayList<BlockPos> tunnel = (ArrayList<BlockPos>) TUNNELS.get(id1);
+			if(tunnel == null) {
+				notifyOfDestruction(world.getBlockState(pos), world, pos);
+				return;
+			}
 			tunnel.forEach(pos2 -> {
 				TileEntity entity = world.getTileEntity(pos2);
 				if (entity != null && entity instanceof ICable) {
@@ -189,7 +200,10 @@ public class TunnelHandler {
 			TUNNELS.remove(new Integer(id1));
 		} else if (x == 1) {
 			cable.setID(-1);
-			TUNNELS.get(id1).remove(pos);
+			ArrayList<BlockPos> tunnel = TUNNELS.get(id1);
+			if(tunnel != null) {
+				tunnel.remove(pos);
+			}
 		} else {
 			cable.setID(-1);
 			TUNNELS.remove(new Integer(id1)).clear();
@@ -212,7 +226,8 @@ public class TunnelHandler {
 			posses = (ArrayList<BlockPos>) array.clone();
 			posses.forEach(pos -> {
 				ICable entity = (ICable) event.world.getTileEntity(pos);
-				if(entity == null) return;
+				if (entity == null)
+					return;
 				EnumFacing[] facings = entity.isInput();
 				for (EnumFacing face : facings) {
 					ICableExceptor exceptor = (ICableExceptor) event.world.getTileEntity(pos.offset(face));
@@ -223,7 +238,8 @@ public class TunnelHandler {
 			});
 			posses.forEach(pos -> {
 				ICable entity = (ICable) event.world.getTileEntity(pos);
-				if(entity == null) return;
+				if (entity == null)
+					return;
 				EnumFacing[] facings = entity.isOutput();
 				for (EnumFacing face : facings) {
 					ICableExceptor exceptor = (ICableExceptor) event.world.getTileEntity(pos.offset(face));
@@ -234,7 +250,8 @@ public class TunnelHandler {
 			});
 			posses.forEach(pos -> {
 				ICable entity = (ICable) event.world.getTileEntity(pos);
-				if(entity == null) return;
+				if (entity == null)
+					return;
 				EnumFacing[] facings = entity.isInput();
 				for (EnumFacing face : facings) {
 					ICableExceptor exceptor = (ICableExceptor) event.world.getTileEntity(pos.offset(face));

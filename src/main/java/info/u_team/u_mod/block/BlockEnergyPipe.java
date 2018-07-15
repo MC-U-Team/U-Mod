@@ -12,14 +12,17 @@ import info.u_team.u_team_core.tileentity.UTileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.*;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
+import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 
-public class EnergyPipeBlock extends UBlockTileEntity {
+public class BlockEnergyPipe extends UBlockTileEntity {
 	
 	public static final PropertyBool UP = PropertyBool.create("up");
 	public static final PropertyBool DOWN = PropertyBool.create("down");
@@ -30,7 +33,7 @@ public class EnergyPipeBlock extends UBlockTileEntity {
 	
 	private static PropertyBool[] properties = new PropertyBool[] { UP, DOWN, NORTH, SOUTH, EAST, WEST };
 	
-	public EnergyPipeBlock(String name) {
+	public BlockEnergyPipe(String name) {
 		super(name, Material.IRON, UCreativeTabs.MACHINE, new UTileEntityProvider(new ResourceLocation(UConstants.MODID, "energy_pipe_tile"), true, TileEntityEnergyPipe.class));
 		this.setDefaultState(this.getDefaultState().withProperty(UP, false).withProperty(DOWN, false).withProperty(NORTH, false).withProperty(SOUTH, false).withProperty(EAST, false).withProperty(WEST, false));
 	}
@@ -38,7 +41,7 @@ public class EnergyPipeBlock extends UBlockTileEntity {
 	@Override
 	public void registerModel() {
 		ModelLoaderRegistry.registerLoader(new UEnergyPipeModelLoader());
-		super.registerModel();
+		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(new ResourceLocation(UConstants.MODID, "energy_pipe.item"),  "inventory"));
 	}
 	
 	@Override

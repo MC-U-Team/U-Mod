@@ -17,7 +17,9 @@ public class UEnergyPipeModelLoader implements ICustomModelLoader {
 		
 	@Override
 	public boolean accepts(ResourceLocation modelLocation) {
-		if (modelLocation.getResourceDomain().equals(UConstants.MODID) && modelLocation.getResourcePath().contains("energy_pipe")) {
+		if (modelLocation.getResourceDomain().equals(UConstants.MODID) && modelLocation.getResourcePath().contains("energy_pipe")
+				// TODO Fix mich
+				&& !modelLocation.getResourcePath().endsWith(".item")) {
 			return true;
 		}
 		return false;
@@ -39,7 +41,9 @@ public class UEnergyPipeModelLoader implements ICustomModelLoader {
 			face.toArray(face2);
 			return new UEnergyPipeModel(false, face2);
 		}
-		return new UEnergyPipeModel(true, new EnumFacing[0] );
+		// TODO Fix mich
+	    //return new UEnergyPipeModel(true, new EnumFacing[0] );
+		return null;
 	}
 	
 }

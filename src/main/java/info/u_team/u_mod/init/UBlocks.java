@@ -22,7 +22,7 @@ public class UBlocks {
 	// Machines
 	public static final UBlock pulverizer = new BlockPulveriser("pulverizer");
 	public static final UBlock battery = new BlockBattery("battery");
-	public static final UBlock energy_pipe = new EnergyPipeBlock("energy_pipe");
+	public static final UBlock energy_pipe = new BlockEnergyPipe("energy_pipe");
 	
 	public static void preinit() {
 		BlockRegistry.register(UConstants.MODID, RegistryUtil.getRegistryEntries(Block.class, UBlocks.class));
