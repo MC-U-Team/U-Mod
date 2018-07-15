@@ -1,4 +1,4 @@
-package info.u_team.u_mod.recipe;
+package info.u_team.u_mod.recipe.crafting;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.ShapelessRecipes;

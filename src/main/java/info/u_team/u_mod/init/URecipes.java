@@ -3,7 +3,7 @@ package info.u_team.u_mod.init;
 import static info.u_team.u_team_core.registry.CommonRegistry.registerSmelting;
 
 import info.u_team.u_mod.UConstants;
-import info.u_team.u_mod.recipe.RecipeShapelessOre;
+import info.u_team.u_mod.recipe.crafting.RecipeShapelessOre;
 import info.u_team.u_mod.resource.ResourceUtil;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
