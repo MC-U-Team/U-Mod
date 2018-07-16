@@ -1,34 +1,34 @@
 package info.u_team.u_mod.tilentity;
 
-import static info.u_team.u_mod.recipe.RecipeManager.getPulverizerRecipes;
-
 import info.u_team.u_mod.api.ICableExceptor;
 import info.u_team.u_mod.api.IClientEnergy;
-import info.u_team.u_mod.container.ContainerPulverizer;
-import info.u_team.u_mod.recipe.RecipePulverizer;
+import info.u_team.u_mod.container.ContainerFurnace;
+import info.u_team.u_mod.recipe.InputStack;
 import info.u_team.u_team_core.tileentity.UTileEntity;
-import net.minecraft.entity.player.*;
-import net.minecraft.inventory.*;
+import it.unimi.dsi.fastutil.Stack;
+import net.minecraft.client.renderer.texture.ITickable;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.*;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.IInteractionObject;
-import net.minecraftforge.common.capabilities.*;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityPulverizer extends UTileEntity implements IClientEnergy, ITickable, ISidedInventory, ICableExceptor, IInteractionObject {
+public class TileEntityFurnace extends UTileEntity implements ISidedInventory, IClientEnergy, IInteractionObject, ITickable, ICableExceptor {
 	
 	public static final int MAX_TIME = 100;
 	public static final int ENERGY_CONSUMED = 100;
 	
-	private NonNullList<ItemStack> itemstacks = NonNullList.withSize(4, ItemStack.EMPTY);
+	private NonNullList<ItemStack> itemstacks = NonNullList.withSize(2, ItemStack.EMPTY);
 	private int time_left = MAX_TIME;
-	
-	// private int output_index = -1;
-	private int recipe_id = -1;
-	private RecipePulverizer recipe;
+	private int output_index = -1;
 	
 	public int impl_energy;
 	
@@ -37,7 +37,7 @@ public class TileEntityPulverizer extends UTileEntity implements IClientEnergy, 
 	
 	private final IEnergyStorage energy;
 	
-	public TileEntityPulverizer() {
+	public TileEntityFurnace() {
 		energy = ENERGY.getDefaultInstance();
 	}
 	
@@ -48,7 +48,7 @@ public class TileEntityPulverizer extends UTileEntity implements IClientEnergy, 
 			ENERGY.readNBT(energy, null, compound.getTag("energy"));
 		}
 		this.time_left = compound.getInteger("time");
-		this.recipe_id = compound.getInteger("recipeid");
+		this.output_index = compound.getInteger("output");
 	}
 	
 	@Override
@@ -56,8 +56,7 @@ public class TileEntityPulverizer extends UTileEntity implements IClientEnergy, 
 		ItemStackHelper.saveAllItems(compound, itemstacks);
 		compound.setTag("energy", ENERGY.writeNBT(energy, null));
 		compound.setInteger("time", this.time_left);
-		compound.setInteger("recipeid", this.recipe_id);
-		this.recipe = getPulverizerRecipes().get(this.recipe_id);
+		compound.setInteger("output", this.output_index);
 	}
 	
 	@Override
@@ -111,44 +110,19 @@ public class TileEntityPulverizer extends UTileEntity implements IClientEnergy, 
 		}
 		
 		if (flag && index == 0) {
-			this.recipe_id = -1;
+			this.output_index = -1;
 			this.time_left = MAX_TIME;
 		}
 		
-		if (index == 0 || this.recipe_id < 0) {
+		if (index == 0 || this.output_index < 0) {
 			this.hasRecipe();
 			this.markDirty();
 		}
 	}
 	
-	public void hasRecipe() {
-		int i = 0;
-		for (RecipePulverizer recipe : getPulverizerRecipes()) {
-			if (recipe.areIngredientsMatching(this)) {
-				if (recipe.areOutputsMatching(this)) {
-					this.recipe = recipe;
-					this.recipe_id = i;
-					this.time_left = MAX_TIME;
-				}
-				return;
-			}
-			i++;
-		}
-		this.recipe_id = -1;
+	private void hasRecipe() {
+		// TODO Check recipe
 	}
-	
-	// public boolean canCook(int index) {
-	// ItemStack stack1 = getStackInSlot(1);
-	// ItemStack stack2 = getStackInSlot(2);
-	// ItemStack stack3 = getStackInSlot(3);
-	// InputStack in = input_dictionary.get(index);
-	//
-	// return ((stack1.isStackable() || stack1.isEmpty()) && stack1.getCount() +
-	// in.getCount() <= stack1.getMaxStackSize()) && ((stack2.isStackable() ||
-	// stack2.isEmpty()) && stack2.getCount() + in.getCount() <=
-	// stack2.getMaxStackSize()) && ((stack3.isStackable() || stack3.isEmpty()) &&
-	// stack3.getCount() + in.getCount() <= stack3.getMaxStackSize());
-	// }
 	
 	@Override
 	public int getInventoryStackLimit() {
@@ -206,7 +180,7 @@ public class TileEntityPulverizer extends UTileEntity implements IClientEnergy, 
 		itemstacks.replaceAll(stack -> ItemStack.EMPTY);
 	}
 	
-	public static final int[] OUT = { 1, 2, 3 }, IN = { 0 };
+	public static final int[] OUT = { 1 }, IN = { 0 };
 	
 	@Override
 	public int[] getSlotsForFace(EnumFacing side) {
@@ -215,11 +189,11 @@ public class TileEntityPulverizer extends UTileEntity implements IClientEnergy, 
 		} else if (side == EnumFacing.UP) {
 			return IN;
 		}
-		return null;
+		return new int[0];
 	}
 	
 	@Override
-	public boolean canInsertItem(int index, ItemStack stack, EnumFacing direction) {
+	public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
 		if (index == 0) {
 			return true;
 		}
@@ -235,39 +209,8 @@ public class TileEntityPulverizer extends UTileEntity implements IClientEnergy, 
 	}
 	
 	@Override
-	public void update() {
-		if (!world.isRemote) {
-			if (ENERGY_CONSUMED > energy.getEnergyStored())
-				return;
-			if (this.recipe_id >= 0 && recipe != null) {
-				this.time_left--;
-				if (this.time_left <= 0) {
-					recipe.executeRecipe(this);
-					energy.extractEnergy(ENERGY_CONSUMED, false);
-					this.markDirty();
-					if (recipe.areOutputsMatching(this) && !itemstacks.get(0).isEmpty()) {
-						this.time_left = MAX_TIME;
-					} else {
-						this.recipe_id = -1;
-					}
-				}
-			}
-		}
-	}
-	
-	@Override
 	public IEnergyStorage getStorage() {
 		return this.energy;
-	}
-	
-	@Override
-	public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn) {
-		return new ContainerPulverizer(playerIn, this.world, this.pos);
-	}
-	
-	@Override
-	public String getGuiID() {
-		return getName();
 	}
 	
 	@Override
@@ -282,10 +225,35 @@ public class TileEntityPulverizer extends UTileEntity implements IClientEnergy, 
 	
 	@Override
 	public int rate() {
-		return 5;
+		return 2;
 	}
-
-	@SideOnly(Side.CLIENT)
+	
+	@Override
+	public void tick() {
+		if (!world.isRemote) {
+			if (ENERGY_CONSUMED > energy.getEnergyStored())
+				return;
+			if (this.output_index >= 0) {
+				this.time_left--;
+				if (this.time_left <= 0) {
+					ItemStack input = itemstacks.get(0);
+					ItemStack output = itemstacks.get(1);
+					// TODO Added cook logic
+				}
+			}
+		}
+	}
+	
+	@Override
+	public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn) {
+		return new ContainerFurnace(playerIn, world, pos);
+	}
+	
+	@Override
+	public String getGuiID() {
+		return "furnace";
+	}
+	
 	@Override
 	public int getImpl() {
 		return this.impl_energy;

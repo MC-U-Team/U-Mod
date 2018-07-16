@@ -1,10 +1,13 @@
 package info.u_team.u_mod.block;
 
 import info.u_team.u_mod.UConstants;
+import info.u_team.u_mod.container.ContainerEnricher;
 import info.u_team.u_mod.container.ContainerPulverizer;
+import info.u_team.u_mod.gui.GuiEnricher;
 import info.u_team.u_mod.gui.GuiPulverizer;
 import info.u_team.u_mod.init.*;
-import info.u_team.u_mod.tilentity.TileEntityPulverizer;
+import info.u_team.u_mod.tilentity.TileEntityEnricher;
+import info.u_team.u_mod.tilentity.pulverizer.TileEntityPulverizer;
 import info.u_team.u_team_core.block.UBlockTileEntity;
 import info.u_team.u_team_core.tileentity.UTileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -18,13 +21,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.*;
 
-public class BlockPulveriser extends UBlockTileEntity {
+public class BlockEnricher extends UBlockTileEntity {
 	
 	private int gui;
 	
-	public BlockPulveriser(String name) {
-		super(name, Material.IRON, UCreativeTabs.MACHINE, new UTileEntityProvider(new ResourceLocation(UConstants.MODID, "pulverizer_tile"), true, TileEntityPulverizer.class));
-		gui = UGuis.addGui(GuiPulverizer.class, ContainerPulverizer.class);
+	public BlockEnricher(String name) {
+		super(name, Material.IRON, UCreativeTabs.MACHINE, new UTileEntityProvider(new ResourceLocation(UConstants.MODID, "enricher_tile"), true, TileEntityEnricher.class));
+		gui = UGuis.addGui(GuiEnricher.class, ContainerEnricher.class);
 	}
 	
 	@Override
