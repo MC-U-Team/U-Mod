@@ -27,7 +27,7 @@ public class UBlocks {
 	public static final UBlock alloy_furnace = new BlockAlloyFurnace("alloy_furnace");
 	public static final UBlock press = new BlockPress("press");
 	public static final UBlock enricher = new BlockEnricher("enricher");
-
+	
 	public static void preinit() {
 		BlockRegistry.register(UConstants.MODID, RegistryUtil.getRegistryEntries(Block.class, UBlocks.class));
 	}

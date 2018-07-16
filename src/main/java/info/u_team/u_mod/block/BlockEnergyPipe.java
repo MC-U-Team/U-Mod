@@ -40,7 +40,7 @@ public class BlockEnergyPipe extends UBlockTileEntity {
 	@Override
 	public void registerModel() {
 		ModelLoaderRegistry.registerLoader(new UEnergyPipeModelLoader());
-		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(new ResourceLocation(UConstants.MODID, "energy_pipe.item"),  "inventory"));
+		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(new ResourceLocation(UConstants.MODID, "energy_pipe.item"), "inventory"));
 	}
 	
 	@Override

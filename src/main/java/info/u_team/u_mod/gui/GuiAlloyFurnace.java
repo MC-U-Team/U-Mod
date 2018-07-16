@@ -7,7 +7,7 @@ import info.u_team.u_team_core.container.UContainer;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiAlloyFurnace extends UGuiContainer {
-		
+	
 	public GuiAlloyFurnace(UContainer inventorySlotsIn) {
 		super((ContainerBase) inventorySlotsIn);
 		this.setBackground(new ResourceLocation(UConstants.MODID, "textures/gui/alloy_furnace.png"));

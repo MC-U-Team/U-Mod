@@ -7,7 +7,7 @@ import info.u_team.u_team_core.container.UContainer;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiEnricher extends UGuiContainer {
-		
+	
 	public GuiEnricher(UContainer inventorySlotsIn) {
 		super((ContainerBase) inventorySlotsIn);
 		this.setBackground(new ResourceLocation(UConstants.MODID, "textures/gui/enricher.png"));

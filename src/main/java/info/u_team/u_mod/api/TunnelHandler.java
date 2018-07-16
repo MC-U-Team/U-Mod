@@ -180,8 +180,8 @@ public class TunnelHandler {
 		
 		int id1 = cable.getID();
 		if (x > 1) {
-			ArrayList<BlockPos> tunnel = (ArrayList<BlockPos>) TUNNELS.get(id1);
-			if(tunnel == null) {
+			ArrayList<BlockPos> tunnel = TUNNELS.get(id1);
+			if (tunnel == null) {
 				notifyOfDestruction(world.getBlockState(pos), world, pos);
 				return;
 			}
@@ -201,7 +201,7 @@ public class TunnelHandler {
 		} else if (x == 1) {
 			cable.setID(-1);
 			ArrayList<BlockPos> tunnel = TUNNELS.get(id1);
-			if(tunnel != null) {
+			if (tunnel != null) {
 				tunnel.remove(pos);
 			}
 		} else {
