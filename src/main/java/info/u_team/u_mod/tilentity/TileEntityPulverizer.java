@@ -31,7 +31,6 @@ public class TileEntityPulverizer extends TileEntityMachine {
 	@Override
 	public void setInventorySlotContents(int index, ItemStack stack) { // METHOD will only be executed when you set stacks, not when you increase them.
 																		// So it wont be updated all the time
-		System.out.println("TEST");
 		ItemStack itemstack = itemstacks.get(index);
 		itemstacks.set(index, stack);
 		
