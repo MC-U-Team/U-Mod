@@ -5,8 +5,7 @@ import java.util.ArrayList;
 import info.u_team.u_mod.UConstants;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.resources.IResourceManager;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.*;
 import net.minecraftforge.client.model.*;
 
 public class UEnergyPipeModelLoader implements ICustomModelLoader {

@@ -3,32 +3,22 @@ package info.u_team.u_mod.model;
 import java.util.*;
 import java.util.function.Function;
 
-import javax.vecmath.Matrix4f;
-import javax.vecmath.Quat4f;
-import javax.vecmath.Vector3f;
-import javax.vecmath.Vector4f;
+import javax.vecmath.*;
 
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.google.common.collect.*;
-import com.google.common.graph.ImmutableValueGraph;
 
-import info.u_team.u_mod.UConstants;
-import info.u_team.u_mod.block.BlockEnergyPipe;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.*;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.util.*;
-import net.minecraftforge.client.model.IModel;
-import net.minecraftforge.client.model.ModelFluid;
-import net.minecraftforge.client.model.ModelStateComposition;
-import net.minecraftforge.client.model.PerspectiveMapWrapper;
+import net.minecraftforge.client.model.*;
 import net.minecraftforge.client.model.pipeline.UnpackedBakedQuad;
 import net.minecraftforge.common.ForgeModContainer;
-import net.minecraftforge.common.model.IModelState;
-import net.minecraftforge.common.model.TRSRTransformation;
+import net.minecraftforge.common.model.*;
 
 public class UEnergyPipeModel implements IModel {
 	

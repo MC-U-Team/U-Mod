@@ -1,6 +1,6 @@
 package info.u_team.u_mod.tilentity;
 
-import info.u_team.u_mod.api.ICableExceptor;
+import info.u_team.u_mod.api.*;
 import info.u_team.u_team_core.tileentity.UTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.*;
@@ -12,7 +12,7 @@ import net.minecraftforge.common.capabilities.*;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.relauncher.*;
 
-public abstract class TileEntityMachine extends UTileEntity implements ITickable, ISidedInventory, ICableExceptor, IInteractionObject {
+public abstract class TileEntityMachine extends UTileEntity implements ITickable, ISidedInventory, ICableExceptor, IInteractionObject, IClientEnergy {
 	
 	protected NonNullList<ItemStack> itemstacks;
 	
@@ -149,4 +149,9 @@ public abstract class TileEntityMachine extends UTileEntity implements ITickable
 		return name;
 	}
 	
+	@SideOnly(Side.CLIENT)
+	@Override
+	public int getImpl() {
+		return energy_client;
+	}
 }
