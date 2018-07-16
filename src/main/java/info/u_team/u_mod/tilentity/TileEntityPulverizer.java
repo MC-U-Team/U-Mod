@@ -1,7 +1,10 @@
 package info.u_team.u_mod.tilentity;
 
+import static info.u_team.u_mod.recipe.RecipeManager.getPulverizerRecipes;
+
 import info.u_team.u_mod.api.ICableExceptor;
 import info.u_team.u_mod.container.ContainerPulverizer;
+import info.u_team.u_mod.recipe.RecipePulverizer;
 import info.u_team.u_team_core.tileentity.UTileEntity;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
@@ -19,7 +22,10 @@ public class TileEntityPulverizer extends UTileEntity implements ITickable, ISid
 	
 	private NonNullList<ItemStack> itemstacks = NonNullList.withSize(4, ItemStack.EMPTY);
 	private int time_left = MAX_TIME;
-	private int output_index = -1;
+	
+	// private int output_index = -1;
+	private int recipe_id = -1;
+	private RecipePulverizer recipe;
 	
 	public int impl_energy;
 	
@@ -39,7 +45,7 @@ public class TileEntityPulverizer extends UTileEntity implements ITickable, ISid
 			ENERGY.readNBT(energy, null, compound.getTag("energy"));
 		}
 		this.time_left = compound.getInteger("time");
-		this.output_index = compound.getInteger("output");
+		this.recipe_id = compound.getInteger("recipeid");
 	}
 	
 	@Override
@@ -47,7 +53,8 @@ public class TileEntityPulverizer extends UTileEntity implements ITickable, ISid
 		ItemStackHelper.saveAllItems(compound, itemstacks);
 		compound.setTag("energy", ENERGY.writeNBT(energy, null));
 		compound.setInteger("time", this.time_left);
-		compound.setInteger("output", this.output_index);
+		compound.setInteger("recipeid", this.recipe_id);
+		this.recipe = getPulverizerRecipes().get(this.recipe_id);
 	}
 	
 	@Override
@@ -101,39 +108,44 @@ public class TileEntityPulverizer extends UTileEntity implements ITickable, ISid
 		}
 		
 		if (flag && index == 0) {
-			this.output_index = -1;
+			this.recipe_id = -1;
 			this.time_left = MAX_TIME;
 		}
 		
-		if (index == 0 || this.output_index < 0) {
-			this.hasRecipe(getStackInSlot(0));
+		if (index == 0 || this.recipe_id < 0) {
+			this.hasRecipe();
 			this.markDirty();
 		}
 	}
 	
-	public void hasRecipe(ItemStack stack) {
+	public void hasRecipe() {
 		int i = 0;
-		for (InputStack recipes : input_dictionary) {
-			if (recipes.contains(stack)) {
-				if (canCook(i)) {
+		for (RecipePulverizer recipe : getPulverizerRecipes()) {
+			if (recipe.areIngredientsMatching(this)) {
+				if (recipe.areOutputsMatching(this)) {
+					this.recipe = recipe;
+					this.recipe_id = i;
 					this.time_left = MAX_TIME;
-					this.output_index = i;
 				}
 				return;
 			}
 			i++;
 		}
-		this.output_index = -1;
+		this.recipe_id = -1;
 	}
 	
-	public boolean canCook(int index) {
-		ItemStack stack1 = getStackInSlot(1);
-		ItemStack stack2 = getStackInSlot(2);
-		ItemStack stack3 = getStackInSlot(3);
-		InputStack in = input_dictionary.get(index);
-		
-		return ((stack1.isStackable() || stack1.isEmpty()) && stack1.getCount() + in.getCount() <= stack1.getMaxStackSize()) && ((stack2.isStackable() || stack2.isEmpty()) && stack2.getCount() + in.getCount() <= stack2.getMaxStackSize()) && ((stack3.isStackable() || stack3.isEmpty()) && stack3.getCount() + in.getCount() <= stack3.getMaxStackSize());
-	}
+	// public boolean canCook(int index) {
+	// ItemStack stack1 = getStackInSlot(1);
+	// ItemStack stack2 = getStackInSlot(2);
+	// ItemStack stack3 = getStackInSlot(3);
+	// InputStack in = input_dictionary.get(index);
+	//
+	// return ((stack1.isStackable() || stack1.isEmpty()) && stack1.getCount() +
+	// in.getCount() <= stack1.getMaxStackSize()) && ((stack2.isStackable() ||
+	// stack2.isEmpty()) && stack2.getCount() + in.getCount() <=
+	// stack2.getMaxStackSize()) && ((stack3.isStackable() || stack3.isEmpty()) &&
+	// stack3.getCount() + in.getCount() <= stack3.getMaxStackSize());
+	// }
 	
 	@Override
 	public int getInventoryStackLimit() {
@@ -204,7 +216,7 @@ public class TileEntityPulverizer extends UTileEntity implements ITickable, ISid
 	}
 	
 	@Override
-	public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
+	public boolean canInsertItem(int index, ItemStack stack, EnumFacing direction) {
 		if (index == 0) {
 			return true;
 		}
@@ -224,35 +236,16 @@ public class TileEntityPulverizer extends UTileEntity implements ITickable, ISid
 		if (!world.isRemote) {
 			if (ENERGY_CONSUMED > energy.getEnergyStored())
 				return;
-			if (this.output_index >= 0) {
+			if (this.recipe_id >= 0 && recipe != null) {
 				this.time_left--;
 				if (this.time_left <= 0) {
-					ItemStack stack_primary_out = itemstacks.get(3);
-					ItemStack out_primary = primary_output_dictionary.get(output_index);
-					if (!stack_primary_out.isEmpty()) {
-						stack_primary_out.grow(out_primary.getCount());
-					} else {
-						itemstacks.set(3, out_primary.copy());
-					}
-					
-					ItemStack out_second = secondary_output_dictionary.get(output_index);
-					if (out_second != null) {
-						ItemStack stack_second_out = itemstacks.get(2);
-						if (!stack_second_out.isEmpty()) {
-							stack_second_out.grow(out_second.getCount());
-						} else {
-							itemstacks.set(2, out_second.copy());
-						}
-					}
-					
-					ItemStack input = itemstacks.get(0);
-					input.shrink(1);
+					recipe.executeRecipe(this);
 					energy.extractEnergy(ENERGY_CONSUMED, false);
 					this.markDirty();
-					if (this.canCook(this.output_index) && !input.isEmpty()) {
+					if (recipe.areOutputsMatching(this) && !itemstacks.get(0).isEmpty()) {
 						this.time_left = MAX_TIME;
 					} else {
-						this.output_index = -1;
+						this.recipe_id = -1;
 					}
 				}
 			}

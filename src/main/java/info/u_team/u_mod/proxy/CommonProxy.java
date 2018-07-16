@@ -29,15 +29,8 @@ public class CommonProxy {
 		
 		// Just testing
 		
-		RecipeManager.registerPulverizer(new RecipePulverizer(new ItemStack(Blocks.IRON_ORE), new ItemStack(Items.IRON_INGOT, 2)));
-		RecipeManager.registerPulverizer(new RecipePulverizer(new ItemStack(Blocks.BARRIER, 2), new ItemStack(Items.IRON_INGOT, 2)));
-		RecipeManager.registerPulverizer(new RecipePulverizer(new ItemStack(Blocks.ACACIA_FENCE_GATE, 2), new ItemStack(Items.IRON_INGOT, 2)));
-		RecipeManager.registerPulverizer(new RecipePulverizer("oreUranium", new ItemStack(Items.IRON_INGOT, 2)));
-		
-		// RecipeManagerPulverizer.addRecipe(new InputStack("oreUranium"), new
-		// ItemStack(Items.IRON_INGOT, 2), null);
-		// RecipeManagerPulverizer.addRecipe(new InputStack(new
-		// ItemStack(Blocks.IRON_ORE)), new ItemStack(Items.IRON_INGOT, 2), null);
+		RecipeManager.registerPulverizer(new RecipePulverizer(new IngredientItemStack("oreUranium", 2), new OutputItemStack(new ItemStack(Items.IRON_INGOT, 4))));
+		RecipeManager.registerPulverizer(new RecipePulverizer(new IngredientItemStack(new ItemStack(Blocks.STONE)), new OutputItemStack(new ItemStack(Items.IRON_INGOT, 16))));
 	}
 	
 	public void postinit(FMLPostInitializationEvent event) {

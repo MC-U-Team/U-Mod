@@ -15,16 +15,7 @@ public class OutputItemStack implements IRecipeOutput {
 	}
 	
 	public ItemStack getItemStack() {
-		return stack;
-	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		if (!(obj instanceof OutputItemStack)) {
-			return false;
-		}
-		ItemStack other = ((OutputItemStack) obj).stack;
-		return ItemStack.areItemsEqual(stack, other) && ItemStack.areItemStackTagsEqual(stack, other);
+		return stack.copy();
 	}
 	
 }

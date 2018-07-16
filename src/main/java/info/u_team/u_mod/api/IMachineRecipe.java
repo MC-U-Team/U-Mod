@@ -1,11 +1,13 @@
 package info.u_team.u_mod.api;
 
-import info.u_team.u_mod.util.NonNullSlot;
+import net.minecraft.inventory.IInventory;
 
 public interface IMachineRecipe {
 	
-	public NonNullSlot<IRecipeIngredient> getInput();
+	public boolean areIngredientsMatching(IInventory inventory);
 	
-	public NonNullSlot<IRecipeOutput> getOutput();
+	public boolean areOutputsMatching(IInventory inventory);
+	
+	public void executeRecipe(IInventory inventory);
 	
 }

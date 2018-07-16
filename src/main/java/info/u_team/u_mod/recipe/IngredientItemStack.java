@@ -9,18 +9,19 @@ public class IngredientItemStack implements IRecipeIngredient {
 	
 	private NonNullList<ItemStack> stacks;
 	
-	private String ore = null;
+	private int count;
 	
 	public IngredientItemStack(ItemStack stack) {
 		if (stack == null) {
 			throw new IllegalStateException("Stack can't be null. Use ItemStack.EMPTY");
 		}
+		count = stack.getCount();
 		stacks = NonNullList.withSize(1, stack);
 	}
 	
-	public IngredientItemStack(String oredict) {
+	public IngredientItemStack(String oredict, int amount) {
+		count = amount;
 		stacks = OreDictionary.getOres(oredict);
-		ore = oredict;
 		if (stacks.isEmpty()) {
 			throw new IllegalStateException("Ore in Oredictionary not found");
 		}
@@ -30,25 +31,16 @@ public class IngredientItemStack implements IRecipeIngredient {
 		return stacks;
 	}
 	
-	@Override
-	public boolean equals(Object obj) {
-		if (!(obj instanceof IngredientItemStack)) {
-			return false;
-		}
-		IngredientItemStack other = ((IngredientItemStack) obj);
-		if (ore == null && other.ore == null) {
-			ItemStack stack = stacks.get(0);
-			ItemStack otherstack = other.stacks.get(0);
-			return ItemStack.areItemsEqual(stack, otherstack) && ItemStack.areItemStackTagsEqual(stack, otherstack);
-		} else if (ore != null && other.ore != null) {
-			return ore == other.ore;
-		} else if (ore == null && other.ore != null) {
-			ItemStack stack = stacks.get(0);
-			return other.stacks.stream().anyMatch(otherstack -> ItemStack.areItemsEqual(stack, otherstack) && ItemStack.areItemStackTagsEqual(stack, otherstack));
-		} else if (ore != null && other.ore == null) {
-			ItemStack otherstack = other.stacks.get(0);
-			return stacks.stream().anyMatch(stack -> ItemStack.areItemsEqual(stack, otherstack) && ItemStack.areItemStackTagsEqual(stack, otherstack));
-		}
-		return false;
+	public int getCount() {
+		return count;
 	}
+	
+	public boolean containsStack(ItemStack other) {
+		return stacks.stream().anyMatch(stack -> ItemStack.areItemsEqual(stack, other) && ItemStack.areItemStackTagsEqual(stack, other));
+	}
+	
+	public boolean containsStackCountMatchOrHigher(ItemStack other) {
+		return stacks.stream().anyMatch(stack -> ItemStack.areItemsEqual(stack, other) && ItemStack.areItemStackTagsEqual(stack, other) && other.getCount() >= count);
+	}
+	
 }
