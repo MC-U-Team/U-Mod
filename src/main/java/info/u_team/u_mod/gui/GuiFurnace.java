@@ -7,11 +7,11 @@ import info.u_team.u_mod.tilentity.pulverizer.TileEntityPulverizer;
 import info.u_team.u_team_core.container.UContainer;
 import net.minecraft.util.ResourceLocation;
 
-public class GuiPulverizer extends UGuiContainer {
+public class GuiFurnace extends UGuiContainer {
 		
-	public GuiPulverizer(UContainer inventorySlotsIn) {
+	public GuiFurnace(UContainer inventorySlotsIn) {
 		super((ContainerBase) inventorySlotsIn);
-		this.setBackground(new ResourceLocation(UConstants.MODID, "textures/gui/pulverizer.png"));
+		this.setBackground(new ResourceLocation(UConstants.MODID, "textures/gui/furnace.png"));
 	}
 	
 	@Override

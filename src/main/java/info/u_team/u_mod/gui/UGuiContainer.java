@@ -1,13 +1,19 @@
 package info.u_team.u_mod.gui;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import org.lwjgl.input.Keyboard;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
 import info.u_team.u_mod.UConstants;
+import info.u_team.u_mod.api.IClientEnergy;
 import info.u_team.u_mod.api.IUGui;
 import info.u_team.u_mod.container.ContainerBase;
 import info.u_team.u_mod.resource.EnumModeTab;
@@ -60,12 +66,16 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 	private int lastClickButton;
 	private boolean doubleClick;
 	private ItemStack shiftClickedSlot = ItemStack.EMPTY;
-	
+	private HashMap<EnumModeTab, Integer> impl_map = Maps.newHashMap();
 	private ResourceLocation normal_background;
 	private ResourceLocation used_background;
 	
 	public UGuiContainer(ContainerBase inventorySlotsIn) {
 		super(inventorySlotsIn);
+		impl_map.put(EnumModeTab.NORMAL, 0);
+		if (inventorySlotsIn.tile instanceof IClientEnergy) {
+			impl_map.put(EnumModeTab.ENERGY, impl_map.size());
+		}
 	}
 	
 	@Override
@@ -76,6 +86,10 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 		int j = (this.height - this.ySize) / 2;
 		this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
 		
+		if (this.getTab() == EnumModeTab.ENERGY) {
+			IClientEnergy iclient = (IClientEnergy) getContainer().tile;
+			this.drawTexturedModalRect(i + 9, j + 8, 0, 166, Math.round(158 * ((float) iclient.getImpl() / (float) iclient.getStorage().getMaxEnergyStored())), 20);
+		}
 		this.drawInBackground(this.getTab(), mouseX, mouseY, i, j);
 	}
 	
@@ -99,11 +113,11 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 		int i = (this.width - this.xSize) / 2;
 		int j = (this.height - this.ySize) / 2 - 28;
 		
-		for (EnumModeTab ttab : EnumModeTab.values()) {
-			if (mouseX > i + 28 * ttab.ordinal() && mouseX < i + 28 * ttab.ordinal() + 28 && mouseY > j && mouseY < j + 28) {
+		impl_map.forEach((ttab, num) -> {
+			if (mouseX > i + 28 * num && mouseX < i + 28 * num + 28 && mouseY > j && mouseY < j + 28) {
 				this.drawHoveringText(I18n.format("modetab." + ttab.name() + ".name"), mouseX, mouseY);
 			}
-		}
+		});
 	}
 	
 	private void drawForgroundTab() {
@@ -112,18 +126,18 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 		this.mc.getTextureManager().bindTexture(CREATIVE_INVENTORY_TABS);
 		int i = (this.width - this.xSize) / 2;
 		int j = (this.height - this.ySize) / 2 - 28;
-		this.drawTexturedModalRect(i + (28 * this.getTab().ordinal()), j, 28 * this.getTab().ordinal(), 32, 28, 32);
+		this.drawTexturedModalRect(i + (28 * impl_map.get(this.getTab())), j, 28 * impl_map.get(this.getTab()), 32, 28, 32);
 		RenderHelper.enableGUIStandardItemLighting();
 		GlStateManager.translate(16, 0, 0);
 		
-		for (EnumModeTab ttab : EnumModeTab.values()) {
+		impl_map.forEach((ttab, num) -> {
 			Block item = ttab.item;
 			if (item != null) {
-				this.renderItemModelIntoGUI(new ItemStack(item), i + (28 * this.getTab().ordinal()) + 14, j);
+				this.renderItemModelIntoGUI(new ItemStack(item), i + (28 * num) - 10, j + 10);
 			} else {
-				this.renderItemModelIntoGUI(new ItemStack(this.getContainer().world.getBlockState(this.getContainer().pos).getBlock()), i + (28 * ttab.ordinal()) - 10, j + 10);
+				this.renderItemModelIntoGUI(new ItemStack(this.getContainer().world.getBlockState(this.getContainer().pos).getBlock()), i + (28 * num) - 10, j + 10);
 			}
-		}
+		});
 	}
 	
 	protected void renderItemModelIntoGUI(ItemStack stack, int x, int y) {
@@ -165,7 +179,7 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 		this.mc.getTextureManager().bindTexture(CREATIVE_INVENTORY_TABS);
 		int i = (this.width - this.xSize) / 2;
 		int j = (this.height - this.ySize) / 2 - 24;
-		this.drawTexturedModalRect(i, j, 0, 2, 28 * EnumModeTab.values().length, 32);
+		this.drawTexturedModalRect(i, j, 0, 2, 28 * impl_map.size(), 32);
 	}
 	
 	public final void setBackground(ResourceLocation background) {
@@ -527,11 +541,11 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 		int f = (this.height - this.ySize) / 2 - 28;
 		
 		if (mouseButton == 0) {
-			for (EnumModeTab ttab : EnumModeTab.values()) {
-				if (mouseX > d + 28 * ttab.ordinal() && mouseX < d + 28 * ttab.ordinal() + 28 && mouseY > f && mouseY < f + 28) {
+			impl_map.forEach((ttab, num) -> {
+				if (mouseX > d + 28 * num && mouseX < d + 28 * num + 28 && mouseY > f && mouseY < f + 28) {
 					this.setModeTab(ttab);
 				}
-			}
+			});
 		}
 	}
 	

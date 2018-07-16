@@ -19,6 +19,7 @@ modetab.ENERGY.name=Energy
 
 #Machines
 tile.umod:pulverizer.name=Pulverizer
+tile.umod:energy_pipe.name=Cable
 
 #Resources
 tile.umod:resource_ore1.aluminium.name=Aluminium Ore
