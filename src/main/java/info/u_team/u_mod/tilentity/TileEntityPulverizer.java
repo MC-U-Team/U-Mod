@@ -20,10 +20,7 @@ public class TileEntityPulverizer extends TileEntityMachine {
 	
 	private int progress = MAX_TIME;
 	private int recipe = -1;
-	
-	@SideOnly(Side.CLIENT)
-	public int progress_client;
-	
+		
 	public TileEntityPulverizer() {
 		super(4, "pulverizer");
 	}
@@ -108,7 +105,7 @@ public class TileEntityPulverizer extends TileEntityMachine {
 	public void setField(int id, int value) {
 		super.setField(id, value);
 		if (id == 1) {
-			progress_client = value;
+			progress = value;
 		}
 	}
 	
@@ -117,7 +114,7 @@ public class TileEntityPulverizer extends TileEntityMachine {
 		if (id == 0) {
 			return super.getField(id);
 		} else if (id == 1) {
-			return progress;
+			return this.progress;
 		}
 		return 0;
 	}
