@@ -6,7 +6,7 @@ import net.minecraft.block.Block;;
 public enum EnumModeTab {
 	
 	NORMAL,
-	ENERGY(UBlocks.energy_pipe);
+	ENERGY(UBlocks.battery);
 	
 	public final Block item;
 	

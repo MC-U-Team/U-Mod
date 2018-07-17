@@ -14,10 +14,11 @@ import net.minecraft.inventory.*;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.*;
 
-public class BlockFurnace extends UBlockTileEntity {
+public class BlockFurnace extends BlockMaschine {
 	
 	private int gui;
 	
@@ -33,7 +34,7 @@ public class BlockFurnace extends UBlockTileEntity {
 	}
 	
 	@Override
-	public boolean isOpaqueCube(IBlockState state) {
+	public boolean doesSideBlockRendering(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing face) {
 		return false;
 	}
 	
@@ -46,10 +47,5 @@ public class BlockFurnace extends UBlockTileEntity {
 		super.breakBlock(worldIn, pos, state);
 	}
 	
-	@SideOnly(Side.CLIENT)
-	@Override
-	public BlockRenderLayer getBlockLayer() {
-		return BlockRenderLayer.CUTOUT_MIPPED;
-	}
 	
 }

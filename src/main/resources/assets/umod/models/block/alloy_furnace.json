@@ -1,0 +1,94 @@
+{
+	"parent": "block/block",
+	"textures": {
+		"0": "umod:blocks/alloy_furnace_sides",
+		"1": "umod:blocks/alloy_furnace_backline",
+		"particle": "umod:blocks/alloy_furnace_sides"
+	},
+	"elements": [
+		{
+			"name": "sides",
+			"from": [0, 0, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"east": {"uv": [0, 0, 16, 16], "texture": "#0", "cullface": "east"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#0", "cullface": "south"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#0", "cullface": "west"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#0", "cullface": "up"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#0", "cullface": "down"}
+			}
+		},
+		{
+			"name": "north_left",
+			"from": [0, 0, 0],
+			"to": [2, 16, 0],
+			"faces": {
+				"north": {"uv": [0, 0, 2, 16], "texture": "#0", "cullface": "north"}
+			}
+		},
+		{
+			"name": "north_up",
+			"from": [2, 14, 0],
+			"to": [14, 16, 0],
+			"faces": {
+				"north": {"uv": [0, 0, 12, 2], "texture": "#0", "cullface": "north"}
+			}
+		},
+		{
+			"name": "north_inner_down",
+			"from": [2, 14, 0],
+			"to": [14, 14, 3],
+			"faces": {
+				"down": {"uv": [0, 0, 12, 3], "texture": "#0", "cullface": "north"}
+			}
+		},
+		{
+			"name": "north_inner_east",
+			"from": [2, 2, 0],
+			"to": [2, 14, 3],
+			"faces": {
+				"east": {"uv": [0, 0, 3, 12], "texture": "#0", "cullface": "north"}
+			}
+		},
+		{
+			"name": "north_inner_west",
+			"from": [14, 2, 0],
+			"to": [14, 14, 3],
+			"faces": {
+				"west": {"uv": [0, 0, 3, 12], "texture": "#0", "cullface": "north"}
+			}
+		},
+		{
+			"name": "north_inner_up",
+			"from": [2, 2, 0],
+			"to": [14, 2, 3],
+			"faces": {
+				"up": {"uv": [0, 0, 12, 3], "texture": "#0", "cullface": "north"}
+			}
+		},
+		{
+			"name": "north_down",
+			"from": [2, 0, 0],
+			"to": [14, 2, 0],
+			"faces": {
+				"north": {"uv": [0, 0, 12, 2], "texture": "#0", "cullface": "north"}
+			}
+		},
+		{
+			"name": "north_backline",
+			"from": [2, 2, 3],
+			"to": [14, 14, 3],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#1", "cullface": "north"}
+			}
+		},
+		{
+			"name": "north_right",
+			"from": [14, 0, 0],
+			"to": [16, 16, 0],
+			"faces": {
+				"north": {"uv": [0, 0, 2, 16], "texture": "#0", "cullface": "north"}
+			}
+		}
+	]
+}

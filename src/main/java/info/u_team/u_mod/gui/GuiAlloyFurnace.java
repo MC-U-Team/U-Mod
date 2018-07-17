@@ -16,7 +16,7 @@ public class GuiAlloyFurnace extends UGuiContainer {
 	@Override
 	protected void drawInBackground(EnumModeTab tab, int mouseX, int mouseY, int x_offset, int y_offset) {
 		if (tab == EnumModeTab.NORMAL)
-			this.drawTexturedModalRect(x_offset + 52, y_offset + 25, 177, 0, 72, Math.round(30 * (100 - getContainer().tile.getField(0)) / 100));
+			this.drawTexturedModalRect(x_offset + 52, y_offset + 25, 176, 0, 72, Math.round(30 * (100 - getContainer().tile.getField(0)) / 100));
 	}
 	
 }

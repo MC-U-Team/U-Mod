@@ -1,0 +1,102 @@
+{
+	"parent": "block/block",
+	"textures": {
+		"0": "umod:blocks/battery_blank",
+		"1": "umod:blocks/battery_rack",
+		"2": "umod:blocks/battery_fence",
+		"particle": "umod:blocks/battery_blank"
+	},
+	"elements": [
+		{
+			"name": "north_right",
+			"from": [0, 0, 0],
+			"to": [2, 16, 0],
+			"faces": {
+				"north": {"uv": [0, 0, 2, 16], "texture": "#0", "cullface": "north"}
+			}
+		},
+		{
+			"name": "inner_east",
+			"from": [2, 0, 0],
+			"to": [2, 16, 2],
+			"faces": {
+				"east": {"uv": [0, 0, 2, 16], "texture": "#0",  "cullface": "north"}
+			}
+		},
+		{
+			"name": "inner_west",
+			"from": [14, 0, 0],
+			"to": [14, 16, 2],
+			"faces": {
+				"west": {"uv": [0, 0, 2, 16], "texture": "#0",  "cullface": "north"}
+			}
+		},
+		{
+			"name": "north_left",
+			"from": [14, 0, 0],
+			"to": [16, 16, 0],
+			"faces": {
+				"north": {"uv": [0, 0, 2, 16], "texture": "#0", "cullface": "north"}
+			}
+		},
+		{
+			"name": "south",
+			"from": [0, 0, 16],
+			"to": [16, 16, 16],
+			"faces": {
+				"south": {"uv": [0, 0, 16, 16], "texture": "#0",  "cullface": "south"}
+			}
+		},
+		{
+			"name": "up",
+			"from": [0, 16, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"up": {"uv": [0, 0, 16, 16], "texture": "#0",  "cullface": "up"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#0",  "cullface": "north"}
+			}
+		},
+		{
+			"name": "down",
+			"from": [0, 0, 0],
+			"to": [16, 0, 16],
+			"faces": {
+				"down": {"uv": [0, 0, 16, 16], "texture": "#0",  "cullface": "down"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#0",  "cullface": "north"}
+			
+			}
+		},
+		{
+			"name": "west",
+			"from": [0, 0, 0],
+			"to": [0, 16, 16],
+			"faces": {
+				"west": {"uv": [0, 0, 16, 16], "texture": "#0",  "cullface": "west"}
+			}
+		},
+		{
+			"name": "east",
+			"from": [16, 0, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"east": {"uv": [0, 0, 16, 16], "texture": "#0",  "cullface": "east"}
+			}
+		},
+		{
+			"name": "rack",
+			"from": [2, 0, 2],
+			"to": [14, 16, 2],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#1", "cullface": "north"}
+			}
+		},
+		{
+			"name": "fence",
+			"from": [2, 0, 0],
+			"to": [14, 16, 0],
+			"faces": {
+				"north": {"uv": [0, 0, 14, 16], "texture": "#2", "cullface": "north"}
+			}
+		}
+	]
+}

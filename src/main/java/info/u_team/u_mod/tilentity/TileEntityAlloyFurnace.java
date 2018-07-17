@@ -21,7 +21,7 @@ public class TileEntityAlloyFurnace extends TileEntityMachine {
 	private int recipe = -1;
 		
 	public TileEntityAlloyFurnace() {
-		super(2, "alloy_furnace");
+		super(4, "alloy_furnace");
 	}
 	
 	@Override

@@ -17,7 +17,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.*;
 
-public class BlockAlloyFurnace extends UBlockTileEntity {
+public class BlockAlloyFurnace extends BlockMaschine {
 	
 	private int gui;
 	
@@ -31,12 +31,7 @@ public class BlockAlloyFurnace extends UBlockTileEntity {
 		playerIn.openGui(UConstants.MODID, gui, worldIn, pos.getX(), pos.getY(), pos.getZ());
 		return true;
 	}
-	
-	@Override
-	public boolean isOpaqueCube(IBlockState state) {
-		return false;
-	}
-	
+		
 	@Override
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
 		TileEntity tileentity = worldIn.getTileEntity(pos);
@@ -45,11 +40,5 @@ public class BlockAlloyFurnace extends UBlockTileEntity {
 		
 		super.breakBlock(worldIn, pos, state);
 	}
-	
-	@SideOnly(Side.CLIENT)
-	@Override
-	public BlockRenderLayer getBlockLayer() {
-		return BlockRenderLayer.CUTOUT_MIPPED;
-	}
-	
+		
 }

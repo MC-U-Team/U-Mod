@@ -1,0 +1,8 @@
+{
+	"variants": {
+	    "facing=north": { "model": "umod:battery" },
+        "facing=south": { "model": "umod:battery", "y": 180 },
+        "facing=west":  { "model": "umod:battery", "y": 270 },
+        "facing=east":  { "model": "umod:battery", "y": 90 }
+	}
+}
