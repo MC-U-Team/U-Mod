@@ -3,6 +3,7 @@ package info.u_team.u_mod.tilentity;
 import info.u_team.u_mod.api.ICableExceptor;
 import info.u_team.u_team_core.tileentity.UTileEntity;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.common.capabilities.*;
 import net.minecraftforge.energy.IEnergyStorage;

@@ -20,7 +20,7 @@ public class JeiPlugin implements IModPlugin {
 	public void register(IModRegistry registry) {
 		registry.handleRecipes(RecipePulverizer.class, RecipeWrapperPulverizer::new, UConstants.MODID + ".pulverizer");
 		registry.addRecipes(RecipeManager.getPulverizerRecipes(), UConstants.MODID + ".pulverizer");
-		
+
 		registry.addRecipeCatalyst(new ItemStack(UBlocks.pulverizer), UConstants.MODID + ".pulverizer");
 	}
 }

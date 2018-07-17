@@ -12,9 +12,9 @@ public class ContainerPulverizer extends ContainerBase {
 	public ContainerPulverizer(EntityPlayer player, World world, BlockPos pos) {
 		super(player, world, pos);
 		addSlot(EnumModeTab.NORMAL, new SlotOreInput(tile, 0, 30, 23));
-		addSlot(EnumModeTab.NORMAL, new SlotOutput(tile, 1, 98, 54));
-		addSlot(EnumModeTab.NORMAL, new SlotOutput(tile, 2, 126, 54));
-		addSlot(EnumModeTab.NORMAL, new SlotOutput(tile, 3, 116, 24));
+		addSlot(EnumModeTab.NORMAL, new SlotOutput(tile, 1, 116, 24));
+		addSlot(EnumModeTab.NORMAL, new SlotOutput(tile, 2, 98, 54));
+		addSlot(EnumModeTab.NORMAL, new SlotOutput(tile, 3, 126, 54));
 	}
 	
 	// TODO
