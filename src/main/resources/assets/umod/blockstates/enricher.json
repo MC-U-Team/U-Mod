@@ -1,8 +1,19 @@
 {
 	"variants": {
-	    "facing=north": { "model": "umod:centrifuge" },
-        "facing=south": { "model": "umod:centrifuge", "y": 180 },
-        "facing=west":  { "model": "umod:centrifuge", "y": 270 },
-        "facing=east":  { "model": "umod:centrifuge", "y": 90 }
+		"facing=north": {
+			"model": "umod:centrifuge"
+		},
+		"facing=south": {
+			"model": "umod:centrifuge",
+			"y": 180
+		},
+		"facing=west": {
+			"model": "umod:centrifuge",
+			"y": 270
+		},
+		"facing=east": {
+			"model": "umod:centrifuge",
+			"y": 90
+		}
 	}
 }

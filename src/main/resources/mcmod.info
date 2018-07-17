@@ -1,7 +1,7 @@
 [
 	{
 		"modid": "umod",
-		"name": "U Mod",
+		"name": "UMod",
 		"version": "${version}",
 		"mcversion": "${mcversion}",
 		"description": "Machines and and and...",

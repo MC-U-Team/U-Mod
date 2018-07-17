@@ -1,11 +1,11 @@
 package info.u_team.u_mod.recipe;
 
-import info.u_team.u_mod.api.IRecipeIngredient;
+import info.u_team.u_mod.util.ItemUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class IngredientItemStack implements IRecipeIngredient {
+public class IngredientItemStack {
 	
 	private NonNullList<ItemStack> stacks;
 	
@@ -36,11 +36,11 @@ public class IngredientItemStack implements IRecipeIngredient {
 	}
 	
 	public boolean containsStack(ItemStack other) {
-		return stacks.stream().anyMatch(stack -> ItemStack.areItemsEqual(stack, other) && ItemStack.areItemStackTagsEqual(stack, other));
+		return stacks.stream().anyMatch(stack -> ItemUtil.areItemStacksEqualIgnoreAmount(stack, other));
 	}
 	
 	public boolean containsStackCountMatchOrHigher(ItemStack other) {
-		return stacks.stream().anyMatch(stack -> ItemStack.areItemsEqual(stack, other) && ItemStack.areItemStackTagsEqual(stack, other) && other.getCount() >= count);
+		return stacks.stream().anyMatch(stack -> ItemUtil.areItemStacksEqualIgnoreAmount(stack, other) && other.getCount() >= count);
 	}
 	
 }

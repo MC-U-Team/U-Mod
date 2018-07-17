@@ -3,6 +3,7 @@ package info.u_team.u_mod.proxy;
 import info.u_team.u_mod.api.TunnelHandler;
 import info.u_team.u_mod.init.*;
 import info.u_team.u_mod.recipe.*;
+import info.u_team.u_mod.recipe.machine.RecipePulverizer;
 import info.u_team.u_team_core.registry.CommonRegistry;
 import net.minecraft.init.*;
 import net.minecraft.item.ItemStack;

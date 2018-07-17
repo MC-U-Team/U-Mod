@@ -4,6 +4,7 @@ import info.u_team.u_mod.UConstants;
 import info.u_team.u_mod.init.UBlocks;
 import info.u_team.u_mod.integration.jei.pulverizer.*;
 import info.u_team.u_mod.recipe.*;
+import info.u_team.u_mod.recipe.machine.RecipePulverizer;
 import mezz.jei.api.*;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import net.minecraft.item.ItemStack;

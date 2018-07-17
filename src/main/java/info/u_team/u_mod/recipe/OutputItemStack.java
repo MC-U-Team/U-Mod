@@ -1,9 +1,8 @@
 package info.u_team.u_mod.recipe;
 
-import info.u_team.u_mod.api.IRecipeOutput;
 import net.minecraft.item.ItemStack;
 
-public class OutputItemStack implements IRecipeOutput {
+public class OutputItemStack {
 	
 	private ItemStack stack;
 	

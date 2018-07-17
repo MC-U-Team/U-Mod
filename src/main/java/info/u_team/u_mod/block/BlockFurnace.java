@@ -5,7 +5,6 @@ import info.u_team.u_mod.container.ContainerFurnace;
 import info.u_team.u_mod.gui.GuiFurnace;
 import info.u_team.u_mod.init.*;
 import info.u_team.u_mod.tilentity.TileEntityFurnace;
-import info.u_team.u_team_core.block.UBlockTileEntity;
 import info.u_team.u_team_core.tileentity.UTileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -14,9 +13,7 @@ import net.minecraft.inventory.*;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.*;
+import net.minecraft.world.*;
 
 public class BlockFurnace extends BlockMaschine {
 	
