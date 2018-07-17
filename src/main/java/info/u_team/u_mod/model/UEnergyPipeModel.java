@@ -26,7 +26,9 @@ public class UEnergyPipeModel implements IModel {
 	private ResourceLocation texture;
 	private boolean isItem;
 	private EnumFacing[] enabled;
-	private static final TRSRTransformation smallTransformation = TRSRTransformation.blockCenterToCorner(new TRSRTransformation(null, null, new Vector3f(.25f, .25f, .25f), null));
+	// private static final TRSRTransformation smallTransformation =
+	// TRSRTransformation.blockCenterToCorner(new TRSRTransformation(null, null, new
+	// Vector3f(.25f, .25f, .25f), null));
 	
 	public UEnergyPipeModel(boolean isItem, EnumFacing[] enabled) {
 		this.particle = new ResourceLocation("minecraft", "blocks/iron_block");
@@ -62,14 +64,14 @@ public class UEnergyPipeModel implements IModel {
 		private final Optional<TRSRTransformation> transformation;
 		private final int color;
 		private final boolean isItem;
-		private final ImmutableMap<TransformType, TRSRTransformation> transforms;
-		private EnumFacing[] enabled;
+		// private final ImmutableMap<TransformType, TRSRTransformation> transforms;
+		// private EnumFacing[] enabled;
 		
 		public UEnergyPipeBakedModel(EnumFacing[] enabled, boolean isItem, Optional<TRSRTransformation> transformation, ImmutableMap<TransformType, TRSRTransformation> map, VertexFormat format, TextureAtlasSprite particle, TextureAtlasSprite texture, int color) {
 			this.transformation = transformation;
-			this.enabled = enabled;
+			// this.enabled = enabled;
 			this.isItem = isItem;
-			this.transforms = map;
+			// this.transforms = map;
 			this.faceQuads = Maps.newEnumMap(EnumFacing.class);
 			for (EnumFacing enumFacing : EnumFacing.VALUES) {
 				this.faceQuads.put(enumFacing, Lists.newArrayList());

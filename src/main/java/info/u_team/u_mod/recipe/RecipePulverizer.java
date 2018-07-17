@@ -1,10 +1,15 @@
 package info.u_team.u_mod.recipe;
 
+import java.util.*;
+
 import info.u_team.u_mod.api.IMachineRecipe;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 
 public class RecipePulverizer implements IMachineRecipe {
+	
+	public List<List<ItemStack>> inputs;
+	public List<ItemStack> outputs;
 	
 	private IngredientItemStack input;
 	private OutputItemStack firstoutput, secondoutput, thirdoutput;
@@ -22,6 +27,14 @@ public class RecipePulverizer implements IMachineRecipe {
 		this.firstoutput = firstoutput;
 		this.secondoutput = secondoutput;
 		this.thirdoutput = thirdoutput;
+		
+		inputs = new ArrayList<>();
+		inputs.add(input.getItemStack());
+		
+		outputs = new ArrayList<>();
+		outputs.add(firstoutput.getItemStack());
+		outputs.add(secondoutput.getItemStack());
+		outputs.add(thirdoutput.getItemStack());
 	}
 	
 	@Override

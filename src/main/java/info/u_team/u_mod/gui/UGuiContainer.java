@@ -227,8 +227,8 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 			GlStateManager.enableRescaleNormal();
 			this.hoveredSlot = null;
-			int k = 240;
-			int l = 240;
+			// int k = 240;
+			// int l = 240;
 			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240.0F, 240.0F);
 			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 			
@@ -261,7 +261,7 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 			ItemStack itemstack = this.draggedStack.isEmpty() ? inventoryplayer.getItemStack() : this.draggedStack;
 			
 			if (!itemstack.isEmpty()) {
-				int j2 = 8;
+				// int j2 = 8;
 				int k2 = this.draggedStack.isEmpty() ? 8 : 16;
 				String s = null;
 				
