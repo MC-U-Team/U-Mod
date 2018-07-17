@@ -100,7 +100,7 @@ sourceSets {
 
 dependencies {
 	compile "info.u-team:u_team_core-1.12.2:+:dev"
-	deobfProvided "mezz.jei:jei_1.12.2:4.11.0.204:api"
+	compile "mezz.jei:jei_1.12.2:4.11.0.204:api"
 	runtime "mezz.jei:jei_1.12.2:4.11.0.204"
 	//runtime "cofh:ThermalExpansion:1.12.2-5.5.0.30:deobf"
 }

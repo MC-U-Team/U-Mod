@@ -3,7 +3,7 @@ package info.u_team.u_mod.tilentity;
 import static info.u_team.u_mod.recipe.RecipeManager.getPulverizerRecipes;
 
 import info.u_team.u_mod.container.ContainerPulverizer;
-import info.u_team.u_mod.recipe.RecipePulverizer;
+import info.u_team.u_mod.recipe.machine.RecipePulverizer;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;

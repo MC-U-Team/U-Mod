@@ -5,7 +5,6 @@ import info.u_team.u_mod.container.ContainerPress;
 import info.u_team.u_mod.gui.GuiPress;
 import info.u_team.u_mod.init.*;
 import info.u_team.u_mod.tilentity.TileEntityPress;
-import info.u_team.u_team_core.block.UBlockTileEntity;
 import info.u_team.u_team_core.tileentity.UTileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -15,7 +14,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.*;
 
 public class BlockPress extends BlockMaschine {
 	

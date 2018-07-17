@@ -1,6 +1,7 @@
 package info.u_team.u_mod.integration.jei.pulverizer;
 
 import info.u_team.u_mod.recipe.*;
+import info.u_team.u_mod.recipe.machine.RecipePulverizer;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.*;
 import net.minecraft.item.ItemStack;

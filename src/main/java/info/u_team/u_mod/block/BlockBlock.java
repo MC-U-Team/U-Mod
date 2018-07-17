@@ -9,7 +9,6 @@ import info.u_team.u_mod.init.UCreativeTabs;
 import info.u_team.u_team_core.api.IMetaType;
 import info.u_team.u_team_core.block.UBlockMetaData;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockFurnace;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;

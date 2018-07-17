@@ -1,8 +1,9 @@
-package info.u_team.u_mod.recipe;
+package info.u_team.u_mod.recipe.machine;
 
 import java.util.*;
 
 import info.u_team.u_mod.api.IMachineRecipe;
+import info.u_team.u_mod.recipe.*;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 

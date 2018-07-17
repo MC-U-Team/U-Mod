@@ -5,7 +5,7 @@ import org.apache.logging.log4j.*;
 public class UConstants {
 	
 	public static final String MODID = "umod";
-	public static final String NAME = "U Mod";
+	public static final String NAME = "UMod";
 	public static final String VERSION = "${version}";
 	public static final String MCVERSION = "${mcversion}";
 	public static final String DEPENDENCIES = "required-after:uteamcore@[2.0.0.75-SNAPSHOT,);required:forge@[14.23.4.2705,)";

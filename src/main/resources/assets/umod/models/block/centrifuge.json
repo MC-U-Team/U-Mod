@@ -10,79 +10,407 @@
 	"elements": [
 		{
 			"name": "ground",
-			"from": [0, 0, 0],
-			"to": [16, 2, 16],
+			"from": [
+				0,
+				0,
+				0
+			],
+			"to": [
+				16,
+				2,
+				16
+			],
 			"faces": {
-				"north": {"uv": [0, 0, 16, 2], "texture": "#0"},
-				"east": {"uv": [0, 0, 16, 2], "texture": "#0"},
-				"south": {"uv": [0, 0, 16, 2], "texture": "#0"},
-				"west": {"uv": [0, 0, 16, 2], "texture": "#0"},
-				"up": {"uv": [0, 0, 16, 16], "texture": "#0"},
-				"down": {"uv": [0, 0, 16, 16], "texture": "#0"}
+				"north": {
+					"uv": [
+						0,
+						0,
+						16,
+						2
+					],
+					"texture": "#0"
+				},
+				"east": {
+					"uv": [
+						0,
+						0,
+						16,
+						2
+					],
+					"texture": "#0"
+				},
+				"south": {
+					"uv": [
+						0,
+						0,
+						16,
+						2
+					],
+					"texture": "#0"
+				},
+				"west": {
+					"uv": [
+						0,
+						0,
+						16,
+						2
+					],
+					"texture": "#0"
+				},
+				"up": {
+					"uv": [
+						0,
+						0,
+						16,
+						16
+					],
+					"texture": "#0"
+				},
+				"down": {
+					"uv": [
+						0,
+						0,
+						16,
+						16
+					],
+					"texture": "#0"
+				}
 			}
 		},
 		{
 			"name": "centrifuge_1",
-			"from": [2, 2, 10],
-			"to": [6, 16, 14],
-			"rotation": {"angle": 45, "axis": "y", "origin": [4, 9, 12]},
+			"from": [
+				2,
+				2,
+				10
+			],
+			"to": [
+				6,
+				16,
+				14
+			],
+			"rotation": {
+				"angle": 45,
+				"axis": "y",
+				"origin": [
+					4,
+					9,
+					12
+				]
+			},
 			"faces": {
-				"north": {"uv": [0, 0, 4, 14], "texture": "#1"},
-				"east": {"uv": [0, 0, 4, 14], "texture": "#1"},
-				"south": {"uv": [0, 0, 4, 14], "texture": "#1"},
-				"west": {"uv": [0, 0, 4, 14], "texture": "#1"},
-				"up": {"uv": [0, 0, 5, 5], "texture": "#2"}
+				"north": {
+					"uv": [
+						0,
+						0,
+						4,
+						14
+					],
+					"texture": "#1"
+				},
+				"east": {
+					"uv": [
+						0,
+						0,
+						4,
+						14
+					],
+					"texture": "#1"
+				},
+				"south": {
+					"uv": [
+						0,
+						0,
+						4,
+						14
+					],
+					"texture": "#1"
+				},
+				"west": {
+					"uv": [
+						0,
+						0,
+						4,
+						14
+					],
+					"texture": "#1"
+				},
+				"up": {
+					"uv": [
+						0,
+						0,
+						5,
+						5
+					],
+					"texture": "#2"
+				}
 			}
 		},
 		{
 			"name": "centrifuge_2",
-			"from": [10, 2, 2],
-			"to": [14, 16, 6],
-			"rotation": {"angle": 45, "axis": "y", "origin": [12, 9, 4]},
+			"from": [
+				10,
+				2,
+				2
+			],
+			"to": [
+				14,
+				16,
+				6
+			],
+			"rotation": {
+				"angle": 45,
+				"axis": "y",
+				"origin": [
+					12,
+					9,
+					4
+				]
+			},
 			"faces": {
-				"north": {"uv": [0, 0, 4, 14], "texture": "#1"},
-				"east": {"uv": [0, 0, 4, 14], "texture": "#1"},
-				"south": {"uv": [0, 0, 4, 14], "texture": "#1"},
-				"west": {"uv": [0, 0, 4, 14], "texture": "#1"},
-				"up": {"uv": [0, 0, 5, 5], "texture": "#2"}
+				"north": {
+					"uv": [
+						0,
+						0,
+						4,
+						14
+					],
+					"texture": "#1"
+				},
+				"east": {
+					"uv": [
+						0,
+						0,
+						4,
+						14
+					],
+					"texture": "#1"
+				},
+				"south": {
+					"uv": [
+						0,
+						0,
+						4,
+						14
+					],
+					"texture": "#1"
+				},
+				"west": {
+					"uv": [
+						0,
+						0,
+						4,
+						14
+					],
+					"texture": "#1"
+				},
+				"up": {
+					"uv": [
+						0,
+						0,
+						5,
+						5
+					],
+					"texture": "#2"
+				}
 			}
 		},
 		{
 			"name": "centrifuge_3",
-			"from": [10, 2, 10],
-			"to": [14, 16, 14],
-			"rotation": {"angle": -45, "axis": "y", "origin": [12, 9, 12]},
+			"from": [
+				10,
+				2,
+				10
+			],
+			"to": [
+				14,
+				16,
+				14
+			],
+			"rotation": {
+				"angle": -45,
+				"axis": "y",
+				"origin": [
+					12,
+					9,
+					12
+				]
+			},
 			"faces": {
-				"north": {"uv": [0, 0, 4, 14], "texture": "#1"},
-				"east": {"uv": [0, 0, 4, 14], "texture": "#1"},
-				"south": {"uv": [0, 0, 4, 14], "texture": "#1"},
-				"west": {"uv": [0, 0, 4, 14], "texture": "#1"},
-				"up": {"uv": [0, 0, 5, 5], "texture": "#2"}
+				"north": {
+					"uv": [
+						0,
+						0,
+						4,
+						14
+					],
+					"texture": "#1"
+				},
+				"east": {
+					"uv": [
+						0,
+						0,
+						4,
+						14
+					],
+					"texture": "#1"
+				},
+				"south": {
+					"uv": [
+						0,
+						0,
+						4,
+						14
+					],
+					"texture": "#1"
+				},
+				"west": {
+					"uv": [
+						0,
+						0,
+						4,
+						14
+					],
+					"texture": "#1"
+				},
+				"up": {
+					"uv": [
+						0,
+						0,
+						5,
+						5
+					],
+					"texture": "#2"
+				}
 			}
 		},
 		{
 			"name": "centrifuge_4",
-			"from": [2, 2, 2],
-			"to": [6, 16, 6],
-			"rotation": {"angle": 45, "axis": "y", "origin": [4, 9, 4]},
+			"from": [
+				2,
+				2,
+				2
+			],
+			"to": [
+				6,
+				16,
+				6
+			],
+			"rotation": {
+				"angle": 45,
+				"axis": "y",
+				"origin": [
+					4,
+					9,
+					4
+				]
+			},
 			"faces": {
-				"north": {"uv": [0, 0, 4, 14], "texture": "#1"},
-				"east": {"uv": [0, 0, 4, 14], "texture": "#1"},
-				"south": {"uv": [0, 0, 4, 14], "texture": "#1"},
-				"west": {"uv": [0, 0, 4, 14], "texture": "#1"},
-				"up": {"uv": [0, 0, 5, 5], "texture": "#2"}
+				"north": {
+					"uv": [
+						0,
+						0,
+						4,
+						14
+					],
+					"texture": "#1"
+				},
+				"east": {
+					"uv": [
+						0,
+						0,
+						4,
+						14
+					],
+					"texture": "#1"
+				},
+				"south": {
+					"uv": [
+						0,
+						0,
+						4,
+						14
+					],
+					"texture": "#1"
+				},
+				"west": {
+					"uv": [
+						0,
+						0,
+						4,
+						14
+					],
+					"texture": "#1"
+				},
+				"up": {
+					"uv": [
+						0,
+						0,
+						5,
+						5
+					],
+					"texture": "#2"
+				}
 			}
 		},
 		{
 			"name": "controle_pannel",
-			"from": [5, 2, 0],
-			"to": [11, 6, 1],
+			"from": [
+				5,
+				2,
+				0
+			],
+			"to": [
+				11,
+				6,
+				1
+			],
 			"faces": {
-				"north": {"uv": [0, 0, 6, 4], "texture": "#3"},
-				"east": {"uv": [0, 0, 1, 4], "texture": "#0"},
-				"south": {"uv": [0, 0, 6, 4], "texture": "#0"},
-				"west": {"uv": [0, 0, 1, 4], "texture": "#0"},
-				"up": {"uv": [0, 0, 6, 1], "texture": "#0"}
+				"north": {
+					"uv": [
+						0,
+						0,
+						6,
+						4
+					],
+					"texture": "#3"
+				},
+				"east": {
+					"uv": [
+						0,
+						0,
+						1,
+						4
+					],
+					"texture": "#0"
+				},
+				"south": {
+					"uv": [
+						0,
+						0,
+						6,
+						4
+					],
+					"texture": "#0"
+				},
+				"west": {
+					"uv": [
+						0,
+						0,
+						1,
+						4
+					],
+					"texture": "#0"
+				},
+				"up": {
+					"uv": [
+						0,
+						0,
+						6,
+						1
+					],
+					"texture": "#0"
+				}
 			}
 		}
 	]
