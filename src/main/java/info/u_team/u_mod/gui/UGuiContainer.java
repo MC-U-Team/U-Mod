@@ -132,6 +132,7 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 				this.renderItemModelIntoGUI(new ItemStack(this.getContainer().world.getBlockState(this.getContainer().pos).getBlock()), i + (28 * num) - 10, j + 10);
 			}
 		});
+		GlStateManager.translate(-16, 0, 0);
 	}
 	
 	protected void renderItemModelIntoGUI(ItemStack stack, int x, int y) {
