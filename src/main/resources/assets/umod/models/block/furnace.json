@@ -4,7 +4,6 @@
 		"0": "umod:blocks/furnace_sides",
 		"1": "umod:blocks/furnace_front",
 		"2": "umod:blocks/furnace_grip",
-		"3": "umod:blocks/furnace_vent",
 		"particle": "umod:blocks/furnace_sides"
 	},
 	"elements": [
