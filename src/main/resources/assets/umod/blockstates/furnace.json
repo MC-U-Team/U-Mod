@@ -1,0 +1,8 @@
+{
+	"variants": {
+	    "facing=north": { "model": "umod:furnace" },
+        "facing=south": { "model": "umod:furnace", "y": 180 },
+        "facing=west":  { "model": "umod:furnace", "y": 270 },
+        "facing=east":  { "model": "umod:furnace", "y": 90 }
+	}
+}

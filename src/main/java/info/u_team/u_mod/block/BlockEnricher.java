@@ -17,7 +17,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.*;
 
-public class BlockEnricher extends UBlockTileEntity {
+public class BlockEnricher extends BlockMaschine {
 	
 	private int gui;
 	
@@ -45,11 +45,5 @@ public class BlockEnricher extends UBlockTileEntity {
 		
 		super.breakBlock(worldIn, pos, state);
 	}
-	
-	@SideOnly(Side.CLIENT)
-	@Override
-	public BlockRenderLayer getBlockLayer() {
-		return BlockRenderLayer.CUTOUT_MIPPED;
-	}
-	
+		
 }
