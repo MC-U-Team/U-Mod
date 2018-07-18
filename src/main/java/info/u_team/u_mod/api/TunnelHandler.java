@@ -142,7 +142,7 @@ public class TunnelHandler {
 				if (blocks != null) {
 					blocks.add(pos);
 				} else {
-					return onStateChange(world.getBlockState(pos), world, pos);
+					return false;
 				}
 			}
 			

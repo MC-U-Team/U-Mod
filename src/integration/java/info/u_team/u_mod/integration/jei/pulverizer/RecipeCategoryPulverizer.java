@@ -1,19 +1,34 @@
 package info.u_team.u_mod.integration.jei.pulverizer;
 
+import java.util.List;
+
+import com.google.common.collect.ImmutableList;
+import com.mojang.realmsclient.gui.ChatFormatting;
+
 import info.u_team.u_mod.UConstants;
 import info.u_team.u_mod.init.UBlocks;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.*;
+import mezz.jei.api.gui.IDrawableAnimated.StartDirection;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeCategory;
+import mezz.jei.color.ColorUtil;
 import mezz.jei.config.Constants;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer.EnumChatVisibility;
+import net.minecraft.item.EnumDyeColor;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.event.RenderTooltipEvent.Color;
 
 public class RecipeCategoryPulverizer implements IRecipeCategory<RecipeWrapperPulverizer> {
 	
 	private IDrawable background;
+	private IDrawableAnimated progressbar;
+	private ResourceLocation PULVERIZER = new ResourceLocation(UConstants.MODID, "textures/gui/pulverizer.png");
 	
 	public RecipeCategoryPulverizer(IGuiHelper guiHelper) {
-		background = guiHelper.drawableBuilder(Constants.RECIPE_GUI_VANILLA, 0, 168, 125, 18).addPadding(0, 20, 0, 0).build();
+		this.background = guiHelper.drawableBuilder(PULVERIZER, 26, 17, 120, 60).build();
+		this.progressbar = guiHelper.createAnimatedDrawable(guiHelper.createDrawable(PULVERIZER, 0, 166, 64, 7), 100, StartDirection.LEFT, false);
 	}
 	
 	@Override
@@ -34,16 +49,29 @@ public class RecipeCategoryPulverizer implements IRecipeCategory<RecipeWrapperPu
 	@Override
 	public IDrawable getBackground() {
 		return background;
+	}	
+	
+	@Override
+	public void drawExtras(Minecraft minecraft) {
+		this.progressbar.draw(minecraft, 21, 11);
+	}
+	
+	@Override
+	public List<String> getTooltipStrings(int mouseX, int mouseY) {
+		if(mouseX >= 21 && mouseX <= 85 && mouseY >= 11 && mouseY <= 18) {
+			return ImmutableList.of(ChatFormatting.RED + "Needs energy!", ChatFormatting.BLUE + "See 'Energy' tab!");
+		}
+		return ImmutableList.of();
 	}
 	
 	@Override
 	public void setRecipe(IRecipeLayout recipeLayout, RecipeWrapperPulverizer recipeWrapper, IIngredients ingredients) {
 		IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
 		
-		guiItemStacks.init(0, true, 0, 0);
-		guiItemStacks.init(1, true, 49, 0);
-		guiItemStacks.init(2, false, 107, 0);
-		guiItemStacks.init(2, false, 123, 0);
+		guiItemStacks.init(0, true, 3, 5);
+		guiItemStacks.init(1, false, 89, 6);
+		guiItemStacks.init(2, false, 71, 36);
+		guiItemStacks.init(3, false, 98, 36);
 		
 		guiItemStacks.set(ingredients);
 	}

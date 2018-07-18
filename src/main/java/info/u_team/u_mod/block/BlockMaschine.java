@@ -11,6 +11,8 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockMaschine extends UBlockTileEntity {
 	
@@ -58,6 +60,29 @@ public class BlockMaschine extends UBlockTileEntity {
         return state.withRotation(mirrorIn.toRotation((EnumFacing)state.getValue(FACING)));
     }
 
+    @Override
+    public boolean isFullBlock(IBlockState state) {
+    	return false;
+    }
+    
+    @SideOnly(Side.CLIENT)
+    @Override
+    public boolean isTranslucent(IBlockState state)
+    {
+        return false;
+    }
+    
+	@Override
+	public boolean isOpaqueCube(IBlockState state) {
+		return false;
+	}
+
+    @Override
+    public boolean getUseNeighborBrightness(IBlockState state)
+    {
+        return false;
+    }
+    
 	@Override
 	protected BlockStateContainer createBlockState() {
 		return new BlockStateContainer(this, new IProperty[] {FACING});
