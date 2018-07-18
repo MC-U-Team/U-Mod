@@ -1,6 +1,9 @@
 package info.u_team.u_mod.tilentity.machine;
 
+import static info.u_team.u_mod.recipe.RecipeManager.getFurnaceRecipes;
+
 import info.u_team.u_mod.container.machine.ContainerPulverizer;
+import info.u_team.u_mod.recipe.machine.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
@@ -9,55 +12,24 @@ import net.minecraft.util.EnumFacing;
 
 public class TileEntityFurnace extends TileEntityMachine {
 	
-	public static final int MAX_TIME = 100;
-	public static final int ENERGY_CONSUMED = 100;
+	public static final int[] IN = { 0 }, OUT = { 1 };
 	
-	public static final int[] OUT = { 1 }, IN = { 0 };
-	
-	private int progress = MAX_TIME;
-	private int recipe = -1;
-		
 	public TileEntityFurnace() {
 		super(2, "furnace");
 	}
 	
 	@Override
-	public void setInventorySlotContents(int index, ItemStack stack) { // METHOD will only be executed when you set stacks, not when you increase them.
-																		// So it wont be updated all the time
-		ItemStack itemstack = itemstacks.get(index);
-		itemstacks.set(index, stack);
-		
-		if (stack.getCount() > this.getInventoryStackLimit()) {
-			stack.setCount(this.getInventoryStackLimit());
-		}
-		
-		if (index == 0) {
-			boolean flag = stack.isEmpty() && !stack.isItemEqual(itemstack) || !ItemStack.areItemStackTagsEqual(stack, itemstack);
-			if (flag) {
-				recipe = -1;
-				progress = MAX_TIME;
+	public void checkRecipe() {
+		for (int i = 0; i < getFurnaceRecipes().size(); i++) {
+			RecipeFurnace recipe = getFurnaceRecipes().get(i);
+			if (recipe.areIngredientsMatching(this)) {
+				recipeid = i;
+				progress = max_progress = recipe.getTime();
+				return;
 			}
 		}
-		
-		if (index == 0 || recipe < 0) {
-			searchRecipe();
-		}
-		markDirty();
-	}
-	
-	public void searchRecipe() {
-		int i = 0;
-//		for (RecipePulverizerOLD recipe : getPulverizerRecipes()) {
-//			if (recipe.areIngredientsMatching(this)) {
-//				if (recipe.areOutputsMatching(this)) {
-//					this.recipe = i;
-//					this.progress = MAX_TIME;
-//				}
-//				return;
-//			}
-//			i++;
-//		}
-		this.recipe = -1;
+		progress = max_progress = 100;
+		recipeid = -1;
 	}
 	
 	@Override
@@ -65,11 +37,20 @@ public class TileEntityFurnace extends TileEntityMachine {
 		if (world.isRemote) {
 			return;
 		}
-		if (ENERGY_CONSUMED > energy.getEnergyStored())
-			return;
-		if (this.recipe >= 0) {
-			this.progress--;
-			if (this.progress <= 0) {
+		if (recipeid >= 0) {
+			RecipeFurnace recipe = getFurnaceRecipes().get(recipeid);
+			if (!recipe.areIngredientsMatching(this)) {
+				recipeid = -1;
+				return;
+			}
+			if (!recipe.isEnergyMatching(this) || !recipe.areOutputsMatching(this)) {
+				return;
+			}
+			progress--;
+			if (progress <= 0) {
+				recipe.execute(this);
+				progress = max_progress;
+				super.markDirty();
 			}
 		}
 	}
@@ -77,38 +58,13 @@ public class TileEntityFurnace extends TileEntityMachine {
 	@Override
 	public void readNBT(NBTTagCompound compound) {
 		super.readNBT(compound);
-		progress = compound.getInteger("progress");
-		recipe = compound.getInteger("recipe");
+		recipeid = compound.getInteger("recipe");
 	}
 	
 	@Override
 	public void writeNBT(NBTTagCompound compound) {
 		super.writeNBT(compound);
-		compound.setInteger("progress", progress);
-		compound.setInteger("recipe", recipe);
-	}
-	
-	@Override
-	public void setField(int id, int value) {
-		super.setField(id, value);
-		if (id == 1) {
-			progress = value;
-		}
-	}
-	
-	@Override
-	public int getField(int id) {
-		if (id == 0) {
-			return super.getField(id);
-		} else if (id == 1) {
-			return this.progress;
-		}
-		return 0;
-	}
-	
-	@Override
-	public int getFieldCount() {
-		return 2;
+		compound.setInteger("recipe", recipeid);
 	}
 	
 	@Override
@@ -153,11 +109,6 @@ public class TileEntityFurnace extends TileEntityMachine {
 	@Override
 	public Container createContainer(InventoryPlayer inventory, EntityPlayer player) {
 		return new ContainerPulverizer(player, world, pos);
-	}
-	
-	@Override
-	public void checkRecipe() {
-		
 	}
 	
 }

@@ -12,7 +12,7 @@ import net.minecraft.util.EnumFacing;
 
 public class TileEntityPulverizer extends TileEntityMachine {
 	
-	public static final int[] OUT = { 1, 2, 3 }, IN = { 0 };
+	public static final int[] IN = { 0 }, OUT = { 1, 2, 3 };
 	
 	public TileEntityPulverizer() {
 		super(4, "pulverizer");

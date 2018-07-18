@@ -1,4 +1,4 @@
-package info.u_team.u_mod.integration.jei.pulverizer;
+package info.u_team.u_mod.integration.jei.alloyfurnace;
 
 import java.util.List;
 
@@ -16,25 +16,25 @@ import mezz.jei.api.recipe.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 
-public class RecipeCategoryPulverizer implements IRecipeCategory<RecipeWrapperPulverizer> {
+public class RecipeCategoryAlloyFurnace implements IRecipeCategory<RecipeWrapperAlloyFurnace> {
 	
 	private IDrawable background;
 	private IDrawableAnimated progressbar;
 	private ResourceLocation PULVERIZER = new ResourceLocation(UConstants.MODID, "textures/gui/pulverizer.png");
 	
-	public RecipeCategoryPulverizer(IGuiHelper guiHelper) {
+	public RecipeCategoryAlloyFurnace(IGuiHelper guiHelper) {
 		this.background = guiHelper.drawableBuilder(PULVERIZER, 26, 17, 120, 60).build();
 		this.progressbar = guiHelper.createAnimatedDrawable(guiHelper.createDrawable(PULVERIZER, 0, 166, 64, 7), 100, StartDirection.LEFT, false);
 	}
 	
 	@Override
 	public String getUid() {
-		return JeiPlugin.pulverizerID;
+		return JeiPlugin.alloyfurnaceID;
 	}
 	
 	@Override
 	public String getTitle() {
-		return UBlocks.pulverizer.getLocalizedName();
+		return UBlocks.alloy_furnace.getLocalizedName();
 	}
 	
 	@Override
@@ -61,12 +61,12 @@ public class RecipeCategoryPulverizer implements IRecipeCategory<RecipeWrapperPu
 	}
 	
 	@Override
-	public void setRecipe(IRecipeLayout recipeLayout, RecipeWrapperPulverizer recipeWrapper, IIngredients ingredients) {
+	public void setRecipe(IRecipeLayout recipeLayout, RecipeWrapperAlloyFurnace recipeWrapper, IIngredients ingredients) {
 		IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
 		
 		guiItemStacks.init(0, true, 3, 5);
-		guiItemStacks.init(1, false, 89, 6);
-		guiItemStacks.init(2, false, 71, 36);
+		guiItemStacks.init(1, true, 89, 6);
+		guiItemStacks.init(2, true, 71, 36);
 		guiItemStacks.init(3, false, 98, 36);
 		
 		guiItemStacks.set(ingredients);

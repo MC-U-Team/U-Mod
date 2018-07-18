@@ -19,7 +19,6 @@ public class GuiPulverizer extends UGuiContainer {
 	protected void drawInBackground(EnumModeTab tab, int mouseX, int mouseY, int x_offset, int y_offset) {
 		if (tab == EnumModeTab.NORMAL) {
 			IClientProgress iclient = (IClientProgress) getContainer().tile;
-			System.out.println(iclient.getImplProgress());
 			drawTexturedModalRect(x_offset + 47, y_offset + 28, 0, 166, Math.round(64 * iclient.getImplProgress() / 100), 7);
 		}
 	}

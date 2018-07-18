@@ -2,11 +2,7 @@ package info.u_team.u_mod.proxy;
 
 import info.u_team.u_mod.api.TunnelHandler;
 import info.u_team.u_mod.init.*;
-import info.u_team.u_mod.recipe.*;
-import info.u_team.u_mod.recipe.machine.RecipePulverizer;
 import info.u_team.u_team_core.registry.CommonRegistry;
-import net.minecraft.init.*;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.event.*;
 
 public class CommonProxy {
@@ -27,11 +23,6 @@ public class CommonProxy {
 		UGeneration.init();
 		UOreDirectory.init();
 		URecipes.init();
-		
-		// Just testing
-		
-		RecipeManager.registerPulverizer(new RecipePulverizer(new IngredientItemStack("oreUranium", 2), new OutputItemStack(new ItemStack(Items.IRON_INGOT, 4)), new ProcessEnergy(100), new ProcessTime(300)));
-		RecipeManager.registerPulverizer(new RecipePulverizer(new IngredientItemStack(new ItemStack(Blocks.STONE)), new OutputItemStack(new ItemStack(Items.IRON_INGOT, 16)), new ProcessEnergy(100), new ProcessTime(100)));
 	}
 	
 	public void postinit(FMLPostInitializationEvent event) {
