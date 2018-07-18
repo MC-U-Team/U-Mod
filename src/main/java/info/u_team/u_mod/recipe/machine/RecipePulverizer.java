@@ -63,7 +63,6 @@ public class RecipePulverizer {
 		secondoutput.execute(pulverizer, 2);
 		thirdoutput.execute(pulverizer, 3);
 		pulverizer.getStorage().extractEnergy(energy.getEnergy(), false);
-		pulverizer.markDirty();
 	}
 	
 	public int getTime() {

@@ -12,7 +12,7 @@ import net.minecraftforge.common.capabilities.*;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.relauncher.*;
 
-public abstract class TileEntityMachine extends UTileEntity implements ITickable, ISidedInventory, ICableExceptor, IInteractionObject, IClientEnergy {
+public abstract class TileEntityMachine extends UTileEntity implements ITickable, ISidedInventory, ICableExceptor, IInteractionObject, IClientEnergy, IClientProgress {
 	
 	protected NonNullList<ItemStack> itemstacks;
 	
@@ -21,12 +21,18 @@ public abstract class TileEntityMachine extends UTileEntity implements ITickable
 	
 	protected final IEnergyStorage energy;
 	
-	protected int progress;
+	protected int max_progress = 100;
+	protected int progress = max_progress;
+	
+	protected int recipeid = -1;
 	
 	protected String name;
 	
 	@SideOnly(Side.CLIENT)
 	public int energy_client;
+	
+	@SideOnly(Side.CLIENT)
+	public int progress_client;
 	
 	public TileEntityMachine(int size, String name) {
 		energy = ENERGY.getDefaultInstance();
@@ -111,7 +117,7 @@ public abstract class TileEntityMachine extends UTileEntity implements ITickable
 		if (id == 0) {
 			return energy.getEnergyStored();
 		} else if (id == 1) {
-			return this.progress;
+			return 100 - (int) (((float) progress / (float) max_progress) * 100);
 		}
 		return 0;
 	}
@@ -121,7 +127,7 @@ public abstract class TileEntityMachine extends UTileEntity implements ITickable
 		if (id == 0) {
 			energy_client = value;
 		} else if (id == 1) {
-			progress = value;
+			progress_client = value;
 		}
 	}
 	
@@ -165,14 +171,26 @@ public abstract class TileEntityMachine extends UTileEntity implements ITickable
 		return name;
 	}
 	
+	@Override
+	public void markDirty() {
+		if (!world.isRemote) {
+			checkRecipe();
+		}
+		super.markDirty();
+	}
+	
+	public abstract void checkRecipe();
+	
 	@SideOnly(Side.CLIENT)
 	@Override
-	public int getImpl() {
+	public int getImplEnergy() {
 		return energy_client;
 	}
 	
-	public NonNullList<ItemStack> getItemstacks() {
-		return itemstacks;
+	@SideOnly(Side.CLIENT)
+	@Override
+	public int getImplProgress() {
+		return progress_client;
 	}
 	
 }

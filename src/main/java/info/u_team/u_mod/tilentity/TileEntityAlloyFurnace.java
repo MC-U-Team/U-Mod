@@ -154,5 +154,9 @@ public class TileEntityAlloyFurnace extends TileEntityMachine {
 	public Container createContainer(InventoryPlayer inventory, EntityPlayer player) {
 		return new ContainerPulverizer(player, world, pos);
 	}
+	@Override
+	public void checkRecipe() {
+		
+	}
 	
 }

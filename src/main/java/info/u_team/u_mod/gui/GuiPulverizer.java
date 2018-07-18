@@ -1,6 +1,7 @@
 package info.u_team.u_mod.gui;
 
 import info.u_team.u_mod.UConstants;
+import info.u_team.u_mod.api.IClientProgress;
 import info.u_team.u_mod.container.ContainerBase;
 import info.u_team.u_mod.resource.EnumModeTab;
 import info.u_team.u_team_core.container.UContainer;
@@ -16,7 +17,9 @@ public class GuiPulverizer extends UGuiContainer {
 	@Override
 	protected void drawInBackground(EnumModeTab tab, int mouseX, int mouseY, int x_offset, int y_offset) {
 		if (tab == EnumModeTab.NORMAL) {
-			this.drawTexturedModalRect(x_offset + 47, y_offset + 28, 0, 166, Math.round(64 * (100 - getContainer().tile.getField(1)) / 100), 7);
+			IClientProgress iclient = (IClientProgress) getContainer().tile;
+			System.out.println(iclient.getImplProgress());
+			drawTexturedModalRect(x_offset + 47, y_offset + 28, 0, 166, Math.round(64 * iclient.getImplProgress() / 100), 7);
 		}
 	}
 	

@@ -155,4 +155,9 @@ public class TileEntityFurnace extends TileEntityMachine {
 		return new ContainerPulverizer(player, world, pos);
 	}
 	
+	@Override
+	public void checkRecipe() {
+		
+	}
+	
 }
