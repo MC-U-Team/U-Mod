@@ -19,7 +19,7 @@ public class GuiEnricher extends UGuiContainer {
 	protected void drawInBackground(EnumModeTab tab, int mouseX, int mouseY, int x_offset, int y_offset) {
 		if (tab == EnumModeTab.NORMAL) {
 			IClientProgress iclient = (IClientProgress) getContainer().tile;
-			drawTexturedModalRect(x_offset + 61, y_offset + 32, 0, 166, Math.round(56 * iclient.getImplProgress() / 100), 16);
+			drawTexturedModalRect(x_offset + 61, y_offset + 32, 0, 166, Math.round(53 * iclient.getImplProgress() / 100), 16);
 		}
 	}
 }

@@ -24,6 +24,7 @@ public class TileEntityAlloyFurnace extends TileEntityMachine {
 		for (int i = 0; i < getAlloyFurnaceRecipes().size(); i++) {
 			RecipeAlloyFurnace recipe = getAlloyFurnaceRecipes().get(i);
 			if (recipe.areIngredientsMatching(this)) {
+				System.out.println("TEST");
 				recipeid = i;
 				progress = max_progress = recipe.getTime();
 				return;
