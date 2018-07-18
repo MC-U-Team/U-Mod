@@ -2,6 +2,7 @@ package info.u_team.u_mod.init;
 
 import info.u_team.u_mod.UConstants;
 import info.u_team.u_mod.block.*;
+import info.u_team.u_mod.block.machine.*;
 import info.u_team.u_mod.resource.*;
 import info.u_team.u_team_core.block.UBlock;
 import info.u_team.u_team_core.registry.BlockRegistry;

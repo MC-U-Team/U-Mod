@@ -3,7 +3,7 @@ package info.u_team.u_mod.recipe.machine;
 import java.util.*;
 
 import info.u_team.u_mod.recipe.*;
-import info.u_team.u_mod.tilentity.TileEntityPulverizer;
+import info.u_team.u_mod.tilentity.machine.TileEntityPulverizer;
 import net.minecraft.item.ItemStack;
 
 public class RecipePulverizer {

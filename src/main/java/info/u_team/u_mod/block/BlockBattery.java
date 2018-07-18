@@ -1,6 +1,7 @@
 package info.u_team.u_mod.block;
 
 import info.u_team.u_mod.UConstants;
+import info.u_team.u_mod.block.machine.BlockMaschine;
 import info.u_team.u_mod.init.UCreativeTabs;
 import info.u_team.u_mod.tilentity.TileEntityBattery;
 import info.u_team.u_team_core.tileentity.UTileEntityProvider;

@@ -1,13 +1,13 @@
-package info.u_team.u_mod.tilentity;
+package info.u_team.u_mod.tilentity.machine;
 
-import info.u_team.u_mod.container.ContainerPulverizer;
+import info.u_team.u_mod.container.machine.ContainerPulverizer;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 
-public class TileEntityAlloyFurnace extends TileEntityMachine {
+public class TileEntityPress extends TileEntityMachine {
 	
 	public static final int MAX_TIME = 100;
 	public static final int ENERGY_CONSUMED = 100;
@@ -17,8 +17,8 @@ public class TileEntityAlloyFurnace extends TileEntityMachine {
 	private int progress = MAX_TIME;
 	private int recipe = -1;
 		
-	public TileEntityAlloyFurnace() {
-		super(4, "alloy_furnace");
+	public TileEntityPress() {
+		super(2, "press");
 	}
 	
 	@Override
@@ -154,9 +154,9 @@ public class TileEntityAlloyFurnace extends TileEntityMachine {
 	public Container createContainer(InventoryPlayer inventory, EntityPlayer player) {
 		return new ContainerPulverizer(player, world, pos);
 	}
+	
 	@Override
 	public void checkRecipe() {
 		
 	}
-	
 }

@@ -1,10 +1,10 @@
-package info.u_team.u_mod.block;
+package info.u_team.u_mod.block.machine;
 
 import info.u_team.u_mod.UConstants;
-import info.u_team.u_mod.container.ContainerPress;
-import info.u_team.u_mod.gui.GuiPress;
+import info.u_team.u_mod.container.machine.ContainerPress;
+import info.u_team.u_mod.gui.machine.GuiPress;
 import info.u_team.u_mod.init.*;
-import info.u_team.u_mod.tilentity.TileEntityPress;
+import info.u_team.u_mod.tilentity.machine.TileEntityPress;
 import info.u_team.u_team_core.tileentity.UTileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

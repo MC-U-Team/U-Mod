@@ -1,4 +1,4 @@
-package info.u_team.u_mod.block;
+package info.u_team.u_mod.block.machine;
 
 import info.u_team.u_team_core.block.UBlockTileEntity;
 import info.u_team.u_team_core.creativetab.UCreativeTab;

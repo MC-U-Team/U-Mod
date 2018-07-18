@@ -1,5 +1,6 @@
-package info.u_team.u_mod.container;
+package info.u_team.u_mod.container.machine;
 
+import info.u_team.u_mod.container.ContainerBase;
 import info.u_team.u_mod.container.slot.*;
 import info.u_team.u_mod.resource.EnumModeTab;
 import net.minecraft.entity.player.EntityPlayer;

@@ -1,8 +1,8 @@
-package info.u_team.u_mod.tilentity;
+package info.u_team.u_mod.tilentity.machine;
 
 import static info.u_team.u_mod.recipe.RecipeManager.getPulverizerRecipes;
 
-import info.u_team.u_mod.container.ContainerPulverizer;
+import info.u_team.u_mod.container.machine.ContainerPulverizer;
 import info.u_team.u_mod.recipe.machine.RecipePulverizer;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.Container;

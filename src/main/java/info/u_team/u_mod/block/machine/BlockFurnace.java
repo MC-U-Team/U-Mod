@@ -1,10 +1,10 @@
-package info.u_team.u_mod.block;
+package info.u_team.u_mod.block.machine;
 
 import info.u_team.u_mod.UConstants;
-import info.u_team.u_mod.container.ContainerFurnace;
-import info.u_team.u_mod.gui.GuiFurnace;
+import info.u_team.u_mod.container.machine.ContainerFurnace;
+import info.u_team.u_mod.gui.machine.GuiFurnace;
 import info.u_team.u_mod.init.*;
-import info.u_team.u_mod.tilentity.TileEntityFurnace;
+import info.u_team.u_mod.tilentity.machine.TileEntityFurnace;
 import info.u_team.u_team_core.tileentity.UTileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

@@ -1,10 +1,11 @@
-package info.u_team.u_mod.block;
+package info.u_team.u_mod.block.machine;
 
 import info.u_team.u_mod.UConstants;
-import info.u_team.u_mod.container.ContainerAlloyFurnace;
-import info.u_team.u_mod.gui.GuiAlloyFurnace;
+import info.u_team.u_mod.container.machine.ContainerPulverizer;
+import info.u_team.u_mod.gui.machine.GuiPulverizer;
 import info.u_team.u_mod.init.*;
-import info.u_team.u_mod.tilentity.TileEntityAlloyFurnace;
+import info.u_team.u_mod.tilentity.machine.TileEntityPulverizer;
+import info.u_team.u_team_core.block.UBlockTileEntity;
 import info.u_team.u_team_core.tileentity.UTileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -14,14 +15,15 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.*;
 
-public class BlockAlloyFurnace extends BlockMaschine {
+public class BlockPulveriser extends UBlockTileEntity {
 	
 	private int gui;
 	
-	public BlockAlloyFurnace(String name) {
-		super(name, Material.IRON, UCreativeTabs.MACHINE, new UTileEntityProvider(new ResourceLocation(UConstants.MODID, "alloy_furnace_tile"), true, TileEntityAlloyFurnace.class));
-		gui = UGuis.addGui(GuiAlloyFurnace.class, ContainerAlloyFurnace.class);
+	public BlockPulveriser(String name) {
+		super(name, Material.IRON, UCreativeTabs.MACHINE, new UTileEntityProvider(new ResourceLocation(UConstants.MODID, "pulverizer_tile"), true, TileEntityPulverizer.class));
+		gui = UGuis.addGui(GuiPulverizer.class, ContainerPulverizer.class);
 	}
 	
 	@Override
@@ -29,7 +31,12 @@ public class BlockAlloyFurnace extends BlockMaschine {
 		playerIn.openGui(UConstants.MODID, gui, worldIn, pos.getX(), pos.getY(), pos.getZ());
 		return true;
 	}
-		
+	
+	@Override
+	public boolean isOpaqueCube(IBlockState state) {
+		return false;
+	}
+	
 	@Override
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
 		TileEntity tileentity = worldIn.getTileEntity(pos);
@@ -38,5 +45,11 @@ public class BlockAlloyFurnace extends BlockMaschine {
 		
 		super.breakBlock(worldIn, pos, state);
 	}
-		
+	
+	@SideOnly(Side.CLIENT)
+	@Override
+	public BlockRenderLayer getBlockLayer() {
+		return BlockRenderLayer.CUTOUT_MIPPED;
+	}
+	
 }

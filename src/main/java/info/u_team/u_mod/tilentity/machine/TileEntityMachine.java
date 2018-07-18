@@ -1,4 +1,4 @@
-package info.u_team.u_mod.tilentity;
+package info.u_team.u_mod.tilentity.machine;
 
 import info.u_team.u_mod.api.*;
 import info.u_team.u_team_core.tileentity.UTileEntity;
