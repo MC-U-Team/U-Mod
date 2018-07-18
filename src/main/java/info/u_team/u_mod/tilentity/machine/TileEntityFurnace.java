@@ -2,6 +2,7 @@ package info.u_team.u_mod.tilentity.machine;
 
 import static info.u_team.u_mod.recipe.RecipeManager.getFurnaceRecipes;
 
+import info.u_team.u_mod.container.machine.ContainerFurnace;
 import info.u_team.u_mod.container.machine.ContainerPulverizer;
 import info.u_team.u_mod.recipe.machine.*;
 import net.minecraft.entity.player.*;
@@ -108,7 +109,7 @@ public class TileEntityFurnace extends TileEntityMachine {
 	
 	@Override
 	public Container createContainer(InventoryPlayer inventory, EntityPlayer player) {
-		return new ContainerPulverizer(player, world, pos);
+		return new ContainerFurnace(player, world, pos);
 	}
 	
 }

@@ -2,6 +2,7 @@ package info.u_team.u_mod.tilentity.machine;
 
 import static info.u_team.u_mod.recipe.RecipeManager.getPressRecipes;
 
+import info.u_team.u_mod.container.machine.ContainerPress;
 import info.u_team.u_mod.container.machine.ContainerPulverizer;
 import info.u_team.u_mod.recipe.machine.*;
 import net.minecraft.entity.player.*;
@@ -108,7 +109,7 @@ public class TileEntityPress extends TileEntityMachine {
 	
 	@Override
 	public Container createContainer(InventoryPlayer inventory, EntityPlayer player) {
-		return new ContainerPulverizer(player, world, pos);
+		return new ContainerPress(player, world, pos);
 	}
 	
 }

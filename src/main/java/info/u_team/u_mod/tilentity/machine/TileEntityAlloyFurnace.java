@@ -2,6 +2,7 @@ package info.u_team.u_mod.tilentity.machine;
 
 import static info.u_team.u_mod.recipe.RecipeManager.getAlloyFurnaceRecipes;
 
+import info.u_team.u_mod.container.machine.ContainerAlloyFurnace;
 import info.u_team.u_mod.container.machine.ContainerPulverizer;
 import info.u_team.u_mod.recipe.machine.*;
 import net.minecraft.entity.player.*;
@@ -15,7 +16,7 @@ public class TileEntityAlloyFurnace extends TileEntityMachine {
 	public static final int[] IN = { 0, 1, 2 }, OUT = { 3 };
 	
 	public TileEntityAlloyFurnace() {
-		super(2, "alloyfurnace");
+		super(4, "alloyfurnace");
 	}
 	
 	@Override
@@ -108,7 +109,7 @@ public class TileEntityAlloyFurnace extends TileEntityMachine {
 	
 	@Override
 	public Container createContainer(InventoryPlayer inventory, EntityPlayer player) {
-		return new ContainerPulverizer(player, world, pos);
+		return new ContainerAlloyFurnace(player, world, pos);
 	}
 	
 }

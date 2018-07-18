@@ -19,7 +19,7 @@ public class GuiPress extends UGuiContainer {
 	protected void drawInBackground(EnumModeTab tab, int mouseX, int mouseY, int x_offset, int y_offset) {
 		if (tab == EnumModeTab.NORMAL) {
 			IClientProgress iclient = (IClientProgress) getContainer().tile;
-			drawTexturedModalRect(x_offset + 80, y_offset + 22, 176, 0, 16, Math.round(64 * iclient.getImplProgress() / 100));
+			drawTexturedModalRect(x_offset + 80, y_offset + 22, 176, 0, 16, Math.round(40 * iclient.getImplProgress() / 100));
 		}
 	}
 }

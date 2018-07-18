@@ -20,11 +20,11 @@ public class RecipeCategoryAlloyFurnace implements IRecipeCategory<RecipeWrapper
 	
 	private IDrawable background;
 	private IDrawableAnimated progressbar;
-	private ResourceLocation PULVERIZER = new ResourceLocation(UConstants.MODID, "textures/gui/pulverizer.png");
+	private ResourceLocation ALLOY_FURNACE = new ResourceLocation(UConstants.MODID, "textures/gui/alloy_furnace.png");
 	
 	public RecipeCategoryAlloyFurnace(IGuiHelper guiHelper) {
-		this.background = guiHelper.drawableBuilder(PULVERIZER, 26, 17, 120, 60).build();
-		this.progressbar = guiHelper.createAnimatedDrawable(guiHelper.createDrawable(PULVERIZER, 0, 166, 64, 7), 100, StartDirection.LEFT, false);
+		this.background = guiHelper.drawableBuilder(ALLOY_FURNACE, 47, 3, 82, 72).build();
+		this.progressbar = guiHelper.createAnimatedDrawable(guiHelper.createDrawable(ALLOY_FURNACE, 176, 0, 72, 30), 100, StartDirection.TOP, false);
 	}
 	
 	@Override
@@ -49,12 +49,12 @@ public class RecipeCategoryAlloyFurnace implements IRecipeCategory<RecipeWrapper
 	
 	@Override
 	public void drawExtras(Minecraft minecraft) {
-		this.progressbar.draw(minecraft, 21, 11);
+		this.progressbar.draw(minecraft, 5, 22);
 	}
 	
 	@Override
 	public List<String> getTooltipStrings(int mouseX, int mouseY) {
-		if (mouseX >= 21 && mouseX <= 85 && mouseY >= 11 && mouseY <= 18) {
+		if (mouseX >= 5 && mouseX <= 77 && mouseY >= 22 && mouseY <= 55) {
 			return ImmutableList.of(ChatFormatting.RED + "Needs energy!", ChatFormatting.BLUE + "See 'Energy' tab!");
 		}
 		return ImmutableList.of();
@@ -64,10 +64,10 @@ public class RecipeCategoryAlloyFurnace implements IRecipeCategory<RecipeWrapper
 	public void setRecipe(IRecipeLayout recipeLayout, RecipeWrapperAlloyFurnace recipeWrapper, IIngredients ingredients) {
 		IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
 		
-		guiItemStacks.init(0, true, 3, 5);
-		guiItemStacks.init(1, true, 89, 6);
-		guiItemStacks.init(2, true, 71, 36);
-		guiItemStacks.init(3, false, 98, 36);
+		guiItemStacks.init(0, true, 3, 3);
+		guiItemStacks.init(1, true, 32, 3);
+		guiItemStacks.init(2, true, 61, 3);
+		guiItemStacks.init(3, false, 32, 51);
 		
 		guiItemStacks.set(ingredients);
 	}
