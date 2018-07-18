@@ -21,6 +21,8 @@ public abstract class TileEntityMachine extends UTileEntity implements ITickable
 	
 	protected final IEnergyStorage energy;
 	
+	protected int progress;
+	
 	protected String name;
 	
 	@SideOnly(Side.CLIENT)
@@ -38,12 +40,14 @@ public abstract class TileEntityMachine extends UTileEntity implements ITickable
 		if (compound.hasKey("energy")) {
 			ENERGY.readNBT(energy, null, compound.getTag("energy"));
 		}
+		progress = compound.getInteger("progress");
 	}
 	
 	@Override
 	public void writeNBT(NBTTagCompound compound) {
 		ItemStackHelper.saveAllItems(compound, itemstacks);
 		compound.setTag("energy", ENERGY.writeNBT(energy, null));
+		compound.setInteger("progress", progress);
 	}
 	
 	@Override
@@ -59,6 +63,14 @@ public abstract class TileEntityMachine extends UTileEntity implements ITickable
 			}
 		}
 		return true;
+	}
+	
+	@Override
+	public void setInventorySlotContents(int index, ItemStack stack) {
+		itemstacks.set(index, stack);
+		if (stack.getCount() > this.getInventoryStackLimit()) {
+			stack.setCount(this.getInventoryStackLimit());
+		}
 	}
 	
 	@Override
@@ -98,6 +110,8 @@ public abstract class TileEntityMachine extends UTileEntity implements ITickable
 	public int getField(int id) {
 		if (id == 0) {
 			return energy.getEnergyStored();
+		} else if (id == 1) {
+			return this.progress;
 		}
 		return 0;
 	}
@@ -106,17 +120,19 @@ public abstract class TileEntityMachine extends UTileEntity implements ITickable
 	public void setField(int id, int value) {
 		if (id == 0) {
 			energy_client = value;
+		} else if (id == 1) {
+			progress = value;
 		}
 	}
 	
 	@Override
 	public int getFieldCount() {
-		return 1;
+		return 2;
 	}
 	
 	@Override
 	public void clear() {
-		itemstacks.replaceAll(stack -> ItemStack.EMPTY);
+		itemstacks.clear();
 	}
 	
 	@Override
@@ -154,4 +170,9 @@ public abstract class TileEntityMachine extends UTileEntity implements ITickable
 	public int getImpl() {
 		return energy_client;
 	}
+	
+	public NonNullList<ItemStack> getItemstacks() {
+		return itemstacks;
+	}
+	
 }

@@ -516,7 +516,8 @@ public class ContainerBase extends UContainer {
 	@Override
 	public void putStackInSlot(int slotID, ItemStack stack) {
 		Slot slot = this.getSlot(slotID);
-		if(slot != null) slot.putStack(stack);
+		if (slot != null)
+			slot.putStack(stack);
 	}
 	
 	@Override

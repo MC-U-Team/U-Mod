@@ -1,9 +1,6 @@
 package info.u_team.u_mod.tilentity;
 
-import static info.u_team.u_mod.recipe.RecipeManager.getPulverizerRecipes;
-
 import info.u_team.u_mod.container.ContainerPulverizer;
-import info.u_team.u_mod.recipe.machine.RecipePulverizer;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
@@ -50,16 +47,16 @@ public class TileEntityFurnace extends TileEntityMachine {
 	
 	public void searchRecipe() {
 		int i = 0;
-		for (RecipePulverizer recipe : getPulverizerRecipes()) {
-			if (recipe.areIngredientsMatching(this)) {
-				if (recipe.areOutputsMatching(this)) {
-					this.recipe = i;
-					this.progress = MAX_TIME;
-				}
-				return;
-			}
-			i++;
-		}
+//		for (RecipePulverizerOLD recipe : getPulverizerRecipes()) {
+//			if (recipe.areIngredientsMatching(this)) {
+//				if (recipe.areOutputsMatching(this)) {
+//					this.recipe = i;
+//					this.progress = MAX_TIME;
+//				}
+//				return;
+//			}
+//			i++;
+//		}
 		this.recipe = -1;
 	}
 	

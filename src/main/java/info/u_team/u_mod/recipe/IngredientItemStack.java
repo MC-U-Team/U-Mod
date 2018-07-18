@@ -1,6 +1,7 @@
 package info.u_team.u_mod.recipe;
 
 import info.u_team.u_mod.util.ItemUtil;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.oredict.OreDictionary;
@@ -41,6 +42,15 @@ public class IngredientItemStack {
 	
 	public boolean containsStackCountMatchOrHigher(ItemStack other) {
 		return stacks.stream().anyMatch(stack -> ItemUtil.areItemStacksEqualIgnoreAmount(stack, other) && other.getCount() >= count);
+	}
+	
+	public void execute(IInventory inventory, int slot) {
+		ItemStack other = inventory.getStackInSlot(slot);
+		if (other.getCount() <= count) {
+			inventory.setInventorySlotContents(slot, ItemStack.EMPTY);
+		} else {
+			other.shrink(count);
+		}
 	}
 	
 }

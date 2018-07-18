@@ -17,50 +17,22 @@ public class TileEntityPulverizer extends TileEntityMachine {
 	
 	public static final int[] OUT = { 1, 2, 3 }, IN = { 0 };
 	
-	private int progress = MAX_TIME;
-	private int recipe = -1;
-		
+	private int recipeid = -1;
+	
 	public TileEntityPulverizer() {
 		super(4, "pulverizer");
+		progress = MAX_TIME;
 	}
 	
-	@Override
-	public void setInventorySlotContents(int index, ItemStack stack) { // METHOD will only be executed when you set stacks, not when you increase them.
-																		// So it wont be updated all the time
-		ItemStack itemstack = itemstacks.get(index);
-		itemstacks.set(index, stack);
-		
-		if (stack.getCount() > this.getInventoryStackLimit()) {
-			stack.setCount(this.getInventoryStackLimit());
-		}
-		
-		if (index == 0) {
-			boolean flag = stack.isEmpty() && !stack.isItemEqual(itemstack) || !ItemStack.areItemStackTagsEqual(stack, itemstack);
-			if (flag) {
-				recipe = -1;
-				progress = MAX_TIME;
-			}
-		}
-		
-		if (index == 0 || recipe < 0) {
-			searchRecipe();
-		}
-		markDirty();
-	}
-	
-	public void searchRecipe() {
-		int i = 0;
-		for (RecipePulverizer recipe : getPulverizerRecipes()) {
+	private void checkRecipe() {
+		for (int i = 0; i < getPulverizerRecipes().size(); i++) {
+			RecipePulverizer recipe = getPulverizerRecipes().get(i);
 			if (recipe.areIngredientsMatching(this)) {
-				if (recipe.areOutputsMatching(this)) {
-					this.recipe = i;
-					this.progress = MAX_TIME;
-				}
+				recipeid = i;
 				return;
 			}
-			i++;
 		}
-		this.recipe = -1;
+		recipeid = -1;
 	}
 	
 	@Override
@@ -68,59 +40,37 @@ public class TileEntityPulverizer extends TileEntityMachine {
 		if (world.isRemote) {
 			return;
 		}
-		if (ENERGY_CONSUMED > energy.getEnergyStored())
-			return;
-		if (this.recipe >= 0) {
-			this.progress--;
-			if (this.progress <= 0) {
-				RecipePulverizer recipepulverizer = getPulverizerRecipes().get(recipe);
-				recipepulverizer.executeRecipe(this);
-				energy.extractEnergy(ENERGY_CONSUMED, false);
-				markDirty();
-				if (recipepulverizer.areOutputsMatching(this) && !itemstacks.get(0).isEmpty()) {
-					this.progress = MAX_TIME;
-				} else {
-					this.recipe = -1;
-				}
+		if (recipeid >= 0) {
+			RecipePulverizer recipe = getPulverizerRecipes().get(recipeid);
+			if (!recipe.isEnergyMatching(this) || !recipe.areOutputsMatching(this)) {
+				return;
+			}
+			progress--;
+			if (progress <= 0) {
+				recipe.execute(this);
+				progress = MAX_TIME;
 			}
 		}
 	}
 	
 	@Override
+	public void markDirty() {
+		if (!world.isRemote) {
+			checkRecipe();
+		}
+		super.markDirty();
+	}
+	
+	@Override
 	public void readNBT(NBTTagCompound compound) {
 		super.readNBT(compound);
-		progress = compound.getInteger("progress");
-		recipe = compound.getInteger("recipe");
+		recipeid = compound.getInteger("recipe");
 	}
 	
 	@Override
 	public void writeNBT(NBTTagCompound compound) {
 		super.writeNBT(compound);
-		compound.setInteger("progress", progress);
-		compound.setInteger("recipe", recipe);
-	}
-	
-	@Override
-	public void setField(int id, int value) {
-		super.setField(id, value);
-		if (id == 1) {
-			progress = value;
-		}
-	}
-	
-	@Override
-	public int getField(int id) {
-		if (id == 0) {
-			return super.getField(id);
-		} else if (id == 1) {
-			return this.progress;
-		}
-		return 0;
-	}
-	
-	@Override
-	public int getFieldCount() {
-		return 2;
+		compound.setInteger("recipe", recipeid);
 	}
 	
 	@Override

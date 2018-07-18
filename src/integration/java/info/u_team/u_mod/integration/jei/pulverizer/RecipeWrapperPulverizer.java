@@ -1,9 +1,8 @@
 package info.u_team.u_mod.integration.jei.pulverizer;
 
-import info.u_team.u_mod.recipe.*;
 import info.u_team.u_mod.recipe.machine.RecipePulverizer;
 import mezz.jei.api.ingredients.IIngredients;
-import mezz.jei.api.recipe.*;
+import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.item.ItemStack;
 
 public class RecipeWrapperPulverizer implements IRecipeWrapper {
@@ -16,8 +15,8 @@ public class RecipeWrapperPulverizer implements IRecipeWrapper {
 	
 	@Override
 	public void getIngredients(IIngredients ingredients) {
-		ingredients.setInputLists(ItemStack.class, recipe.inputs);
-		ingredients.setOutputs(ItemStack.class, recipe.outputs);
+		ingredients.setInputLists(ItemStack.class, recipe.getJeiItemIngredients());
+		ingredients.setOutputs(ItemStack.class, recipe.getJeiItemOutputs());
 	}
 	
 }
