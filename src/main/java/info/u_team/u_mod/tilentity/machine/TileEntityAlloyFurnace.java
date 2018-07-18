@@ -15,7 +15,7 @@ public class TileEntityAlloyFurnace extends TileEntityMachine {
 	public static final int[] IN = { 0, 1, 2 }, OUT = { 3 };
 	
 	public TileEntityAlloyFurnace() {
-		super(2, "alloyfurnace");
+		super(4, "alloyfurnace");
 	}
 	
 	@Override
@@ -23,6 +23,7 @@ public class TileEntityAlloyFurnace extends TileEntityMachine {
 		for (int i = 0; i < getAlloyFurnaceRecipes().size(); i++) {
 			RecipeAlloyFurnace recipe = getAlloyFurnaceRecipes().get(i);
 			if (recipe.areIngredientsMatching(this)) {
+				System.out.println("TEST");
 				recipeid = i;
 				progress = max_progress = recipe.getTime();
 				return;
