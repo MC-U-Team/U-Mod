@@ -23,8 +23,8 @@ public class RecipeCategoryEnricher implements IRecipeCategory<RecipeWrapperEnri
 	private ResourceLocation ENRICHER = new ResourceLocation(UConstants.MODID, "textures/gui/enricher.png");
 	
 	public RecipeCategoryEnricher(IGuiHelper guiHelper) {
-		this.background = guiHelper.drawableBuilder(ENRICHER, 26, 17, 120, 60).build();
-		this.progressbar = guiHelper.createAnimatedDrawable(guiHelper.createDrawable(ENRICHER, 0, 166, 64, 7), 100, StartDirection.LEFT, false);
+		this.background = guiHelper.drawableBuilder(ENRICHER, 40, 29, 94, 22).build();
+		this.progressbar = guiHelper.createAnimatedDrawable(guiHelper.createDrawable(ENRICHER, 0, 166, 53, 16), 100, StartDirection.LEFT, false);
 	}
 	
 	@Override
@@ -49,12 +49,12 @@ public class RecipeCategoryEnricher implements IRecipeCategory<RecipeWrapperEnri
 	
 	@Override
 	public void drawExtras(Minecraft minecraft) {
-		this.progressbar.draw(minecraft, 21, 11);
+		this.progressbar.draw(minecraft, 21, 3);
 	}
 	
 	@Override
 	public List<String> getTooltipStrings(int mouseX, int mouseY) {
-		if (mouseX >= 21 && mouseX <= 85 && mouseY >= 11 && mouseY <= 18) {
+		if (mouseX >= 21 && mouseX <= 74 && mouseY >= 3 && mouseY <= 19) {
 			return ImmutableList.of(ChatFormatting.RED + "Needs energy!", ChatFormatting.BLUE + "See 'Energy' tab!");
 		}
 		return ImmutableList.of();
@@ -64,8 +64,8 @@ public class RecipeCategoryEnricher implements IRecipeCategory<RecipeWrapperEnri
 	public void setRecipe(IRecipeLayout recipeLayout, RecipeWrapperEnricher recipeWrapper, IIngredients ingredients) {
 		IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
 		
-		guiItemStacks.init(0, true, 3, 5);
-		guiItemStacks.init(1, false, 98, 36);
+		guiItemStacks.init(0, true, 3, 2);
+		guiItemStacks.init(1, false, 74, 2);
 		
 		guiItemStacks.set(ingredients);
 	}
