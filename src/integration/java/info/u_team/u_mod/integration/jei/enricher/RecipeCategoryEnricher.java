@@ -20,11 +20,11 @@ public class RecipeCategoryEnricher implements IRecipeCategory<RecipeWrapperEnri
 	
 	private IDrawable background;
 	private IDrawableAnimated progressbar;
-	private ResourceLocation PULVERIZER = new ResourceLocation(UConstants.MODID, "textures/gui/pulverizer.png");
+	private ResourceLocation ENRICHER = new ResourceLocation(UConstants.MODID, "textures/gui/enricher.png");
 	
 	public RecipeCategoryEnricher(IGuiHelper guiHelper) {
-		this.background = guiHelper.drawableBuilder(PULVERIZER, 26, 17, 120, 60).build();
-		this.progressbar = guiHelper.createAnimatedDrawable(guiHelper.createDrawable(PULVERIZER, 0, 166, 64, 7), 100, StartDirection.LEFT, false);
+		this.background = guiHelper.drawableBuilder(ENRICHER, 26, 17, 120, 60).build();
+		this.progressbar = guiHelper.createAnimatedDrawable(guiHelper.createDrawable(ENRICHER, 0, 166, 64, 7), 100, StartDirection.LEFT, false);
 	}
 	
 	@Override
