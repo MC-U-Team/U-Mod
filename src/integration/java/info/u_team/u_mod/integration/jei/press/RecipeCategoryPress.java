@@ -20,11 +20,11 @@ public class RecipeCategoryPress implements IRecipeCategory<RecipeWrapperPress> 
 	
 	private IDrawable background;
 	private IDrawableAnimated progressbar;
-	private ResourceLocation PULVERIZER = new ResourceLocation(UConstants.MODID, "textures/gui/pulverizer.png");
+	private ResourceLocation PRESS = new ResourceLocation(UConstants.MODID, "textures/gui/press.png");
 	
 	public RecipeCategoryPress(IGuiHelper guiHelper) {
-		this.background = guiHelper.drawableBuilder(PULVERIZER, 26, 17, 120, 60).build();
-		this.progressbar = guiHelper.createAnimatedDrawable(guiHelper.createDrawable(PULVERIZER, 0, 166, 64, 7), 100, StartDirection.LEFT, false);
+		this.background = guiHelper.drawableBuilder(PRESS, 78, 3, 20, 78).build();
+		this.progressbar = guiHelper.createAnimatedDrawable(guiHelper.createDrawable(PRESS, 176, 0, 16, 40), 100, StartDirection.TOP, false);
 	}
 	
 	@Override
@@ -49,12 +49,12 @@ public class RecipeCategoryPress implements IRecipeCategory<RecipeWrapperPress> 
 	
 	@Override
 	public void drawExtras(Minecraft minecraft) {
-		this.progressbar.draw(minecraft, 21, 11);
+		this.progressbar.draw(minecraft, 2, 19);
 	}
 	
 	@Override
 	public List<String> getTooltipStrings(int mouseX, int mouseY) {
-		if (mouseX >= 21 && mouseX <= 85 && mouseY >= 11 && mouseY <= 18) {
+		if (mouseX >= 1 && mouseX <= 17 && mouseY >= 19 && mouseY <= 59) {
 			return ImmutableList.of(ChatFormatting.RED + "Needs energy!", ChatFormatting.BLUE + "See 'Energy' tab!");
 		}
 		return ImmutableList.of();
@@ -64,8 +64,8 @@ public class RecipeCategoryPress implements IRecipeCategory<RecipeWrapperPress> 
 	public void setRecipe(IRecipeLayout recipeLayout, RecipeWrapperPress recipeWrapper, IIngredients ingredients) {
 		IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
 		
-		guiItemStacks.init(0, true, 3, 5);
-		guiItemStacks.init(1, false, 98, 36);
+		guiItemStacks.init(0, true, 1, 1);
+		guiItemStacks.init(1, false, 1, 59);
 		
 		guiItemStacks.set(ingredients);
 	}

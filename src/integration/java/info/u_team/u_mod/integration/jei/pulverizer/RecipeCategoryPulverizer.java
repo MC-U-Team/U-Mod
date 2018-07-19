@@ -67,7 +67,7 @@ public class RecipeCategoryPulverizer implements IRecipeCategory<RecipeWrapperPu
 		guiItemStacks.init(0, true, 3, 5);
 		guiItemStacks.init(1, false, 89, 6);
 		guiItemStacks.init(2, false, 71, 36);
-		guiItemStacks.init(3, false, 98, 36);
+		guiItemStacks.init(3, false, 99, 36);
 		
 		guiItemStacks.set(ingredients);
 	}

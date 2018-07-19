@@ -19,6 +19,11 @@ modetab.ENERGY.name=Energy
 
 #Machines
 tile.umod:pulverizer.name=Pulverizer
+tile.umod:press.name=Press
+tile.umod:enricher.name=Enricher
+tile.umod:alloy_furnace.name=Alloy Furnace
+tile.umod:furnace.name=Furnace
+tile.umod:battery.name=Battery
 tile.umod:energy_pipe.name=Cable
 
 #Resources
