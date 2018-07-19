@@ -20,7 +20,7 @@ import net.minecraftforge.fml.relauncher.*;
 public class BlockBlock extends UBlockMetaData {
 	
 	public BlockBlock(String name, IMetaType[] array) {
-		super(name, Material.ROCK, UCreativeTabs.RESOURCES, array);
+		super(name, Material.ROCK, UCreativeTabs.resources, array);
 	}
 	
 	@SideOnly(Side.CLIENT)

@@ -9,7 +9,7 @@ import net.minecraft.util.ResourceLocation;
 public class ItemNugget extends UItemMetaData {
 	
 	public ItemNugget(String name, IMetaType[] list) {
-		super(name, UCreativeTabs.RESOURCES, list);
+		super(name, UCreativeTabs.resources, list);
 	}
 	
 	@Override

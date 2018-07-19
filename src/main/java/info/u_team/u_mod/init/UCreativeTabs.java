@@ -6,12 +6,12 @@ import info.u_team.u_team_core.creativetab.UCreativeTab;
 
 public class UCreativeTabs {
 	
-	public static final UCreativeTab RESOURCES = new UCreativeTab(UConstants.MODID, "resources");
-	public static final UCreativeTab MACHINE = new UCreativeTab(UConstants.MODID, "machine");
+	public static final UCreativeTab resources = new UCreativeTab(UConstants.MODID, "resources");
+	public static final UCreativeTab machine = new UCreativeTab(UConstants.MODID, "machine");
 	
 	public static void init() {
-		MACHINE.setIcon(UBlocks.pulverizer);
-		RESOURCES.setIcon(UBlocks.resource_ore1, EnumResources1.COPPER.getMetadata());
+		machine.setIcon(UBlocks.pulverizer);
+		resources.setIcon(UBlocks.resource_ore1, EnumResources1.COPPER.getMetadata());
 	}
 	
 }

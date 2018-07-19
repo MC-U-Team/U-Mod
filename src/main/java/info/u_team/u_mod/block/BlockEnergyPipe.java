@@ -33,7 +33,7 @@ public class BlockEnergyPipe extends UBlockTileEntity {
 	private static PropertyBool[] properties = new PropertyBool[] { UP, DOWN, NORTH, SOUTH, EAST, WEST };
 	
 	public BlockEnergyPipe(String name) {
-		super(name, Material.IRON, UCreativeTabs.MACHINE, new UTileEntityProvider(new ResourceLocation(UConstants.MODID, "energy_pipe_tile"), true, TileEntityEnergyPipe.class));
+		super(name, Material.IRON, UCreativeTabs.machine, new UTileEntityProvider(new ResourceLocation(UConstants.MODID, "energy_pipe_tile"), true, TileEntityEnergyPipe.class));
 		this.setDefaultState(this.getDefaultState().withProperty(UP, false).withProperty(DOWN, false).withProperty(NORTH, false).withProperty(SOUTH, false).withProperty(EAST, false).withProperty(WEST, false));
 	}
 	

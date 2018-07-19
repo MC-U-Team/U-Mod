@@ -25,7 +25,7 @@ import net.minecraftforge.fml.relauncher.*;
 public class BlockOre extends UBlockMetaData {
 	
 	public BlockOre(String name, IMetaType[] array) {
-		super(name, Material.ROCK, UCreativeTabs.RESOURCES, array);
+		super(name, Material.ROCK, UCreativeTabs.resources, array);
 		setHardness(5);
 	}
 	

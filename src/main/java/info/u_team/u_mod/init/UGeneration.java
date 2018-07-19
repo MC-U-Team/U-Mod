@@ -5,10 +5,10 @@ import info.u_team.u_team_core.registry.CommonRegistry;
 
 public class UGeneration {
 	
-	public static final UWorldGeneration WORLDGENERATION = new UWorldGeneration();
+	public static final UWorldGeneration worldgeneration = new UWorldGeneration();
 	
 	public static void init() {
-		CommonRegistry.registerWorldGeneration(WORLDGENERATION, 0);
+		CommonRegistry.registerWorldGeneration(worldgeneration, 0);
 	}
 	
 }

@@ -44,7 +44,7 @@ public class BiomeOreDesert extends UBiome {
 	public void decorate(World world, Random rand, BlockPos pos) {
 		super.decorate(world, rand, pos);
 		for (int i = 0; i < 9; i++) {
-			UGeneration.WORLDGENERATION.generateOres(pos, world, rand);
+			UGeneration.worldgeneration.generateOres(pos, world, rand);
 		}
 	}
 	

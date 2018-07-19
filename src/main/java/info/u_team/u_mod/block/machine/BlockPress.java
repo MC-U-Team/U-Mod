@@ -3,10 +3,9 @@ package info.u_team.u_mod.block.machine;
 import info.u_team.u_mod.UConstants;
 import info.u_team.u_mod.container.machine.ContainerPress;
 import info.u_team.u_mod.gui.machine.GuiPress;
-import info.u_team.u_mod.init.*;
+import info.u_team.u_mod.init.UGuis;
 import info.u_team.u_mod.tilentity.machine.TileEntityPress;
 import info.u_team.u_team_core.tileentity.UTileEntityProvider;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.*;
@@ -20,7 +19,7 @@ public class BlockPress extends BlockMaschine {
 	private int gui;
 	
 	public BlockPress(String name) {
-		super(name, Material.IRON, UCreativeTabs.MACHINE, new UTileEntityProvider(new ResourceLocation(UConstants.MODID, "press_tile"), true, TileEntityPress.class));
+		super(name, new UTileEntityProvider(new ResourceLocation(UConstants.MODID, "press_tile"), true, TileEntityPress.class));
 		gui = UGuis.addGui(GuiPress.class, ContainerPress.class);
 	}
 	
@@ -29,7 +28,7 @@ public class BlockPress extends BlockMaschine {
 		playerIn.openGui(UConstants.MODID, gui, worldIn, pos.getX(), pos.getY(), pos.getZ());
 		return true;
 	}
-		
+	
 	@Override
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
 		TileEntity tileentity = worldIn.getTileEntity(pos);

@@ -3,10 +3,9 @@ package info.u_team.u_mod.block.machine;
 import info.u_team.u_mod.UConstants;
 import info.u_team.u_mod.container.machine.ContainerFurnace;
 import info.u_team.u_mod.gui.machine.GuiFurnace;
-import info.u_team.u_mod.init.*;
+import info.u_team.u_mod.init.UGuis;
 import info.u_team.u_mod.tilentity.machine.TileEntityFurnace;
 import info.u_team.u_team_core.tileentity.UTileEntityProvider;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.*;
@@ -20,7 +19,7 @@ public class BlockFurnace extends BlockMaschine {
 	private int gui;
 	
 	public BlockFurnace(String name) {
-		super(name, Material.IRON, UCreativeTabs.MACHINE, new UTileEntityProvider(new ResourceLocation(UConstants.MODID, "furnace_tile"), true, TileEntityFurnace.class));
+		super(name, new UTileEntityProvider(new ResourceLocation(UConstants.MODID, "furnace_tile"), true, TileEntityFurnace.class));
 		gui = UGuis.addGui(GuiFurnace.class, ContainerFurnace.class);
 	}
 	
@@ -43,6 +42,5 @@ public class BlockFurnace extends BlockMaschine {
 		
 		super.breakBlock(worldIn, pos, state);
 	}
-	
 	
 }

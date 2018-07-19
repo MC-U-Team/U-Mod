@@ -3,10 +3,9 @@ package info.u_team.u_mod.block.machine;
 import info.u_team.u_mod.UConstants;
 import info.u_team.u_mod.container.machine.ContainerAlloyFurnace;
 import info.u_team.u_mod.gui.machine.GuiAlloyFurnace;
-import info.u_team.u_mod.init.*;
+import info.u_team.u_mod.init.UGuis;
 import info.u_team.u_mod.tilentity.machine.TileEntityAlloyFurnace;
 import info.u_team.u_team_core.tileentity.UTileEntityProvider;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.*;
@@ -20,7 +19,7 @@ public class BlockAlloyFurnace extends BlockMaschine {
 	private int gui;
 	
 	public BlockAlloyFurnace(String name) {
-		super(name, Material.IRON, UCreativeTabs.MACHINE, new UTileEntityProvider(new ResourceLocation(UConstants.MODID, "alloy_furnace_tile"), true, TileEntityAlloyFurnace.class));
+		super(name, new UTileEntityProvider(new ResourceLocation(UConstants.MODID, "alloy_furnace_tile"), true, TileEntityAlloyFurnace.class));
 		gui = UGuis.addGui(GuiAlloyFurnace.class, ContainerAlloyFurnace.class);
 	}
 	
@@ -29,7 +28,7 @@ public class BlockAlloyFurnace extends BlockMaschine {
 		playerIn.openGui(UConstants.MODID, gui, worldIn, pos.getX(), pos.getY(), pos.getZ());
 		return true;
 	}
-		
+	
 	@Override
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
 		TileEntity tileentity = worldIn.getTileEntity(pos);
@@ -38,5 +37,5 @@ public class BlockAlloyFurnace extends BlockMaschine {
 		
 		super.breakBlock(worldIn, pos, state);
 	}
-		
+	
 }
