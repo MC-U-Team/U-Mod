@@ -2,11 +2,12 @@ package info.u_team.u_mod.recipe.machine;
 
 import java.util.*;
 
+import info.u_team.u_mod.api.IMachineRecipe;
 import info.u_team.u_mod.recipe.*;
-import info.u_team.u_mod.tilentity.machine.TileEntityAlloyFurnace;
+import info.u_team.u_mod.tilentity.machine.TileEntityMachine;
 import net.minecraft.item.ItemStack;
 
-public class RecipeAlloyFurnace {
+public class RecipeAlloyFurnace implements IMachineRecipe {
 	
 	private List<List<ItemStack>> jeiitemingredients;
 	private List<ItemStack> jeiitemoutputs;
@@ -37,24 +38,24 @@ public class RecipeAlloyFurnace {
 		jeiitemoutputs.add(output.getItemStack());
 	}
 	
-	public boolean areIngredientsMatching(TileEntityAlloyFurnace pulverizer) {
-		return firstingredient.containsStackCountMatchOrHigher(pulverizer.getStackInSlot(0)) && secondingredient.containsStackCountMatchOrHigher(pulverizer.getStackInSlot(1)) && thirdingredient.containsStackCountMatchOrHigher(pulverizer.getStackInSlot(2));
+	public boolean areIngredientsMatching(TileEntityMachine machine) {
+		return firstingredient.containsStackCountMatchOrHigher(machine.getStackInSlot(0)) && secondingredient.containsStackCountMatchOrHigher(machine.getStackInSlot(1)) && thirdingredient.containsStackCountMatchOrHigher(machine.getStackInSlot(2));
 	}
 	
-	public boolean areOutputsMatching(TileEntityAlloyFurnace pulverizer) {
-		return output.isItemStackAcceptable(pulverizer.getStackInSlot(3));
+	public boolean areOutputsMatching(TileEntityMachine machine) {
+		return output.isItemStackAcceptable(machine.getStackInSlot(3));
 	}
 	
-	public boolean isEnergyMatching(TileEntityAlloyFurnace pulverizer) {
-		return pulverizer.getStorage().getEnergyStored() >= energy.getEnergy();
+	public boolean isEnergyMatching(TileEntityMachine machine) {
+		return machine.getStorage().getEnergyStored() >= energy.getEnergy();
 	}
 	
-	public void execute(TileEntityAlloyFurnace pulverizer) {
-		firstingredient.execute(pulverizer, 0);
-		secondingredient.execute(pulverizer, 1);
-		thirdingredient.execute(pulverizer, 2);
-		output.execute(pulverizer, 3);
-		pulverizer.getStorage().extractEnergy(energy.getEnergy(), false);
+	public void execute(TileEntityMachine machine) {
+		firstingredient.execute(machine, 0);
+		secondingredient.execute(machine, 1);
+		thirdingredient.execute(machine, 2);
+		output.execute(machine, 3);
+		machine.getStorage().extractEnergy(energy.getEnergy(), false);
 	}
 	
 	public int getTime() {

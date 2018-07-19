@@ -2,11 +2,12 @@ package info.u_team.u_mod.recipe.machine;
 
 import java.util.*;
 
+import info.u_team.u_mod.api.IMachineRecipe;
 import info.u_team.u_mod.recipe.*;
-import info.u_team.u_mod.tilentity.machine.TileEntityEnricher;
+import info.u_team.u_mod.tilentity.machine.TileEntityMachine;
 import net.minecraft.item.ItemStack;
 
-public class RecipeEnricher {
+public class RecipeEnricher implements IMachineRecipe {
 	
 	private List<List<ItemStack>> jeiitemingredients;
 	private List<ItemStack> jeiitemoutputs;
@@ -33,22 +34,22 @@ public class RecipeEnricher {
 		jeiitemoutputs.add(output.getItemStack());
 	}
 	
-	public boolean areIngredientsMatching(TileEntityEnricher pulverizer) {
-		return ingredient.containsStackCountMatchOrHigher(pulverizer.getStackInSlot(0));
+	public boolean areIngredientsMatching(TileEntityMachine machine) {
+		return ingredient.containsStackCountMatchOrHigher(machine.getStackInSlot(0));
 	}
 	
-	public boolean areOutputsMatching(TileEntityEnricher pulverizer) {
-		return output.isItemStackAcceptable(pulverizer.getStackInSlot(1));
+	public boolean areOutputsMatching(TileEntityMachine machine) {
+		return output.isItemStackAcceptable(machine.getStackInSlot(1));
 	}
 	
-	public boolean isEnergyMatching(TileEntityEnricher pulverizer) {
-		return pulverizer.getStorage().getEnergyStored() >= energy.getEnergy();
+	public boolean isEnergyMatching(TileEntityMachine machine) {
+		return machine.getStorage().getEnergyStored() >= energy.getEnergy();
 	}
 	
-	public void execute(TileEntityEnricher pulverizer) {
-		ingredient.execute(pulverizer, 0);
-		output.execute(pulverizer, 1);
-		pulverizer.getStorage().extractEnergy(energy.getEnergy(), false);
+	public void execute(TileEntityMachine machine) {
+		ingredient.execute(machine, 0);
+		output.execute(machine, 1);
+		machine.getStorage().extractEnergy(energy.getEnergy(), false);
 	}
 	
 	public int getTime() {

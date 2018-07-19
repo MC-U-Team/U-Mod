@@ -2,11 +2,12 @@ package info.u_team.u_mod.recipe.machine;
 
 import java.util.*;
 
+import info.u_team.u_mod.api.IMachineRecipe;
 import info.u_team.u_mod.recipe.*;
-import info.u_team.u_mod.tilentity.machine.TileEntityPulverizer;
+import info.u_team.u_mod.tilentity.machine.TileEntityMachine;
 import net.minecraft.item.ItemStack;
 
-public class RecipePulverizer {
+public class RecipePulverizer implements IMachineRecipe {
 	
 	private List<List<ItemStack>> jeiitemingredients;
 	private List<ItemStack> jeiitemoutputs;
@@ -45,24 +46,24 @@ public class RecipePulverizer {
 		jeiitemoutputs.add(thirdoutput.getItemStack());
 	}
 	
-	public boolean areIngredientsMatching(TileEntityPulverizer pulverizer) {
-		return ingredient.containsStackCountMatchOrHigher(pulverizer.getStackInSlot(0));
+	public boolean areIngredientsMatching(TileEntityMachine machine) {
+		return ingredient.containsStackCountMatchOrHigher(machine.getStackInSlot(0));
 	}
 	
-	public boolean areOutputsMatching(TileEntityPulverizer pulverizer) {
-		return firstoutput.isItemStackAcceptable(pulverizer.getStackInSlot(1)) && secondoutput.isItemStackAcceptable(pulverizer.getStackInSlot(2)) && thirdoutput.isItemStackAcceptable(pulverizer.getStackInSlot(3));
+	public boolean areOutputsMatching(TileEntityMachine machine) {
+		return firstoutput.isItemStackAcceptable(machine.getStackInSlot(1)) && secondoutput.isItemStackAcceptable(machine.getStackInSlot(2)) && thirdoutput.isItemStackAcceptable(machine.getStackInSlot(3));
 	}
 	
-	public boolean isEnergyMatching(TileEntityPulverizer pulverizer) {
-		return pulverizer.getStorage().getEnergyStored() >= energy.getEnergy();
+	public boolean isEnergyMatching(TileEntityMachine machine) {
+		return machine.getStorage().getEnergyStored() >= energy.getEnergy();
 	}
 	
-	public void execute(TileEntityPulverizer pulverizer) {
-		ingredient.execute(pulverizer, 0);
-		firstoutput.execute(pulverizer, 1);
-		secondoutput.execute(pulverizer, 2);
-		thirdoutput.execute(pulverizer, 3);
-		pulverizer.getStorage().extractEnergy(energy.getEnergy(), false);
+	public void execute(TileEntityMachine machine) {
+		ingredient.execute(machine, 0);
+		firstoutput.execute(machine, 1);
+		secondoutput.execute(machine, 2);
+		thirdoutput.execute(machine, 3);
+		machine.getStorage().extractEnergy(energy.getEnergy(), false);
 	}
 	
 	public int getTime() {

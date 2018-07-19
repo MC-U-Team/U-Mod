@@ -1,13 +1,17 @@
 package info.u_team.u_mod.api;
 
-import net.minecraft.inventory.IInventory;
+import info.u_team.u_mod.tilentity.machine.TileEntityMachine;
 
 public interface IMachineRecipe {
 	
-	public boolean areIngredientsMatching(IInventory inventory);
+	public boolean areIngredientsMatching(TileEntityMachine machine);
 	
-	public boolean areOutputsMatching(IInventory inventory);
+	public boolean areOutputsMatching(TileEntityMachine machine);
 	
-	public void executeRecipe(IInventory inventory);
+	public boolean isEnergyMatching(TileEntityMachine machine);
+	
+	public void execute(TileEntityMachine machine);
+	
+	public int getTime();
 	
 }

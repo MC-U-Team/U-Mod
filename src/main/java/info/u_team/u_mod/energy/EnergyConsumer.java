@@ -52,6 +52,10 @@ public class EnergyConsumer implements IEnergyStorage, INbtSerializable {
 		return true;
 	}
 	
+	public int getTransfer() {
+		return transfer;
+	}
+	
 	@Override
 	public void readNBT(NBTTagCompound compound) {
 		if (compound.hasKey("energy_energy")) {

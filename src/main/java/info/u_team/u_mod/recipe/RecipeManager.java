@@ -2,15 +2,16 @@ package info.u_team.u_mod.recipe;
 
 import java.util.ArrayList;
 
+import info.u_team.u_mod.api.IMachineRecipe;
 import info.u_team.u_mod.recipe.machine.*;
 
 public class RecipeManager {
 	
-	private static ArrayList<RecipeAlloyFurnace> alloyfurnace = new ArrayList<>();
-	private static ArrayList<RecipeEnricher> enricher = new ArrayList<>();
-	private static ArrayList<RecipeFurnace> furnace = new ArrayList<>();
-	private static ArrayList<RecipePress> press = new ArrayList<>();
-	private static ArrayList<RecipePulverizer> pulverizer = new ArrayList<>();
+	private static ArrayList<IMachineRecipe> alloyfurnace = new ArrayList<>();
+	private static ArrayList<IMachineRecipe> enricher = new ArrayList<>();
+	private static ArrayList<IMachineRecipe> furnace = new ArrayList<>();
+	private static ArrayList<IMachineRecipe> press = new ArrayList<>();
+	private static ArrayList<IMachineRecipe> pulverizer = new ArrayList<>();
 	
 	public static void registerAlloyFurnace(RecipeAlloyFurnace recipe) {
 		alloyfurnace.add(recipe);
@@ -32,23 +33,23 @@ public class RecipeManager {
 		pulverizer.add(recipe);
 	}
 	
-	public static ArrayList<RecipeAlloyFurnace> getAlloyFurnaceRecipes() {
+	public static ArrayList<IMachineRecipe> getAlloyFurnaceRecipes() {
 		return alloyfurnace;
 	}
 	
-	public static ArrayList<RecipeEnricher> getEnricherRecipes() {
+	public static ArrayList<IMachineRecipe> getEnricherRecipes() {
 		return enricher;
 	}
 	
-	public static ArrayList<RecipeFurnace> getFurnaceRecipes() {
+	public static ArrayList<IMachineRecipe> getFurnaceRecipes() {
 		return furnace;
 	}
 	
-	public static ArrayList<RecipePress> getPressRecipes() {
+	public static ArrayList<IMachineRecipe> getPressRecipes() {
 		return press;
 	}
 	
-	public static ArrayList<RecipePulverizer> getPulverizerRecipes() {
+	public static ArrayList<IMachineRecipe> getPulverizerRecipes() {
 		return pulverizer;
 	}
 }

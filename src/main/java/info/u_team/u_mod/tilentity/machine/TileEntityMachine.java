@@ -1,5 +1,7 @@
 package info.u_team.u_mod.tilentity.machine;
 
+import java.util.List;
+
 import info.u_team.u_mod.api.*;
 import info.u_team.u_mod.energy.EnergyConsumer;
 import info.u_team.u_team_core.tileentity.UTileEntity;
@@ -39,6 +41,56 @@ public abstract class TileEntityMachine extends UTileEntity implements ITickable
 		energy = new EnergyConsumer(40000, 1000);
 		this.name = name;
 	}
+	
+	public void checkRecipe() {
+		for (int i = 0; i < getRecipes().size(); i++) {
+			IMachineRecipe recipe = getRecipes().get(i);
+			if (recipe.areIngredientsMatching(this)) {
+				recipeid = i;
+				if (max_progress != recipe.getTime()) {
+					progress = max_progress = recipe.getTime();
+				} else {
+					max_progress = recipe.getTime();
+				}
+				return;
+			}
+		}
+		progress = max_progress = 100;
+		recipeid = -1;
+	}
+	
+	@Override
+	public void update() {
+		if (world.isRemote) {
+			return;
+		}
+		if (recipeid >= 0) {
+			IMachineRecipe recipe = getRecipes().get(recipeid);
+			if (!recipe.areIngredientsMatching(this)) {
+				recipeid = -1;
+				return;
+			}
+			if (!recipe.isEnergyMatching(this) || !recipe.areOutputsMatching(this)) {
+				return;
+			}
+			progress--;
+			if (progress <= 0) {
+				recipe.execute(this);
+				progress = max_progress;
+				super.markDirty();
+			}
+		}
+	}
+	
+	@Override
+	public void markDirty() {
+		if (!world.isRemote) {
+			checkRecipe();
+		}
+		super.markDirty();
+	}
+	
+	public abstract List<IMachineRecipe> getRecipes();
 	
 	@Override
 	public void readNBT(NBTTagCompound compound) {
@@ -167,19 +219,14 @@ public abstract class TileEntityMachine extends UTileEntity implements ITickable
 	}
 	
 	@Override
-	public String getName() {
-		return name;
+	public int rate() {
+		return energy.getTransfer();
 	}
 	
 	@Override
-	public void markDirty() {
-		if (!world.isRemote) {
-			checkRecipe();
-		}
-		super.markDirty();
+	public String getName() {
+		return name;
 	}
-	
-	public abstract void checkRecipe();
 	
 	@SideOnly(Side.CLIENT)
 	@Override

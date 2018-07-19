@@ -1,9 +1,10 @@
 package info.u_team.u_mod.tilentity.machine;
 
-import static info.u_team.u_mod.recipe.RecipeManager.getAlloyFurnaceRecipes;
+import java.util.List;
 
+import info.u_team.u_mod.api.IMachineRecipe;
 import info.u_team.u_mod.container.machine.ContainerAlloyFurnace;
-import info.u_team.u_mod.recipe.machine.RecipeAlloyFurnace;
+import info.u_team.u_mod.recipe.RecipeManager;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
@@ -18,49 +19,8 @@ public class TileEntityAlloyFurnace extends TileEntityMachine {
 	}
 	
 	@Override
-	public void checkRecipe() {
-		for (int i = 0; i < getAlloyFurnaceRecipes().size(); i++) {
-			RecipeAlloyFurnace recipe = getAlloyFurnaceRecipes().get(i);
-			if (recipe.areIngredientsMatching(this)) {
-				recipeid = i;
-				if (max_progress != recipe.getTime()) {
-					progress = max_progress = recipe.getTime();
-				} else {
-					max_progress = recipe.getTime();
-				}
-				return;
-			}
-		}
-		progress = max_progress = 100;
-		recipeid = -1;
-	}
-	
-	@Override
-	public void update() {
-		if (world.isRemote) {
-			return;
-		}
-		if (recipeid >= 0) {
-			RecipeAlloyFurnace recipe = getAlloyFurnaceRecipes().get(recipeid);
-			if (!recipe.areIngredientsMatching(this)) {
-				recipeid = -1;
-				return;
-			}
-			if (!recipe.isEnergyMatching(this) || !recipe.areOutputsMatching(this)) {
-				return;
-			}
-			progress--;
-			if (progress <= 0) {
-				recipe.execute(this);
-				progress = max_progress;
-				super.markDirty();
-			}
-		}
-	}
-	
-	@Override
-	public int rate() {
-		return 5;
+	public List<IMachineRecipe> getRecipes() {
+		return RecipeManager.getAlloyFurnaceRecipes();
 	}
 	
 	@Override
