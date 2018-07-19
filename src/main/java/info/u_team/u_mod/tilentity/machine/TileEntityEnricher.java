@@ -2,6 +2,7 @@ package info.u_team.u_mod.tilentity.machine;
 
 import static info.u_team.u_mod.recipe.RecipeManager.getEnricherRecipes;
 
+import info.u_team.u_mod.container.machine.ContainerEnricher;
 import info.u_team.u_mod.container.machine.ContainerPulverizer;
 import info.u_team.u_mod.recipe.machine.RecipeEnricher;
 import net.minecraft.entity.player.*;
@@ -95,7 +96,7 @@ public class TileEntityEnricher extends TileEntityMachine {
 	
 	@Override
 	public Container createContainer(InventoryPlayer inventory, EntityPlayer player) {
-		return new ContainerPulverizer(player, world, pos);
+		return new ContainerEnricher(player, world, pos);
 	}
 	
 }

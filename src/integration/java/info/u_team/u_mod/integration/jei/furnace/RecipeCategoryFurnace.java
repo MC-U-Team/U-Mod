@@ -20,11 +20,11 @@ public class RecipeCategoryFurnace implements IRecipeCategory<RecipeWrapperFurna
 	
 	private IDrawable background;
 	private IDrawableAnimated progressbar;
-	private ResourceLocation PULVERIZER = new ResourceLocation(UConstants.MODID, "textures/gui/pulverizer.png");
+	private ResourceLocation FURNACE = new ResourceLocation(UConstants.MODID, "textures/gui/furnace.png");
 	
 	public RecipeCategoryFurnace(IGuiHelper guiHelper) {
-		this.background = guiHelper.drawableBuilder(PULVERIZER, 26, 17, 120, 60).build();
-		this.progressbar = guiHelper.createAnimatedDrawable(guiHelper.createDrawable(PULVERIZER, 0, 166, 64, 7), 100, StartDirection.LEFT, false);
+		this.background = guiHelper.drawableBuilder(FURNACE, 26, 17, 116, 30).build();
+		this.progressbar = guiHelper.createAnimatedDrawable(guiHelper.createDrawable(FURNACE, 0, 166, 64, 7), 100, StartDirection.LEFT, false);
 	}
 	
 	@Override
@@ -65,7 +65,7 @@ public class RecipeCategoryFurnace implements IRecipeCategory<RecipeWrapperFurna
 		IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
 		
 		guiItemStacks.init(0, true, 3, 5);
-		guiItemStacks.init(1, false, 98, 36);
+		guiItemStacks.init(1, false, 89, 6);
 		
 		guiItemStacks.set(ingredients);
 	}
