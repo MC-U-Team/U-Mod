@@ -55,13 +55,13 @@ public class EnergyConsumer implements IEnergyStorage, INbtSerializable {
 	@Override
 	public void readNBT(NBTTagCompound compound) {
 		if (compound.hasKey("energy_energy")) {
-			energy = compound.getInteger(compound.getString("energy_energy"));
+			energy = compound.getInteger("energy_energy");
 		}
 		if (compound.hasKey("energy_capacity")) {
-			capacity = compound.getInteger(compound.getString("energy_capacity"));
+			capacity = compound.getInteger("energy_capacity");
 		}
 		if (compound.hasKey("energy_transfer")) {
-			transfer = compound.getInteger(compound.getString("energy_transfer"));
+			transfer = compound.getInteger("energy_transfer");
 		}
 	}
 	
