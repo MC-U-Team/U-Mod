@@ -3,7 +3,6 @@ package info.u_team.u_mod.tilentity.machine;
 import static info.u_team.u_mod.recipe.RecipeManager.getPressRecipes;
 
 import info.u_team.u_mod.container.machine.ContainerPress;
-import info.u_team.u_mod.container.machine.ContainerPulverizer;
 import info.u_team.u_mod.recipe.machine.RecipePress;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.Container;
@@ -24,7 +23,11 @@ public class TileEntityPress extends TileEntityMachine {
 			RecipePress recipe = getPressRecipes().get(i);
 			if (recipe.areIngredientsMatching(this)) {
 				recipeid = i;
-				progress = max_progress = recipe.getTime();
+				if (max_progress != recipe.getTime()) {
+					progress = max_progress = recipe.getTime();
+				} else {
+					max_progress = recipe.getTime();
+				}
 				return;
 			}
 		}

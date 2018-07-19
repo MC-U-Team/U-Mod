@@ -3,7 +3,6 @@ package info.u_team.u_mod.tilentity.machine;
 import static info.u_team.u_mod.recipe.RecipeManager.getAlloyFurnaceRecipes;
 
 import info.u_team.u_mod.container.machine.ContainerAlloyFurnace;
-import info.u_team.u_mod.container.machine.ContainerPulverizer;
 import info.u_team.u_mod.recipe.machine.RecipeAlloyFurnace;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.Container;
@@ -23,9 +22,12 @@ public class TileEntityAlloyFurnace extends TileEntityMachine {
 		for (int i = 0; i < getAlloyFurnaceRecipes().size(); i++) {
 			RecipeAlloyFurnace recipe = getAlloyFurnaceRecipes().get(i);
 			if (recipe.areIngredientsMatching(this)) {
-				System.out.println("TEST");
 				recipeid = i;
-				progress = max_progress = recipe.getTime();
+				if (max_progress != recipe.getTime()) {
+					progress = max_progress = recipe.getTime();
+				} else {
+					max_progress = recipe.getTime();
+				}
 				return;
 			}
 		}

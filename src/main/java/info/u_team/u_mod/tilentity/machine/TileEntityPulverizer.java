@@ -23,7 +23,11 @@ public class TileEntityPulverizer extends TileEntityMachine {
 			RecipePulverizer recipe = getPulverizerRecipes().get(i);
 			if (recipe.areIngredientsMatching(this)) {
 				recipeid = i;
-				progress = max_progress = recipe.getTime();
+				if (max_progress != recipe.getTime()) {
+					progress = max_progress = recipe.getTime();
+				} else {
+					max_progress = recipe.getTime();
+				}
 				return;
 			}
 		}

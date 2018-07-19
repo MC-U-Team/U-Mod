@@ -69,6 +69,7 @@ public class RecipeCategoryAlloyFurnace implements IRecipeCategory<RecipeWrapper
 		guiItemStacks.init(2, true, 61, 3);
 		guiItemStacks.init(3, false, 32, 51);
 		
+		recipeWrapper.getIngredients(ingredients);
 		guiItemStacks.set(ingredients);
 	}
 	
