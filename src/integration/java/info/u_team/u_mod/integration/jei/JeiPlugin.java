@@ -1,6 +1,7 @@
 package info.u_team.u_mod.integration.jei;
 
 import info.u_team.u_mod.UConstants;
+import info.u_team.u_mod.gui.machine.*;
 import info.u_team.u_mod.init.UBlocks;
 import info.u_team.u_mod.integration.jei.alloyfurnace.*;
 import info.u_team.u_mod.integration.jei.enricher.*;
@@ -33,21 +34,26 @@ public class JeiPlugin implements IModPlugin {
 		registry.handleRecipes(RecipeAlloyFurnace.class, RecipeWrapperAlloyFurnace::new, alloyfurnaceID);
 		registry.addRecipes(RecipeManager.getAlloyFurnaceRecipes(), alloyfurnaceID);
 		registry.addRecipeCatalyst(new ItemStack(UBlocks.alloy_furnace), alloyfurnaceID);
+		registry.addRecipeClickArea(GuiAlloyFurnace.class, 52, 25, 72, 30, alloyfurnaceID); // TODO FIX TABS
 		
 		registry.handleRecipes(RecipeEnricher.class, RecipeWrapperEnricher::new, enricherID);
 		registry.addRecipes(RecipeManager.getEnricherRecipes(), enricherID);
 		registry.addRecipeCatalyst(new ItemStack(UBlocks.enricher), enricherID);
+		registry.addRecipeClickArea(GuiEnricher.class, 61, 32, 53, 16, enricherID);
 		
 		registry.handleRecipes(RecipeFurnace.class, RecipeWrapperFurnace::new, furnaceID);
 		registry.addRecipes(RecipeManager.getFurnaceRecipes(), furnaceID);
 		registry.addRecipeCatalyst(new ItemStack(UBlocks.furnace), furnaceID);
+		registry.addRecipeClickArea(GuiFurnace.class, 47, 28, 64, 7, furnaceID);
 		
 		registry.handleRecipes(RecipePress.class, RecipeWrapperPress::new, pressID);
 		registry.addRecipes(RecipeManager.getPressRecipes(), pressID);
 		registry.addRecipeCatalyst(new ItemStack(UBlocks.press), pressID);
+		registry.addRecipeClickArea(GuiPress.class, 80, 22, 16, 40, pressID);
 		
 		registry.handleRecipes(RecipePulverizer.class, RecipeWrapperPulverizer::new, pulverizerID);
 		registry.addRecipes(RecipeManager.getPulverizerRecipes(), pulverizerID);
 		registry.addRecipeCatalyst(new ItemStack(UBlocks.pulverizer), pulverizerID);
+		registry.addRecipeClickArea(GuiPulverizer.class, 47, 28, 64, 7, pulverizerID);
 	}
 }
