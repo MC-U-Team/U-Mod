@@ -38,18 +38,22 @@ public class RecipeAlloyFurnace implements IMachineRecipe {
 		jeiitemoutputs.add(output.getItemStack());
 	}
 	
+	@Override
 	public boolean areIngredientsMatching(TileEntityMachine machine) {
 		return firstingredient.containsStackCountMatchOrHigher(machine.getStackInSlot(0)) && secondingredient.containsStackCountMatchOrHigher(machine.getStackInSlot(1)) && thirdingredient.containsStackCountMatchOrHigher(machine.getStackInSlot(2));
 	}
 	
+	@Override
 	public boolean areOutputsMatching(TileEntityMachine machine) {
 		return output.isItemStackAcceptable(machine.getStackInSlot(3));
 	}
 	
+	@Override
 	public boolean isEnergyMatching(TileEntityMachine machine) {
 		return machine.getStorage().getEnergyStored() >= energy.getEnergy();
 	}
 	
+	@Override
 	public void execute(TileEntityMachine machine) {
 		firstingredient.execute(machine, 0);
 		secondingredient.execute(machine, 1);
@@ -58,6 +62,7 @@ public class RecipeAlloyFurnace implements IMachineRecipe {
 		machine.getStorage().extractEnergy(energy.getEnergy(), false);
 	}
 	
+	@Override
 	public int getTime() {
 		return time.getTime();
 	}

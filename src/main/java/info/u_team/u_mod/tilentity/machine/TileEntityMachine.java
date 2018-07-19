@@ -251,6 +251,7 @@ public abstract class TileEntityMachine extends UTileEntity implements ITickable
 	IItemHandler handlerTop = new SidedInvWrapper(this, EnumFacing.UP);
 	IItemHandler handlerBottom = new SidedInvWrapper(this, EnumFacing.DOWN);
 	
+	@Override
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
 		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && facing != null) {
 			if (facing == EnumFacing.DOWN) {

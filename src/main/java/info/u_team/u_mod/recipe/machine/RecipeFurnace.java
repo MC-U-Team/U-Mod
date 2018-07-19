@@ -34,24 +34,29 @@ public class RecipeFurnace implements IMachineRecipe {
 		jeiitemoutputs.add(output.getItemStack());
 	}
 	
+	@Override
 	public boolean areIngredientsMatching(TileEntityMachine machine) {
 		return ingredient.containsStackCountMatchOrHigher(machine.getStackInSlot(0));
 	}
 	
+	@Override
 	public boolean areOutputsMatching(TileEntityMachine machine) {
 		return output.isItemStackAcceptable(machine.getStackInSlot(1));
 	}
 	
+	@Override
 	public boolean isEnergyMatching(TileEntityMachine machine) {
 		return machine.getStorage().getEnergyStored() >= energy.getEnergy();
 	}
 	
+	@Override
 	public void execute(TileEntityMachine machine) {
 		ingredient.execute(machine, 0);
 		output.execute(machine, 1);
 		machine.getStorage().extractEnergy(energy.getEnergy(), false);
 	}
 	
+	@Override
 	public int getTime() {
 		return time.getTime();
 	}

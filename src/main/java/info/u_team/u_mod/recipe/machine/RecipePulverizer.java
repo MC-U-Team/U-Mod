@@ -46,18 +46,22 @@ public class RecipePulverizer implements IMachineRecipe {
 		jeiitemoutputs.add(thirdoutput.getItemStack());
 	}
 	
+	@Override
 	public boolean areIngredientsMatching(TileEntityMachine machine) {
 		return ingredient.containsStackCountMatchOrHigher(machine.getStackInSlot(0));
 	}
 	
+	@Override
 	public boolean areOutputsMatching(TileEntityMachine machine) {
 		return firstoutput.isItemStackAcceptable(machine.getStackInSlot(1)) && secondoutput.isItemStackAcceptable(machine.getStackInSlot(2)) && thirdoutput.isItemStackAcceptable(machine.getStackInSlot(3));
 	}
 	
+	@Override
 	public boolean isEnergyMatching(TileEntityMachine machine) {
 		return machine.getStorage().getEnergyStored() >= energy.getEnergy();
 	}
 	
+	@Override
 	public void execute(TileEntityMachine machine) {
 		ingredient.execute(machine, 0);
 		firstoutput.execute(machine, 1);
@@ -66,6 +70,7 @@ public class RecipePulverizer implements IMachineRecipe {
 		machine.getStorage().extractEnergy(energy.getEnergy(), false);
 	}
 	
+	@Override
 	public int getTime() {
 		return time.getTime();
 	}

@@ -3,7 +3,6 @@ package info.u_team.u_mod.tilentity;
 import info.u_team.u_team_core.tileentity.UTileEntity;
 import net.minecraft.nbt.NBTTagCompound;
 
-
 public class TileEntityBuilder extends UTileEntity {
 	
 	@Override
