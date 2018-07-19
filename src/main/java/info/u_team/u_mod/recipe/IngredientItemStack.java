@@ -22,7 +22,12 @@ public class IngredientItemStack {
 	
 	public IngredientItemStack(String oredict, int amount) {
 		count = amount;
-		stacks = OreDictionary.getOres(oredict);
+		stacks = NonNullList.create();
+		OreDictionary.getOres(oredict).forEach(stack -> {
+			ItemStack copy = stack.copy();
+			copy.setCount(amount);
+			stacks.add(copy);
+		});
 		if (stacks.isEmpty()) {
 			throw new IllegalStateException("Ore in Oredictionary not found");
 		}
