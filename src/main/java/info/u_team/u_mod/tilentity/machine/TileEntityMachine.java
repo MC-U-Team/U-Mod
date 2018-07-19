@@ -1,6 +1,7 @@
 package info.u_team.u_mod.tilentity.machine;
 
 import info.u_team.u_mod.api.*;
+import info.u_team.u_mod.energy.EnergyConsumer;
 import info.u_team.u_team_core.tileentity.UTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.*;
@@ -8,18 +9,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.*;
 import net.minecraft.world.IInteractionObject;
-import net.minecraftforge.common.capabilities.*;
-import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.energy.*;
 import net.minecraftforge.fml.relauncher.*;
+import net.minecraftforge.items.*;
+import net.minecraftforge.items.wrapper.SidedInvWrapper;
 
 public abstract class TileEntityMachine extends UTileEntity implements ITickable, ISidedInventory, ICableExceptor, IInteractionObject, IClientEnergy, IClientProgress {
 	
 	protected NonNullList<ItemStack> itemstacks;
 	
-	@CapabilityInject(IEnergyStorage.class)
-	public static Capability<IEnergyStorage> ENERGY;
-	
-	protected final IEnergyStorage energy;
+	protected final EnergyConsumer energy;
 	
 	protected int max_progress = 100;
 	protected int progress = max_progress;
@@ -35,25 +35,25 @@ public abstract class TileEntityMachine extends UTileEntity implements ITickable
 	public int progress_client;
 	
 	public TileEntityMachine(int size, String name) {
-		energy = ENERGY.getDefaultInstance();
 		itemstacks = NonNullList.withSize(size, ItemStack.EMPTY);
+		energy = new EnergyConsumer(40000, 1000);
 		this.name = name;
 	}
 	
 	@Override
 	public void readNBT(NBTTagCompound compound) {
 		ItemStackHelper.loadAllItems(compound, itemstacks);
-		if (compound.hasKey("energy")) {
-			ENERGY.readNBT(energy, null, compound.getTag("energy"));
-		}
+		energy.readNBT(compound);
 		progress = compound.getInteger("progress");
+		recipeid = compound.getInteger("recipe");
 	}
 	
 	@Override
 	public void writeNBT(NBTTagCompound compound) {
 		ItemStackHelper.saveAllItems(compound, itemstacks);
-		compound.setTag("energy", ENERGY.writeNBT(energy, null));
+		energy.writeNBT(compound);
 		compound.setInteger("progress", progress);
+		compound.setInteger("recipe", recipeid);
 	}
 	
 	@Override
@@ -193,4 +193,27 @@ public abstract class TileEntityMachine extends UTileEntity implements ITickable
 		return progress_client;
 	}
 	
+	@Override
+	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
+		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY || capability == CapabilityEnergy.ENERGY) {
+			return true;
+		}
+		return super.hasCapability(capability, facing);
+	}
+	
+	IItemHandler handlerTop = new SidedInvWrapper(this, EnumFacing.UP);
+	IItemHandler handlerBottom = new SidedInvWrapper(this, EnumFacing.DOWN);
+	
+	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && facing != null) {
+			if (facing == EnumFacing.DOWN) {
+				return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(handlerBottom);
+			} else if (facing == EnumFacing.UP) {
+				return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(handlerTop);
+			}
+		} else if (capability == CapabilityEnergy.ENERGY) {
+			return CapabilityEnergy.ENERGY.cast(energy);
+		}
+		return super.getCapability(capability, facing);
+	}
 }

@@ -3,11 +3,10 @@ package info.u_team.u_mod.tilentity.machine;
 import static info.u_team.u_mod.recipe.RecipeManager.getPressRecipes;
 
 import info.u_team.u_mod.container.machine.ContainerPulverizer;
-import info.u_team.u_mod.recipe.machine.*;
+import info.u_team.u_mod.recipe.machine.RecipePress;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 
 public class TileEntityPress extends TileEntityMachine {
@@ -53,18 +52,6 @@ public class TileEntityPress extends TileEntityMachine {
 				super.markDirty();
 			}
 		}
-	}
-	
-	@Override
-	public void readNBT(NBTTagCompound compound) {
-		super.readNBT(compound);
-		recipeid = compound.getInteger("recipe");
-	}
-	
-	@Override
-	public void writeNBT(NBTTagCompound compound) {
-		super.writeNBT(compound);
-		compound.setInteger("recipe", recipeid);
 	}
 	
 	@Override
