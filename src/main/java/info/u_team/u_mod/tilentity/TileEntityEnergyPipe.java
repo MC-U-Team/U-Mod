@@ -9,6 +9,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
+import net.minecraft.world.World;
 
 public class TileEntityEnergyPipe extends UTileEntity implements ICable, ITickable {
 	
@@ -17,7 +18,6 @@ public class TileEntityEnergyPipe extends UTileEntity implements ICable, ITickab
 	@Override
 	public void readNBT(NBTTagCompound compound) {
 		id = compound.getInteger("tunnel");
-		TunnelHandler.registerTunnel(id, pos, world);
 	}
 	
 	@Override
@@ -27,27 +27,12 @@ public class TileEntityEnergyPipe extends UTileEntity implements ICable, ITickab
 	
 	@Override
 	public void onLoad() {
+		if (this.id > -1) {
+			TunnelHandler.registerTunnel(id, pos, world);
+		}
 		if (!this.world.isRemote && this.id == -1) {
 			IBlockState state = this.world.getBlockState(pos).getActualState(world, pos);
-			state.getBlock().onNeighborChange(world, pos, null);
-			if (state.getValue(BlockEnergyPipe.UP)) {
-				world.getBlockState(pos.up()).getBlock().onNeighborChange(world, pos.up(), pos);
-			}
-			if (state.getValue(BlockEnergyPipe.DOWN)) {
-				world.getBlockState(pos.down()).getBlock().onNeighborChange(world, pos.down(), pos);
-			}
-			if (state.getValue(BlockEnergyPipe.EAST)) {
-				world.getBlockState(pos.east()).getBlock().onNeighborChange(world, pos.east(), pos);
-			}
-			if (state.getValue(BlockEnergyPipe.WEST)) {
-				world.getBlockState(pos.west()).getBlock().onNeighborChange(world, pos.west(), pos);
-			}
-			if (state.getValue(BlockEnergyPipe.NORTH)) {
-				world.getBlockState(pos.north()).getBlock().onNeighborChange(world, pos.north(), pos);
-			}
-			if (state.getValue(BlockEnergyPipe.SOUTH)) {
-				world.getBlockState(pos.south()).getBlock().onNeighborChange(world, pos.south(), pos);
-			}
+			TunnelHandler.onStateChange(state, world, pos);
 		}
 	}
 	

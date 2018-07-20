@@ -1,5 +1,6 @@
 package info.u_team.u_mod.block;
 
+import java.util.HashMap;
 import java.util.List;
 
 import info.u_team.u_mod.UConstants;
@@ -169,17 +170,23 @@ public class BlockEnergyPipe extends UBlockTileEntity {
 		return new AxisAlignedBB(anfangX, anfangY, anfangZ, endeX, endeY, endeZ);
 	}
 	
+	private static HashMap<BlockPos, IBlockState> last_state = new HashMap<>();
+	
 	@Override
 	public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
 		int i = 0;
 		for (EnumFacing face : EnumFacing.VALUES) {
 			TileEntity entity = worldIn.getTileEntity(pos.offset(face.getOpposite()));
-			if (entity != null && (entity instanceof ICableExceptor || entity instanceof ICable)) {
+			if (entity != null && ((entity instanceof ICableExceptor && ((ICableExceptor)entity).canConnectTo(face, pos, worldIn)) || entity instanceof ICable)) {
 				state = state.withProperty(properties[i], true);
 			} else {
 				state = state.withProperty(properties[i], false);
 			}
 			i++;
+		}
+		if (worldIn instanceof World && !state.equals(last_state.get(pos))) {
+			TunnelHandler.onStateChange(state, (World) worldIn, pos);
+			last_state.put(pos, state);
 		}
 		return state;
 	}
@@ -191,13 +198,14 @@ public class BlockEnergyPipe extends UBlockTileEntity {
 	@Override
 	public void onNeighborChange(IBlockAccess world, BlockPos pos, BlockPos neighbor) {
 		if (world instanceof World) {
-			TunnelHandler.onStateChange(world.getBlockState(pos), (World) world, pos);
+			TunnelHandler.onStateChange(world.getBlockState(pos).getActualState(world, pos), (World) world, pos);
 		}
 	}
 	
 	@Override
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-		TunnelHandler.notifyOfDestruction(state, worldIn, pos);
+		TunnelHandler.notifyOfDestruction(state.getActualState(worldIn, pos), worldIn, pos);
+		last_state.remove(pos);
 		super.breakBlock(worldIn, pos, state);
 	}
 	
