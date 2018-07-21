@@ -6,9 +6,8 @@ import info.u_team.u_mod.tilentity.TileEntityNuclearReactor;
 import info.u_team.u_team_core.tileentity.UTileEntityProvider;
 import net.minecraft.util.ResourceLocation;
 
-
 public class BlockNuclearReactor extends BlockMachine {
-
+	
 	public BlockNuclearReactor(String name) {
 		super(name, new UTileEntityProvider(new ResourceLocation(UConstants.MODID, "nuclear_reactor_tile"), TileEntityNuclearReactor.class));
 	}

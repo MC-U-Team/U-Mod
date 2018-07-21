@@ -144,12 +144,12 @@ public abstract class TileEntityGeneration extends UTileEntity implements ITicka
 	}
 	
 	@Override
-	public boolean takesEnergy() {
+	public boolean takesEnergy(EnumFacing facing) {
 		return false;
 	}
 	
 	@Override
-	public boolean givesEnergy() {
+	public boolean givesEnergy(EnumFacing facing) {
 		return true;
 	}
 	

@@ -176,7 +176,7 @@ public class BlockEnergyPipe extends UBlockTileEntity {
 		int i = 0;
 		for (EnumFacing face : EnumFacing.VALUES) {
 			TileEntity entity = worldIn.getTileEntity(pos.offset(face.getOpposite()));
-			if (entity != null && ((entity instanceof ICableExceptor && ((ICableExceptor)entity).canConnectTo(face, pos, worldIn)) || entity instanceof ICable)) {
+			if (entity != null && ((entity instanceof ICableExceptor && ((ICableExceptor) entity).canConnectTo(face, pos, worldIn)) || entity instanceof ICable)) {
 				state = state.withProperty(properties[i], true);
 			} else {
 				state = state.withProperty(properties[i], false);
