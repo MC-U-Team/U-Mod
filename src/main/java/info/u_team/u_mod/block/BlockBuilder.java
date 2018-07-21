@@ -12,7 +12,7 @@ import net.minecraft.util.ResourceLocation;
 public class BlockBuilder extends BlockMaschine{
 
 	public BlockBuilder(String name) {
-		super(name, Material.IRON, UCreativeTabs.MACHINE, new UTileEntityProvider(new ResourceLocation(UConstants.MODID, "builder_tile"), true, TileEntityBuilder.class));
+		super(name, new UTileEntityProvider(new ResourceLocation(UConstants.MODID, "builder_tile"), true, TileEntityBuilder.class));
 	}
 	
 }
