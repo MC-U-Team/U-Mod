@@ -14,7 +14,7 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockPulveriser extends BlockMaschine {
+public class BlockPulveriser extends BlockMachine {
 	
 	private int gui;
 	

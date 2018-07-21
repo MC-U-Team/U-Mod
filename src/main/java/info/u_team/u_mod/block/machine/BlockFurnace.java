@@ -14,7 +14,7 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.*;
 
-public class BlockFurnace extends BlockMaschine {
+public class BlockFurnace extends BlockMachine {
 	
 	private int gui;
 	

@@ -2,6 +2,7 @@ package info.u_team.u_mod.init;
 
 import info.u_team.u_mod.UConstants;
 import info.u_team.u_mod.block.*;
+import info.u_team.u_mod.block.generation.BlockSolarPanel;
 import info.u_team.u_mod.block.machine.*;
 import info.u_team.u_mod.resource.*;
 import info.u_team.u_team_core.block.UBlock;
@@ -21,14 +22,19 @@ public class UBlocks {
 	public static final UBlock alloy_block1 = new BlockBlock("alloy_block1", EnumAlloys1.VALUES);
 	
 	// Machines
-	public static final UBlock pulverizer = new BlockPulveriser("pulverizer");
-	public static final UBlock battery = new BlockBattery("battery");
-	public static final UBlock energy_pipe = new BlockEnergyPipe("energy_pipe");
-	public static final UBlock furnace = new BlockFurnace("furnace");
 	public static final UBlock alloy_furnace = new BlockAlloyFurnace("alloy_furnace");
-	public static final UBlock press = new BlockPress("press");
 	public static final UBlock enricher = new BlockEnricher("enricher");
+	public static final UBlock furnace = new BlockFurnace("furnace");
+	public static final UBlock press = new BlockPress("press");
+	public static final UBlock pulverizer = new BlockPulveriser("pulverizer");
+	
+	// Generation
+	public static final UBlock solarpanel = new BlockSolarPanel("solar_panel");
+	
+	public static final UBlock battery = new BlockBattery("battery");
 	public static final UBlock dummy = new BlockDummyMultiblock("dummy");
+	
+	public static final UBlock cable = new BlockEnergyPipe("energy_pipe");
 	
 	public static void preinit() {
 		BlockRegistry.register(UConstants.MODID, RegistryUtil.getRegistryEntries(Block.class, UBlocks.class));

@@ -1,7 +1,6 @@
 package info.u_team.u_mod.block;
 
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 import info.u_team.u_mod.UConstants;
 import info.u_team.u_mod.api.*;

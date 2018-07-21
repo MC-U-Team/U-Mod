@@ -13,11 +13,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.*;
 
-public class BlockMaschine extends UBlockTileEntity {
+public abstract class BlockMachine extends UBlockTileEntity {
 	
 	public static final PropertyDirection FACING = BlockHorizontal.FACING;
 	
-	public BlockMaschine(String name, UTileEntityProvider provider) {
+	public BlockMachine(String name, UTileEntityProvider provider) {
 		super(name, Material.IRON, UCreativeTabs.machine, provider);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
 	}
@@ -49,13 +49,13 @@ public class BlockMaschine extends UBlockTileEntity {
 	}
 	
 	@Override
-	public IBlockState withRotation(IBlockState state, Rotation rot) {
-		return state.withProperty(FACING, rot.rotate(state.getValue(FACING)));
+	public IBlockState withRotation(IBlockState state, Rotation rotation) {
+		return state.withProperty(FACING, rotation.rotate(state.getValue(FACING)));
 	}
 	
 	@Override
-	public IBlockState withMirror(IBlockState state, Mirror mirrorIn) {
-		return state.withRotation(mirrorIn.toRotation(state.getValue(FACING)));
+	public IBlockState withMirror(IBlockState state, Mirror mirror) {
+		return state.withRotation(mirror.toRotation(state.getValue(FACING)));
 	}
 	
 	@Override
