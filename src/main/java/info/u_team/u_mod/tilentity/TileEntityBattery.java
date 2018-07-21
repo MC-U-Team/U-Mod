@@ -1,40 +1,36 @@
 package info.u_team.u_mod.tilentity;
 
 import info.u_team.u_mod.api.ICableExceptor;
+import info.u_team.u_mod.energy.EnergyStorage;
 import info.u_team.u_team_core.tileentity.UTileEntity;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ITickable;
-import net.minecraftforge.common.capabilities.*;
-import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraft.util.*;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.energy.*;
 
 public class TileEntityBattery extends UTileEntity implements ITickable, ICableExceptor {
 	
-	@CapabilityInject(IEnergyStorage.class)
-	public static Capability<IEnergyStorage> ENERGY;
-	
-	private IEnergyStorage energy;
+	protected final EnergyStorage energy;
 	
 	public TileEntityBattery() {
-		energy = ENERGY.getDefaultInstance();
+		energy = new EnergyStorage(100000, 10000, 10000);
 	}
 	
 	@Override
 	public void readNBT(NBTTagCompound compound) {
-		// TODO Auto-generated method stub
-		
+		energy.readNBT(compound);
 	}
 	
 	@Override
 	public void writeNBT(NBTTagCompound compound) {
-		// TODO Auto-generated method stub
-		
+		energy.writeNBT(compound);
 	}
 	
 	@Override
 	public void update() {
 		if (world.isRemote)
 			return;
-		energy.receiveEnergy(10, false);
+		energy.receiveEnergy(5000, false);
 	}
 	
 	@Override
@@ -44,7 +40,7 @@ public class TileEntityBattery extends UTileEntity implements ITickable, ICableE
 	
 	@Override
 	public boolean takesEnergy() {
-		return false;
+		return true;
 	}
 	
 	@Override
@@ -53,8 +49,24 @@ public class TileEntityBattery extends UTileEntity implements ITickable, ICableE
 	}
 	
 	@Override
-	public int rate() {
-		return 8;
+	public int rate() {// TODO add in and out transfer
+		return 1000; //Why is transfer so low?? @MrTroble
+	}
+	
+	@Override
+	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
+		if (capability == CapabilityEnergy.ENERGY) {
+			return true;
+		}
+		return super.hasCapability(capability, facing);
+	}
+	
+	@Override
+	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+		if (capability == CapabilityEnergy.ENERGY) {
+			return CapabilityEnergy.ENERGY.cast(energy);
+		}
+		return super.getCapability(capability, facing);
 	}
 	
 }
