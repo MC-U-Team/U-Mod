@@ -14,7 +14,7 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockPress extends BlockMaschine {
+public class BlockPress extends BlockMachine {
 	
 	private int gui;
 	

@@ -3,13 +3,11 @@ package info.u_team.u_mod.tilentity;
 import java.util.ArrayList;
 
 import info.u_team.u_mod.api.*;
-import info.u_team.u_mod.block.BlockEnergyPipe;
 import info.u_team.u_team_core.tileentity.UTileEntity;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
-import net.minecraft.world.World;
 
 public class TileEntityEnergyPipe extends UTileEntity implements ICable, ITickable {
 	

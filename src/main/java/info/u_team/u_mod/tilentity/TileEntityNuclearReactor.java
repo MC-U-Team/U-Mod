@@ -4,8 +4,7 @@ import java.util.List;
 
 import info.u_team.u_mod.api.IMachineRecipe;
 import info.u_team.u_mod.tilentity.machine.TileEntityMachine;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.player.*;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
