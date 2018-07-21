@@ -43,7 +43,7 @@ public class TileEntityEnergyPipe extends UTileEntity implements ICable, ITickab
 			TileEntity entity = world.getTileEntity(pos.offset(face));
 			if (entity != null && entity instanceof ICableExceptor) {
 				ICableExceptor exceptor = (ICableExceptor) entity;
-				if (exceptor.takesEnergy()) {
+				if (exceptor.takesEnergy(face)) {
 					facings.add(face);
 				}
 			}
@@ -58,7 +58,7 @@ public class TileEntityEnergyPipe extends UTileEntity implements ICable, ITickab
 			TileEntity entity = world.getTileEntity(pos.offset(face));
 			if (entity != null && entity instanceof ICableExceptor) {
 				ICableExceptor exceptor = (ICableExceptor) entity;
-				if (exceptor.givesEnergy()) {
+				if (exceptor.givesEnergy(face)) {
 					facings.add(face);
 				}
 			}

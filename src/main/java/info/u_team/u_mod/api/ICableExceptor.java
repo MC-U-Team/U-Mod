@@ -7,9 +7,9 @@ import net.minecraft.world.World;
 
 public interface ICableExceptor extends IEnergyStorageProvider {
 	
-	boolean takesEnergy();
+	boolean takesEnergy(EnumFacing face);
 	
-	boolean givesEnergy();
+	boolean givesEnergy(EnumFacing face);
 	
 	int rate();
 	

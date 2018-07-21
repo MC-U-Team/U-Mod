@@ -39,18 +39,18 @@ public class TileEntityBattery extends UTileEntity implements ITickable, ICableE
 	}
 	
 	@Override
-	public boolean takesEnergy() {
+	public boolean takesEnergy(EnumFacing face) {
 		return true;
 	}
 	
 	@Override
-	public boolean givesEnergy() {
+	public boolean givesEnergy(EnumFacing face) {
 		return true;
 	}
 	
 	@Override
-	public int rate() {// TODO add in and out transfer
-		return 1000; //Why is transfer so low?? @MrTroble
+	public int rate() {
+		return 1000;
 	}
 	
 	@Override

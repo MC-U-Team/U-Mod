@@ -209,12 +209,12 @@ public abstract class TileEntityMachine extends UTileEntity implements ITickable
 	}
 	
 	@Override
-	public boolean takesEnergy() {
+	public boolean takesEnergy(EnumFacing face) {
 		return true;
 	}
 	
 	@Override
-	public boolean givesEnergy() {
+	public boolean givesEnergy(EnumFacing face) {
 		return false;
 	}
 	
