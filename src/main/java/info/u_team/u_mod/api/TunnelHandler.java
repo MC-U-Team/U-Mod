@@ -17,7 +17,9 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
 public class TunnelHandler {
 	
 	private static HashMap<Integer, ArrayList<BlockPos>> TUNNELS = new HashMap<Integer, ArrayList<BlockPos>>();
-	private static int highestid = -1;
+	private static int energy_available;
+	private static int energy_needed;
+	private static ArrayList<BlockPos> posses;
 	
 	private static int mergeTunnels(World world, int id, int id2) {
 		int min = Math.min(id, id2);
@@ -55,7 +57,6 @@ public class TunnelHandler {
 		if (cable1 == null || world.isRemote)
 			return false;
 		int id = cable1.getID();
-		state = state.getActualState(world, pos);
 		if (state.getValue(BlockEnergyPipe.UP)) {
 			TileEntity entity = world.getTileEntity(pos.down());
 			if (entity != null && entity instanceof ICable) {
@@ -135,7 +136,7 @@ public class TunnelHandler {
 		
 		if (cable1.getID() != id || cable1.getID() == -1) {
 			if (id == -1) {
-				id = (highestid += 1);
+				id = getNextID();
 				TUNNELS.put(id, Lists.newArrayList(pos));
 			} else {
 				ArrayList<BlockPos> blocks = TUNNELS.get(id);
@@ -145,18 +146,23 @@ public class TunnelHandler {
 					return false;
 				}
 			}
-			
 			cable1.setID(id);
 			return true;
 		}
 		return false;
 	}
 	
+	public static int getNextID() {
+		int i = 0;
+		for (; TUNNELS.containsKey(i); i++) {
+		}
+		return i;
+	}
+	
 	public static void notifyOfDestruction(IBlockState state, World world, BlockPos pos) {
 		if (world.isRemote)
 			return;
 		byte x = 0;
-		state = state.getActualState(world, pos);
 		ICable cable = (ICable) world.getTileEntity(pos);
 		
 		if (state.getValue(BlockEnergyPipe.UP)) {
@@ -182,7 +188,6 @@ public class TunnelHandler {
 		if (x > 1) {
 			ArrayList<BlockPos> tunnel = TUNNELS.get(id1);
 			if (tunnel == null) {
-				notifyOfDestruction(world.getBlockState(pos), world, pos);
 				return;
 			}
 			tunnel.forEach(pos2 -> {
@@ -210,18 +215,14 @@ public class TunnelHandler {
 		}
 	}
 	
-	private static int energy_available;
-	private static int energy_needed;
-	private static HashMap<Integer, ArrayList<BlockPos>> __impl_transform;
-	private static ArrayList<BlockPos> posses;
+	private static HashMap<Integer, ArrayList<BlockPos>> _impl_tunnels = null;
 	
-	@SuppressWarnings("unchecked")
 	@SubscribeEvent
 	public static void onWorldTIck(WorldTickEvent event) {
 		if (event.world.isRemote)
 			return;
-		__impl_transform = (HashMap<Integer, ArrayList<BlockPos>>) TUNNELS.clone();
-		__impl_transform.forEach((id, array) -> {
+		_impl_tunnels = (HashMap<Integer, ArrayList<BlockPos>>) TUNNELS.clone();
+		_impl_tunnels.forEach((id, array) -> {
 			energy_needed = 0;
 			energy_available = 0;
 			posses = (ArrayList<BlockPos>) array.clone();
