@@ -1,5 +1,6 @@
 package info.u_team.u_mod.init;
 
+import info.u_team.u_mod.block.generation.BlockSolarPanel;
 import info.u_team.u_mod.resource.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.color.*;
@@ -34,6 +35,13 @@ public class UColors {
 			return EnumAlloys1.byMetadata(state.getBlock().getMetaFromState(state)).getColor();
 		}, UBlocks.alloy_block1);
 		
+		// Solar panel
+		blockcolors.registerBlockColorHandler((state, world, pos, index) -> {
+			if (index == 1) {
+				return BlockSolarPanel.EnumType.byMetadata(state.getBlock().getMetaFromState(state)).getColor();
+			}
+			return 0xFFFFFF;
+		}, UBlocks.solar_panel);
 	}
 	
 	private static void item() {
@@ -50,6 +58,14 @@ public class UColors {
 		itemcolors.registerItemColorHandler((stack, index) -> {
 			return EnumAlloys1.byMetadata(stack.getMetadata()).getColor();
 		}, UBlocks.alloy_block1.getItem(), UItems.alloy_nugget1, UItems.alloy_ingot1);
+		
+		// Solar panel
+		itemcolors.registerItemColorHandler((stack, index) -> {
+			if (index == 1) {
+				return BlockSolarPanel.EnumType.byMetadata(stack.getMetadata()).getColor();
+			}
+			return 0xFFFFFF;
+		}, UBlocks.solar_panel.getItem());
 	}
 	
 }

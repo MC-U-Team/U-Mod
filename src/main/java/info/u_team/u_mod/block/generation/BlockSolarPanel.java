@@ -1,13 +1,14 @@
 package info.u_team.u_mod.block.generation;
 
 import info.u_team.u_mod.UConstants;
+import info.u_team.u_mod.api.IColored;
 import info.u_team.u_mod.item.generation.ItemBlockSolarPanel;
 import info.u_team.u_mod.tilentity.generation.TileEntitySolarPanel;
 import info.u_team.u_team_core.item.UItemBlock;
 import info.u_team.u_team_core.tileentity.UTileEntityProvider;
-import info.u_team.u_team_core.util.CustomResourceLocation;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.*;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.*;
 import net.minecraft.tileentity.TileEntity;
@@ -44,16 +45,32 @@ public class BlockSolarPanel extends BlockGeneration {
 	}
 	
 	@Override
-	public UItemBlock getItemBlock() {
-		return new ItemBlockSolarPanel(this);
+	public int damageDropped(IBlockState state) {
+		return getMetaFromState(state);
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@Override
+	public BlockRenderLayer getBlockLayer() {
+		return BlockRenderLayer.CUTOUT_MIPPED;
 	}
 	
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerModel() {
-		for (EnumType enumtype : EnumType.values()) {
-			setModel(getItem(), enumtype.getMetadata(), new CustomResourceLocation(getRegistryName(), "_" + enumtype.getName()));
+		for (EnumType type : EnumType.values()) {
+			setModel(getItem(), type.getMetadata(), getRegistryName());
 		}
+	}
+	
+	@Override
+	public UItemBlock getItemBlock() {
+		return new ItemBlockSolarPanel(this);
+	}
+	
+	@Override
+	public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+		return super.getStateForPlacement(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer).withProperty(TYPE, EnumType.byMetadata(meta));
 	}
 	
 	@Override
@@ -71,20 +88,22 @@ public class BlockSolarPanel extends BlockGeneration {
 		return new BlockStateContainer(this, FACING, TYPE);
 	}
 	
-	public static enum EnumType implements IStringSerializable {
-		TIER1(0, "tier1", 16),
-		TIER2(1, "tier2", 256),
-		TIER3(2, "tier3", 4096),
-		TIER4(3, "tier4", 65536);
+	public static enum EnumType implements IStringSerializable, IColored {
+		TIER1(0, "tier1", 16, 0x00FFFF),
+		TIER2(1, "tier2", 256, 0x0000FF),
+		TIER3(2, "tier3", 4096, 0x00FF00),
+		TIER4(3, "tier4", 65536, 0xFF00FF);
 		
 		private final int meta;
 		private final String name;
 		private int energy;
+		private int color;
 		
-		private EnumType(int meta, String name, int energy) {
+		private EnumType(int meta, String name, int energy, int color) {
 			this.meta = meta;
 			this.name = name;
 			this.energy = energy;
+			this.color = color;
 		}
 		
 		public int getMetadata() {
@@ -98,6 +117,10 @@ public class BlockSolarPanel extends BlockGeneration {
 		
 		public int getEnergy() {
 			return energy;
+		}
+		
+		public int getColor() {
+			return color;
 		}
 		
 		private static final EnumType[] META_LOOKUP = new EnumType[values().length];

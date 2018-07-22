@@ -1,0 +1,64 @@
+{
+	"variants": {
+		"facing=north,type=tier1": {
+			"model": "umod:solar_panel"
+		},
+		"facing=south,type=tier1": {
+			"model": "umod:solar_panel",
+			"y": 180
+		},
+		"facing=west,type=tier1": {
+			"model": "umod:solar_panel",
+			"y": 270
+		},
+		"facing=east,type=tier1": {
+			"model": "umod:solar_panel",
+			"y": 90
+		},
+		"facing=north,type=tier2": {
+			"model": "umod:solar_panel"
+		},
+		"facing=south,type=tier2": {
+			"model": "umod:solar_panel",
+			"y": 180
+		},
+		"facing=west,type=tier2": {
+			"model": "umod:solar_panel",
+			"y": 270
+		},
+		"facing=east,type=tier2": {
+			"model": "umod:solar_panel",
+			"y": 90
+		},
+		"facing=north,type=tier3": {
+			"model": "umod:solar_panel"
+		},
+		"facing=south,type=tier3": {
+			"model": "umod:solar_panel",
+			"y": 180
+		},
+		"facing=west,type=tier3": {
+			"model": "umod:solar_panel",
+			"y": 270
+		},
+		"facing=east,type=tier3": {
+			"model": "umod:solar_panel",
+			"y": 90
+		},
+		"facing=north,type=tier4": {
+			"model": "umod:solar_panel"
+		},
+		"facing=south,type=tier4": {
+			"model": "umod:solar_panel",
+			"y": 180
+		},
+		"facing=west,type=tier4": {
+			"model": "umod:solar_panel",
+			"y": 270
+		},
+		"facing=east,type=tier4": {
+			"model": "umod:solar_panel",
+			"y": 90
+		}
+	}
+}

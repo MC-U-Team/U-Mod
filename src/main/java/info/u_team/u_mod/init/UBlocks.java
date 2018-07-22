@@ -29,7 +29,7 @@ public class UBlocks {
 	public static final UBlock pulverizer = new BlockPulveriser("pulverizer");
 	
 	// Generation
-	public static final UBlock solarpanel = new BlockSolarPanel("solar_panel");
+	public static final UBlock solar_panel = new BlockSolarPanel("solar_panel");
 	
 	public static final UBlock battery = new BlockBattery("battery");
 	public static final UBlock dummy = new BlockDummyMultiblock("dummy");

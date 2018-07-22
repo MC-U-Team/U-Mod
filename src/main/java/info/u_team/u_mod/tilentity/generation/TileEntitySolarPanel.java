@@ -25,12 +25,11 @@ public class TileEntitySolarPanel extends TileEntityGeneration {
 		}
 		if (type == null) {
 			type = EnumType.byMetadata(getBlockMetadata());
-			energy.setCapacity(type.getEnergy() * 10);
-			energy.setTransfer(type.getEnergy() * 2);
+			energy.setCapacity(type.getEnergy() * 100);
+			energy.setTransfer(type.getEnergy() * 4);
 		}
 		if (working) {
 			energy.receiveEnergy(type.getEnergy(), false);
-			System.out.println(energy.getEnergyStored());
 		}
 		cooldown++;
 		if (cooldown >= 20) {

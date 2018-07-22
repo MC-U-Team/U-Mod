@@ -1,7 +1,19 @@
 {
 	"variants": {
-		"normal": {
+		"facing=north": {
 			"model": "umod:pulverizer"
+		},
+		"facing=south": {
+			"model": "umod:pulverizer",
+			"y": 180
+		},
+		"facing=west": {
+			"model": "umod:pulverizer",
+			"y": 270
+		},
+		"facing=east": {
+			"model": "umod:pulverizer",
+			"y": 90
 		}
 	}
 }

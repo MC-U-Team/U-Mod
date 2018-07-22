@@ -217,6 +217,7 @@ public class TunnelHandler {
 	
 	private static HashMap<Integer, ArrayList<BlockPos>> _impl_tunnels = null;
 	
+	@SuppressWarnings("unchecked")
 	@SubscribeEvent
 	public static void onWorldTIck(WorldTickEvent event) {
 		if (event.world.isRemote)
