@@ -1,58 +1,36 @@
 package info.u_team.u_mod.block.generation;
 
-import info.u_team.u_mod.UConstants;
 import info.u_team.u_mod.api.IColored;
+import info.u_team.u_mod.block.BlockEnergyGui;
+import info.u_team.u_mod.init.UGuis;
 import info.u_team.u_mod.item.generation.ItemBlockSolarPanel;
 import info.u_team.u_mod.tilentity.generation.TileEntitySolarPanel;
 import info.u_team.u_team_core.item.UItemBlock;
-import info.u_team.u_team_core.tileentity.UTileEntityProvider;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.*;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.*;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.*;
 
-public class BlockSolarPanel extends BlockGeneration {
-	
-	// private int gui;
+public class BlockSolarPanel extends BlockEnergyGui {
 	
 	public static final PropertyEnum<EnumType> TYPE = PropertyEnum.create("type", EnumType.class);
 	
 	public BlockSolarPanel(String name) {
-		super(name, new UTileEntityProvider(new ResourceLocation(UConstants.MODID, "solar_panel_tile"), true, TileEntitySolarPanel.class));
-		// gui = UGuis.addGui(Gui.class, Container.class);
+		super(name, TileEntitySolarPanel.class);
 	}
 	
 	@Override
-	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		// playerIn.openGui(UConstants.MODID, gui, worldIn, pos.getX(), pos.getY(),
-		// pos.getZ());
-		return true;
-	}
-	
-	@Override
-	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-		TileEntity tileentity = worldIn.getTileEntity(pos);
-		InventoryHelper.dropInventoryItems(worldIn, pos, (IInventory) tileentity);
-		worldIn.updateComparatorOutputLevel(pos, this);
-		
-		super.breakBlock(worldIn, pos, state);
-	}
-	
-	@Override
-	public int damageDropped(IBlockState state) {
-		return getMetaFromState(state);
+	protected int getContainer() {
+		return UGuis.addContainer(null);
 	}
 	
 	@SideOnly(Side.CLIENT)
 	@Override
-	public BlockRenderLayer getBlockLayer() {
-		return BlockRenderLayer.CUTOUT_MIPPED;
+	protected void getGui(int id) {
+		UGuis.addGuiContainer(null, id);
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -68,10 +46,21 @@ public class BlockSolarPanel extends BlockGeneration {
 		return new ItemBlockSolarPanel(this);
 	}
 	
+	/**
+	 * From here we'll need to fix some things
+	 */
+	
+	@Override
+	public int damageDropped(IBlockState state) {
+		return getMetaFromState(state);
+	}
+	
 	@Override
 	public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-		return super.getStateForPlacement(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer).withProperty(TYPE, EnumType.byMetadata(meta));
+		return getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()).withProperty(TYPE, EnumType.byMetadata(meta));
 	}
+	
+	// Byte conversion is WRONG! This needs to be fixed.
 	
 	@Override
 	public int getMetaFromState(IBlockState state) {

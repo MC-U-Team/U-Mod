@@ -14,12 +14,12 @@ import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.*;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
-import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 import net.minecraftforge.client.model.*;
+import net.minecraftforge.fml.relauncher.*;
 
 public class BlockEnergyPipe extends UBlockTileEntity {
 	
@@ -37,10 +37,11 @@ public class BlockEnergyPipe extends UBlockTileEntity {
 		this.setDefaultState(this.getDefaultState().withProperty(UP, false).withProperty(DOWN, false).withProperty(NORTH, false).withProperty(SOUTH, false).withProperty(EAST, false).withProperty(WEST, false));
 	}
 	
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerModel() {
 		ModelLoaderRegistry.registerLoader(new UEnergyPipeModelLoader());
-		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(new ResourceLocation(UConstants.MODID, "energy_pipe.item"), "inventory"));
+		ModelLoader.setCustomModelResourceLocation(getItem(), 0, new ModelResourceLocation(new ResourceLocation(UConstants.MODID, "energy_pipe.item"), "inventory"));
 	}
 	
 	@Override

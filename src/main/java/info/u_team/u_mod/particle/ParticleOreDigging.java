@@ -2,6 +2,7 @@ package info.u_team.u_mod.particle;
 
 import javax.annotation.Nullable;
 
+import info.u_team.u_mod.UConstants;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -33,8 +34,8 @@ public class ParticleOreDigging extends Particle {
 		particleScale /= 2.0F;
 		
 		TextureMap map = Minecraft.getMinecraft().getTextureMapBlocks();
-		texture_stone = map.getAtlasSprite("umod:blocks/ore_stone");
-		texture_ore = map.getAtlasSprite("umod:blocks/ore_overlay");
+		texture_stone = map.getAtlasSprite(UConstants.MODID + ":blocks/ore_stone");
+		texture_ore = map.getAtlasSprite(UConstants.MODID + ":blocks/ore_overlay");
 	}
 	
 	@Override

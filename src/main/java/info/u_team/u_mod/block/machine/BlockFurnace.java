@@ -1,46 +1,36 @@
 package info.u_team.u_mod.block.machine;
 
-import info.u_team.u_mod.UConstants;
+import info.u_team.u_mod.block.BlockEnergyGui;
 import info.u_team.u_mod.container.machine.ContainerFurnace;
 import info.u_team.u_mod.gui.machine.GuiFurnace;
 import info.u_team.u_mod.init.UGuis;
 import info.u_team.u_mod.tilentity.machine.TileEntityFurnace;
-import info.u_team.u_team_core.tileentity.UTileEntityProvider;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.*;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.*;
+import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.fml.relauncher.*;
 
-public class BlockFurnace extends BlockMachine {
-	
-	private int gui;
+public class BlockFurnace extends BlockEnergyGui {
 	
 	public BlockFurnace(String name) {
-		super(name, new UTileEntityProvider(new ResourceLocation(UConstants.MODID, "furnace_tile"), true, TileEntityFurnace.class));
-		gui = UGuis.addGui(GuiFurnace.class, ContainerFurnace.class);
+		super(name, TileEntityFurnace.class);
 	}
 	
 	@Override
-	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		playerIn.openGui(UConstants.MODID, gui, worldIn, pos.getX(), pos.getY(), pos.getZ());
-		return true;
+	protected int getContainer() {
+		return UGuis.addContainer(ContainerFurnace.class);
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@Override
+	protected void getGui(int id) {
+		UGuis.addGuiContainer(GuiFurnace.class, id);
 	}
 	
 	@Override
 	public boolean doesSideBlockRendering(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing face) {
 		return false;
-	}
-	
-	@Override
-	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-		TileEntity tileentity = worldIn.getTileEntity(pos);
-		InventoryHelper.dropInventoryItems(worldIn, pos, (IInventory) tileentity);
-		worldIn.updateComparatorOutputLevel(pos, this);
-		
-		super.breakBlock(worldIn, pos, state);
 	}
 	
 }

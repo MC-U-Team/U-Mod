@@ -1,4 +1,4 @@
-package info.u_team.u_mod.block.generation;
+package info.u_team.u_mod.block;
 
 import info.u_team.u_mod.init.UCreativeTabs;
 import info.u_team.u_team_core.block.UBlockTileEntity;
@@ -8,22 +8,37 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.*;
 import net.minecraft.block.state.*;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.inventory.*;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.*;
 
-public abstract class BlockGeneration extends UBlockTileEntity {
+public abstract class BlockEnergy extends UBlockTileEntity {
 	
 	public static final PropertyDirection FACING = BlockHorizontal.FACING;
 	
-	public BlockGeneration(String name, UTileEntityProvider provider) {
+	public BlockEnergy(String name, UTileEntityProvider provider) {
 		super(name, Material.IRON, UCreativeTabs.machine, provider);
-		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
+		setDefaultState(getDefaultState().withProperty(FACING, EnumFacing.NORTH));
 	}
 	
+	// TODO
+	// Currently drop all things. Its planned to store nbt tags on stacks when
+	// breaking and restore them when placing
 	@Override
-	public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+		TileEntity tileentity = worldIn.getTileEntity(pos);
+		InventoryHelper.dropInventoryItems(worldIn, pos, (IInventory) tileentity);
+		worldIn.updateComparatorOutputLevel(pos, this);
+		
+		super.breakBlock(worldIn, pos, state);
+	}
+	
+	// Facing things
+	
+	@Override
+	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
 		return getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
 	}
 	
@@ -48,28 +63,8 @@ public abstract class BlockGeneration extends UBlockTileEntity {
 	}
 	
 	@Override
-	public boolean isFullBlock(IBlockState state) {
-		return false;
-	}
-	
-	@SideOnly(Side.CLIENT)
-	@Override
-	public boolean isTranslucent(IBlockState state) {
-		return false;
-	}
-	
-	@Override
-	public boolean isOpaqueCube(IBlockState state) {
-		return false;
-	}
-	
-	@Override
-	public boolean getUseNeighborBrightness(IBlockState state) {
-		return false;
-	}
-	
-	@Override
 	protected BlockStateContainer createBlockState() {
 		return new BlockStateContainer(this, new IProperty[] { FACING });
 	}
+	
 }
