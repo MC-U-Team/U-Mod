@@ -1,5 +1,6 @@
 package info.u_team.u_mod.tilentity.generation;
 
+import info.u_team.u_mod.block.generation.BlockSolarPanel;
 import info.u_team.u_mod.block.generation.BlockSolarPanel.EnumType;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.Container;
@@ -24,7 +25,7 @@ public class TileEntitySolarPanel extends TileEntityGeneration {
 			return;
 		}
 		if (type == null) {
-			type = EnumType.byMetadata(getBlockMetadata());
+			type = world.getBlockState(pos).getValue(BlockSolarPanel.TYPE);
 			energy.setCapacity(type.getEnergy() * 100);
 			energy.setTransfer(type.getEnergy() * 4);
 		}

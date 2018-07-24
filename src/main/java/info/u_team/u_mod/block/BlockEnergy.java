@@ -64,7 +64,7 @@ public abstract class BlockEnergy extends UBlockTileEntity {
 	
 	@Override
 	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, new IProperty[] { FACING });
+		return new BlockStateContainer(this, FACING);
 	}
 	
 }
