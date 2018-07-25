@@ -5,7 +5,7 @@ import info.u_team.u_team_core.block.UBlockTileEntity;
 import info.u_team.u_team_core.tileentity.UTileEntityProvider;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.*;
+import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.*;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.inventory.*;
