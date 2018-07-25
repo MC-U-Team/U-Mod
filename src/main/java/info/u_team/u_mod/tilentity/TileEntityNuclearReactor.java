@@ -1,16 +1,7 @@
 package info.u_team.u_mod.tilentity;
 
-import java.util.List;
-
-import info.u_team.u_mod.api.IMachineRecipe;
-import info.u_team.u_mod.tilentity.machine.TileEntityMachine;
 import info.u_team.u_team_core.tileentity.UTileEntity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
 
 
 public class TileEntityNuclearReactor extends UTileEntity {
@@ -26,6 +17,5 @@ public class TileEntityNuclearReactor extends UTileEntity {
 		// TODO Auto-generated method stub
 		
 	}
-	
 	
 }

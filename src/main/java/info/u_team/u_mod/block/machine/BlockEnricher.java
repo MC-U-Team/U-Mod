@@ -1,41 +1,27 @@
 package info.u_team.u_mod.block.machine;
 
-import info.u_team.u_mod.UConstants;
-import info.u_team.u_mod.container.machine.ContainerEnricher;
-import info.u_team.u_mod.gui.machine.GuiEnricher;
+import info.u_team.u_mod.block.BlockEnergyGui;
+import info.u_team.u_mod.container.machine.*;
+import info.u_team.u_mod.gui.machine.*;
 import info.u_team.u_mod.init.UGuis;
 import info.u_team.u_mod.tilentity.machine.TileEntityEnricher;
-import info.u_team.u_team_core.tileentity.UTileEntityProvider;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.*;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.*;
 
-public class BlockEnricher extends BlockMaschine {
-	
-	private int gui;
+public class BlockEnricher extends BlockEnergyGui {
 	
 	public BlockEnricher(String name) {
-		super(name, new UTileEntityProvider(new ResourceLocation(UConstants.MODID, "enricher_tile"), true, TileEntityEnricher.class));
-		gui = UGuis.addGui(GuiEnricher.class, ContainerEnricher.class);
+		super(name, TileEntityEnricher.class);
 	}
 	
 	@Override
-	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		playerIn.openGui(UConstants.MODID, gui, worldIn, pos.getX(), pos.getY(), pos.getZ());
-		return true;
+	protected int getContainer() {
+		return UGuis.addContainer(ContainerEnricher.class);
 	}
 	
+	@SideOnly(Side.CLIENT)
 	@Override
-	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-		TileEntity tileentity = worldIn.getTileEntity(pos);
-		InventoryHelper.dropInventoryItems(worldIn, pos, (IInventory) tileentity);
-		worldIn.updateComparatorOutputLevel(pos, this);
-		
-		super.breakBlock(worldIn, pos, state);
+	protected void getGui(int id) {
+		UGuis.addGuiContainer(GuiEnricher.class, id);
 	}
 	
 }

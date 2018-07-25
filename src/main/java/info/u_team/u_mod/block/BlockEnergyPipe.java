@@ -1,7 +1,6 @@
 package info.u_team.u_mod.block;
 
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 import info.u_team.u_mod.UConstants;
 import info.u_team.u_mod.api.*;
@@ -15,12 +14,12 @@ import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.*;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
-import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 import net.minecraftforge.client.model.*;
+import net.minecraftforge.fml.relauncher.*;
 
 public class BlockEnergyPipe extends UBlockTileEntity {
 	
@@ -37,7 +36,7 @@ public class BlockEnergyPipe extends UBlockTileEntity {
 		super(name, Material.IRON, UCreativeTabs.machine, new UTileEntityProvider(new ResourceLocation(UConstants.MODID, "energy_pipe_tile"), true, TileEntityEnergyPipe.class));
 		this.setDefaultState(this.getDefaultState().withProperty(UP, false).withProperty(DOWN, false).withProperty(NORTH, false).withProperty(SOUTH, false).withProperty(EAST, false).withProperty(WEST, false));
 	}
-		
+	
 	@Override
 	public boolean isBlockNormalCube(IBlockState state) {
 		return false;
@@ -171,7 +170,7 @@ public class BlockEnergyPipe extends UBlockTileEntity {
 		int i = 0;
 		for (EnumFacing face : EnumFacing.VALUES) {
 			TileEntity entity = worldIn.getTileEntity(pos.offset(face.getOpposite()));
-			if (entity != null && ((entity instanceof ICableExceptor && ((ICableExceptor)entity).canConnectTo(face, pos, worldIn)) || entity instanceof ICable)) {
+			if (entity != null && ((entity instanceof ICableExceptor && ((ICableExceptor) entity).canConnectTo(face, pos, worldIn)) || entity instanceof ICable)) {
 				state = state.withProperty(properties[i], true);
 			} else {
 				state = state.withProperty(properties[i], false);

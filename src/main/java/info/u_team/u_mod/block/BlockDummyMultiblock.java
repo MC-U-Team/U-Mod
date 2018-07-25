@@ -1,19 +1,14 @@
 package info.u_team.u_mod.block;
 
-import info.u_team.u_mod.init.UCreativeTabs;
 import info.u_team.u_team_core.block.UBlock;
-import net.minecraft.block.BlockAir;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockFaceShape;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.block.state.*;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
-public class BlockDummyMultiblock extends UBlock{
-
+public class BlockDummyMultiblock extends UBlock {
+	
 	public BlockDummyMultiblock(String name) {
 		super(name, Material.IRON);
 	}
@@ -52,7 +47,7 @@ public class BlockDummyMultiblock extends UBlock{
 	public float getAmbientOcclusionLightValue(IBlockState state) {
 		return 0;
 	}
-		
+	
 	@Override
 	public int getLightOpacity(IBlockState state, IBlockAccess world, BlockPos pos) {
 		return 0;

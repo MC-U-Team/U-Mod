@@ -1,41 +1,27 @@
 package info.u_team.u_mod.block.machine;
 
-import info.u_team.u_mod.UConstants;
+import info.u_team.u_mod.block.BlockEnergyGui;
 import info.u_team.u_mod.container.machine.ContainerAlloyFurnace;
 import info.u_team.u_mod.gui.machine.GuiAlloyFurnace;
 import info.u_team.u_mod.init.UGuis;
 import info.u_team.u_mod.tilentity.machine.TileEntityAlloyFurnace;
-import info.u_team.u_team_core.tileentity.UTileEntityProvider;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.*;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.*;
 
-public class BlockAlloyFurnace extends BlockMaschine {
-	
-	private int gui;
+public class BlockAlloyFurnace extends BlockEnergyGui {
 	
 	public BlockAlloyFurnace(String name) {
-		super(name, new UTileEntityProvider(new ResourceLocation(UConstants.MODID, "alloy_furnace_tile"), true, TileEntityAlloyFurnace.class));
-		gui = UGuis.addGui(GuiAlloyFurnace.class, ContainerAlloyFurnace.class);
+		super(name, TileEntityAlloyFurnace.class);
 	}
 	
 	@Override
-	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		playerIn.openGui(UConstants.MODID, gui, worldIn, pos.getX(), pos.getY(), pos.getZ());
-		return true;
+	protected int getContainer() {
+		return UGuis.addContainer(ContainerAlloyFurnace.class);
 	}
 	
+	@SideOnly(Side.CLIENT)
 	@Override
-	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-		TileEntity tileentity = worldIn.getTileEntity(pos);
-		InventoryHelper.dropInventoryItems(worldIn, pos, (IInventory) tileentity);
-		worldIn.updateComparatorOutputLevel(pos, this);
-		
-		super.breakBlock(worldIn, pos, state);
+	protected void getGui(int id) {
+		UGuis.addGuiContainer(GuiAlloyFurnace.class, id);
 	}
 	
 }

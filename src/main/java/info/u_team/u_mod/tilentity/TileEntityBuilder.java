@@ -5,8 +5,6 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class TileEntityBuilder extends UTileEntity {
 	
-	
-	
 	@Override
 	public void readNBT(NBTTagCompound compound) {
 		// TODO Auto-generated method stub
