@@ -6,7 +6,7 @@ import java.util.List;
 import info.u_team.u_mod.UConstants;
 import info.u_team.u_mod.api.*;
 import info.u_team.u_mod.init.UCreativeTabs;
-import info.u_team.u_mod.model.UEnergyPipeModelLoader;
+import info.u_team.u_mod.model.UModelLoader;
 import info.u_team.u_mod.tilentity.TileEntityEnergyPipe;
 import info.u_team.u_team_core.block.UBlockTileEntity;
 import info.u_team.u_team_core.tileentity.UTileEntityProvider;
@@ -37,13 +37,7 @@ public class BlockEnergyPipe extends UBlockTileEntity {
 		super(name, Material.IRON, UCreativeTabs.machine, new UTileEntityProvider(new ResourceLocation(UConstants.MODID, "energy_pipe_tile"), true, TileEntityEnergyPipe.class));
 		this.setDefaultState(this.getDefaultState().withProperty(UP, false).withProperty(DOWN, false).withProperty(NORTH, false).withProperty(SOUTH, false).withProperty(EAST, false).withProperty(WEST, false));
 	}
-	
-	@Override
-	public void registerModel() {
-		ModelLoaderRegistry.registerLoader(new UEnergyPipeModelLoader());
-		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(new ResourceLocation(UConstants.MODID, "energy_pipe.item"), "inventory"));
-	}
-	
+		
 	@Override
 	public boolean isBlockNormalCube(IBlockState state) {
 		return false;
