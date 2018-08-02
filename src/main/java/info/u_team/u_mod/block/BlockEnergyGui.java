@@ -40,7 +40,7 @@ public abstract class BlockEnergyGui extends BlockEnergy {
 	// Do we really need to set all that here? Maybe not all sub blocks need this
 	
 	@Override
-	public BlockRenderLayer getBlockLayer() {
+	public BlockRenderLayer getRenderLayer() {
 		return BlockRenderLayer.CUTOUT_MIPPED;
 	}
 	
