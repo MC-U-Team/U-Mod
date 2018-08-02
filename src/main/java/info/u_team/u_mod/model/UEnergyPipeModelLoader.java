@@ -16,9 +16,9 @@ public class UEnergyPipeModelLoader implements ICustomModelLoader {
 	
 	@Override
 	public boolean accepts(ResourceLocation modelLocation) {
-		if (modelLocation.getPath().equals(UConstants.MODID) && modelLocation.getNamespace().contains("energy_pipe")
+		if (modelLocation.getNamespace().equals(UConstants.MODID) && modelLocation.getPath().contains("energy_pipe")
 		// TODO Fix mich
-				&& !modelLocation.getNamespace().endsWith(".item")) {
+				&& !modelLocation.getPath().endsWith(".item")) {
 			return true;
 		}
 		return false;
