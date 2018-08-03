@@ -1,8 +1,8 @@
 package info.u_team.u_mod.block.machine;
 
 import info.u_team.u_mod.block.BlockEnergyGui;
-import info.u_team.u_mod.container.machine.*;
-import info.u_team.u_mod.gui.machine.*;
+import info.u_team.u_mod.container.machine.ContainerPress;
+import info.u_team.u_mod.gui.machine.GuiPress;
 import info.u_team.u_mod.init.UGuis;
 import info.u_team.u_mod.tilentity.machine.TileEntityPress;
 import net.minecraftforge.fml.relauncher.*;

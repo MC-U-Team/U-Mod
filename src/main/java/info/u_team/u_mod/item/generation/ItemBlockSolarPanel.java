@@ -15,9 +15,9 @@ public class ItemBlockSolarPanel extends UItemBlock {
 	}
 	
 	@Override
-	public String getUnlocalizedName(ItemStack stack) {
+	public String getTranslationKey(ItemStack stack) {
 		int metadata = stack.getMetadata();
-		return getUnlocalizedName() + "." + EnumType.byMetadata(metadata).getName();
+		return getTranslationKey() + "." + EnumType.byMetadata(metadata).getName();
 	}
 	
 	@Override

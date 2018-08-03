@@ -26,8 +26,8 @@ public class UModelLoader implements ICustomModelLoader {
 	
 	@Override
 	public boolean accepts(ResourceLocation modelLocation) {
-		if (modelLocation.getResourceDomain().equals(UConstants.MODID)) {
-			if(models.containsKey(modelLocation.getResourcePath())) {
+		if (modelLocation.getNamespace().equals(UConstants.MODID)) {
+			if(models.containsKey(modelLocation.getPath())) {
 				return true;
 			}
 		}
@@ -37,7 +37,7 @@ public class UModelLoader implements ICustomModelLoader {
 	@Override
 	public IModel loadModel(ResourceLocation modelLocation) throws Exception {
 		if (modelLocation instanceof ModelResourceLocation) {
-			return models.get(modelLocation.getResourcePath()).getConstructor(ModelResourceLocation.class).newInstance((ModelResourceLocation)modelLocation);
+			return models.get(modelLocation.getPath()).getConstructor(ModelResourceLocation.class).newInstance((ModelResourceLocation)modelLocation);
 		}
 		return null;
 	}

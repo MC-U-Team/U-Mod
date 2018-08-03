@@ -29,9 +29,8 @@ public class BlockOre extends UBlockMetaData {
 		setHardness(5);
 	}
 	
-	@SideOnly(Side.CLIENT)
 	@Override
-	public BlockRenderLayer getBlockLayer() {
+	public BlockRenderLayer getRenderLayer() {
 		return BlockRenderLayer.CUTOUT_MIPPED;
 	}
 	
