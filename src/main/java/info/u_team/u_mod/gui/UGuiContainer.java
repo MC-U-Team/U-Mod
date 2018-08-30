@@ -9,9 +9,11 @@ import com.google.common.collect.*;
 
 import info.u_team.u_mod.UConstants;
 import info.u_team.u_mod.api.*;
+import info.u_team.u_mod.block.BlockEnergyGuiFacing;
 import info.u_team.u_mod.container.ContainerBase;
 import info.u_team.u_mod.resource.EnumModeTab;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -103,7 +105,7 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 		this.guiTop = (this.height - this.ySize) / 2;
 	}
 	
-	private void drawOverlay(int mouseX, int mouseY) {
+	protected void drawOverlay(int mouseX, int mouseY) {
 		int i = (this.width - this.xSize) / 2;
 		int j = (this.height - this.ySize) / 2 - 28;
 		
@@ -112,6 +114,16 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 				this.drawHoveringText(I18n.format("modetab." + ttab.name() + ".name"), mouseX, mouseY);
 			}
 		});
+		
+		int k = (this.width - this.xSize) / 2;
+		int l = (this.height - this.ySize) / 2;
+		
+		if (this.getTab() == EnumModeTab.ENERGY) {
+			if (mouseX > k + 9 && mouseX < k + 167 && mouseY > l + 8 && mouseY < l + 28) {
+				IClientEnergy iclient = (IClientEnergy) getContainer().tile;
+				this.drawHoveringText(iclient.getImplEnergy() + " / " + iclient.getImplMaxEnergy() + " FE", mouseX, mouseY);
+			}
+		}
 	}
 	
 	private void drawForgroundTab() {
@@ -129,7 +141,12 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 			if (item != null) {
 				this.renderItemModelIntoGUI(new ItemStack(item), i + (28 * num) - 10, j + 10);
 			} else {
-				this.renderItemModelIntoGUI(new ItemStack(this.getContainer().world.getBlockState(this.getContainer().pos).getBlock()), i + (28 * num) - 10, j + 10);
+				IBlockState state = this.getContainer().world.getBlockState(this.getContainer().pos);
+				int meta = 0;
+				if (!state.getPropertyKeys().contains(BlockEnergyGuiFacing.FACING)) {
+					meta = state.getBlock().getMetaFromState(state);
+				}
+				this.renderItemModelIntoGUI(new ItemStack(state.getBlock(), 1, meta), i + (28 * num) - 10, j + 10);
 			}
 		});
 		GlStateManager.translate(-16, 0, 0);

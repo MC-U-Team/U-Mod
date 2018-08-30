@@ -4,45 +4,26 @@ import java.util.List;
 
 import info.u_team.u_mod.api.*;
 import info.u_team.u_mod.energy.EnergyConsumer;
-import info.u_team.u_team_core.tileentity.UTileEntity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.*;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.*;
-import net.minecraft.world.IInteractionObject;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.energy.*;
+import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.fml.relauncher.*;
 import net.minecraftforge.items.*;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 
-public abstract class TileEntityMachine extends UTileEntity implements ITickable, ISidedInventory, ICableExceptor, IInteractionObject, IClientEnergy, IClientProgress {
-	
-	protected NonNullList<ItemStack> itemstacks;
-	
-	protected final EnergyConsumer energy;
+public abstract class TileEntityMachine extends TileEntityEnergyGui implements IClientProgress {
 	
 	protected int max_progress = 100;
 	protected int progress = max_progress;
 	
 	protected int recipeid = -1;
 	
-	protected String name;
-	
-	@SideOnly(Side.CLIENT)
-	public int energy_client;
-	
-	@SideOnly(Side.CLIENT)
-	public int maxenergy_client;
-	
 	@SideOnly(Side.CLIENT)
 	public int progress_client;
 	
 	public TileEntityMachine(int size, String name) {
-		itemstacks = NonNullList.withSize(size, ItemStack.EMPTY);
-		energy = new EnergyConsumer(40000, 1000);
-		this.name = name;
+		super(size, name, new EnergyConsumer(40000, 1000));
 	}
 	
 	public void checkRecipe() {
@@ -97,154 +78,38 @@ public abstract class TileEntityMachine extends UTileEntity implements ITickable
 	
 	@Override
 	public void readNBT(NBTTagCompound compound) {
-		ItemStackHelper.loadAllItems(compound, itemstacks);
-		energy.readNBT(compound);
+		super.readNBT(compound);
 		progress = compound.getInteger("progress");
 		recipeid = compound.getInteger("recipe");
 	}
 	
 	@Override
 	public void writeNBT(NBTTagCompound compound) {
-		ItemStackHelper.saveAllItems(compound, itemstacks);
-		energy.writeNBT(compound);
+		super.writeNBT(compound);
 		compound.setInteger("progress", progress);
 		compound.setInteger("recipe", recipeid);
 	}
 	
 	@Override
-	public int getSizeInventory() {
-		return itemstacks.size();
-	}
-	
-	@Override
-	public boolean isEmpty() {
-		for (ItemStack itemstack : itemstacks) {
-			if (!itemstack.isEmpty()) {
-				return false;
-			}
-		}
-		return true;
-	}
-	
-	@Override
-	public void setInventorySlotContents(int index, ItemStack stack) {
-		itemstacks.set(index, stack);
-		if (stack.getCount() > this.getInventoryStackLimit()) {
-			stack.setCount(this.getInventoryStackLimit());
-		}
-	}
-	
-	@Override
-	public ItemStack getStackInSlot(int index) {
-		return itemstacks.get(index);
-	}
-	
-	@Override
-	public ItemStack decrStackSize(int index, int count) {
-		return ItemStackHelper.getAndSplit(itemstacks, index, count);
-	}
-	
-	@Override
-	public ItemStack removeStackFromSlot(int index) {
-		return ItemStackHelper.getAndRemove(itemstacks, index);
-	}
-	
-	@Override
-	public int getInventoryStackLimit() {
-		return 64;
-	}
-	
-	@Override
-	public boolean isUsableByPlayer(EntityPlayer player) {
-		return true;
-	}
-	
-	@Override
-	public void openInventory(EntityPlayer player) {
-	}
-	
-	@Override
-	public void closeInventory(EntityPlayer player) {
-	}
-	
-	@Override
 	public int getField(int id) {
-		if (id == 0) {
-			return energy.getEnergyStored();
-		} else if (id == 1) {
-			return energy.getMaxEnergyStored();
-		} else if (id == 2) {
+		if (id == 2) {
 			return 100 - (int) (((float) progress / (float) max_progress) * 100);
 		}
-		return 0;
+		return super.getField(id);
 	}
 	
 	@Override
 	public void setField(int id, int value) {
-		if (id == 0) {
-			energy_client = value;
-		} else if (id == 1) {
-			maxenergy_client = value;
-		} else if (id == 2) {
+		if (id == 2) {
 			progress_client = value;
+		} else {
+			super.setField(id, value);
 		}
 	}
 	
 	@Override
 	public int getFieldCount() {
 		return 3;
-	}
-	
-	@Override
-	public void clear() {
-		itemstacks.clear();
-	}
-	
-	@Override
-	public boolean hasCustomName() {
-		return false;
-	}
-	
-	@Override
-	public IEnergyStorage getStorage() {
-		return energy;
-	}
-	
-	@Override
-	public String getGuiID() {
-		return getName();
-	}
-	
-	@Override
-	public boolean takesEnergy(EnumFacing face) {
-		return true;
-	}
-	
-	@Override
-	public boolean givesEnergy(EnumFacing face) {
-		return false;
-	}
-	
-	@Override
-	public int rate() {
-		return energy.getTransfer();
-	}
-	
-	@Override
-	public String getName() {
-		return name;
-	}
-	
-	@SideOnly(Side.CLIENT)
-	@Override
-	public int getImplEnergy() {
-		return energy_client;
-	}
-	
-	@SideOnly(Side.CLIENT)
-	@Override
-	public int getImplMaxEnergy() {
-		return maxenergy_client;
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -273,7 +138,7 @@ public abstract class TileEntityMachine extends UTileEntity implements ITickable
 				return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(handlerTop);
 			}
 		} else if (capability == CapabilityEnergy.ENERGY) {
-			return CapabilityEnergy.ENERGY.cast(energy);
+			return CapabilityEnergy.ENERGY.cast(ienergy);
 		}
 		return super.getCapability(capability, facing);
 	}
