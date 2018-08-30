@@ -35,6 +35,9 @@ repositories {
 	maven {
 		url = "http://chickenbones.net/maven"
 	}
+	maven {
+		url = "https://minecraft.curseforge.com/api/maven"
+	}
 }
 
 getBuildNumber()
@@ -102,7 +105,8 @@ dependencies {
 	compile "info.u-team:u_team_core-1.12.2:+:dev"
 	compile "mezz.jei:jei_1.12.2:4.11.0.204:api"
 	runtime "mezz.jei:jei_1.12.2:4.11.0.204"
-	//runtime "cofh:ThermalExpansion:1.12.2-5.5.0.30:deobf"
+	deobfCompile "endercore:EnderCore:1.12.2:0.5.37"
+	deobfCompile "ender-io:EnderIO:1.12.2:5.0.31"
 }
 
 curseforge {
