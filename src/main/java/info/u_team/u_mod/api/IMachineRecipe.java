@@ -1,6 +1,6 @@
 package info.u_team.u_mod.api;
 
-import info.u_team.u_mod.tilentity.machine.TileEntityMachine;
+import info.u_team.u_mod.tilentity.energy.TileEntityMachine;
 
 public interface IMachineRecipe {
 	

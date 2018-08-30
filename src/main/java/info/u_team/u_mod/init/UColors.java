@@ -1,6 +1,6 @@
 package info.u_team.u_mod.init;
 
-import info.u_team.u_mod.block.generation.BlockSolarPanel;
+import info.u_team.u_mod.block.energy.BlockSolarPanel;
 import info.u_team.u_mod.resource.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.color.*;

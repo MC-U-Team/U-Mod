@@ -1,26 +1,26 @@
-package info.u_team.u_mod.tilentity.machine;
+package info.u_team.u_mod.tilentity.energy;
 
 import java.util.List;
 
 import info.u_team.u_mod.api.IMachineRecipe;
-import info.u_team.u_mod.container.machine.ContainerPress;
+import info.u_team.u_mod.container.machine.ContainerAlloyFurnace;
 import info.u_team.u_mod.recipe.RecipeManager;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 
-public class TileEntityPress extends TileEntityMachine {
+public class TileEntityAlloyFurnace extends TileEntityMachine {
 	
-	public static final int[] IN = { 0 }, OUT = { 1 };
+	public static final int[] IN = { 0, 1, 2 }, OUT = { 3 };
 	
-	public TileEntityPress() {
-		super(2, "press");
+	public TileEntityAlloyFurnace() {
+		super(4, "alloyfurnace");
 	}
 	
 	@Override
 	public List<IMachineRecipe> getRecipes() {
-		return RecipeManager.getPressRecipes();
+		return RecipeManager.getAlloyFurnaceRecipes();
 	}
 	
 	@Override
@@ -59,7 +59,7 @@ public class TileEntityPress extends TileEntityMachine {
 	
 	@Override
 	public Container createContainer(InventoryPlayer inventory, EntityPlayer player) {
-		return new ContainerPress(player, world, pos);
+		return new ContainerAlloyFurnace(player, world, pos);
 	}
 	
 }

@@ -6,7 +6,7 @@ import info.u_team.u_team_core.tileentity.UTileEntityProvider;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.ResourceLocation;
 
-public class BlockBattery extends BlockEnergy {
+public class BlockBattery extends BlockTileEntityBase {
 	
 	public BlockBattery(String name) {
 		super(name, new UTileEntityProvider(new ResourceLocation(UConstants.MODID, "battery_tile"), true, TileEntityBattery.class));

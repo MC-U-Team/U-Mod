@@ -1,26 +1,26 @@
-package info.u_team.u_mod.tilentity.machine;
+package info.u_team.u_mod.tilentity.energy;
 
 import java.util.List;
 
 import info.u_team.u_mod.api.IMachineRecipe;
-import info.u_team.u_mod.container.machine.ContainerFurnace;
+import info.u_team.u_mod.container.machine.ContainerEnricher;
 import info.u_team.u_mod.recipe.RecipeManager;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 
-public class TileEntityFurnace extends TileEntityMachine {
+public class TileEntityEnricher extends TileEntityMachine {
 	
 	public static final int[] IN = { 0 }, OUT = { 1 };
 	
-	public TileEntityFurnace() {
-		super(2, "furnace");
+	public TileEntityEnricher() {
+		super(2, "enricher");
 	}
 	
 	@Override
 	public List<IMachineRecipe> getRecipes() {
-		return RecipeManager.getFurnaceRecipes();
+		return RecipeManager.getEnricherRecipes();
 	}
 	
 	@Override
@@ -59,7 +59,7 @@ public class TileEntityFurnace extends TileEntityMachine {
 	
 	@Override
 	public Container createContainer(InventoryPlayer inventory, EntityPlayer player) {
-		return new ContainerFurnace(player, world, pos);
+		return new ContainerEnricher(player, world, pos);
 	}
 	
 }

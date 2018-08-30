@@ -1,17 +1,14 @@
-package info.u_team.u_mod.block.generation;
+package info.u_team.u_mod.block.energy;
 
 import info.u_team.u_mod.api.IColored;
 import info.u_team.u_mod.block.BlockEnergyGui;
 import info.u_team.u_mod.init.UGuis;
-import info.u_team.u_mod.item.generation.ItemBlockSolarPanel;
-import info.u_team.u_mod.tilentity.generation.TileEntitySolarPanel;
+import info.u_team.u_mod.item.ItemBlockSolarPanel;
+import info.u_team.u_mod.tilentity.energy.TileEntitySolarPanel;
 import info.u_team.u_team_core.item.UItemBlock;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.*;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.util.IStringSerializable;
 import net.minecraftforge.fml.relauncher.*;
 
 public class BlockSolarPanel extends BlockEnergyGui {
@@ -46,35 +43,24 @@ public class BlockSolarPanel extends BlockEnergyGui {
 		return new ItemBlockSolarPanel(this);
 	}
 	
-	/**
-	 * From here we'll need to fix some things
-	 */
-	
 	@Override
 	public int damageDropped(IBlockState state) {
 		return getMetaFromState(state);
 	}
 	
 	@Override
-	public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-		return getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()).withProperty(TYPE, EnumType.byMetadata(meta));
-	}
-	
-	// Byte conversion is WRONG! This needs to be fixed.
-	
-	@Override
 	public int getMetaFromState(IBlockState state) {
-		return (super.getMetaFromState(state) << 2) + (state.getValue(TYPE).getMetadata() << 0);
+		return state.getValue(TYPE).getMetadata();
 	}
 	
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		return super.getStateFromMeta(meta >> 2).withProperty(TYPE, EnumType.byMetadata(meta % 4));
+		return getDefaultState().withProperty(TYPE, EnumType.byMetadata(meta));
 	}
 	
 	@Override
 	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, FACING, TYPE);
+		return new BlockStateContainer(this, TYPE);
 	}
 	
 	public static enum EnumType implements IStringSerializable, IColored {

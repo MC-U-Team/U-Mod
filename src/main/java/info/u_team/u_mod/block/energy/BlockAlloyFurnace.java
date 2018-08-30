@@ -1,13 +1,13 @@
-package info.u_team.u_mod.block.machine;
+package info.u_team.u_mod.block.energy;
 
-import info.u_team.u_mod.block.BlockEnergyGui;
+import info.u_team.u_mod.block.BlockEnergyGuiFacing;
 import info.u_team.u_mod.container.machine.ContainerAlloyFurnace;
 import info.u_team.u_mod.gui.machine.GuiAlloyFurnace;
 import info.u_team.u_mod.init.UGuis;
-import info.u_team.u_mod.tilentity.machine.TileEntityAlloyFurnace;
+import info.u_team.u_mod.tilentity.energy.TileEntityAlloyFurnace;
 import net.minecraftforge.fml.relauncher.*;
 
-public class BlockAlloyFurnace extends BlockEnergyGui {
+public class BlockAlloyFurnace extends BlockEnergyGuiFacing {
 	
 	public BlockAlloyFurnace(String name) {
 		super(name, TileEntityAlloyFurnace.class);

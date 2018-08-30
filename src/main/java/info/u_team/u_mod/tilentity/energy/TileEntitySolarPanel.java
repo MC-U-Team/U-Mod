@@ -1,7 +1,7 @@
-package info.u_team.u_mod.tilentity.generation;
+package info.u_team.u_mod.tilentity.energy;
 
-import info.u_team.u_mod.block.generation.BlockSolarPanel;
-import info.u_team.u_mod.block.generation.BlockSolarPanel.EnumType;
+import info.u_team.u_mod.block.energy.BlockSolarPanel;
+import info.u_team.u_mod.block.energy.BlockSolarPanel.EnumType;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;

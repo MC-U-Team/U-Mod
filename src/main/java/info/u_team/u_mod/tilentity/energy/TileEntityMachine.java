@@ -1,7 +1,9 @@
-package info.u_team.u_mod.tilentity.generation;
+package info.u_team.u_mod.tilentity.energy;
+
+import java.util.List;
 
 import info.u_team.u_mod.api.*;
-import info.u_team.u_mod.energy.EnergyProvider;
+import info.u_team.u_mod.energy.EnergyConsumer;
 import info.u_team.u_team_core.tileentity.UTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.*;
@@ -15,11 +17,16 @@ import net.minecraftforge.fml.relauncher.*;
 import net.minecraftforge.items.*;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 
-public abstract class TileEntityGeneration extends UTileEntity implements ITickable, ISidedInventory, ICableExceptor, IInteractionObject, IClientEnergy {
+public abstract class TileEntityMachine extends UTileEntity implements ITickable, ISidedInventory, ICableExceptor, IInteractionObject, IClientEnergy, IClientProgress {
 	
 	protected NonNullList<ItemStack> itemstacks;
 	
-	protected final EnergyProvider energy;
+	protected final EnergyConsumer energy;
+	
+	protected int max_progress = 100;
+	protected int progress = max_progress;
+	
+	protected int recipeid = -1;
 	
 	protected String name;
 	
@@ -29,22 +36,76 @@ public abstract class TileEntityGeneration extends UTileEntity implements ITicka
 	@SideOnly(Side.CLIENT)
 	public int progress_client;
 	
-	public TileEntityGeneration(int size, String name) {
+	public TileEntityMachine(int size, String name) {
 		itemstacks = NonNullList.withSize(size, ItemStack.EMPTY);
-		energy = new EnergyProvider(40000, 1000);
+		energy = new EnergyConsumer(40000, 1000);
 		this.name = name;
 	}
+	
+	public void checkRecipe() {
+		for (int i = 0; i < getRecipes().size(); i++) {
+			IMachineRecipe recipe = getRecipes().get(i);
+			if (recipe.areIngredientsMatching(this)) {
+				recipeid = i;
+				if (max_progress != recipe.getTime()) {
+					progress = max_progress = recipe.getTime();
+				} else {
+					max_progress = recipe.getTime();
+				}
+				return;
+			}
+		}
+		progress = max_progress = 100;
+		recipeid = -1;
+	}
+	
+	@Override
+	public void update() {
+		if (world.isRemote) {
+			return;
+		}
+		if (recipeid >= 0) {
+			IMachineRecipe recipe = getRecipes().get(recipeid);
+			if (!recipe.areIngredientsMatching(this)) {
+				recipeid = -1;
+				return;
+			}
+			if (!recipe.isEnergyMatching(this) || !recipe.areOutputsMatching(this)) {
+				return;
+			}
+			progress--;
+			if (progress <= 0) {
+				recipe.execute(this);
+				progress = max_progress;
+				super.markDirty();
+			}
+		}
+	}
+	
+	@Override
+	public void markDirty() {
+		if (!world.isRemote) {
+			checkRecipe();
+		}
+		super.markDirty();
+	}
+	
+	public abstract List<IMachineRecipe> getRecipes();
 	
 	@Override
 	public void readNBT(NBTTagCompound compound) {
 		ItemStackHelper.loadAllItems(compound, itemstacks);
 		energy.readNBT(compound);
+		progress = compound.getInteger("progress");
+		recipeid = compound.getInteger("recipe");
 	}
 	
 	@Override
 	public void writeNBT(NBTTagCompound compound) {
 		ItemStackHelper.saveAllItems(compound, itemstacks);
 		energy.writeNBT(compound);
+		compound.setInteger("progress", progress);
+		compound.setInteger("recipe", recipeid);
 	}
 	
 	@Override
@@ -107,6 +168,8 @@ public abstract class TileEntityGeneration extends UTileEntity implements ITicka
 	public int getField(int id) {
 		if (id == 0) {
 			return energy.getEnergyStored();
+		} else if (id == 1) {
+			return 100 - (int) (((float) progress / (float) max_progress) * 100);
 		}
 		return 0;
 	}
@@ -115,6 +178,8 @@ public abstract class TileEntityGeneration extends UTileEntity implements ITicka
 	public void setField(int id, int value) {
 		if (id == 0) {
 			energy_client = value;
+		} else if (id == 1) {
+			progress_client = value;
 		}
 	}
 	
@@ -144,13 +209,13 @@ public abstract class TileEntityGeneration extends UTileEntity implements ITicka
 	}
 	
 	@Override
-	public boolean takesEnergy(EnumFacing facing) {
-		return false;
+	public boolean takesEnergy(EnumFacing face) {
+		return true;
 	}
 	
 	@Override
-	public boolean givesEnergy(EnumFacing facing) {
-		return true;
+	public boolean givesEnergy(EnumFacing face) {
+		return false;
 	}
 	
 	@Override
@@ -167,6 +232,12 @@ public abstract class TileEntityGeneration extends UTileEntity implements ITicka
 	@Override
 	public int getImplEnergy() {
 		return energy_client;
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@Override
+	public int getImplProgress() {
+		return progress_client;
 	}
 	
 	@Override

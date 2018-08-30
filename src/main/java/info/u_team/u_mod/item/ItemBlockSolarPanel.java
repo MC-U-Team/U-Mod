@@ -1,7 +1,7 @@
-package info.u_team.u_mod.item.generation;
+package info.u_team.u_mod.item;
 
-import info.u_team.u_mod.block.generation.BlockSolarPanel;
-import info.u_team.u_mod.block.generation.BlockSolarPanel.EnumType;
+import info.u_team.u_mod.block.energy.BlockSolarPanel;
+import info.u_team.u_mod.block.energy.BlockSolarPanel.EnumType;
 import info.u_team.u_team_core.item.UItemBlock;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;

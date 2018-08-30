@@ -1,41 +1,26 @@
 package info.u_team.u_mod.block;
 
-import info.u_team.u_mod.init.UCreativeTabs;
-import info.u_team.u_team_core.block.UBlockTileEntity;
-import info.u_team.u_team_core.tileentity.UTileEntityProvider;
+import info.u_team.u_team_core.tileentity.UTileEntity;
 import net.minecraft.block.BlockHorizontal;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.*;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.inventory.*;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public abstract class BlockEnergy extends UBlockTileEntity {
+public abstract class BlockEnergyGuiFacing extends BlockEnergyGui {
 	
 	public static final PropertyDirection FACING = BlockHorizontal.FACING;
 	
-	public BlockEnergy(String name, UTileEntityProvider provider) {
-		super(name, Material.IRON, UCreativeTabs.machine, provider);
+	public BlockEnergyGuiFacing(String name, Class<? extends UTileEntity> tileentity) {
+		this(name, tileentity, true);
+	}
+	
+	public BlockEnergyGuiFacing(String name, Class<? extends UTileEntity> tileentity, boolean register) {
+		super(name, tileentity, register);
 		setDefaultState(getDefaultState().withProperty(FACING, EnumFacing.NORTH));
 	}
-	
-	// TODO
-	// Currently drop all things. Its planned to store nbt tags on stacks when
-	// breaking and restore them when placing
-	@Override
-	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-		TileEntity tileentity = worldIn.getTileEntity(pos);
-		InventoryHelper.dropInventoryItems(worldIn, pos, (IInventory) tileentity);
-		worldIn.updateComparatorOutputLevel(pos, this);
-		
-		super.breakBlock(worldIn, pos, state);
-	}
-	
-	// Facing things
 	
 	@Override
 	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {

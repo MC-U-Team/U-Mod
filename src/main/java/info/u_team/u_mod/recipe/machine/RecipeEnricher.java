@@ -4,7 +4,7 @@ import java.util.*;
 
 import info.u_team.u_mod.api.IMachineRecipe;
 import info.u_team.u_mod.recipe.*;
-import info.u_team.u_mod.tilentity.machine.TileEntityMachine;
+import info.u_team.u_mod.tilentity.energy.TileEntityMachine;
 import net.minecraft.item.ItemStack;
 
 public class RecipeEnricher implements IMachineRecipe {

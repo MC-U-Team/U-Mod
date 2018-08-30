@@ -1,13 +1,13 @@
-package info.u_team.u_mod.block.machine;
+package info.u_team.u_mod.block.energy;
 
-import info.u_team.u_mod.block.BlockEnergyGui;
+import info.u_team.u_mod.block.BlockEnergyGuiFacing;
 import info.u_team.u_mod.container.machine.ContainerEnricher;
 import info.u_team.u_mod.gui.machine.GuiEnricher;
 import info.u_team.u_mod.init.UGuis;
-import info.u_team.u_mod.tilentity.machine.TileEntityEnricher;
+import info.u_team.u_mod.tilentity.energy.TileEntityEnricher;
 import net.minecraftforge.fml.relauncher.*;
 
-public class BlockEnricher extends BlockEnergyGui {
+public class BlockEnricher extends BlockEnergyGuiFacing {
 	
 	public BlockEnricher(String name) {
 		super(name, TileEntityEnricher.class);
