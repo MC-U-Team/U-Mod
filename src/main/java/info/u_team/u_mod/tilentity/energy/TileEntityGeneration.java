@@ -27,6 +27,9 @@ public abstract class TileEntityGeneration extends UTileEntity implements ITicka
 	public int energy_client;
 	
 	@SideOnly(Side.CLIENT)
+	public int maxenergy_client;
+	
+	@SideOnly(Side.CLIENT)
 	public int progress_client;
 	
 	public TileEntityGeneration(int size, String name) {
@@ -107,6 +110,8 @@ public abstract class TileEntityGeneration extends UTileEntity implements ITicka
 	public int getField(int id) {
 		if (id == 0) {
 			return energy.getEnergyStored();
+		} else if (id == 1) {
+			return energy.getMaxEnergyStored();
 		}
 		return 0;
 	}
@@ -115,6 +120,8 @@ public abstract class TileEntityGeneration extends UTileEntity implements ITicka
 	public void setField(int id, int value) {
 		if (id == 0) {
 			energy_client = value;
+		} else if (id == 1) {
+			maxenergy_client = value;
 		}
 	}
 	
@@ -167,6 +174,12 @@ public abstract class TileEntityGeneration extends UTileEntity implements ITicka
 	@Override
 	public int getImplEnergy() {
 		return energy_client;
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@Override
+	public int getImplMaxEnergy() {
+		return maxenergy_client;
 	}
 	
 	@Override

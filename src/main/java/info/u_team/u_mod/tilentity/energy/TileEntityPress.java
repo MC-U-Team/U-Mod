@@ -3,7 +3,7 @@ package info.u_team.u_mod.tilentity.energy;
 import java.util.List;
 
 import info.u_team.u_mod.api.IMachineRecipe;
-import info.u_team.u_mod.container.machine.ContainerPress;
+import info.u_team.u_mod.container.energy.ContainerPress;
 import info.u_team.u_mod.recipe.RecipeManager;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.Container;

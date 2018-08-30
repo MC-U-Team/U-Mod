@@ -34,6 +34,9 @@ public abstract class TileEntityMachine extends UTileEntity implements ITickable
 	public int energy_client;
 	
 	@SideOnly(Side.CLIENT)
+	public int maxenergy_client;
+	
+	@SideOnly(Side.CLIENT)
 	public int progress_client;
 	
 	public TileEntityMachine(int size, String name) {
@@ -169,6 +172,8 @@ public abstract class TileEntityMachine extends UTileEntity implements ITickable
 		if (id == 0) {
 			return energy.getEnergyStored();
 		} else if (id == 1) {
+			return energy.getMaxEnergyStored();
+		} else if (id == 2) {
 			return 100 - (int) (((float) progress / (float) max_progress) * 100);
 		}
 		return 0;
@@ -179,13 +184,15 @@ public abstract class TileEntityMachine extends UTileEntity implements ITickable
 		if (id == 0) {
 			energy_client = value;
 		} else if (id == 1) {
+			maxenergy_client = value;
+		} else if (id == 2) {
 			progress_client = value;
 		}
 	}
 	
 	@Override
 	public int getFieldCount() {
-		return 2;
+		return 3;
 	}
 	
 	@Override
@@ -232,6 +239,12 @@ public abstract class TileEntityMachine extends UTileEntity implements ITickable
 	@Override
 	public int getImplEnergy() {
 		return energy_client;
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@Override
+	public int getImplMaxEnergy() {
+		return maxenergy_client;
 	}
 	
 	@SideOnly(Side.CLIENT)

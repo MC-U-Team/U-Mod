@@ -1,8 +1,8 @@
 package info.u_team.u_mod.block.energy;
 
 import info.u_team.u_mod.block.BlockEnergyGuiFacing;
-import info.u_team.u_mod.container.machine.ContainerPulverizer;
-import info.u_team.u_mod.gui.machine.GuiPulverizer;
+import info.u_team.u_mod.container.energy.ContainerPulverizer;
+import info.u_team.u_mod.gui.energy.GuiPulverizer;
 import info.u_team.u_mod.init.UGuis;
 import info.u_team.u_mod.tilentity.energy.TileEntityPulverizer;
 import net.minecraftforge.fml.relauncher.*;

@@ -16,7 +16,7 @@ public class TileEntitySolarPanel extends TileEntityGeneration {
 	private int cooldown = 0;
 	
 	public TileEntitySolarPanel() {
-		super(0, "solarpanel");
+		super(1, "solarpanel");
 	}
 	
 	@Override

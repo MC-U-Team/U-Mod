@@ -1,4 +1,4 @@
-package info.u_team.u_mod.container.machine;
+package info.u_team.u_mod.container.energy;
 
 import info.u_team.u_mod.container.ContainerBase;
 import info.u_team.u_mod.container.slot.*;
@@ -8,12 +8,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class ContainerFurnace extends ContainerBase {
+public class ContainerEnricher extends ContainerBase {
 	
-	public ContainerFurnace(EntityPlayer player, World world, BlockPos pos) {
+	public ContainerEnricher(EntityPlayer player, World world, BlockPos pos) {
 		super(player, world, pos);
-		addSlot(EnumModeTab.NORMAL, new SlotOreInput(tile, 0, 30, 23));
-		addSlot(EnumModeTab.NORMAL, new SlotOutput(tile, 1, 116, 24));
+		addSlot(EnumModeTab.NORMAL, new SlotOreInput(tile, 0, 44, 32));
+		addSlot(EnumModeTab.NORMAL, new SlotOutput(tile, 1, 115, 32));
 	}
 	
 	// TODO

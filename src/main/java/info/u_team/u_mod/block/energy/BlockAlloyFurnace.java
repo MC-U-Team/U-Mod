@@ -1,8 +1,8 @@
 package info.u_team.u_mod.block.energy;
 
 import info.u_team.u_mod.block.BlockEnergyGuiFacing;
-import info.u_team.u_mod.container.machine.ContainerAlloyFurnace;
-import info.u_team.u_mod.gui.machine.GuiAlloyFurnace;
+import info.u_team.u_mod.container.energy.ContainerAlloyFurnace;
+import info.u_team.u_mod.gui.energy.GuiAlloyFurnace;
 import info.u_team.u_mod.init.UGuis;
 import info.u_team.u_mod.tilentity.energy.TileEntityAlloyFurnace;
 import net.minecraftforge.fml.relauncher.*;

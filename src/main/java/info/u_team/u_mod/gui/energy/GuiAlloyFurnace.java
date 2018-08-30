@@ -1,4 +1,4 @@
-package info.u_team.u_mod.gui.machine;
+package info.u_team.u_mod.gui.energy;
 
 import info.u_team.u_mod.UConstants;
 import info.u_team.u_mod.api.IClientProgress;
@@ -12,7 +12,7 @@ public class GuiAlloyFurnace extends UGuiContainer {
 	
 	public GuiAlloyFurnace(UContainer inventorySlotsIn) {
 		super((ContainerBase) inventorySlotsIn);
-		this.setBackground(new ResourceLocation(UConstants.MODID, "textures/gui/alloy_furnace.png"));
+		setBackground(new ResourceLocation(UConstants.MODID, "textures/gui/alloy_furnace.png"));
 	}
 	
 	@Override

@@ -2,6 +2,8 @@ package info.u_team.u_mod.block.energy;
 
 import info.u_team.u_mod.api.IColored;
 import info.u_team.u_mod.block.BlockEnergyGui;
+import info.u_team.u_mod.container.energy.ContainerSolarPanel;
+import info.u_team.u_mod.gui.energy.GuiSolarPanel;
 import info.u_team.u_mod.init.UGuis;
 import info.u_team.u_mod.item.ItemBlockSolarPanel;
 import info.u_team.u_mod.tilentity.energy.TileEntitySolarPanel;
@@ -9,6 +11,8 @@ import info.u_team.u_team_core.item.UItemBlock;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.*;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.math.*;
+import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.fml.relauncher.*;
 
 public class BlockSolarPanel extends BlockEnergyGui {
@@ -21,13 +25,13 @@ public class BlockSolarPanel extends BlockEnergyGui {
 	
 	@Override
 	protected int getContainer() {
-		return UGuis.addContainer(null);
+		return UGuis.addContainer(ContainerSolarPanel.class);
 	}
 	
 	@SideOnly(Side.CLIENT)
 	@Override
 	protected void getGui(int id) {
-		UGuis.addGuiContainer(null, id);
+		UGuis.addGuiContainer(GuiSolarPanel.class, id);
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -63,6 +67,11 @@ public class BlockSolarPanel extends BlockEnergyGui {
 		return new BlockStateContainer(this, TYPE);
 	}
 	
+	@Override
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+		return new AxisAlignedBB(0, 0, 0, 1, 10D / 16D, 1);
+	}
+	
 	public static enum EnumType implements IStringSerializable, IColored {
 		TIER1(0, "tier1", 16, 0x00FFFF),
 		TIER2(1, "tier2", 256, 0x0000FF),
@@ -94,6 +103,7 @@ public class BlockSolarPanel extends BlockEnergyGui {
 			return energy;
 		}
 		
+		@Override
 		public int getColor() {
 			return color;
 		}

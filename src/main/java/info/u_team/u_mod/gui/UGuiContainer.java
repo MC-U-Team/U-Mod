@@ -82,7 +82,7 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 		
 		if (this.getTab() == EnumModeTab.ENERGY) {
 			IClientEnergy iclient = (IClientEnergy) getContainer().tile;
-			this.drawTexturedModalRect(i + 9, j + 8, 0, 166, Math.round(158 * ((float) iclient.getImplEnergy() / (float) iclient.getStorage().getMaxEnergyStored())), 20);
+			this.drawTexturedModalRect(i + 9, j + 8, 0, 166, Math.round(158 * ((float) iclient.getImplEnergy() / (float) iclient.getImplMaxEnergy())), 20);
 		}
 		this.drawInBackground(this.getTab(), mouseX, mouseY, i, j);
 	}

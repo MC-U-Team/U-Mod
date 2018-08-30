@@ -1,7 +1,7 @@
 package info.u_team.u_mod.integration.jei;
 
 import info.u_team.u_mod.UConstants;
-import info.u_team.u_mod.gui.machine.*;
+import info.u_team.u_mod.gui.energy.*;
 import info.u_team.u_mod.init.UBlocks;
 import info.u_team.u_mod.integration.jei.alloyfurnace.*;
 import info.u_team.u_mod.integration.jei.enricher.*;

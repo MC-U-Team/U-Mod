@@ -1,8 +1,8 @@
 package info.u_team.u_mod.block.energy;
 
 import info.u_team.u_mod.block.BlockEnergyGuiFacing;
-import info.u_team.u_mod.container.machine.ContainerFurnace;
-import info.u_team.u_mod.gui.machine.GuiFurnace;
+import info.u_team.u_mod.container.energy.ContainerFurnace;
+import info.u_team.u_mod.gui.energy.GuiFurnace;
 import info.u_team.u_mod.init.UGuis;
 import info.u_team.u_mod.tilentity.energy.TileEntityFurnace;
 import net.minecraft.block.state.IBlockState;
