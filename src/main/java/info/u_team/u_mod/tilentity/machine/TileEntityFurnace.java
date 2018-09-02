@@ -22,33 +22,7 @@ public class TileEntityFurnace extends TileEntityMachine {
 	public List<IMachineRecipe> getRecipes() {
 		return RecipeManager.getFurnaceRecipes();
 	}
-	
-	@Override
-	public int[] getSlotsForFace(EnumFacing side) {
-		if (side == EnumFacing.DOWN) {
-			return OUT;
-		} else if (side == EnumFacing.UP) {
-			return IN;
-		}
-		return null;
-	}
-	
-	@Override
-	public boolean canInsertItem(int index, ItemStack stack, EnumFacing direction) {
-		if (index == 0) {
-			return true;
-		}
-		return false;
-	}
-	
-	@Override
-	public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
-		if (index > 0) {
-			return true;
-		}
-		return false;
-	}
-	
+		
 	@Override
 	public boolean isItemValidForSlot(int index, ItemStack stack) {
 		if (index == 0) {

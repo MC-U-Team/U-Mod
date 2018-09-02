@@ -1,7 +1,13 @@
 package info.u_team.u_mod.init;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.google.common.collect.Lists;
+
 import info.u_team.u_mod.block.generation.BlockSolarPanel;
 import info.u_team.u_mod.resource.*;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.color.*;
 import net.minecraftforge.fml.relauncher.*;
@@ -67,5 +73,5 @@ public class UColors {
 			return 0xFFFFFF;
 		}, UBlocks.solar_panel.getItem());
 	}
-	
+		
 }

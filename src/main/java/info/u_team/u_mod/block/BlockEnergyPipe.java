@@ -9,6 +9,7 @@ import info.u_team.u_mod.model.UModelLoader;
 import info.u_team.u_mod.tilentity.TileEntityEnergyPipe;
 import info.u_team.u_team_core.block.UBlockTileEntity;
 import info.u_team.u_team_core.tileentity.UTileEntityProvider;
+import net.minecraft.block.BlockFence;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.*;
@@ -36,7 +37,7 @@ public class BlockEnergyPipe extends UBlockTileEntity {
 		super(name, Material.IRON, UCreativeTabs.machine, new UTileEntityProvider(new ResourceLocation(UConstants.MODID, "energy_pipe_tile"), true, TileEntityEnergyPipe.class));
 		this.setDefaultState(this.getDefaultState().withProperty(UP, false).withProperty(DOWN, false).withProperty(NORTH, false).withProperty(SOUTH, false).withProperty(EAST, false).withProperty(WEST, false));
 	}
-	
+		
 	@Override
 	public boolean isBlockNormalCube(IBlockState state) {
 		return false;
@@ -205,6 +206,11 @@ public class BlockEnergyPipe extends UBlockTileEntity {
 	@Override
 	public int getMetaFromState(IBlockState state) {
 		return 0;
+	}
+	
+	@Override
+	public IBlockState getStateFromMeta(int meta) {
+		return this.getDefaultState().withProperty(UP, false).withProperty(DOWN, false).withProperty(NORTH, false).withProperty(SOUTH, false).withProperty(EAST, false).withProperty(WEST, false);
 	}
 	
 	@Override

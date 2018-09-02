@@ -10,6 +10,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import com.google.common.collect.*;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.BlockFluidRenderer;
 import net.minecraft.client.renderer.block.model.*;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -19,24 +20,33 @@ import net.minecraftforge.client.model.*;
 import net.minecraftforge.client.model.pipeline.UnpackedBakedQuad;
 import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.common.model.*;
+import net.minecraftforge.fluids.BlockFluidBase;
+import net.minecraftforge.fluids.BlockFluidClassic;
+import net.minecraftforge.fluids.capability.ItemFluidContainer;
 
 public class UEnergyPipeModel implements IModel {
 	
 	private ResourceLocation particle;
 	private ResourceLocation texture;
 	private EnumFacing[] enabled;
+	private boolean isItem = false;
 	
 	public UEnergyPipeModel(ModelResourceLocation location) {
-		String[] values = location.getVariant().split(",");
-		ArrayList<EnumFacing> face = new ArrayList<>();
-		for (String str : values) {
-			String[] pair = str.split("=");
-			if (Boolean.valueOf(pair[1])) {
-				face.add(EnumFacing.byName(pair[0]));
+		if (!location.getVariant().equals("inventory")) {
+			String[] values = location.getVariant().split(",");
+			ArrayList<EnumFacing> face = new ArrayList<>();
+			for (String str : values) {
+				String[] pair = str.split("=");
+				if (Boolean.valueOf(pair[1])) {
+					face.add(EnumFacing.byName(pair[0]));
+				}
 			}
+			enabled = new EnumFacing[face.size()];
+			face.toArray(enabled);
+		} else {
+			enabled = new EnumFacing[0];
+			this.isItem = true;
 		}
-		enabled = new EnumFacing[face.size()];
-		face.toArray(enabled);
 		
 		this.particle = new ResourceLocation("minecraft", "blocks/iron_block");
 		this.texture = new ResourceLocation("minecraft", "blocks/iron_block");
@@ -46,27 +56,24 @@ public class UEnergyPipeModel implements IModel {
 	public Collection<ResourceLocation> getTextures() {
 		return ImmutableList.of(this.particle, this.texture);
 	}
-	
-	@Override
-	public IModelState getDefaultState() {
-		return ModelRotation.X0_Y0;
-	}
-	
+		
 	@Override
 	public IBakedModel bake(IModelState state, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter) {
-		ImmutableMap<TransformType, TRSRTransformation> map = PerspectiveMapWrapper.getTransforms(state);
-		return new UEnergyPipeBakedModel(this.enabled, state.apply(Optional.empty()), map, format, bakedTextureGetter.apply(particle), bakedTextureGetter.apply(texture), 0xFFFFFF);
-	}
-	
-	public class UEnergyPipeBakedModel implements IBakedModel {
+		Map<TransformType, TRSRTransformation> tMap = Maps.newEnumMap(TransformType.class);
+		tMap.putAll(PerspectiveMapWrapper.getTransforms(state));
+		IModelState perState = new SimpleModelState(ImmutableMap.copyOf(tMap));
 		
-		private static final float eps = 1e-3f;
+		return new UEnergyPipeBakedModel(this.enabled, perState.apply(Optional.empty()), PerspectiveMapWrapper.getTransforms(perState), format, bakedTextureGetter.apply(particle), bakedTextureGetter.apply(texture), 0xFFFFFF);
+	}
+		
+	public class UEnergyPipeBakedModel implements IBakedModel {
 		
 		private final EnumMap<EnumFacing, List<BakedQuad>> faceQuads;
 		private final TextureAtlasSprite particle;
 		private final TextureAtlasSprite texture;
 		private final VertexFormat format;
 		private final Optional<TRSRTransformation> transformation;
+		private final ImmutableMap<TransformType, TRSRTransformation> map;
 		private final int color;
 		
 		public UEnergyPipeBakedModel(EnumFacing[] enabled, Optional<TRSRTransformation> transformation, ImmutableMap<TransformType, TRSRTransformation> map, VertexFormat format, TextureAtlasSprite particle, TextureAtlasSprite texture, int color) {
@@ -79,6 +86,7 @@ public class UEnergyPipeModel implements IModel {
 			this.format = format;
 			this.color = color;
 			this.texture = texture;
+			this.map = map;
 			
 			addCube(0.2F, 0.2F, 0.2F, 0.4F, 0.4F, 0.4F);
 			for (EnumFacing enumFacing : enabled) {
@@ -121,6 +129,7 @@ public class UEnergyPipeModel implements IModel {
 				builder.setQuadOrientation(side);
 				builder.setTexture(texture);
 				builder.setQuadTint(0);
+				
 				for (int j = 0; j < x[i].length; j++) {
 					putVertex(builder, side, x_offset + x[i][j], y_offset + y[i][j], z_offset + z[i][j], texture.getInterpolatedU(u[i][j] * 16), texture.getInterpolatedV(v[i][j] * 16));
 				}
@@ -137,7 +146,7 @@ public class UEnergyPipeModel implements IModel {
 			for (int e = 0; e < format.getElementCount(); e++) {
 				switch (format.getElement(e).getUsage()) {
 				case POSITION:
-					float[] data = new float[] { x - side.getDirectionVec().getX() * eps, y, z - side.getDirectionVec().getZ() * eps, 1 };
+					float[] data = { x, y, z, 1f };
 					if (transformation.isPresent() && !transformation.get().isIdentity()) {
 						Vector4f vec = new Vector4f(data);
 						transformation.get().getMatrix().transform(vec);
@@ -154,7 +163,7 @@ public class UEnergyPipeModel implements IModel {
 						break;
 					}
 				case NORMAL:
-					builder.put(e, side.getXOffset(), side.getYOffset(), side.getZOffset(), 0f);
+					builder.put(e, (float) side.getXOffset(), (float) side.getYOffset(), (float) side.getZOffset(), 0f);
 					break;
 				default:
 					builder.put(e);
@@ -165,8 +174,8 @@ public class UEnergyPipeModel implements IModel {
 		
 		@Override
 		public List<BakedQuad> getQuads(IBlockState state, EnumFacing side, long rand) {
-			if (side == null || state == null) {
-				return faceQuads.get(EnumFacing.SOUTH);
+			if (side == null) {
+				return Lists.newArrayList();
 			}
 			return faceQuads.get(side);
 		}
@@ -192,10 +201,15 @@ public class UEnergyPipeModel implements IModel {
 		}
 		
 		@Override
+		public Pair<? extends IBakedModel, Matrix4f> handlePerspective(TransformType cameraTransformType) {
+			return PerspectiveMapWrapper.handlePerspective(this, this.map, cameraTransformType);
+		}
+		
+		@Override
 		public ItemOverrideList getOverrides() {
 			return ItemOverrideList.NONE;
 		}
-				
+		
 	}
 	
 }
