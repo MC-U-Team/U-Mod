@@ -167,19 +167,19 @@ public class BlockEnergyPipe extends UBlockTileEntity {
 	private static HashMap<BlockPos, IBlockState> last_state = new HashMap<>();
 	
 	@Override
-	public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
+	public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
 		int i = 0;
 		for (EnumFacing face : EnumFacing.VALUES) {
-			TileEntity entity = worldIn.getTileEntity(pos.offset(face.getOpposite()));
-			if (entity != null && ((entity instanceof ICableExceptor && ((ICableExceptor) entity).canConnectTo(face, pos, worldIn)) || entity instanceof ICable)) {
+			TileEntity entity = world.getTileEntity(pos.offset(face.getOpposite()));
+			if (entity != null && ((entity instanceof ICableExceptor && ((ICableExceptor) entity).canConnectTo(face, pos, world)) || entity instanceof ICable)) {
 				state = state.withProperty(properties[i], true);
 			} else {
 				state = state.withProperty(properties[i], false);
 			}
 			i++;
 		}
-		if (worldIn instanceof World && !state.equals(last_state.get(pos))) {
-			TunnelHandler.onStateChange(state, (World) worldIn, pos);
+		if (world instanceof World && !state.equals(last_state.get(pos))) {
+			TunnelHandler.onStateChange(state, (World) world, pos);
 			last_state.put(pos, state);
 		}
 		return state;

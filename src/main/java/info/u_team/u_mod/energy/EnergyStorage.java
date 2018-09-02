@@ -1,10 +1,9 @@
 package info.u_team.u_mod.energy;
 
-import info.u_team.u_mod.api.INbtSerializable;
+import info.u_team.u_mod.api.IEnergyTile;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.energy.IEnergyStorage;
 
-public class EnergyStorage implements IEnergyStorage, INbtSerializable {
+public class EnergyStorage implements IEnergyTile {
 	
 	protected int energy;
 	protected int capacity;
@@ -67,10 +66,16 @@ public class EnergyStorage implements IEnergyStorage, INbtSerializable {
 		return transferIn;
 	}
 	
+	@Override
+	public int getTransfer() {
+		return transferOut;
+	}
+	
 	public void setEnergy(int energy) {
 		this.energy = energy;
 	}
 	
+	@Override
 	public void setCapacity(int capacity) {
 		this.capacity = capacity;
 	}
@@ -81,6 +86,11 @@ public class EnergyStorage implements IEnergyStorage, INbtSerializable {
 	
 	public void setTransferOut(int transferOut) {
 		this.transferOut = transferOut;
+	}
+	
+	@Override
+	public void setTransfer(int transfer) {
+		this.transferOut = transfer;
 	}
 	
 	@Override
@@ -106,4 +116,5 @@ public class EnergyStorage implements IEnergyStorage, INbtSerializable {
 		compound.setInteger("energy_transfer_in", transferIn);
 		compound.setInteger("energy_transfer_out", transferOut);
 	}
+	
 }

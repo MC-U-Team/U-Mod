@@ -1,20 +1,15 @@
 package info.u_team.u_mod.gui;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import org.lwjgl.input.Keyboard;
 
-import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
+import com.google.common.collect.*;
 
 import info.u_team.u_mod.UConstants;
-import info.u_team.u_mod.api.CapabilityIOMode;
-import info.u_team.u_mod.api.IClientEnergy;
-import info.u_team.u_mod.api.IUGui;
-import info.u_team.u_mod.block.BlockEnergy;
+import info.u_team.u_mod.api.*;
+import info.u_team.u_mod.block.BlockEnergyGuiFacing;
 import info.u_team.u_mod.container.ContainerBase;
 import info.u_team.u_mod.resource.EnumModeTab;
 import net.minecraft.block.Block;
@@ -22,41 +17,20 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.BlockRendererDispatcher;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.EntityRenderer;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.RenderItem;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.block.model.IBakedModel;
-import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
+import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.block.model.*;
 import net.minecraft.client.renderer.color.ItemColors;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.client.renderer.texture.TextureUtil;
+import net.minecraft.client.renderer.texture.*;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.inventory.ClickType;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3i;
+import net.minecraft.util.*;
+import net.minecraft.util.math.*;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.*;
 
 @SideOnly(Side.CLIENT)
 public class UGuiContainer extends GuiContainer implements IUGui {
@@ -102,7 +76,7 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 	private final Tessellator tessellator;
 	private final BufferBuilder bufferbuilder;
 	private final ItemColors colors;
-
+	
 	private IBakedModel model;
 	private ItemStack itemstack;
 	private Rotation rotation;
@@ -129,30 +103,32 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 		if (((TileEntity) inventorySlotsIn.tile).hasCapability(CapabilityIOMode.IOMODE_CAPABILITY, EnumFacing.NORTH)) {
 			impl_map.put(EnumModeTab.IOMODE, impl_map.size());
 			current_state = inventorySlotsIn.world.getBlockState(inventorySlotsIn.pos);
-			switch(current_state.getValue(BlockEnergy.FACING)) {
-			case EAST:
-				angle_x = 90;
-				use_z = true;
-				break;
-			case NORTH:
-				angle_y = 180;
-				angle_z = 180;
-				break;
-			case WEST:
-				angle_x = 270;	
-				use_z = true;
-				break;
-			default:
-				break;
+			if (current_state.getValue(BlockEnergyGuiFacing.FACING) != null) {
+				switch (current_state.getValue(BlockEnergyGuiFacing.FACING)) {
+				case EAST:
+					angle_x = 90;
+					use_z = true;
+					break;
+				case NORTH:
+					angle_y = 180;
+					angle_z = 180;
+					break;
+				case WEST:
+					angle_x = 270;
+					use_z = true;
+					break;
+				default:
+					break;
+				}
 			}
 			this.model = renderblock.getModelForState(current_state);
 			this.itemstack = new ItemStack(current_state.getBlock());
 			this.surrounding_models = new IBakedModel[6];
 			this.surroundings_offsets = new BlockPos[6];
-			this.surroundings_item_stacks = new  ItemStack[6];
+			this.surroundings_item_stacks = new ItemStack[6];
 			for (int i = 0; i < 6; i++) {
 				this.surroundings_offsets[i] = inventorySlotsIn.pos.offset(EnumFacing.byIndex(i));
-				if(inventorySlotsIn.world.isAirBlock(this.surroundings_offsets[i])) {
+				if (inventorySlotsIn.world.isAirBlock(this.surroundings_offsets[i])) {
 					this.surroundings_offsets[i] = null;
 					continue;
 				}
@@ -174,7 +150,7 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 		
 		if (this.getTab() == EnumModeTab.ENERGY) {
 			IClientEnergy iclient = (IClientEnergy) getContainer().tile;
-			this.drawTexturedModalRect(i + 9, j + 8, 0, 166, Math.round(158 * ((float) iclient.getImplEnergy() / (float) iclient.getStorage().getMaxEnergyStored())), 20);
+			this.drawTexturedModalRect(i + 9, j + 8, 0, 166, Math.round(158 * ((float) iclient.getImplEnergy() / (float) iclient.getImplMaxEnergy())), 20);
 		}
 		this.drawInBackground(this.getTab(), mouseX, mouseY, i, j);
 	}
@@ -195,7 +171,7 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 		this.guiTop = (this.height - this.ySize) / 2;
 	}
 	
-	private void drawOverlay(int mouseX, int mouseY) {
+	protected void drawOverlay(int mouseX, int mouseY) {
 		int i = (this.width - this.xSize) / 2;
 		int j = (this.height - this.ySize) / 2 - 28;
 		
@@ -204,6 +180,16 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 				this.drawHoveringText(I18n.format("modetab." + ttab.name() + ".name"), mouseX, mouseY);
 			}
 		});
+		
+		int k = (this.width - this.xSize) / 2;
+		int l = (this.height - this.ySize) / 2;
+		
+		if (this.getTab() == EnumModeTab.ENERGY) {
+			if (mouseX > k + 9 && mouseX < k + 167 && mouseY > l + 8 && mouseY < l + 28) {
+				IClientEnergy iclient = (IClientEnergy) getContainer().tile;
+				this.drawHoveringText(iclient.getImplEnergy() + " / " + iclient.getImplMaxEnergy() + " FE", mouseX, mouseY);
+			}
+		}
 	}
 	
 	private void drawForgroundTab() {
@@ -221,7 +207,12 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 			if (item != null) {
 				this.renderItemModelIntoGUI(new ItemStack(item), i + (28 * num) - 10, j + 10);
 			} else {
-				this.renderItemModelIntoGUI(new ItemStack(this.getContainer().world.getBlockState(this.getContainer().pos).getBlock()), i + (28 * num) - 10, j + 10);
+				IBlockState state = this.getContainer().world.getBlockState(this.getContainer().pos);
+				int meta = 0;
+				if (!state.getPropertyKeys().contains(BlockEnergyGuiFacing.FACING)) {
+					meta = state.getBlock().getMetaFromState(state);
+				}
+				this.renderItemModelIntoGUI(new ItemStack(state.getBlock(), 1, meta), i + (28 * num) - 10, j + 10);
 			}
 		});
 		GlStateManager.translate(-16, 0, 0);
@@ -406,7 +397,7 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 	}
 	
 	private float angle_x = 0, angle_y = 0, angle_z = 0;
-		
+	
 	private void drawIOMode(float partialTicks, int mouseX, int mouseY) {
 		this.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
 		GlStateManager.pushMatrix();
@@ -427,9 +418,10 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 		GlStateManager.disableLighting();
 		renderitem.renderItem(this.itemstack, this.model);
 		for (int i = 0; i < 6; i++) {
-			if(this.surroundings_offsets[i] == null)continue;
+			if (this.surroundings_offsets[i] == null)
+				continue;
 			GlStateManager.pushMatrix();
-			GlStateManager.translate(this.surroundings_offsets[i].getX() -0.5, this.surroundings_offsets[i].getY() -0.5, this.surroundings_offsets[i].getZ() -0.5);
+			GlStateManager.translate(this.surroundings_offsets[i].getX() - 0.5, this.surroundings_offsets[i].getY() - 0.5, this.surroundings_offsets[i].getZ() - 0.5);
 			renderModel(this.surrounding_models[i], 0x66FFFFFF, this.surroundings_item_stacks[i]);
 			GlStateManager.popMatrix();
 		}
@@ -440,46 +432,40 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 		textureManager.getTexture(TextureMap.LOCATION_BLOCKS_TEXTURE).restoreLastBlurMipmap();
 	}
 	
-    private void renderModel(IBakedModel model, int color, ItemStack stack)
-    {
-        Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferbuilder = tessellator.getBuffer();
-        bufferbuilder.begin(7, DefaultVertexFormats.ITEM);
-
-        for (EnumFacing enumfacing : EnumFacing.values())
-        {
-            this.renderQuads(bufferbuilder, model.getQuads((IBlockState)null, enumfacing, 0L), color, stack);
-        }
-
-        this.renderQuads(bufferbuilder, model.getQuads((IBlockState)null, (EnumFacing)null, 0L), color, stack);
-        tessellator.draw();
-    }
-
-    private void renderQuads(BufferBuilder renderer, List<BakedQuad> quads, int color, ItemStack stack)
-    {
-        boolean flag = color == -1 && !stack.isEmpty();
-        int i = 0;
-
-        for (int j = quads.size(); i < j; ++i)
-        {
-            BakedQuad bakedquad = quads.get(i);
-            int k = color;
-
-            if (flag && bakedquad.hasTintIndex())
-            {
-                k = this.colors.colorMultiplier(stack, bakedquad.getTintIndex());
-
-                if (EntityRenderer.anaglyphEnable)
-                {
-                    k = TextureUtil.anaglyphColor(k);
-                }
-
-                k = k | -16777216;
-            }
-
-            net.minecraftforge.client.model.pipeline.LightUtil.renderQuadColor(renderer, bakedquad, k);
-        }
-    }
+	private void renderModel(IBakedModel model, int color, ItemStack stack) {
+		Tessellator tessellator = Tessellator.getInstance();
+		BufferBuilder bufferbuilder = tessellator.getBuffer();
+		bufferbuilder.begin(7, DefaultVertexFormats.ITEM);
+		
+		for (EnumFacing enumfacing : EnumFacing.values()) {
+			this.renderQuads(bufferbuilder, model.getQuads((IBlockState) null, enumfacing, 0L), color, stack);
+		}
+		
+		this.renderQuads(bufferbuilder, model.getQuads((IBlockState) null, (EnumFacing) null, 0L), color, stack);
+		tessellator.draw();
+	}
+	
+	private void renderQuads(BufferBuilder renderer, List<BakedQuad> quads, int color, ItemStack stack) {
+		boolean flag = color == -1 && !stack.isEmpty();
+		int i = 0;
+		
+		for (int j = quads.size(); i < j; ++i) {
+			BakedQuad bakedquad = quads.get(i);
+			int k = color;
+			
+			if (flag && bakedquad.hasTintIndex()) {
+				k = this.colors.colorMultiplier(stack, bakedquad.getTintIndex());
+				
+				if (EntityRenderer.anaglyphEnable) {
+					k = TextureUtil.anaglyphColor(k);
+				}
+				
+				k = k | -16777216;
+			}
+			
+			net.minecraftforge.client.model.pipeline.LightUtil.renderQuadColor(renderer, bakedquad, k);
+		}
+	}
 	
 	@Override
 	protected void renderHoveredToolTip(int p_191948_1_, int p_191948_2_) {
@@ -639,7 +625,7 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 		old_mouseX = mouseX;
 		old_mouseY = mouseY;
 		old_mouseZ = mouseX;
-
+		
 		if (mouseButton == 0 || mouseButton == 1 || flag) {
 			int j = this.guiLeft;
 			int k = this.guiTop;
@@ -737,12 +723,12 @@ public class UGuiContainer extends GuiContainer implements IUGui {
 		ItemStack itemstack = this.mc.player.inventory.getItemStack();
 		
 		if (clickedMouseButton == 0 && this.getTab() == EnumModeTab.IOMODE) {
-			if(use_z) {
+			if (use_z) {
 				angle_y += ((float) old_mouseY - (float) mouseX) * 1f;
 				old_mouseY = mouseX;
 				angle_z += ((float) old_mouseZ - (float) mouseY) * 1f;
-			    old_mouseZ = mouseY;
-			} else { 
+				old_mouseZ = mouseY;
+			} else {
 				angle_y += ((float) old_mouseY - (float) mouseY) * 1f;
 				old_mouseY = mouseY;
 				angle_x += ((float) old_mouseX - (float) mouseX) * 1f;

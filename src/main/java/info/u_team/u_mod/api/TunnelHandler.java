@@ -53,6 +53,10 @@ public class TunnelHandler {
 	}
 	
 	public static boolean onStateChange(IBlockState state, World world, BlockPos pos) {
+		// WTF java.lang.ClassCastException:
+		// crazypants.enderio.conduits.conduit.TileConduitBundle cannot be cast to
+		// info.u_team.u_mod.api.ICable
+		
 		ICable cable1 = (ICable) world.getTileEntity(pos);
 		if (cable1 == null || world.isRemote)
 			return false;

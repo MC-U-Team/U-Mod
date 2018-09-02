@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.*;
 
-public abstract class BlockEnergyGui extends BlockEnergy {
+public abstract class BlockEnergyGui extends BlockTileEntityBase {
 	
 	protected int gui;
 	
@@ -64,4 +64,5 @@ public abstract class BlockEnergyGui extends BlockEnergy {
 	public boolean getUseNeighborBrightness(IBlockState state) {
 		return false;
 	}
+	
 }

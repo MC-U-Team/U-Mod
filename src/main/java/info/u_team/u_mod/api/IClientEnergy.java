@@ -7,4 +7,7 @@ public interface IClientEnergy extends IEnergyStorageProvider {
 	@SideOnly(Side.CLIENT)
 	int getImplEnergy();
 	
+	@SideOnly(Side.CLIENT)
+	int getImplMaxEnergy();
+	
 }

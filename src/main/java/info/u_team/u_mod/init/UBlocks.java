@@ -2,8 +2,7 @@ package info.u_team.u_mod.init;
 
 import info.u_team.u_mod.UConstants;
 import info.u_team.u_mod.block.*;
-import info.u_team.u_mod.block.generation.BlockSolarPanel;
-import info.u_team.u_mod.block.machine.*;
+import info.u_team.u_mod.block.energy.*;
 import info.u_team.u_mod.resource.*;
 import info.u_team.u_team_core.block.UBlock;
 import info.u_team.u_team_core.registry.BlockRegistry;
@@ -30,6 +29,8 @@ public class UBlocks {
 	
 	// Generation
 	public static final UBlock solar_panel = new BlockSolarPanel("solar_panel");
+	public static final UBlock coal_generator = new BlockCoalGenerator("coal_generator");
+	public static final UBlock lava_generator = new BlockLavaGenerator("lava_generator");
 	
 	public static final UBlock battery = new BlockBattery("battery");
 	public static final UBlock dummy = new BlockDummyMultiblock("dummy");
