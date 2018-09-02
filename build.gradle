@@ -38,6 +38,9 @@ repositories {
 	maven {
 		url = "https://minecraft.curseforge.com/api/maven"
 	}
+	maven {
+		url = "https://maven.tterrag.com"
+	}
 }
 
 getBuildNumber()
@@ -107,6 +110,7 @@ dependencies {
 	runtime "mezz.jei:jei_1.12.2:4.11.0.204"
 	deobfCompile "endercore:EnderCore:1.12.2:0.5.37"
 	deobfCompile "ender-io:EnderIO:1.12.2:5.0.31"
+	deobfCompile "mcjty.theoneprobe:TheOneProbe-1.12:1.12-1.4.23-16"
 }
 
 curseforge {
