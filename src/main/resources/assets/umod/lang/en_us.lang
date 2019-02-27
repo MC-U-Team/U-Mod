@@ -12,6 +12,7 @@ itemGroup.umod:resources=UMod Resources
 
 modetab.NORMAL.name=Normal
 modetab.ENERGY.name=Energy
+modetab.IOMODE.name=IOMode
 
 #---------------------------------------------
 # Blocks

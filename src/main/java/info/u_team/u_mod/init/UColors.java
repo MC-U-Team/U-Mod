@@ -1,10 +1,14 @@
 package info.u_team.u_mod.init;
 
 import info.u_team.u_mod.block.energy.BlockSolarPanel;
-import info.u_team.u_mod.resource.*;
+import info.u_team.u_mod.resource.EnumAlloys1;
+import info.u_team.u_mod.resource.EnumResources1;
+import info.u_team.u_mod.resource.EnumResources2;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.color.*;
-import net.minecraftforge.fml.relauncher.*;
+import net.minecraft.client.renderer.color.BlockColors;
+import net.minecraft.client.renderer.color.ItemColors;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class UColors {
@@ -67,5 +71,5 @@ public class UColors {
 			return 0xFFFFFF;
 		}, UBlocks.solar_panel.getItem());
 	}
-	
+		
 }

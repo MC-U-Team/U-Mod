@@ -190,7 +190,7 @@ public class TunnelHandler {
 		
 		int id1 = cable.getID();
 		if (x > 1) {
-			ArrayList<BlockPos> tunnel = TUNNELS.get(id1);
+			ArrayList<BlockPos> tunnel = (ArrayList<BlockPos>) TUNNELS.get(id1).clone();
 			if (tunnel == null) {
 				return;
 			}

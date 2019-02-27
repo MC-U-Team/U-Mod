@@ -18,4 +18,5 @@ public class ItemIngot extends UItemMetaData {
 			setModel(this, i, new ResourceLocation(UConstants.MODID, "ingot"));
 		}
 	}
+	
 }

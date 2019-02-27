@@ -11,9 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 
 public class TileEntityPress extends TileEntityMachine {
-	
-	public static final int[] IN = { 0 }, OUT = { 1 };
-	
+		
 	public TileEntityPress() {
 		super(2, "press");
 	}
@@ -22,33 +20,7 @@ public class TileEntityPress extends TileEntityMachine {
 	public List<IMachineRecipe> getRecipes() {
 		return RecipeManager.getPressRecipes();
 	}
-	
-	@Override
-	public int[] getSlotsForFace(EnumFacing side) {
-		if (side == EnumFacing.DOWN) {
-			return OUT;
-		} else if (side == EnumFacing.UP) {
-			return IN;
-		}
-		return null;
-	}
-	
-	@Override
-	public boolean canInsertItem(int index, ItemStack stack, EnumFacing direction) {
-		if (index == 0) {
-			return true;
-		}
-		return false;
-	}
-	
-	@Override
-	public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
-		if (index > 0) {
-			return true;
-		}
-		return false;
-	}
-	
+		
 	@Override
 	public boolean isItemValidForSlot(int index, ItemStack stack) {
 		if (index == 0) {

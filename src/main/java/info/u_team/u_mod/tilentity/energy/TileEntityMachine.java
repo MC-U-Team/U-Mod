@@ -3,7 +3,10 @@ package info.u_team.u_mod.tilentity.energy;
 import java.util.List;
 
 import info.u_team.u_mod.api.*;
+import info.u_team.u_mod.api.IIOMode.IOModeHandler;
 import info.u_team.u_mod.energy.EnergyConsumer;
+import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
@@ -12,7 +15,9 @@ import net.minecraftforge.fml.relauncher.*;
 import net.minecraftforge.items.*;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 
-public abstract class TileEntityMachine extends TileEntityEnergyGui implements IClientProgress {
+public abstract class TileEntityMachine extends TileEntityEnergyGui implements IClientProgress {	
+	
+	protected final IOModeHandler iomode_handler;
 	
 	protected int max_progress = 100;
 	protected int progress = max_progress;
@@ -24,6 +29,22 @@ public abstract class TileEntityMachine extends TileEntityEnergyGui implements I
 	
 	public TileEntityMachine(int size, String name) {
 		super(size, name, new EnergyConsumer(40000, 1000));
+		this.iomode_handler = new IOModeHandler(this);
+	}
+	
+	@Override
+	public int[] getSlotsForFace(EnumFacing side) {
+		return this.iomode_handler.getSlots(side);
+	}
+	
+	@Override
+	public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
+		return this.iomode_handler.canExtractItem(direction, index, stack);
+	}
+	
+	@Override
+	public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
+		return this.iomode_handler.canInsertItem(direction, index, itemStackIn);
 	}
 	
 	public void checkRecipe() {
@@ -120,25 +141,21 @@ public abstract class TileEntityMachine extends TileEntityEnergyGui implements I
 	
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY || capability == CapabilityEnergy.ENERGY) {
+		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY || capability == CapabilityEnergy.ENERGY
+				|| capability == CapabilityIOMode.IOMODE_CAPABILITY) {
 			return true;
 		}
 		return super.hasCapability(capability, facing);
 	}
-	
-	IItemHandler handlerTop = new SidedInvWrapper(this, EnumFacing.UP);
-	IItemHandler handlerBottom = new SidedInvWrapper(this, EnumFacing.DOWN);
-	
+		
 	@Override
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
 		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && facing != null) {
-			if (facing == EnumFacing.DOWN) {
-				return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(handlerBottom);
-			} else if (facing == EnumFacing.UP) {
-				return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(handlerTop);
-			}
+			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(this.iomode_handler.get(facing));
 		} else if (capability == CapabilityEnergy.ENERGY) {
 			return CapabilityEnergy.ENERGY.cast(ienergy);
+		} else if (capability == CapabilityIOMode.IOMODE_CAPABILITY) {
+			return CapabilityIOMode.IOMODE_CAPABILITY.cast(this.iomode_handler);
 		}
 		return super.getCapability(capability, facing);
 	}

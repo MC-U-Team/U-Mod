@@ -17,12 +17,7 @@ public class BlockDummyMultiblock extends UBlock {
 	public EnumBlockRenderType getRenderType(IBlockState state) {
 		return EnumBlockRenderType.INVISIBLE;
 	}
-	
-	@Override
-	public BlockRenderLayer getRenderLayer() {
-		return BlockRenderLayer.TRANSLUCENT;
-	}
-	
+		
 	@Override
 	public boolean isFullBlock(IBlockState state) {
 		return false;
