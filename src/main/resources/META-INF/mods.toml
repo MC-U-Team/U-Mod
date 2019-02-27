@@ -1,0 +1,35 @@
+modLoader="javafml"
+loaderVersion="[25,)"
+issueTrackerURL="https://github.com/MC-U-Team/U-Mod/issues"
+displayURL="https://u-team.info/mods/umod"
+logoFile="logo.png"
+credits="Team U-Team"
+authors="HyCraftHD"
+
+[[mods]]
+	modId="umod"
+	version="${file.jarVersion}"
+	displayName="U Mod"
+	updateJSONURL="https://api.u-team.info/update/umod.json"
+	description="Everything we wanna have in minecraft :D"
+	
+	[[dependencies.umod]]
+	    modId="forge"
+	    mandatory=true
+	    versionRange="[25.0.59,)"
+	    ordering="NONE"
+	    side="BOTH"
+	
+	[[dependencies.umod]]
+	    modId="minecraft"
+	    mandatory=true
+	    versionRange="[1.13.2]"
+	    ordering="NONE"
+	    side="BOTH"
+	    
+	[[dependencies.umod]]
+	    modId="uteamcore"
+	    mandatory=true
+	    versionRange="[2.3.1.100-SNAPSHOT,)"
+	    ordering="NONE"
+	    side="BOTH"
