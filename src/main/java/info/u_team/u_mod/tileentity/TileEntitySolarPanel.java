@@ -40,7 +40,7 @@ public class TileEntitySolarPanel extends UTileEntityContainer implements ITicka
 	
 	@Override
 	public void writeNBT(NBTTagCompound compound) {
-		compound.setInt("storage", energy.getStorage());
+		compound.putInt("storage", energy.getStorage());
 	}
 	
 	@Override
