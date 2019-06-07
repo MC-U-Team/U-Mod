@@ -11,7 +11,11 @@ buildscript {
     }
 }
 
+apply from: "https://raw.githubusercontent.com/HyCraftHD/Blank-Forge-Project/master/build.methods"
 apply from: "https://raw.githubusercontent.com/HyCraftHD/Blank-Forge-Project/master/git.methods"
+
+setup()
+info()
 
 apply plugin: "net.minecraftforge.gradle"
 apply plugin: "eclipse"
@@ -20,18 +24,6 @@ apply plugin: "maven"
 
 repositories {
     maven { url = "https://repo.u-team.info" }
-}
-
-loadConfig()
-
-def loadConfig() {
-	ext.buildProps = file "build.properties"
-
-	buildProps.withReader {
-		def prop = new Properties()
-		prop.load(it)
-		ext.config = new ConfigSlurper().parse prop
-	}
 }
 
 getBuildNumber()
@@ -54,17 +46,17 @@ minecraft {
     mappings channel: config.forge.mapping_channel, version: config.forge.mapping
     runs {
         client = {
-            workingDirectory project.file("run").canonicalPath
+            workingDirectory project.file("run/client").canonicalPath
             mods {
-                umod {
+                overworldmirror {
                     source sourceSets.main
 				}
 			}
         }
         server = {
-            workingDirectory project.file("run").canonicalPath
+            workingDirectory project.file("run/server").canonicalPath
             mods {
-                umod {
+                overworldmirror {
                     source sourceSets.main
 				}
 			}
@@ -130,7 +122,14 @@ artifacts {
 }
 
 sourceSets {
-	main
+	main {
+		java {
+			srcDirs += "src/api/java"
+		}
+		resources {
+			srcDirs += "src/api/resources"
+		}
+	}
 }
 
 dependencies {
@@ -163,11 +162,14 @@ curseforge {
 
     	mainArtifact(jar) {
       		displayName = "${config.curse.display}-${config.forge.mcversion}-${project.version}"
+      		changelogType = "html"
+			changelog = "<a href=\"${config.curse.changelog}\">Changelog of ${project.version}</a>"
     	}
     	
     	addArtifact(deobfJar) {
     		displayName = "${config.curse.display}-${config.forge.mcversion}-${project.version}-dev"
-    		changelog = "Mappings: " + config.forge.mapping
+    		changelogType = "text"
+    		changelog = "Mappings: ${config.forge.mapping_channel}_${config.forge.mapping}"
     	}
   	}
 }
@@ -190,21 +192,21 @@ uploadArchives {
 				project {
 					name project.archivesBaseName
 					packaging "jar"
-					description "Useful-Backpacks"
-						url "https://github.com/MC-U-Team/Useful-Backpacks"
+					description "${config.maven.github_name}"
+						url "https://github.com/MC-U-Team/${config.maven.github_name}"
 					scm {
-						url "https://github.com/MC-U-Team/Useful-Backpacks"
-						connection "scm:git:git://github.com/MC-U-Team/Useful-Backpacks.git"
-						developerConnection "scm:git:git@github.com:MC-U-Team/Useful-Backpacks.git"
+						url "https://github.com/MC-U-Team/${config.maven.github_name}"
+						connection "scm:git:git://github.com/MC-U-Team/${config.maven.github_name}.git"
+						developerConnection "scm:git:git@github.com:MC-U-Team/${config.maven.github_name}.git"
 					}
 					issueManagement {
 						system "github"
-						url "https://github.com/MC-U-Team/Useful-Backpacks/issues"
+						url "https://github.com/MC-U-Team/${config.maven.github_name}/issues"
 					}
 					licenses {
 						license {
 							name "Apache License 2.0"
-							url "https://github.com/MC-U-Team/Useful-Backpacks/blob/1.13.2/LICENSE"
+							url "https://github.com/MC-U-Team/${config.maven.github_name}/blob/1.13.2/LICENSE"
 							distribution "repo"
 						}
 					}
