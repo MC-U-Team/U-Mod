@@ -149,7 +149,7 @@ sourceSets {
 dependencies {
     minecraft "net.minecraftforge:forge:$config.forge.version"
 	compile "info.u-team:u_team_core-${config.forge.mcversion}:${config.uteamcore.version}:dev"
-	compile "info.u-team:useful_resources-${config.forge.mcversion}:${config.useful_resources.version}:dev" {
+	compile "info.u-team:useful_resources-${config.forge.mcversion}:${config.usefulresources.version}:dev" {
 		transitive = false
 	}
   	compileOnly fg.deobf("mezz.jei:jei-${config.forge.mcversion}:${config.jei.version}:api")
