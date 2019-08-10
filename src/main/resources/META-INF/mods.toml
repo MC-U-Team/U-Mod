@@ -33,3 +33,10 @@ authors="HyCraftHD, Luc_ZZ, MrTroble"
 	    versionRange="[2.7.0.129,)"
 	    ordering="NONE"
 	    side="BOTH"
+	    
+	[[dependencies.umod]]
+	    modId="usefulresources"
+	    mandatory=true
+	    versionRange="[0.10.2.11-SNAPSHOT,)"
+	    ordering="NONE"
+	    side="BOTH"
