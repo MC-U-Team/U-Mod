@@ -8,26 +8,25 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.*;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-@Mod(UMod.modid)
+@Mod(UMod.MODID)
 public class UMod {
 	
-	public static final String modid = "umod";
+	public static final String MODID = "umod";
 	
-	public static final IModProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> CommonProxy::new);
+	private static final IModProxy PROXY = DistExecutor.runForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 	
 	public UMod() {
 		FMLJavaModLoadingContext.get().getModEventBus().register(this);
-		proxy.construct();
+		PROXY.construct();
 	}
 	
 	@SubscribeEvent
 	public void setup(FMLCommonSetupEvent event) {
-		proxy.setup();
+		PROXY.setup();
 	}
 	
 	@SubscribeEvent
 	public void ready(FMLLoadCompleteEvent event) {
-		proxy.complete();
+		PROXY.complete();
 	}
-	
 }
