@@ -1,0 +1,12 @@
+{
+    "parent": "block/cube",
+    "textures": {
+        "particle": "umod:block/crate_side",
+        "down": "umod:block/crate_bottom",
+        "up": "umod:block/crate_top",
+        "south": "umod:block/crate_side",
+        "west": "umod:block/crate_side",
+        "east": "umod:block/crate_side",
+        "north": "umod:block/crate_front"
+    }
+}

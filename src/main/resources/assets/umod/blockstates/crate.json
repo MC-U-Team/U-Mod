@@ -1,0 +1,19 @@
+{
+	"variants": {
+		"facing=north": {
+			"model": "umod:block/crate"
+		},
+		"facing=south": {
+			"model": "umod:block/crate",
+			"y": 180
+		},
+		"facing=west": {
+			"model": "umod:block/crate",
+			"y": 270
+		},
+		"facing=east": {
+			"model": "umod:block/crate",
+			"y": 90
+		}
+	}
+}
