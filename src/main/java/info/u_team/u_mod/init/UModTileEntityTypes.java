@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
 @EventBusSubscriber(bus = Bus.MOD, modid = UMod.MODID)
-public class UModTileEntities {
+public class UModTileEntityTypes {
 	
 	public static final TileEntityType<CrateTileEntity> CRATE = UBuilder.create("crate", CrateTileEntity::new, UModBlocks.CRATE).build();
 	

@@ -14,7 +14,7 @@ public class CrateBlock extends UTileEntityBlock {
 	public static final DirectionProperty DIRECTION = BlockStateProperties.HORIZONTAL_FACING;
 	
 	public CrateBlock(String name) {
-		super(name, UModItemGroups.GROUP, Properties.create(Material.WOOD), () -> UModTileEntities.CRATE);
+		super(name, UModItemGroups.GROUP, Properties.create(Material.WOOD), () -> UModTileEntityTypes.CRATE);
 	}
 	
 	@Override
