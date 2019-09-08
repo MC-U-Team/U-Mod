@@ -16,7 +16,7 @@ authors="HyCraftHD, MrTroble, Luc_ZZ"
 	[[dependencies.umod]]
 	    modId="forge"
 	    mandatory=true
-	    versionRange="[28.0.45,)"
+	    versionRange="[28.0.100,)"
 	    ordering="NONE"
 	    side="BOTH"
 	
