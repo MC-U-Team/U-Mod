@@ -1,4 +1,4 @@
-package info.u_team.u_mod.block;
+package info.u_team.u_mod.container;
 
 import info.u_team.u_mod.init.UModContainerTypes;
 import info.u_team.u_mod.tileentity.CrateTileEntity;

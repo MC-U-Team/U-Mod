@@ -1,7 +1,7 @@
 package info.u_team.u_mod.gui;
 
 import info.u_team.u_mod.UMod;
-import info.u_team.u_mod.block.CrateContainer;
+import info.u_team.u_mod.container.CrateContainer;
 import info.u_team.u_mod.type.Crate;
 import info.u_team.u_team_core.gui.UContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;

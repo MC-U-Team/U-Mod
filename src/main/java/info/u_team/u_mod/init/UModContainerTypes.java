@@ -1,7 +1,7 @@
 package info.u_team.u_mod.init;
 
 import info.u_team.u_mod.UMod;
-import info.u_team.u_mod.block.CrateContainer;
+import info.u_team.u_mod.container.CrateContainer;
 import info.u_team.u_team_core.containertype.UContainerType;
 import info.u_team.u_team_core.util.registry.BaseRegistryUtil;
 import net.minecraft.inventory.container.ContainerType;
