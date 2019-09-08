@@ -1,3 +1,4 @@
 language: java
-install: ./gradlew genEclipseRuns eclipse
-script: ./gradlew build -PcreateBuild
+jdk: oraclejdk8
+install: gradle genEclipseRuns eclipse
+script: gradle build -PcreateBuild
