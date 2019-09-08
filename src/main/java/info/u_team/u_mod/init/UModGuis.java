@@ -1,7 +1,7 @@
 package info.u_team.u_mod.init;
 
 import info.u_team.u_mod.UMod;
-import info.u_team.u_mod.screen.CrateScreen;
+import info.u_team.u_mod.gui.CrateScreen;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

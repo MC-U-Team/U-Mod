@@ -1,4 +1,4 @@
-package info.u_team.u_mod.screen;
+package info.u_team.u_mod.gui;
 
 import info.u_team.u_mod.block.CrateContainer;
 import info.u_team.u_team_core.gui.UContainerScreen;
