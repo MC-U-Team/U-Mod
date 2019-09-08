@@ -11,14 +11,11 @@ cache:
 
 jobs:
   include:
-    stage: "builddeploy"
+    - stage: "builddeploy"
       name: "Build and deploy"
       if: branch = 1.14.4
       script: gradle uploadBoth -PcreateBuild
-
-jobs:
-  include:
-    stage: "buildonly"
+    - stage: "buildonly"
       name: "Build"
       if: branch != 1.14.4
       script: gradle build -PcreateBuild
