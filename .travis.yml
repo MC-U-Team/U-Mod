@@ -1,4 +1,4 @@
 language: java
 jdk: openjdk8
-install: ./gradlew genEclipseRuns eclipse
-script: ./gradlew build -PcreateBuild
+install: gradle genEclipseRuns eclipse
+script: gradle build -PcreateBuild
