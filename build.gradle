@@ -207,7 +207,7 @@ uploadArchives {
 
 	repositories {
 		mavenDeployer {
-			pass = System.getenv("mavenpass")
+			String pass = System.getenv("mavenpass")
 			if(pass == null) {
 				pass = project.getProperty("mavenpass")
 			}
