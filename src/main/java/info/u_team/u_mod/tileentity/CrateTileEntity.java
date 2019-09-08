@@ -48,7 +48,12 @@ public class CrateTileEntity extends UTileEntity implements INamedContainerProvi
 	@Override
 	public void remove() {
 		super.remove();
+		crate.invalidate();
 		slots.invalidate();
+	}
+	
+	public LazyOptional<Crate> getCrate() {
+		return crate;
 	}
 	
 	@Override
