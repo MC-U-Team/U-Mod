@@ -161,7 +161,15 @@ compileJava {
 }
 
 curseforge {
-	apiKey = project.getProperty("token")
+	if (project.hasProperty("token")) {
+		apiKey = project.getProperty("token")
+	} else {
+		if(System.getenv("token") != null) {
+			apiKey = System.getenv("token")
+		} else {
+			apiKey = "mrTroble"
+		}
+	}
 	
 	tasks.curseforge.dependsOn build
 	
@@ -199,9 +207,13 @@ uploadArchives {
 
 	repositories {
 		mavenDeployer {
-			if (project.hasProperty("mavenpass")) {
+			String pass = System.getenv("mavenpass")
+			if(pass == null) {
+				pass = project.getProperty("mavenpass")
+			}
+			if (pass != null) {
 				repository(url: "https://repo.u-team.info") {
-					authentication(userName: "maven", password: project.getProperty("mavenpass"))
+					authentication(userName: "maven", password: pass)
 				}
 			}
 			pom {
