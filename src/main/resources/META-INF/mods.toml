@@ -4,7 +4,7 @@ issueTrackerURL="https://github.com/MC-U-Team/U-Mod/issues"
 displayURL="https://u-team.info/mods/umod"
 logoFile="logo.png"
 credits="Team U-Team"
-authors="HyCraftHD, Luc_ZZ, MrTroble"
+authors="HyCraftHD, MrTroble, Luc_ZZ"
 
 [[mods]]
 	modId="umod"
