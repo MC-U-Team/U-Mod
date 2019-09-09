@@ -1,6 +1,7 @@
 package info.u_team.u_mod.tileentity;
 
 import info.u_team.u_mod.block.CrateBlock;
+import info.u_team.u_mod.container.CrateContainer;
 import info.u_team.u_mod.init.UModTileEntityTypes;
 import info.u_team.u_mod.type.Crate;
 import info.u_team.u_team_core.tileentity.UTileEntity;
@@ -9,7 +10,7 @@ import net.minecraft.entity.player.*;
 import net.minecraft.inventory.container.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.*;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.*;
@@ -58,11 +59,11 @@ public class CrateTileEntity extends UTileEntity implements INamedContainerProvi
 	
 	@Override
 	public Container createMenu(int id, PlayerInventory playerInventory, PlayerEntity player) {
-		return null;
+		return new CrateContainer(id, playerInventory, this);
 	}
 	
 	@Override
 	public ITextComponent getDisplayName() {
-		return null;
+		return new StringTextComponent(crate.toString());
 	}
 }

@@ -8,18 +8,18 @@ public enum Crate {
 	
 	private final String name;
 	private final Rarity rarity;
-	private final int inventoryWidth, inventoryHeight;
-	private final int slotBackpackX, slotBackpackY;
+	private final int slotWidth, slotHeight;
+	private final int slotX, slotY;
 	private final int slotPlayerX, slotPlayerY;
 	private final int textureSizeX, textureSizeY;
 	
-	private Crate(String name, Rarity rarity, int inventoryWidth, int inventoryHeight, int slotBackpackX, int slotBackpackY, int slotPlayerX, int slotPlayerY, int textureSizeX, int textureSizeY) {
+	private Crate(String name, Rarity rarity, int slotWidth, int slotHeight, int slotX, int slotY, int slotPlayerX, int slotPlayerY, int textureSizeX, int textureSizeY) {
 		this.name = name;
 		this.rarity = rarity;
-		this.inventoryWidth = inventoryWidth;
-		this.inventoryHeight = inventoryHeight;
-		this.slotBackpackX = slotBackpackX;
-		this.slotBackpackY = slotBackpackY;
+		this.slotWidth = slotWidth;
+		this.slotHeight = slotHeight;
+		this.slotX = slotX;
+		this.slotY = slotY;
 		this.slotPlayerX = slotPlayerX;
 		this.slotPlayerY = slotPlayerY;
 		this.textureSizeX = textureSizeX;
@@ -34,24 +34,24 @@ public enum Crate {
 		return rarity;
 	}
 	
-	public int getInventoryWidth() {
-		return inventoryWidth;
+	public int getSlotWidth() {
+		return slotWidth;
 	}
 	
-	public int getInventoryHeight() {
-		return inventoryHeight;
+	public int getSlotHeight() {
+		return slotHeight;
 	}
 	
 	public int getInventorySize() {
-		return inventoryWidth * inventoryHeight;
+		return slotWidth * slotHeight;
 	}
 	
-	public int getSlotBackpackX() {
-		return slotBackpackX;
+	public int getSlotX() {
+		return slotX;
 	}
 	
-	public int getSlotBackpackY() {
-		return slotBackpackY;
+	public int getSlotY() {
+		return slotY;
 	}
 	
 	public int getSlotPlayerX() {
