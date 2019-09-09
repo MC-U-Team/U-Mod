@@ -4,6 +4,7 @@ import java.util.List;
 
 import info.u_team.u_mod.UMod;
 import info.u_team.u_mod.block.CrateBlock;
+import info.u_team.u_mod.block.EnergyStorageBlock;
 import info.u_team.u_mod.block.PipeBlock;
 import info.u_team.u_team_core.util.registry.BaseRegistryUtil;
 import net.minecraft.block.Block;
@@ -18,6 +19,7 @@ public class UModBlocks {
 	
 	public static final CrateBlock CRATE = new CrateBlock("crate");
 	public static final PipeBlock PIPE = new PipeBlock("pipe");
+	public static final EnergyStorageBlock ENERGYSTORAGE = new EnergyStorageBlock("energystorage");
 
 	@SubscribeEvent
 	public static void register(Register<Block> event) {
