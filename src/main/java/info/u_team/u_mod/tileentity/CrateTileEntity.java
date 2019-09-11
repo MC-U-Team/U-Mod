@@ -1,14 +1,12 @@
 package info.u_team.u_mod.tileentity;
 
-import info.u_team.u_mod.block.CrateBlock;
 import info.u_team.u_mod.container.CrateContainer;
-import info.u_team.u_mod.init.UModTileEntityTypes;
 import info.u_team.u_mod.type.Crate;
 import info.u_team.u_team_core.tileentity.UTileEntity;
-import net.minecraft.block.Block;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.container.*;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.text.*;
 import net.minecraftforge.common.capabilities.Capability;
@@ -17,15 +15,14 @@ import net.minecraftforge.items.*;
 
 public class CrateTileEntity extends UTileEntity implements INamedContainerProvider {
 	
-	private final LazyOptional<Crate> crate = LazyOptional.of(() -> {
-		final Block block = getBlockState().getBlock();
-		return block instanceof CrateBlock ? ((CrateBlock) block).getCrate() : null;
-	});
+	private final Crate crate;
 	
-	private final LazyOptional<ItemStackHandler> slots = LazyOptional.of(() -> new ItemStackHandler(crate.orElse(null).getInventorySize()));
+	private final LazyOptional<ItemStackHandler> slots;
 	
-	public CrateTileEntity() {
-		super(UModTileEntityTypes.CRATE);
+	public CrateTileEntity(TileEntityType<?> type, Crate crate) {
+		super(type);
+		this.crate = crate;
+		slots = LazyOptional.of(() -> new ItemStackHandler(crate.getInventorySize()));
 	}
 	
 	@Override
@@ -49,11 +46,10 @@ public class CrateTileEntity extends UTileEntity implements INamedContainerProvi
 	@Override
 	public void remove() {
 		super.remove();
-		crate.invalidate();
 		slots.invalidate();
 	}
 	
-	public LazyOptional<Crate> getCrate() {
+	public Crate getCrate() {
 		return crate;
 	}
 	
@@ -64,6 +60,6 @@ public class CrateTileEntity extends UTileEntity implements INamedContainerProvi
 	
 	@Override
 	public ITextComponent getDisplayName() {
-		return new StringTextComponent(crate.toString());
+		return new StringTextComponent(crate.getName());
 	}
 }

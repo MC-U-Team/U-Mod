@@ -1,5 +1,7 @@
 package info.u_team.u_mod.block;
 
+import java.util.function.Supplier;
+
 import info.u_team.u_mod.init.*;
 import info.u_team.u_mod.type.Crate;
 import info.u_team.u_team_core.block.UTileEntityBlock;
@@ -10,6 +12,7 @@ import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
@@ -20,8 +23,8 @@ public class CrateBlock extends UTileEntityBlock {
 	
 	private final Crate crate;
 	
-	public CrateBlock(Crate crate, String name) {
-		super(crate.getName() + "_" + name, UModItemGroups.GROUP, Properties.create(Material.WOOD), () -> UModTileEntityTypes.CRATE);
+	public CrateBlock(Crate crate, String name, Supplier<TileEntityType<?>> tileEntityType) {
+		super(crate.getName() + "_" + name, UModItemGroups.GROUP, Properties.create(Material.WOOD), tileEntityType);
 		this.crate = crate;
 	}
 	

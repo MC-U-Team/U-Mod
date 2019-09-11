@@ -6,6 +6,6 @@ import net.minecraft.item.ItemGroup;
 
 public class UModItemGroups {
 	
-	public static final ItemGroup GROUP = new UItemGroup(UMod.MODID, "group", () -> UModBlocks.CRATE);
+	public static final ItemGroup GROUP = new UItemGroup(UMod.MODID, "group", () -> UModBlocks.CRATES.getArray()[0]);
 	
 }

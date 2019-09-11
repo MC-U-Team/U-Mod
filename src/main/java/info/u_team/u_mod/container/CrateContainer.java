@@ -2,6 +2,7 @@ package info.u_team.u_mod.container;
 
 import info.u_team.u_mod.init.UModContainerTypes;
 import info.u_team.u_mod.tileentity.CrateTileEntity;
+import info.u_team.u_mod.type.Crate;
 import info.u_team.u_team_core.container.UTileEntityContainer;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.network.PacketBuffer;
@@ -19,8 +20,9 @@ public class CrateContainer extends UTileEntityContainer<CrateTileEntity> {
 	
 	@Override
 	protected void init(boolean server) {
-		tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> appendInventory(handler, 2, 3, 116, 41));
-		appendPlayerInventory(playerInventory, 8, 91);
+		final Crate crate = tileEntity.getCrate();
+		tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> appendInventory(handler, crate.getSlotHeight(), crate.getSlotWidth(), crate.getSlotX(), crate.getSlotY()));
+		appendPlayerInventory(playerInventory, crate.getSlotPlayerX(), crate.getSlotPlayerY());
 	}
 	
 }
