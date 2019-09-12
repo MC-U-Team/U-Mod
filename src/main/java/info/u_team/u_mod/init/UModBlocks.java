@@ -3,10 +3,8 @@ package info.u_team.u_mod.init;
 import java.util.List;
 
 import info.u_team.u_mod.UMod;
-import info.u_team.u_mod.block.CrateBlock;
-import info.u_team.u_mod.block.EnergyFurnace;
-import info.u_team.u_mod.block.EnergyStorageBlock;
-import info.u_team.u_mod.block.PipeBlock;
+import info.u_team.u_mod.block.*;
+import info.u_team.u_mod.type.Crate.Crates;
 import info.u_team.u_team_core.util.registry.BaseRegistryUtil;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -18,11 +16,12 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 @EventBusSubscriber(bus = Bus.MOD, modid = UMod.MODID)
 public class UModBlocks {
 	
-	public static final CrateBlock CRATE = new CrateBlock("crate");
+	public static final Crates.Blocks CRATES = Crates.CRATES.getBlocks();
+	
 	public static final PipeBlock PIPE = new PipeBlock("pipe");
 	public static final EnergyStorageBlock ENERGYSTORAGE = new EnergyStorageBlock("energystorage");
 	public static final EnergyFurnace  ENERGYFURNACE = new EnergyFurnace("energyfurnace");
-	
+
 	@SubscribeEvent
 	public static void register(Register<Block> event) {
 		entries = BaseRegistryUtil.getAllRegistryEntriesAndApplyNames(UMod.MODID, Block.class);
