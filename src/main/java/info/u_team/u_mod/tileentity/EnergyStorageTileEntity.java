@@ -6,19 +6,21 @@ import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.EnergyStorage;
 
 public class EnergyStorageTileEntity extends UTileEntity{
-
+	
+	private EnergyStorage storage = new EnergyStorage(10000, 10, 10, 10000);
+	
 	public EnergyStorageTileEntity() {
 		super(UModTileEntityTypes.ENERGYSTORAGE);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-		if(cap.equals(CapabilityEnergy.ENERGY)) {
-			return LazyOptional.of(() -> cap.getDefaultInstance()); 
-		}
+		if(cap.equals(CapabilityEnergy.ENERGY))
+			return (LazyOptional<T>) LazyOptional.of(() -> storage);
 		return super.getCapability(cap, side);
 	}
-
 }
