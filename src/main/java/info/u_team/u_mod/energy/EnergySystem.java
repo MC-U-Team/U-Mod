@@ -17,11 +17,11 @@ public class EnergySystem {
 	 * 
 	 * @return energy actually pulled from the network
 	 */
-	public static int pullEnergyFromNetwork(World world, BlockPos pos, int extract) {
+	public static int pullEnergyFromNetwork(World world, BlockPos pos, int extract, int depth) {
 		int energy = findEnergyFromSouroundings(world, pos, extract);
 		if (energy <= 0)
 			return extract;
-		return discoverFurther(world, pos, pos, energy, 14) + (extract - energy);
+		return discoverFurther(world, pos, pos, energy, depth) + (extract - energy);
 	}
 
 	/**
