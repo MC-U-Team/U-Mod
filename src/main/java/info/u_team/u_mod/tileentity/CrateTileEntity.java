@@ -1,7 +1,7 @@
 package info.u_team.u_mod.tileentity;
 
+import info.u_team.u_mod.api.type.ICrate;
 import info.u_team.u_mod.container.CrateContainer;
-import info.u_team.u_mod.type.Crate;
 import info.u_team.u_team_core.tileentity.UTileEntity;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.container.*;
@@ -15,11 +15,11 @@ import net.minecraftforge.items.*;
 
 public class CrateTileEntity extends UTileEntity implements INamedContainerProvider {
 	
-	private final Crate crate;
+	private final ICrate crate;
 	
 	private final LazyOptional<ItemStackHandler> slots;
 	
-	public CrateTileEntity(TileEntityType<?> type, Crate crate) {
+	public CrateTileEntity(TileEntityType<?> type, ICrate crate) {
 		super(type);
 		this.crate = crate;
 		slots = LazyOptional.of(() -> new ItemStackHandler(crate.getInventorySize()));
@@ -49,7 +49,7 @@ public class CrateTileEntity extends UTileEntity implements INamedContainerProvi
 		slots.invalidate();
 	}
 	
-	public Crate getCrate() {
+	public ICrate getCrate() {
 		return crate;
 	}
 	

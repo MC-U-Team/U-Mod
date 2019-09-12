@@ -1,10 +1,12 @@
 package info.u_team.u_mod.type;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Stream;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import info.u_team.u_mod.api.type.ICrate;
 import info.u_team.u_mod.block.CrateBlock;
 import info.u_team.u_mod.tileentity.CrateTileEntity;
 import info.u_team.u_mod.util.UExtendedTileEntityType.UExtendedBuilder;
@@ -13,7 +15,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Rarity;
 import net.minecraft.tileentity.TileEntityType;
 
-public enum Crate {
+public enum Crate implements ICrate {
 	
 	SMALL("small", Rarity.COMMON, 5, 3, 44, 24, 8, 82, 176, 164);
 	
@@ -37,46 +39,57 @@ public enum Crate {
 		this.textureSizeY = textureSizeY;
 	}
 	
+	@Override
 	public String getName() {
 		return name;
 	}
 	
+	@Override
 	public Rarity getRarity() {
 		return rarity;
 	}
 	
+	@Override
 	public int getSlotWidth() {
 		return slotWidth;
 	}
 	
+	@Override
 	public int getSlotHeight() {
 		return slotHeight;
 	}
 	
+	@Override
 	public int getInventorySize() {
 		return slotWidth * slotHeight;
 	}
 	
+	@Override
 	public int getSlotX() {
 		return slotX;
 	}
 	
+	@Override
 	public int getSlotY() {
 		return slotY;
 	}
 	
+	@Override
 	public int getSlotPlayerX() {
 		return slotPlayerX;
 	}
 	
+	@Override
 	public int getSlotPlayerY() {
 		return slotPlayerY;
 	}
 	
+	@Override
 	public int getTextureSizeX() {
 		return textureSizeX;
 	}
 	
+	@Override
 	public int getTextureSizeY() {
 		return textureSizeY;
 	}
@@ -90,13 +103,12 @@ public enum Crate {
 		private final Blocks blocks;
 		private final TileEntityTypes tileEntityTypes;
 		
-		@SuppressWarnings("unchecked")
 		public Crates(String name) {
 			Stream.of(Crate.values()).forEach(crate -> {
-				final TileEntityType<CrateTileEntity>[] array = new TileEntityType[1];
-				final CrateBlock block = new CrateBlock(crate, name, () -> array[0]);
+				final AtomicReference<TileEntityType<CrateTileEntity>> reference = new AtomicReference<>();
+				final CrateBlock block = new CrateBlock(crate, name, reference::get);
 				final TileEntityType<CrateTileEntity> tileEntityType = UExtendedBuilder.<CrateTileEntity> create("crate", type -> new CrateTileEntity(type, crate), block).build();
-				array[0] = tileEntityType;
+				reference.set(tileEntityType);
 				
 				crates.put(crate, Pair.of(block, tileEntityType));
 			});

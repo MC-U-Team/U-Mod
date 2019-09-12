@@ -1,7 +1,6 @@
 package info.u_team.u_mod.block;
 
-import info.u_team.u_mod.init.UModItemGroups;
-import info.u_team.u_mod.init.UModTileEntityTypes;
+import info.u_team.u_mod.init.*;
 import info.u_team.u_team_core.block.UTileEntityBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
