@@ -2,8 +2,8 @@ package info.u_team.u_mod.block;
 
 import java.util.function.Supplier;
 
-import info.u_team.u_mod.init.*;
-import info.u_team.u_mod.type.Crate;
+import info.u_team.u_mod.api.type.ICrate;
+import info.u_team.u_mod.init.UModItemGroups;
 import info.u_team.u_team_core.block.UTileEntityBlock;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
@@ -21,9 +21,9 @@ public class CrateBlock extends UTileEntityBlock {
 	
 	public static final DirectionProperty DIRECTION = BlockStateProperties.HORIZONTAL_FACING;
 	
-	private final Crate crate;
+	private final ICrate crate;
 	
-	public CrateBlock(Crate crate, String name, Supplier<TileEntityType<?>> tileEntityType) {
+	public CrateBlock(ICrate crate, String name, Supplier<TileEntityType<?>> tileEntityType) {
 		super(crate.getName() + "_" + name, UModItemGroups.GROUP, Properties.create(Material.WOOD), tileEntityType);
 		this.crate = crate;
 	}
@@ -43,7 +43,7 @@ public class CrateBlock extends UTileEntityBlock {
 		return getDefaultState().with(DIRECTION, context.getPlacementHorizontalFacing().getOpposite());
 	}
 	
-	public Crate getCrate() {
+	public ICrate getCrate() {
 		return crate;
 	}
 	
