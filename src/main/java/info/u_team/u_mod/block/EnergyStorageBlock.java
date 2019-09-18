@@ -17,7 +17,6 @@ public class EnergyStorageBlock extends UTileEntityBlock{
 
 	public EnergyStorageBlock(String name) {
 		super(name, UModItemGroups.GROUP, Properties.create(Material.IRON), () -> UModTileEntityTypes.ENERGYSTORAGE);
-		// TODO Auto-generated constructor stub
 	}
 
 	// TEST ONLY
