@@ -20,13 +20,14 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
 @EventBusSubscriber(modid = UMod.MODID, bus = Bus.MOD)
 public class EnergySystem {
-
+	
 	public static final LinkedList<BlockPos> POSITIONS = new LinkedList<BlockPos>();
 	
 	@SubscribeEvent
 	public static void onWorldTick(WorldTickEvent event) {
-		if(event.side == LogicalSide.CLIENT) return;
-		POSITIONS.forEach(pos -> pullEnergyFromNetwork(event.world, pos, 10, 14 /* TODO Depth and energy*/));
+		if (event.side == LogicalSide.CLIENT)
+			return;
+		POSITIONS.forEach(pos -> pullEnergyFromNetwork(event.world, pos, 10, 14 /* TODO Depth and energy */));
 	}
 	
 	/**
@@ -35,13 +36,14 @@ public class EnergySystem {
 	 * @return energy actually pulled from the network
 	 */
 	public static int pullEnergyFromNetwork(World world, BlockPos pos, int extract, int depth) {
-		if(world.isRemote) return 0;
+		if (world.isRemote)
+			return 0;
 		int energy = findEnergyFromSouroundings(world, pos, extract);
 		if (energy <= 0)
 			return extract;
 		return discoverFurther(world, pos, pos, energy, depth) + (extract - energy);
 	}
-
+	
 	/**
 	 * Discover a pipe network with a certain depth
 	 * 
@@ -53,7 +55,7 @@ public class EnergySystem {
 			return extract;
 		for (Direction direct : Direction.values()) {
 			BlockPos newpos = pos.offset(direct);
-			if (newpos.equals(last) || !world.getBlockState(newpos).getBlock().equals(UModBlocks.PIPE))
+			if (newpos.equals(last) || !world.getBlockState(newpos).getBlock().equals(UModBlocks.CABLE))
 				continue;
 			remaining -= discoverFurther(world, newpos, pos, remaining, depth - 1);
 			if (remaining <= 0)
@@ -61,10 +63,9 @@ public class EnergySystem {
 		}
 		return extract - remaining;
 	}
-
+	
 	/**
-	 * Finds the nearest energy source to a specific position and extracts as much
-	 * energy as needed or possible
+	 * Finds the nearest energy source to a specific position and extracts as much energy as needed or possible
 	 * 
 	 * @return energy remaining
 	 */
@@ -74,14 +75,12 @@ public class EnergySystem {
 			TileEntity entity = world.getTileEntity(pos.offset(direct));
 			if (entity == null)
 				continue;
-			LazyOptional<IEnergyStorage> lazystorage = entity.getCapability(CapabilityEnergy.ENERGY,
-					direct.getOpposite());
-			lazystorage.filter(et -> et.canExtract()
-					&& integer.getAndSet(integer.get() - et.extractEnergy(integer.get(), false)) > 0);
+			LazyOptional<IEnergyStorage> lazystorage = entity.getCapability(CapabilityEnergy.ENERGY, direct.getOpposite());
+			lazystorage.filter(et -> et.canExtract() && integer.getAndSet(integer.get() - et.extractEnergy(integer.get(), false)) > 0);
 			if (integer.get() <= 0)
 				return 0;
 		}
 		return integer.get();
 	}
-
+	
 }

@@ -15,9 +15,11 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 @EventBusSubscriber(bus = Bus.MOD, modid = UMod.MODID)
 public class UModBlocks {
 	
-	public static final CableBlock PIPE = new CableBlock("pipe");
-	public static final EnergyStorageBlock ENERGYSTORAGE = new EnergyStorageBlock("energystorage");
-	public static final EnergyFurnceBlock ENERGYFURNACE = new EnergyFurnceBlock("energyfurnace");
+	public static final CableBlock CABLE = new CableBlock("cable_test");
+	
+	public static final EnergyStorageBlock ENERGY_STORAGE = new EnergyStorageBlock("energy_storage");
+	
+	public static final EnergyFurnceBlock ENERGY_FURNACE = new EnergyFurnceBlock("energy_furnace");
 	
 	@SubscribeEvent
 	public static void register(Register<Block> event) {
