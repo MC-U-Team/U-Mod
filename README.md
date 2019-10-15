@@ -5,7 +5,7 @@
 ![Curseforge Versions](http://cf.way2muchnoise.eu/versions/u-mod.svg)
 ](https://www.curseforge.com/minecraft/mc-mods/u-mod)
 [
-![Travis](https://api.travis-ci.org/MC-U-Team/U-Mod.svg?branch=1.14.4)]
+![Travis](https://api.travis-ci.org/MC-U-Team/U-Mod.svg?branch=1.14.4)
 ](https://travis-ci.org/MC-U-Team/U-Mod)
 [
 ![Discord](https://img.shields.io/discord/297104769649213441?label=Discord)
