@@ -14,9 +14,9 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
 
-public class EnergyFurnace extends UTileEntityBlock{
+public class EnergyFurnceBlock extends UTileEntityBlock{
 
-	public EnergyFurnace(String name) {
+	public EnergyFurnceBlock(String name) {
 		super(name, UModItemGroups.GROUP, Properties.create(Material.IRON), () -> UModTileEntityTypes.ENERGYFURNANCE);
 	}
 	

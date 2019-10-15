@@ -17,9 +17,9 @@ import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
 
-public class PipeBlock extends UBlock {
+public class CableBlock extends UBlock {
 
-	public PipeBlock(String name) {
+	public CableBlock(String name) {
 		super(name, UModItemGroups.GROUP, Properties.create(Material.IRON));
 	}
 
