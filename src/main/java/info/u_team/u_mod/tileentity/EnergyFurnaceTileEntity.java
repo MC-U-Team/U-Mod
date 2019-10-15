@@ -5,7 +5,7 @@ import info.u_team.u_mod.init.UModTileEntityTypes;
 public class EnergyFurnaceTileEntity extends BasicEnergyTileEntity {
 	
 	public EnergyFurnaceTileEntity() {
-		super(UModTileEntityTypes.ENERGY_FURNANCE, 1000, 10, 0);
+		super(UModTileEntityTypes.ENERGY_FURNANCE, 20000, 100, 0);
 	}
 	
 }

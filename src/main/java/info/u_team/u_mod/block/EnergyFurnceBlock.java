@@ -14,24 +14,23 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
 
-public class EnergyFurnceBlock extends UTileEntityBlock{
-
+public class EnergyFurnceBlock extends UTileEntityBlock {
+	
 	public EnergyFurnceBlock(String name) {
-		super(name, UModItemGroups.GROUP, Properties.create(Material.IRON), () -> UModTileEntityTypes.ENERGYFURNANCE);
+		super(name, UModItemGroups.GROUP, Properties.create(Material.IRON), () -> UModTileEntityTypes.ENERGY_FURNANCE);
 	}
 	
-// TEST ONLY
+	// TEST ONLY
 	@Override
-	public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn,
-			BlockRayTraceResult hit) {
+	public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
 		TileEntity entity = worldIn.getTileEntity(pos);
-		if(entity != null) {
+		if (entity != null) {
 			entity.getCapability(CapabilityEnergy.ENERGY).ifPresent(store -> {
 				player.sendMessage(new StringTextComponent(String.valueOf(store.getEnergyStored())));
 			});
 		}
 		return true;
 	}
-// I wish I had preprocessors
-
+	// I wish I had preprocessors
+	
 }
