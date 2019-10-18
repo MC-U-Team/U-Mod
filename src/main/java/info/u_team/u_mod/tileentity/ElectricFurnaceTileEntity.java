@@ -9,6 +9,7 @@ import net.minecraft.item.crafting.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.text.*;
+import net.minecraftforge.api.distmarker.*;
 import net.minecraftforge.common.util.LazyOptional;
 
 public class ElectricFurnaceTileEntity extends BasicEnergyTileEntity implements INamedContainerProvider, ITickableTileEntity {
@@ -20,6 +21,9 @@ public class ElectricFurnaceTileEntity extends BasicEnergyTileEntity implements 
 	
 	private int progress;
 	private int maxProgress;
+	
+	@OnlyIn(Dist.CLIENT)
+	private float progressPercentage;
 	
 	public ElectricFurnaceTileEntity() {
 		super(UModTileEntityTypes.ENERGY_FURNANCE, 20000, 100, 0);
@@ -64,6 +68,28 @@ public class ElectricFurnaceTileEntity extends BasicEnergyTileEntity implements 
 		super.remove();
 		ingredient.invalidate();
 		output.invalidate();
+	}
+	
+	// Getter
+	
+	public int getProgress() {
+		return progress;
+	}
+	
+	public int getMaxProgress() {
+		return maxProgress;
+	}
+	
+	// Client setter and getter
+	
+	@OnlyIn(Dist.CLIENT)
+	public void setProgressPercentage(float progressPercentage) {
+		this.progressPercentage = progressPercentage;
+	}
+	
+	@OnlyIn(Dist.CLIENT)
+	public float getProgressPercentage() {
+		return progressPercentage;
 	}
 	
 }

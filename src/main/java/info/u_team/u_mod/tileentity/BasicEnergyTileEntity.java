@@ -4,10 +4,7 @@ import info.u_team.u_team_core.energy.BasicEnergyStorage;
 import info.u_team.u_team_core.tileentity.UTileEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
 
 public class BasicEnergyTileEntity extends UTileEntity {
 	
@@ -33,17 +30,14 @@ public class BasicEnergyTileEntity extends UTileEntity {
 	}
 	
 	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction direction) {
-		if (capability == CapabilityEnergy.ENERGY && direction == null) { // Only expose capability internal and not to other sides.
-			return internalStorage.cast();
-		}
-		return super.getCapability(capability);
-	}
-	
-	@Override
 	public void remove() {
 		super.remove();
 		internalStorage.invalidate();
+	}
+	
+	// Getter
+	public LazyOptional<BasicEnergyStorage> getInternalStorage() {
+		return internalStorage;
 	}
 	
 }
