@@ -2,7 +2,9 @@ package info.u_team.u_mod.util;
 
 import java.util.Optional;
 
+import info.u_team.u_mod.tileentity.BasicEnergyTileEntity;
 import info.u_team.u_team_core.api.sync.BufferReferenceHolder;
+import info.u_team.u_team_core.energy.BasicEnergyStorage;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.*;
@@ -18,6 +20,7 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 	
 	private final LazyOptional<BasicTileEntityStackHandler> ingredient;
 	private final LazyOptional<BasicTileEntityStackHandler> output;
+//	private final LazyOptional<BasicEnergyStorage> energy;
 	
 	private final RecipeCache<T> recipeCache;
 	
