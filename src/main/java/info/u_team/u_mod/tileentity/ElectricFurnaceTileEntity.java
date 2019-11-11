@@ -3,6 +3,7 @@ package info.u_team.u_mod.tileentity;
 import info.u_team.u_mod.container.ElectricFurnaceContainer;
 import info.u_team.u_mod.init.UModTileEntityTypes;
 import info.u_team.u_mod.util.*;
+import info.u_team.u_mod.util.recipe.*;
 import info.u_team.u_team_core.api.sync.IInitSyncedTileEntity;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.container.*;
@@ -19,7 +20,7 @@ public class ElectricFurnaceTileEntity extends BasicEnergyTileEntity implements 
 	
 	public ElectricFurnaceTileEntity() {
 		super(UModTileEntityTypes.ENERGY_FURNANCE, 20000, 100, 0, 10000);
-		recipeHandler = new RecipeHandler<>(this, IRecipeType.SMELTING, 1, 1, RecipeData.getBasicCooking(0, 5));
+		recipeHandler = new TileEntityRecipeHandler<>(this, IRecipeType.SMELTING, 1, 1, RecipeData.getBasicCooking(0, 5));
 	}
 	
 	// Tick

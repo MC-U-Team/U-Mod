@@ -1,16 +1,16 @@
-package info.u_team.u_mod.util;
+package info.u_team.u_mod.util.recipe;
 
 import java.util.Optional;
 
-import info.u_team.u_mod.tileentity.BasicEnergyTileEntity;
+import info.u_team.u_mod.util.ExtendedBufferReferenceHolder;
 import info.u_team.u_team_core.api.sync.BufferReferenceHolder;
 import info.u_team.u_team_core.energy.BasicEnergyStorage;
+import info.u_team.u_team_core.inventory.UItemStackHandler;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.*;
@@ -18,13 +18,13 @@ import net.minecraftforge.common.util.*;
 
 public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSerializable<CompoundNBT> {
 	
-	private final LazyOptional<BasicTileEntityStackHandler> ingredient;
-	private final LazyOptional<BasicTileEntityStackHandler> output;
-//	private final LazyOptional<BasicEnergyStorage> energy;
-	
-	private final RecipeCache<T> recipeCache;
+	private final LazyOptional<UItemStackHandler> ingredient;
+	private final LazyOptional<UItemStackHandler> output;
+	private final LazyOptional<BasicEnergyStorage> energy;
 	
 	private final RecipeData<T> recipeData;
+	
+	private final RecipeCache<T> recipeCache;
 	
 	private int totalTime;
 	private int time;
@@ -34,11 +34,12 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 	// Client only value
 	private float percent;
 	
-	public RecipeHandler(TileEntity tileEntity, IRecipeType<T> recipeType, int ingredientSize, int outputSize, RecipeData<T> recipeData) {
-		ingredient = LazyOptional.of(() -> new BasicTileEntityStackHandler(ingredientSize, tileEntity));
-		output = LazyOptional.of(() -> new BasicTileEntityStackHandler(outputSize, tileEntity));
-		recipeCache = new RecipeCache<>(recipeType, ingredientSize);
+	public RecipeHandler(IRecipeType<T> recipeType, LazyOptional<BasicEnergyStorage> energy, LazyOptional<UItemStackHandler> ingredient, LazyOptional<UItemStackHandler> output, RecipeData<T> recipeData) {
+		this.energy = energy;
+		this.ingredient = ingredient;
+		this.output = output;
 		this.recipeData = recipeData;
+		recipeCache = new RecipeCache<>(recipeType, ingredient.orElseThrow(IllegalStateException::new).getSlots());
 	}
 	
 	public void update(World world) {
@@ -46,8 +47,8 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 			time = 0;
 			return;
 		}
-		final BasicTileEntityStackHandler ingredientHandler = ingredient.orElseGet(null);
-		final BasicTileEntityStackHandler outputHandler = output.orElseGet(null);
+		final UItemStackHandler ingredientHandler = ingredient.orElseGet(null);
+		final UItemStackHandler outputHandler = output.orElseGet(null);
 		
 		final Optional<T> recipeOptional = recipeCache.getRecipe(world, ingredientHandler);
 		if (recipeOptional.isPresent()) {
@@ -67,7 +68,7 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 		}
 	}
 	
-	protected boolean canProcess(T recipe, BasicTileEntityStackHandler outputHandler) {
+	protected boolean canProcess(T recipe, UItemStackHandler outputHandler) {
 		final NonNullList<ItemStack> recipeOutputs = recipeData.getRecipeOutputs(recipe);
 		if (recipeOutputs.isEmpty() || recipeOutputs.stream().allMatch(ItemStack::isEmpty)) {
 			return false;
@@ -93,7 +94,7 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 		return true;
 	}
 	
-	protected void process(T recipe, BasicTileEntityStackHandler ingredientHandler, BasicTileEntityStackHandler outputHandler) {
+	protected void process(T recipe, UItemStackHandler ingredientHandler, UItemStackHandler outputHandler) {
 		final NonNullList<ItemStack> recipeOutputs = recipeData.getRecipeOutputs(recipe);
 		// Add to output
 		for (int index = 0; index < recipeOutputs.size(); index++) {
@@ -145,11 +146,15 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 		percent = buffer.readFloat();
 	}
 	
-	public LazyOptional<BasicTileEntityStackHandler> getIngredient() {
+	public LazyOptional<BasicEnergyStorage> getEnergy() {
+		return energy;
+	}
+	
+	public LazyOptional<UItemStackHandler> getIngredient() {
 		return ingredient;
 	}
 	
-	public LazyOptional<BasicTileEntityStackHandler> getOutput() {
+	public LazyOptional<UItemStackHandler> getOutput() {
 		return output;
 	}
 	

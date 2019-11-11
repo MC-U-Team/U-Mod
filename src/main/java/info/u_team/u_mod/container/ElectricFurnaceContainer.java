@@ -2,7 +2,7 @@ package info.u_team.u_mod.container;
 
 import info.u_team.u_mod.init.UModContainerTypes;
 import info.u_team.u_mod.tileentity.ElectricFurnaceTileEntity;
-import info.u_team.u_mod.util.RecipeHandler;
+import info.u_team.u_mod.util.recipe.RecipeHandler;
 import info.u_team.u_team_core.container.UTileEntityContainer;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.crafting.FurnaceRecipe;

@@ -1,4 +1,4 @@
-package info.u_team.u_mod.util;
+package info.u_team.u_mod.util.recipe;
 
 import java.util.function.*;
 
