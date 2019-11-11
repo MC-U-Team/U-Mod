@@ -3,15 +3,13 @@ package info.u_team.u_mod.tileentity;
 import info.u_team.u_mod.container.ElectricFurnaceContainer;
 import info.u_team.u_mod.init.UModTileEntityTypes;
 import info.u_team.u_mod.util.*;
-import info.u_team.u_team_core.api.sync.*;
+import info.u_team.u_team_core.api.sync.IInitSyncedTileEntity;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.container.*;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.*;
 import net.minecraftforge.api.distmarker.*;
 
@@ -21,7 +19,7 @@ public class ElectricFurnaceTileEntity extends BasicEnergyTileEntity implements 
 	
 	public ElectricFurnaceTileEntity() {
 		super(UModTileEntityTypes.ENERGY_FURNANCE, 20000, 100, 0, 10000);
-		recipeHandler = new RecipeHandler<>(this, IRecipeType.SMELTING, 1, 1, new RecipeData<>(AbstractCookingRecipe::getCookTime, recipe -> NonNullList.from(ItemStack.EMPTY, recipe.getRecipeOutput())));
+		recipeHandler = new RecipeHandler<>(this, IRecipeType.SMELTING, 1, 1, RecipeData.getBasicCooking(0, 5));
 	}
 	
 	// Tick
