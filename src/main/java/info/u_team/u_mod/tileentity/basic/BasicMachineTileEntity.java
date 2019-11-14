@@ -10,6 +10,7 @@ import net.minecraft.util.Direction;
 import net.minecraftforge.api.distmarker.*;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.energy.CapabilityEnergy;
 
 public abstract class BasicMachineTileEntity<T extends IRecipe<IInventory>> extends BasicContainerEnergyTileEntity {
 	
@@ -67,5 +68,13 @@ public abstract class BasicMachineTileEntity<T extends IRecipe<IInventory>> exte
 		return recipeHandler;
 	}
 	
+	// Capability
+	@Override
+	public <X> LazyOptional<X> getCapability(Capability<X> capability, Direction side) {
+		if (capability == CapabilityEnergy.ENERGY) {
+			return internalEnergyStorage.cast();
+		}
+		return super.getCapability(capability, side);
+	}
 	
 }

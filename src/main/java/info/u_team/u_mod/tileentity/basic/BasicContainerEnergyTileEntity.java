@@ -3,10 +3,7 @@ package info.u_team.u_mod.tileentity.basic;
 import info.u_team.u_team_core.api.sync.IInitSyncedTileEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
 import net.minecraftforge.api.distmarker.*;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
 
 public abstract class BasicContainerEnergyTileEntity extends BasicEnergyTileEntity implements IInitSyncedTileEntity {
 	
@@ -21,8 +18,8 @@ public abstract class BasicContainerEnergyTileEntity extends BasicEnergyTileEnti
 	// Inital send when container is opened
 	@Override
 	public void sendInitialDataBuffer(PacketBuffer buffer) {
-		if (internalStorage.isPresent()) {
-			internalStorage.ifPresent(storage -> buffer.writeInt(storage.getEnergy()));
+		if (internalEnergyStorage.isPresent()) {
+			internalEnergyStorage.ifPresent(storage -> buffer.writeInt(storage.getEnergy()));
 		} else {
 			buffer.writeInt(0); // Write data always, because else the reader might corrupt
 		}
@@ -31,7 +28,7 @@ public abstract class BasicContainerEnergyTileEntity extends BasicEnergyTileEnti
 	@OnlyIn(Dist.CLIENT)
 	@Override
 	public void handleInitialDataBuffer(PacketBuffer buffer) {
-		internalStorage.ifPresent(storage -> storage.setEnergy(buffer.readInt()));
+		internalEnergyStorage.ifPresent(storage -> storage.setEnergy(buffer.readInt()));
 	}
 	
 }
