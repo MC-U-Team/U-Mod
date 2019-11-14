@@ -23,9 +23,9 @@ public class ElectricFurnaceContainer extends UTileEntityContainer<ElectricFurna
 	@Override
 	protected void init(boolean server) {
 		final RecipeHandler<FurnaceRecipe> recipeHandler = tileEntity.getRecipeHandler();
-		recipeHandler.getIngredient().ifPresent(handler -> appendInventory(handler, 1, 1, 56, 17));
-		recipeHandler.getOutput().ifPresent(handler -> appendInventory(handler, 1, 1, 116, 35));
-		appendPlayerInventory(playerInventory, 8, 84);
+		recipeHandler.getIngredient().ifPresent(handler -> appendInventory(handler, 1, 1, 44, 39));
+		recipeHandler.getOutput().ifPresent(handler -> appendInventory(handler, 1, 1, 116, 39));
+		appendPlayerInventory(playerInventory, 8, 92);
 		addServerToClientTracker(recipeHandler.getPercentTracker());
 		recipeHandler.getEnergy().ifPresent(storage -> addServerToClientTracker(storage.createSyncHandler()));
 	}
