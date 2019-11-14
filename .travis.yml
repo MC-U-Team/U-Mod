@@ -14,8 +14,8 @@ jobs:
     - stage: "builddeploy"
       name: "Build and deploy"
       if: branch = 1.14.4
-      script: gradle uploadBoth -PcreateBuild
+      script: gradle build
     - stage: "buildonly"
       name: "Build"
       if: branch != 1.14.4
-      script: gradle build -PcreateBuild
+      script: gradle build
