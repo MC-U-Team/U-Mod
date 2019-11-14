@@ -29,6 +29,9 @@ public abstract class MachineRecipe implements IRecipe<IInventory> {
 	
 	public abstract NonNullList<ItemStack> getOutput(IInventory inventory);
 	
+	@Override
+	public abstract NonNullList<Ingredient> getIngredients();
+	
 	// Getter
 	
 	public int getTotalTime() {
