@@ -8,7 +8,7 @@ import net.minecraftforge.api.distmarker.*;
 public abstract class BasicContainerEnergyTileEntity extends BasicEnergyTileEntity implements IInitSyncedTileEntity {
 	
 	public BasicContainerEnergyTileEntity(TileEntityType<?> type, int capacity, int maxReceive, int maxExtract) {
-		this(type, capacity, maxReceive, maxExtract, 0);
+		this(type, capacity, maxReceive, maxExtract, 10000);
 	}
 	
 	public BasicContainerEnergyTileEntity(TileEntityType<?> type, int capacity, int maxReceive, int maxExtract, int currentEnergy) {

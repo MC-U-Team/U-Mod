@@ -215,11 +215,11 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 		return energy;
 	}
 	
-	public LazyOptional<UItemStackHandler> getIngredient() {
+	public LazyOptional<UItemStackHandler> getIngredientSlots() {
 		return ingredientSlots;
 	}
 	
-	public LazyOptional<UItemStackHandler> getOutput() {
+	public LazyOptional<UItemStackHandler> getOutputSlots() {
 		return outputSlots;
 	}
 	

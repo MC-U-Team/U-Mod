@@ -18,14 +18,12 @@ public abstract class BasicMachineTileEntity<T extends IRecipe<IInventory>> exte
 	
 	protected final RecipeHandler<T> recipeHandler;
 	
-	protected final LazyOptional<NoExtractHandlerWrapper> ingredientSlotsWrapper;
-	protected final LazyOptional<NoInsertHandlerWrapper> outputSlotsWrapper;
+	protected final LazyOptional<InputOutputHandlerWrapper> slotsWrapper;
 	
 	public BasicMachineTileEntity(TileEntityType<?> type, int capacity, int maxReceive, int maxExtract, IRecipeType<T> recipeType, int ingredientSize, int outputSize, RecipeData<T> recipeData) {
 		super(type, capacity, maxReceive, maxExtract);
 		recipeHandler = new TileEntityRecipeHandler<T, BasicEnergyTileEntity>(this, recipeType, ingredientSize, outputSize, recipeData);
-		ingredientSlotsWrapper = recipeHandler.getIngredient().map(NoExtractHandlerWrapper::new);
-		outputSlotsWrapper = recipeHandler.getIngredient().map(NoInsertHandlerWrapper::new);
+		slotsWrapper = LazyOptional.of(() -> new InputOutputHandlerWrapper(recipeHandler.getIngredientSlots().orElseThrow(IllegalStateException::new), recipeHandler.getOutputSlots().orElseThrow(IllegalStateException::new)));
 	}
 	
 	// Tick
@@ -54,8 +52,7 @@ public abstract class BasicMachineTileEntity<T extends IRecipe<IInventory>> exte
 	public void remove() {
 		super.remove();
 		recipeHandler.invalidate();
-		ingredientSlotsWrapper.invalidate();
-		outputSlotsWrapper.invalidate();
+		slotsWrapper.invalidate();
 	}
 	
 	// Inital send when container is opened
@@ -83,11 +80,7 @@ public abstract class BasicMachineTileEntity<T extends IRecipe<IInventory>> exte
 		if (capability == CapabilityEnergy.ENERGY) {
 			return internalEnergyStorage.cast();
 		} else if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-			if (side == Direction.UP) {
-				return ingredientSlotsWrapper.cast();
-			} else {
-				return outputSlotsWrapper.cast();
-			}
+			return slotsWrapper.cast();
 		} else {
 			return super.getCapability(capability, side);
 		}
