@@ -2,6 +2,7 @@ package info.u_team.u_mod.gui;
 
 import java.util.function.Supplier;
 
+import info.u_team.u_mod.UMod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.gui.widget.Widget;
@@ -10,6 +11,8 @@ import net.minecraftforge.api.distmarker.*;
 
 @OnlyIn(Dist.CLIENT)
 public class ProgressWidget extends Widget {
+	
+	private static final ResourceLocation BASIC_ARROW = new ResourceLocation(UMod.MODID, "textures/gui/progress/basic_arrow.png");
 	
 	public final ResourceLocation texture;
 	
@@ -33,5 +36,9 @@ public class ProgressWidget extends Widget {
 	@Override
 	public void playDownSound(SoundHandler handler) {
 		// Don't play click sound
+	}
+	
+	public static ProgressWidget createBasicArrow(int x, int y, int width, int height, Supplier<Float> progress) {
+		return new ProgressWidget(x, y, width, height, BASIC_ARROW, progress);
 	}
 }

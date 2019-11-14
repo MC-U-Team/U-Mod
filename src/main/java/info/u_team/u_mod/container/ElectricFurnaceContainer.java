@@ -1,14 +1,14 @@
 package info.u_team.u_mod.container;
 
+import info.u_team.u_mod.container.basic.BasicMachineContainer;
 import info.u_team.u_mod.init.UModContainerTypes;
 import info.u_team.u_mod.tileentity.ElectricFurnaceTileEntity;
 import info.u_team.u_mod.util.recipe.RecipeHandler;
-import info.u_team.u_team_core.container.UTileEntityContainer;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.crafting.FurnaceRecipe;
 import net.minecraft.network.PacketBuffer;
 
-public class ElectricFurnaceContainer extends UTileEntityContainer<ElectricFurnaceTileEntity> {
+public class ElectricFurnaceContainer extends BasicMachineContainer<ElectricFurnaceTileEntity> {
 	
 	// Client
 	public ElectricFurnaceContainer(int id, PlayerInventory playerInventory, PacketBuffer buffer) {
@@ -22,12 +22,11 @@ public class ElectricFurnaceContainer extends UTileEntityContainer<ElectricFurna
 	
 	@Override
 	protected void init(boolean server) {
+		super.init(server);
 		final RecipeHandler<FurnaceRecipe> recipeHandler = tileEntity.getRecipeHandler();
 		recipeHandler.getIngredient().ifPresent(handler -> appendInventory(handler, 1, 1, 44, 39));
 		recipeHandler.getOutput().ifPresent(handler -> appendInventory(handler, 1, 1, 116, 39));
 		appendPlayerInventory(playerInventory, 8, 92);
-		addServerToClientTracker(recipeHandler.getPercentTracker());
-		recipeHandler.getEnergy().ifPresent(storage -> addServerToClientTracker(storage.createSyncHandler()));
 	}
 	
 }
