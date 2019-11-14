@@ -1,6 +1,6 @@
 package info.u_team.u_mod.util.recipe;
 
-import info.u_team.u_mod.tileentity.BasicEnergyTileEntity;
+import info.u_team.u_mod.tileentity.basic.BasicEnergyTileEntity;
 import info.u_team.u_mod.util.BasicTileEntityStackHandler;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.crafting.*;

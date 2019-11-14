@@ -1,4 +1,4 @@
-package info.u_team.u_mod.tileentity;
+package info.u_team.u_mod.tileentity.basic;
 
 import info.u_team.u_team_core.tileentity.UTileEntity;
 import net.minecraft.tileentity.*;

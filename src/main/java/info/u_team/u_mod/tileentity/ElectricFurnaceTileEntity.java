@@ -2,6 +2,7 @@ package info.u_team.u_mod.tileentity;
 
 import info.u_team.u_mod.container.ElectricFurnaceContainer;
 import info.u_team.u_mod.init.UModTileEntityTypes;
+import info.u_team.u_mod.tileentity.basic.BasicContainerEnergyTileEntity;
 import info.u_team.u_mod.util.recipe.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.container.Container;

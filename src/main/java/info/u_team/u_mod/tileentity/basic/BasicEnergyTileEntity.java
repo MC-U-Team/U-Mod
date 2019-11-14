@@ -1,4 +1,4 @@
-package info.u_team.u_mod.tileentity;
+package info.u_team.u_mod.tileentity.basic;
 
 import info.u_team.u_team_core.energy.BasicEnergyStorage;
 import net.minecraft.nbt.CompoundNBT;
