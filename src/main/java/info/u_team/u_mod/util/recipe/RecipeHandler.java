@@ -1,6 +1,7 @@
 package info.u_team.u_mod.util.recipe;
 
 import java.util.Optional;
+import java.util.function.BiFunction;
 
 import info.u_team.u_mod.util.ExtendedBufferReferenceHolder;
 import info.u_team.u_team_core.api.sync.BufferReferenceHolder;
@@ -26,6 +27,8 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 	private final RecipeData<T> recipeData;
 	
 	private final RecipeCache<T> recipeCache;
+	
+	private BiFunction<T, Integer, Integer> totalTimeModifier = (recipe, totalTime) -> totalTime;
 	
 	private int totalTime;
 	private int time;
@@ -66,8 +69,8 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 		
 		// Get recipe
 		final T recipe = recipeOptional.get();
-		// Set the total time to the total time from the recipe
-		totalTime = recipeData.getTotalTime(recipe);
+		// Set the total time to the total time from the recipe (trough the function for modifiers)
+		totalTime = totalTimeModifier.apply(recipe, recipeData.getTotalTime(recipe));
 		
 		// Check if the recipe is valid when the timer starts
 		if (time == 0) {
@@ -207,6 +210,7 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 		percent = buffer.readFloat();
 	}
 	
+	// Getter
 	public LazyOptional<BasicEnergyStorage> getEnergy() {
 		return energy;
 	}
@@ -226,6 +230,11 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 	@OnlyIn(Dist.CLIENT)
 	public float getPercent() {
 		return percent;
+	}
+	
+	// Setter
+	public void setTotalTimeModifier(BiFunction<T, Integer, Integer> totalTimeModifier) {
+		this.totalTimeModifier = totalTimeModifier;
 	}
 	
 }
