@@ -54,6 +54,8 @@ public abstract class BasicMachineTileEntity<T extends IRecipe<IInventory>> exte
 	public void remove() {
 		super.remove();
 		recipeHandler.invalidate();
+		ingredientSlotsWrapper.invalidate();
+		outputSlotsWrapper.invalidate();
 	}
 	
 	// Inital send when container is opened
