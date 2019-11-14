@@ -159,6 +159,7 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 		// Add to output
 		for (int index = 0; index < recipeOutputs.size(); index++) {
 			final ItemStack recipeOutput = recipeOutputs.get(index);
+			// If recipe output is empty we continue the loop
 			if (recipeOutput.isEmpty()) {
 				continue;
 			}

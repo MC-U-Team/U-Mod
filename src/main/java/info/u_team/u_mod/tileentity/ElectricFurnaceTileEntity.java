@@ -65,15 +65,18 @@ public class ElectricFurnaceTileEntity extends BasicEnergyTileEntity implements 
 	// Inital send when container is opened
 	@Override
 	public void sendInitialDataBuffer(PacketBuffer buffer) {
+		super.sendInitialDataBuffer(buffer);
 		recipeHandler.sendInitialDataBuffer(buffer);
 	}
 	
 	@OnlyIn(Dist.CLIENT)
 	@Override
 	public void handleInitialDataBuffer(PacketBuffer buffer) {
+		super.handleInitialDataBuffer(buffer);
 		recipeHandler.handleInitialDataBuffer(buffer);
 	}
 	
+	// Getter
 	public RecipeHandler<FurnaceRecipe> getRecipeHandler() {
 		return recipeHandler;
 	}
