@@ -6,7 +6,10 @@ import net.minecraft.item.crafting.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.Direction;
 import net.minecraftforge.api.distmarker.*;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
 
 public abstract class BasicMachineTileEntity<T extends IRecipe<IInventory>> extends BasicContainerEnergyTileEntity {
 	
@@ -63,5 +66,6 @@ public abstract class BasicMachineTileEntity<T extends IRecipe<IInventory>> exte
 	public RecipeHandler<T> getRecipeHandler() {
 		return recipeHandler;
 	}
+	
 	
 }

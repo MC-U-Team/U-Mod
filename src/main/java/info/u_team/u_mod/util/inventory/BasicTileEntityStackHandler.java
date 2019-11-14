@@ -1,4 +1,4 @@
-package info.u_team.u_mod.util;
+package info.u_team.u_mod.util.inventory;
 
 import java.util.stream.IntStream;
 

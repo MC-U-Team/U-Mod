@@ -3,7 +3,10 @@ package info.u_team.u_mod.tileentity.basic;
 import info.u_team.u_team_core.api.sync.IInitSyncedTileEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.Direction;
 import net.minecraftforge.api.distmarker.*;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
 
 public abstract class BasicContainerEnergyTileEntity extends BasicEnergyTileEntity implements IInitSyncedTileEntity {
 	
