@@ -14,7 +14,7 @@ public abstract class BasicMachineTileEntity<T extends IRecipe<IInventory>> exte
 	
 	public BasicMachineTileEntity(TileEntityType<?> type, int capacity, int maxReceive, int maxExtract, IRecipeType<T> recipeType, int ingredientSize, int outputSize, RecipeData<T> recipeData) {
 		super(type, capacity, maxReceive, maxExtract);
-		recipeHandler = new TileEntityRecipeHandler<T, BasicEnergyTileEntity>(this, recipeType, 0, 0, null);
+		recipeHandler = new TileEntityRecipeHandler<T, BasicEnergyTileEntity>(this, recipeType, ingredientSize, outputSize, recipeData);
 	}
 	
 	// Tick
