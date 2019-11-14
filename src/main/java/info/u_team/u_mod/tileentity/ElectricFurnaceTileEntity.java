@@ -3,17 +3,15 @@ package info.u_team.u_mod.tileentity;
 import info.u_team.u_mod.container.ElectricFurnaceContainer;
 import info.u_team.u_mod.init.UModTileEntityTypes;
 import info.u_team.u_mod.util.recipe.*;
-import info.u_team.u_team_core.api.sync.IInitSyncedTileEntity;
 import net.minecraft.entity.player.*;
-import net.minecraft.inventory.container.*;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.item.crafting.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.text.*;
 import net.minecraftforge.api.distmarker.*;
 
-public class ElectricFurnaceTileEntity extends BasicEnergyTileEntity implements INamedContainerProvider, ITickableTileEntity, IInitSyncedTileEntity {
+public class ElectricFurnaceTileEntity extends BasicContainerEnergyTileEntity {
 	
 	private final RecipeHandler<FurnaceRecipe> recipeHandler;
 	
