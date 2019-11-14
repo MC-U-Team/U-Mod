@@ -44,33 +44,75 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 	}
 	
 	public void update(World world) {
+		// If some lazy optional is invalid we cannot proceed
 		if (!ingredientSlots.isPresent() || !outputSlots.isPresent() || !energy.isPresent()) {
 			time = 0;
 			return;
 		}
+		
+		// Provided slots and energy
 		final RecipeWrapper recipeWrapper = new RecipeWrapper(ingredientSlots.orElseThrow(IllegalStateException::new));
 		final UItemStackHandler outputHandler = outputSlots.orElseThrow(IllegalStateException::new);
 		final BasicEnergyStorage energyStorage = energy.orElseThrow(IllegalStateException::new);
 		
+		// Recipe optional
 		final Optional<T> recipeOptional = recipeCache.getRecipe(world, recipeWrapper);
-		if (recipeOptional.isPresent()) {
-			final T recipe = recipeOptional.get();
-			totalTime = recipeData.getTotalTime(recipe);
-			if (canProcess(recipe, recipeWrapper, outputHandler)) {
-				if (time == 0) {
-					energyStorage.addEnergy(-recipeData.getConsumptionOnStart(recipe));
-				}
-				time++;
-				if (time == totalTime) {
-					time = 0;
-					process(recipe, recipeWrapper, outputHandler);
-				}
-			} else {
-				time = 0;
-			}
-		} else {
+		
+		// If no recipe was found we cannot proceed
+		if (!recipeOptional.isPresent()) {
 			time = 0;
+			return;
 		}
+		
+		// Get recipe
+		final T recipe = recipeOptional.get();
+		// Set the total time to the total time from the recipe
+		totalTime = recipeData.getTotalTime(recipe);
+		
+		// If we cannot process (e.g. output slot is full) we cannot proceed
+		if (!canProcess(recipe, recipeWrapper, outputHandler)) {
+			time = 0;
+			return;
+		}
+		
+		// If we have no energy for the consumption at the start we cannot proceed
+		if (!doConsumtionOnStart(recipe, energyStorage)) {
+			time = 0;
+			return;
+		}
+		
+		// If we have not energy for the consumption every tick we cannot proceed. We will not reset the timer here.
+		if (!doConsumtionPerTick(recipe, energyStorage)) {
+			return;
+		}
+		
+		// Increase the processing time by one
+		time++;
+		
+		// If the time is equal to the total time needed we can process
+		if (time == totalTime) {
+			time = 0;
+			process(recipe, recipeWrapper, outputHandler);
+		}
+		return;
+	}
+	
+	protected boolean doConsumtionPerTick(T recipe, BasicEnergyStorage energyStorage) {
+		final int consumtion = recipeData.getConsumptionPerTick(recipe);
+		if (energyStorage.getEnergy() >= consumtion) {
+			energyStorage.addEnergy(-consumtion);
+			return true;
+		}
+		return false;
+	}
+	
+	protected boolean doConsumtionOnStart(T recipe, BasicEnergyStorage energyStorage) {
+		final int consumtion = recipeData.getConsumptionOnStart(recipe);
+		if (time == 0 && energyStorage.getEnergy() >= consumtion) {
+			energyStorage.addEnergy(-consumtion);
+			return true;
+		}
+		return false;
 	}
 	
 	protected boolean canProcess(T recipe, RecipeWrapper recipeWrapper, UItemStackHandler outputHandler) {
