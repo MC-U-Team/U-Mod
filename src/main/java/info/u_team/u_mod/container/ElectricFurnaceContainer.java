@@ -27,6 +27,7 @@ public class ElectricFurnaceContainer extends UTileEntityContainer<ElectricFurna
 		recipeHandler.getOutput().ifPresent(handler -> appendInventory(handler, 1, 1, 116, 35));
 		appendPlayerInventory(playerInventory, 8, 84);
 		addServerToClientTracker(recipeHandler.getPercentTracker());
+		recipeHandler.getEnergy().ifPresent(storage -> addServerToClientTracker(storage.createSyncHandler()));
 	}
 	
 }
