@@ -1,5 +1,6 @@
 package info.u_team.u_mod.tileentity.basic;
 
+import info.u_team.u_mod.util.inventory.*;
 import info.u_team.u_mod.util.recipe.*;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.crafting.*;
@@ -11,14 +12,20 @@ import net.minecraftforge.api.distmarker.*;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.items.CapabilityItemHandler;
 
 public abstract class BasicMachineTileEntity<T extends IRecipe<IInventory>> extends BasicContainerEnergyTileEntity {
 	
 	protected final RecipeHandler<T> recipeHandler;
 	
+	protected final LazyOptional<NoExtractHandlerWrapper> ingredientSlotsWrapper;
+	protected final LazyOptional<NoInsertHandlerWrapper> outputSlotsWrapper;
+	
 	public BasicMachineTileEntity(TileEntityType<?> type, int capacity, int maxReceive, int maxExtract, IRecipeType<T> recipeType, int ingredientSize, int outputSize, RecipeData<T> recipeData) {
 		super(type, capacity, maxReceive, maxExtract);
 		recipeHandler = new TileEntityRecipeHandler<T, BasicEnergyTileEntity>(this, recipeType, ingredientSize, outputSize, recipeData);
+		ingredientSlotsWrapper = recipeHandler.getIngredient().map(NoExtractHandlerWrapper::new);
+		outputSlotsWrapper = recipeHandler.getIngredient().map(NoInsertHandlerWrapper::new);
 	}
 	
 	// Tick
@@ -73,6 +80,13 @@ public abstract class BasicMachineTileEntity<T extends IRecipe<IInventory>> exte
 	public <X> LazyOptional<X> getCapability(Capability<X> capability, Direction side) {
 		if (capability == CapabilityEnergy.ENERGY) {
 			return internalEnergyStorage.cast();
+		}
+		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+			if (side == Direction.UP) {
+				return ingredientSlotsWrapper.cast();
+			} else {
+				return outputSlotsWrapper.cast();
+			}
 		}
 		return super.getCapability(capability, side);
 	}
