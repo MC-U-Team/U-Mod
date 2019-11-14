@@ -80,15 +80,15 @@ public abstract class BasicMachineTileEntity<T extends IRecipe<IInventory>> exte
 	public <X> LazyOptional<X> getCapability(Capability<X> capability, Direction side) {
 		if (capability == CapabilityEnergy.ENERGY) {
 			return internalEnergyStorage.cast();
-		}
-		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+		} else if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
 			if (side == Direction.UP) {
 				return ingredientSlotsWrapper.cast();
 			} else {
 				return outputSlotsWrapper.cast();
 			}
+		} else {
+			return super.getCapability(capability, side);
 		}
-		return super.getCapability(capability, side);
 	}
 	
 }
