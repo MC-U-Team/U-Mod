@@ -162,11 +162,11 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 			if (recipeOutput.isEmpty()) {
 				continue;
 			}
-			final ItemStack outputStack = outputHandler.getStackInSlot(index);
-			if (outputStack.isEmpty()) {
+			final ItemStack slotOutput = outputHandler.getStackInSlot(index);
+			if (slotOutput.isEmpty()) {
 				outputHandler.setStackInSlot(0, recipeOutput.copy());
-			} else if (outputStack.getItem() == recipeOutput.getItem()) {
-				outputStack.grow(recipeOutput.getCount());
+			} else if (slotOutput.getItem() == recipeOutput.getItem()) {
+				slotOutput.grow(recipeOutput.getCount());
 			}
 		}
 		// Remove from ingredient
