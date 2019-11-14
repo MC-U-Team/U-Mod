@@ -69,16 +69,26 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 		// Set the total time to the total time from the recipe
 		totalTime = recipeData.getTotalTime(recipe);
 		
-		// If we cannot process (e.g. output slot is full) we cannot proceed
+		// Check if the recipe is valid when the timer starts
+		if (time == 0) {
+			if (!isRecipeValid(recipe, recipeWrapper)) {
+				time = 0;
+				return;
+			}
+		}
+		
+		// Check if we can process (e.g. output slot is not full)
 		if (!canProcess(recipe, recipeWrapper, outputHandler)) {
 			time = 0;
 			return;
 		}
 		
 		// If we have no energy for the consumption at the start we cannot proceed
-		if (!doConsumtionOnStart(recipe, energyStorage)) {
-			time = 0;
-			return;
+		if (time == 0) {
+			if (!doConsumtionOnStart(recipe, energyStorage)) {
+				time = 0;
+				return;
+			}
 		}
 		
 		// If we have not energy for the consumption every tick we cannot proceed. We will not reset the timer here.
@@ -108,22 +118,25 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 	
 	protected boolean doConsumtionOnStart(T recipe, BasicEnergyStorage energyStorage) {
 		final int consumtion = recipeData.getConsumptionOnStart(recipe);
-		if (time == 0 && energyStorage.getEnergy() >= consumtion) {
+		if (energyStorage.getEnergy() >= consumtion) {
 			energyStorage.addEnergy(-consumtion);
 			return true;
 		}
 		return false;
 	}
 	
+	protected boolean isRecipeValid(T recipe, RecipeWrapper recipeWrapper) {
+		final NonNullList<ItemStack> recipeOutputs = recipeData.getRecipeOutputs(recipe, recipeWrapper);
+		return !recipeOutputs.isEmpty() && !recipeOutputs.stream().allMatch(ItemStack::isEmpty);
+	}
+	
 	protected boolean canProcess(T recipe, RecipeWrapper recipeWrapper, UItemStackHandler outputHandler) {
 		final NonNullList<ItemStack> recipeOutputs = recipeData.getRecipeOutputs(recipe, recipeWrapper);
-		if (recipeOutputs.isEmpty() || recipeOutputs.stream().allMatch(ItemStack::isEmpty)) {
-			return false;
-		}
 		for (int index = 0; index < recipeOutputs.size(); index++) {
 			final ItemStack recipeOutput = recipeOutputs.get(index);
 			final ItemStack slotOutput = outputHandler.getStackInSlot(index);
 			
+			// Logic copied from furnace
 			if (slotOutput.isEmpty()) {
 				continue;
 			} else if (!slotOutput.isItemEqual(recipeOutput)) {
