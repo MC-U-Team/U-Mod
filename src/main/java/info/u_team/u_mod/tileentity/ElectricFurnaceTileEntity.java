@@ -13,13 +13,14 @@ public class ElectricFurnaceTileEntity extends BasicMachineTileEntity<FurnaceRec
 	
 	public ElectricFurnaceTileEntity() {
 		super(UModTileEntityTypes.ENERGY_FURNANCE, 20000, 100, 0, IRecipeType.SMELTING, 1, 1, RecipeData.getBasicCooking(0, 5));
+		recipeHandler.setTotalTimeModifier((recipe, totalTime) -> (int) (totalTime * 0.2));
 	}
 	
 	// Container
 	
 	@Override
 	public ITextComponent getDisplayName() {
-		return new StringTextComponent("Electric Furnace");
+		return new TranslationTextComponent("container.umod.electric_furnace");
 	}
 	
 	@Override

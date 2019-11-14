@@ -10,7 +10,7 @@ import net.minecraftforge.api.distmarker.*;
 
 public abstract class BasicMachineTileEntity<T extends IRecipe<IInventory>> extends BasicContainerEnergyTileEntity {
 	
-	private final RecipeHandler<T> recipeHandler;
+	protected final RecipeHandler<T> recipeHandler;
 	
 	public BasicMachineTileEntity(TileEntityType<?> type, int capacity, int maxReceive, int maxExtract, IRecipeType<T> recipeType, int ingredientSize, int outputSize, RecipeData<T> recipeData) {
 		super(type, capacity, maxReceive, maxExtract);
