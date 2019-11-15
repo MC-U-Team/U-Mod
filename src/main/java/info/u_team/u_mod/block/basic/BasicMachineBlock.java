@@ -1,6 +1,8 @@
 package info.u_team.u_mod.block.basic;
 
-import info.u_team.u_mod.init.*;
+import java.util.function.Supplier;
+
+import info.u_team.u_mod.init.UModItemGroups;
 import info.u_team.u_team_core.block.UTileEntityBlock;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
@@ -9,6 +11,7 @@ import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
@@ -17,8 +20,8 @@ public class BasicMachineBlock extends UTileEntityBlock {
 	
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 	
-	public BasicMachineBlock(String name) {
-		super(name, UModItemGroups.GROUP, Properties.create(Material.IRON), () -> UModTileEntityTypes.ENERGY_FURNANCE);
+	public BasicMachineBlock(String name, Supplier<TileEntityType<?>> tileEntityType) {
+		super(name, UModItemGroups.GROUP, Properties.create(Material.IRON), tileEntityType);
 		setDefaultState(getDefaultState().with(FACING, Direction.NORTH));
 	}
 	
