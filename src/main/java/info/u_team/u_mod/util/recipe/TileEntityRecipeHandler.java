@@ -9,7 +9,7 @@ import net.minecraftforge.common.util.LazyOptional;
 public class TileEntityRecipeHandler<T extends IRecipe<IInventory>, X extends BasicEnergyTileEntity> extends RecipeHandler<T> {
 	
 	public TileEntityRecipeHandler(X tileEntity, IRecipeType<T> recipeType, int ingredientSize, int outputSize, RecipeData<T> recipeData) {
-		super(recipeType, tileEntity.getInternalEnergyStorage(), LazyOptional.of(() -> new BasicTileEntityStackHandler(ingredientSize, tileEntity)), LazyOptional.of(() -> new BasicTileEntityStackHandler(outputSize, tileEntity)), recipeData);
+		super(recipeType, tileEntity.getInternalEnergyStorage(), LazyOptional.of(() -> new BasicTileEntityStackHandler(ingredientSize, tileEntity)), LazyOptional.of(() -> new BasicTileEntityStackHandler(outputSize, tileEntity)), recipeData, tileEntity::markDirty);
 	}
 	
 }

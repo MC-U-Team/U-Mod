@@ -28,6 +28,8 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 	
 	private final RecipeCache<T> recipeCache;
 	
+	private final Runnable dirtyMarker;
+	
 	private BiFunction<T, Integer, Integer> totalTimeModifier = (recipe, totalTime) -> totalTime;
 	
 	private int totalTime;
@@ -38,11 +40,12 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 	// Client only value
 	private float percent;
 	
-	public RecipeHandler(IRecipeType<T> recipeType, LazyOptional<BasicEnergyStorage> energy, LazyOptional<UItemStackHandler> ingredientSlots, LazyOptional<UItemStackHandler> outputSlots, RecipeData<T> recipeData) {
+	public RecipeHandler(IRecipeType<T> recipeType, LazyOptional<BasicEnergyStorage> energy, LazyOptional<UItemStackHandler> ingredientSlots, LazyOptional<UItemStackHandler> outputSlots, RecipeData<T> recipeData, Runnable dirtyMarker) {
 		this.energy = energy;
 		this.ingredientSlots = ingredientSlots;
 		this.outputSlots = outputSlots;
 		this.recipeData = recipeData;
+		this.dirtyMarker = dirtyMarker;
 		recipeCache = new RecipeCache<>(recipeType, ingredientSlots.orElseThrow(IllegalStateException::new).getSlots());
 	}
 	
@@ -63,7 +66,7 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 		
 		// If no recipe was found we cannot proceed
 		if (!recipeOptional.isPresent()) {
-			time = 0;
+			resetTimeAndMarkDirty();
 			return;
 		}
 		
@@ -107,7 +110,12 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 			time = 0;
 			process(recipe, recipeWrapper, outputHandler);
 		}
-		return;
+		dirtyMarker.run();
+	}
+	
+	private void resetTimeAndMarkDirty() {
+		time = 0;
+		dirtyMarker.run();
 	}
 	
 	protected boolean doConsumtionPerTick(T recipe, BasicEnergyStorage energyStorage) {
