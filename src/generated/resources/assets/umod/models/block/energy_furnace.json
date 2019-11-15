@@ -1,0 +1,10 @@
+{
+	"parent": "uteamcore:block/facing_bottom_top",
+	"textures": {
+		"particle": "umod:block/energy_furnace_side",
+		"front": "umod:block/energy_furnace_front",
+		"bottom": "umod:block/energy_furnace_bottom",
+		"top": "umod:block/energy_furnace_top",
+		"side": "umod:block/energy_furnace_side"
+	}
+}

@@ -3,6 +3,7 @@ package info.u_team.u_mod.data.provider;
 import info.u_team.u_mod.block.basic.BasicMachineBlock;
 import info.u_team.u_mod.init.UModBlocks;
 import info.u_team.u_team_core.data.*;
+import net.minecraft.util.ResourceLocation;
 
 public class UModBlockStatesProvider extends CommonBlockStatesProvider {
 	
@@ -17,7 +18,11 @@ public class UModBlockStatesProvider extends CommonBlockStatesProvider {
 	
 	private void addMachine(BasicMachineBlock block) {
 		final String path = block.getRegistryName().getPath();
-		facingBlock(block, cubeFacingBottomTop(path, modLoc(path + "_front"), modLoc(path + "_bottom"), modLoc(path + "_top"), modLoc(path + "_side")));
+		horizontalBlock(block, cubeFacingBottomTop(path, modBlockLoc(path + "_front"), modBlockLoc(path + "_bottom"), modBlockLoc(path + "_top"), modBlockLoc(path + "_side")));
+	}
+	
+	private ResourceLocation modBlockLoc(String name) {
+		return modLoc("block/" + name);
 	}
 	
 }
