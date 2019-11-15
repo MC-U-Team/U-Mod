@@ -15,6 +15,7 @@ public class UModDataGenerator {
 	public static void data(GatherDataEvent event) {
 		final GenerationData data = new GenerationData(UMod.MODID, event);
 		if (event.includeServer()) {
+			data.addProvider(UModLootTablesProvider::new);
 		}
 		if (event.includeClient()) {
 			data.addProvider(UModBlockStatesProvider::new);

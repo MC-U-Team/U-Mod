@@ -7,4 +7,8 @@ public class UMod {
 	
 	public static final String MODID = "umod";
 	
+	public UMod() {
+		
+	}
+	
 }

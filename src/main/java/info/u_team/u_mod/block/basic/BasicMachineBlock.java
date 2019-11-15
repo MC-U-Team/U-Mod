@@ -9,11 +9,10 @@ import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.*;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
@@ -37,11 +36,11 @@ public class BasicMachineBlock extends UTileEntityBlock {
 	@Override
 	public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
 		if (state.getBlock() != newState.getBlock()) {
-			isTileEntityFromType(world, pos).map(BasicMachineTileEntity.class::cast).ifPresent(tileEntity -> {
-				final ItemStack stack = new ItemStack(this);
-				tileEntity.writeNBT(stack.getOrCreateChildTag("BlockEntityTag"));
-				spawnAsEntity(world, pos, stack);
-			});
+//			isTileEntityFromType(world, pos).map(BasicMachineTileEntity.class::cast).ifPresent(tileEntity -> {
+//				final ItemStack stack = new ItemStack(this);
+//				tileEntity.writeNBT(stack.getOrCreateChildTag("BlockEntityTag"));
+//				spawnAsEntity(world, pos, stack);
+//			});
 			world.removeTileEntity(pos);
 		}
 	}
