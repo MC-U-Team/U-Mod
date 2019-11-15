@@ -1,7 +1,7 @@
 package info.u_team.u_mod.data;
 
 import info.u_team.u_mod.UMod;
-import info.u_team.u_mod.data.provider.UModBlockStatesProvider;
+import info.u_team.u_mod.data.provider.*;
 import info.u_team.u_team_core.data.GenerationData;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -18,6 +18,7 @@ public class UModDataGenerator {
 		}
 		if (event.includeClient()) {
 			data.addProvider(UModBlockStatesProvider::new);
+			data.addProvider(UModItemModelsProvider::new);
 		}
 	}
 }
