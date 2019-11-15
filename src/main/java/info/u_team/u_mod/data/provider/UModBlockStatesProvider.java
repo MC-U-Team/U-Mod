@@ -18,7 +18,7 @@ public class UModBlockStatesProvider extends CommonBlockStatesProvider {
 	
 	private void addMachine(BasicMachineBlock block) {
 		final String path = block.getRegistryName().getPath();
-		horizontalBlock(block, cubeFacingBottomTop(path, modBlockLoc(path + "_front"), modBlockLoc(path + "_bottom"), modBlockLoc(path + "_top"), modBlockLoc(path + "_side")));
+		horizontalBlock(block, cubeFacing(path, modBlockLoc("machine/" + path + "_front"), modBlockLoc("machine/side")));
 	}
 	
 	private ResourceLocation modBlockLoc(String name) {
