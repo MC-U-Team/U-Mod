@@ -4,6 +4,7 @@ import java.util.List;
 
 import info.u_team.u_mod.UMod;
 import info.u_team.u_mod.block.*;
+import info.u_team.u_mod.block.basic.BasicMachineBlock;
 import info.u_team.u_team_core.util.registry.BaseRegistryUtil;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -19,7 +20,7 @@ public class UModBlocks {
 	
 	public static final EnergyStorageBlock ENERGY_STORAGE = new EnergyStorageBlock("energy_storage");
 	
-	public static final EnergyFurnceBlock ENERGY_FURNACE = new EnergyFurnceBlock("energy_furnace");
+	public static final BasicMachineBlock ENERGY_FURNACE = new BasicMachineBlock("energy_furnace", () -> UModTileEntityTypes.ENERGY_FURNANCE);
 	
 	@SubscribeEvent
 	public static void register(Register<Block> event) {
