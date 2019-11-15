@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
-@EventBusSubscriber(bus = Bus.MOD, value = Dist.CLIENT, modid = UMod.MODID)
+@EventBusSubscriber(modid = UMod.MODID, bus = Bus.MOD, value = Dist.CLIENT)
 public class UModScreens {
 	
 	@SubscribeEvent
