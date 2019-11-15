@@ -31,20 +31,6 @@ public class BasicMachineBlock extends UTileEntityBlock {
 		return openContainer(world, pos, player, true);
 	}
 	
-	// Drop
-	
-	@Override
-	public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
-		if (state.getBlock() != newState.getBlock()) {
-			// isTileEntityFromType(world, pos).map(BasicMachineTileEntity.class::cast).ifPresent(tileEntity -> {
-			// final ItemStack stack = new ItemStack(this);
-			// tileEntity.writeNBT(stack.getOrCreateChildTag("BlockEntityTag"));
-			// spawnAsEntity(world, pos, stack);
-			// });
-			world.removeTileEntity(pos);
-		}
-	}
-	
 	// Facing
 	
 	@Override
