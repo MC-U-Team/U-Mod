@@ -19,6 +19,7 @@ public class UModDataGenerator {
 		if (event.includeClient()) {
 			data.addProvider(UModBlockStatesProvider::new);
 			data.addProvider(UModItemModelsProvider::new);
+			data.addProvider(UModLanguagesProvider::new);
 		}
 	}
 }
