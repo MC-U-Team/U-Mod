@@ -6,6 +6,7 @@ import info.u_team.u_team_core.container.UTileEntityContainer;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.network.PacketBuffer;
+import net.minecraftforge.items.IItemHandler;
 
 public class BasicMachineContainer<T extends BasicMachineTileEntity<?>> extends UTileEntityContainer<T> {
 	
@@ -24,6 +25,10 @@ public class BasicMachineContainer<T extends BasicMachineTileEntity<?>> extends 
 		final RecipeHandler<?> recipeHandler = tileEntity.getRecipeHandler();
 		addServerToClientTracker(recipeHandler.getPercentTracker());
 		recipeHandler.getEnergy().ifPresent(storage -> addServerToClientTracker(storage.createSyncHandler()));
+	}
+	
+	protected void addOutputInventory(IItemHandler handler, int inventoryHeight, int inventoryWidth, int x, int y) {
+		appendInventory(handler, BasicOutputItemHandlerSlot::new, inventoryHeight, inventoryWidth, x, y);
 	}
 	
 }
