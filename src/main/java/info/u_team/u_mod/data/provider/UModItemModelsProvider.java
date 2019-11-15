@@ -11,6 +11,6 @@ public class UModItemModelsProvider extends CommonItemModelsProvider {
 	
 	@Override
 	protected void registerModels() {
-		simpleBlock(UModBlocks.ENERGY_FURNACE);
+		simpleBlock(UModBlocks.ELECTRIC_FURNACE);
 	}
 }

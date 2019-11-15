@@ -2,7 +2,7 @@
 	"parent": "uteamcore:block/facing",
 	"textures": {
 		"particle": "umod:block/machine/side",
-		"front": "umod:block/machine/energy_furnace_front",
+		"front": "umod:block/machine/electric_furnace_front",
 		"side": "umod:block/machine/side"
 	}
 }

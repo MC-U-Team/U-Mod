@@ -11,7 +11,7 @@ public class UModLanguagesProvider extends CommonLanguagesProvider {
 	
 	@Override
 	public void addTranslations() {
-		add(UModBlocks.ENERGY_FURNACE, "Energy Furnace");
+		add(UModBlocks.ELECTRIC_FURNACE, "Electric Furnace");
 		add("container.umod.electric_furnace", "Electric Furnace");
 	}
 }

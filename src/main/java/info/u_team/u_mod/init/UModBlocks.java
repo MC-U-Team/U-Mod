@@ -20,7 +20,7 @@ public class UModBlocks {
 	
 	public static final EnergyStorageBlock ENERGY_STORAGE = new EnergyStorageBlock("energy_storage");
 	
-	public static final BasicMachineBlock ENERGY_FURNACE = new BasicMachineBlock("energy_furnace", () -> UModTileEntityTypes.ENERGY_FURNANCE);
+	public static final BasicMachineBlock ELECTRIC_FURNACE = new BasicMachineBlock("electric_furnace", () -> UModTileEntityTypes.ELECTRIC_FURNACE);
 	
 	@SubscribeEvent
 	public static void register(Register<Block> event) {

@@ -13,7 +13,7 @@ public class UModBlockStatesProvider extends CommonBlockStatesProvider {
 	
 	@Override
 	protected void registerStatesAndModels() {
-		addMachine(UModBlocks.ENERGY_FURNACE);
+		addMachine(UModBlocks.ELECTRIC_FURNACE);
 	}
 	
 	private void addMachine(BasicMachineBlock block) {

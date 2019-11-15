@@ -12,7 +12,7 @@ import net.minecraft.util.text.*;
 public class ElectricFurnaceTileEntity extends BasicMachineTileEntity<FurnaceRecipe> {
 	
 	public ElectricFurnaceTileEntity() {
-		super(UModTileEntityTypes.ENERGY_FURNANCE, 20000, 100, 0, IRecipeType.SMELTING, 1, 1, RecipeData.getBasicCooking(0, 5));
+		super(UModTileEntityTypes.ELECTRIC_FURNACE, 20000, 100, 0, IRecipeType.SMELTING, 1, 1, RecipeData.getBasicCooking(0, 5));
 	}
 	
 	// Container
