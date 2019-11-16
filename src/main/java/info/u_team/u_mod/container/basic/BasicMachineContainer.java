@@ -11,6 +11,8 @@ import net.minecraftforge.items.IItemHandler;
 
 public class BasicMachineContainer<T extends BasicMachineTileEntity<?>> extends UTileEntityContainer<T> {
 	
+	protected int playerInventoryStart = 2; // set standard to 2
+	
 	// Client
 	public BasicMachineContainer(ContainerType<?> type, int id, PlayerInventory playerInventory, PacketBuffer buffer) {
 		super(type, id, playerInventory, buffer);
@@ -46,17 +48,17 @@ public class BasicMachineContainer<T extends BasicMachineTileEntity<?>> extends 
 			final ItemStack stack = slot.getStack();
 			remainingStack = stack.copy();
 			
-			if (index < 2) {
-				if (!mergeItemStack(stack, 2, inventorySlots.size(), true)) {
+			if (index < playerInventoryStart) {
+				if (!mergeItemStack(stack, playerInventoryStart, inventorySlots.size(), true)) {
 					return ItemStack.EMPTY;
 				}
 			} else {
-				if (index >= 29) {
-					if (!mergeItemStack(stack, 2, 29, false)) {
+				if (index >= 27 + playerInventoryStart) {
+					if (!mergeItemStack(stack, playerInventoryStart, 27 + playerInventoryStart, false)) {
 						return ItemStack.EMPTY;
 					}
 				} else {
-					if (!mergeItemStack(stack, 29, inventorySlots.size(), false)) {
+					if (!mergeItemStack(stack, playerInventoryStart + 27, inventorySlots.size(), false)) {
 						return ItemStack.EMPTY;
 					}
 				}
