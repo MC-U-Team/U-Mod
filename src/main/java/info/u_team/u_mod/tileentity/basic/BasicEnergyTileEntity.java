@@ -7,7 +7,9 @@ import net.minecraftforge.common.util.LazyOptional;
 
 public abstract class BasicEnergyTileEntity extends BasicTickableTileEntity {
 	
-	protected final LazyOptional<BasicEnergyStorage> internalEnergyStorage;
+	protected final BasicEnergyStorage internalEnergyStorage;
+	
+	protected final LazyOptional<BasicEnergyStorage> internalEnergyStorageOptional;
 	
 	public BasicEnergyTileEntity(TileEntityType<?> type, int capacity, int maxReceive, int maxExtract) {
 		this(type, capacity, maxReceive, maxExtract, 0);
@@ -15,29 +17,36 @@ public abstract class BasicEnergyTileEntity extends BasicTickableTileEntity {
 	
 	public BasicEnergyTileEntity(TileEntityType<?> type, int capacity, int maxReceive, int maxExtract, int currentEnergy) {
 		super(type);
-		internalEnergyStorage = LazyOptional.of(() -> new BasicEnergyStorage(capacity, maxReceive, maxExtract, currentEnergy));
+		internalEnergyStorage = new BasicEnergyStorage(capacity, maxReceive, maxExtract, currentEnergy);
+		internalEnergyStorageOptional = LazyOptional.of(() -> internalEnergyStorage);
 	}
 	
 	@Override
 	public void writeNBT(CompoundNBT compound) {
-		internalEnergyStorage.ifPresent(handler -> compound.put("energy", handler.serializeNBT()));
+		compound.put("energy", internalEnergyStorage.serializeNBT());
 	}
 	
 	@Override
 	public void readNBT(CompoundNBT compound) {
-		internalEnergyStorage.ifPresent(handler -> handler.deserializeNBT(compound.getCompound("energy")));
+		internalEnergyStorage.deserializeNBT(compound.getCompound("energy"));
 	}
 	
 	// Invalidate lazy optional
+	
 	@Override
 	public void remove() {
 		super.remove();
-		internalEnergyStorage.invalidate();
+		internalEnergyStorageOptional.invalidate();
 	}
 	
 	// Getter
-	public LazyOptional<BasicEnergyStorage> getInternalEnergyStorage() {
+	
+	public BasicEnergyStorage getInternalEnergyStorage() {
 		return internalEnergyStorage;
+	}
+	
+	public LazyOptional<BasicEnergyStorage> getInternalEnergyStorageOptional() {
+		return internalEnergyStorageOptional;
 	}
 	
 }

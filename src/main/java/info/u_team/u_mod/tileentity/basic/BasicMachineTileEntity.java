@@ -18,12 +18,12 @@ public abstract class BasicMachineTileEntity<T extends IRecipe<IInventory>> exte
 	
 	protected final RecipeHandler<T> recipeHandler;
 	
-	protected final LazyOptional<InputOutputHandlerWrapper> slotsWrapper;
+	protected final LazyOptional<InputOutputHandlerWrapper> slotsWrapperOptional;
 	
 	public BasicMachineTileEntity(TileEntityType<?> type, int capacity, int maxReceive, int maxExtract, IRecipeType<T> recipeType, int ingredientSize, int outputSize, RecipeData<T> recipeData) {
 		super(type, capacity, maxReceive, maxExtract);
 		recipeHandler = new TileEntityRecipeHandler<T, BasicEnergyTileEntity>(this, recipeType, ingredientSize, outputSize, recipeData);
-		slotsWrapper = LazyOptional.of(() -> new InputOutputHandlerWrapper(recipeHandler.getIngredientSlots().orElseThrow(IllegalStateException::new), recipeHandler.getOutputSlots().orElseThrow(IllegalStateException::new)));
+		slotsWrapperOptional = LazyOptional.of(() -> new InputOutputHandlerWrapper(recipeHandler.getIngredientSlots(), recipeHandler.getOutputSlots()));
 	}
 	
 	// Tick
@@ -52,7 +52,7 @@ public abstract class BasicMachineTileEntity<T extends IRecipe<IInventory>> exte
 	public void remove() {
 		super.remove();
 		recipeHandler.invalidate();
-		slotsWrapper.invalidate();
+		slotsWrapperOptional.invalidate();
 	}
 	
 	// Inital send when container is opened
@@ -78,9 +78,9 @@ public abstract class BasicMachineTileEntity<T extends IRecipe<IInventory>> exte
 	@Override
 	public <X> LazyOptional<X> getCapability(Capability<X> capability, Direction side) {
 		if (capability == CapabilityEnergy.ENERGY) {
-			return internalEnergyStorage.cast();
+			return internalEnergyStorageOptional.cast();
 		} else if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-			return slotsWrapper.cast();
+			return slotsWrapperOptional.cast();
 		} else {
 			return super.getCapability(capability, side);
 		}

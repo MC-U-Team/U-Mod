@@ -20,9 +20,13 @@ import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSerializable<CompoundNBT> {
 	
-	private final LazyOptional<UItemStackHandler> ingredientSlots;
-	private final LazyOptional<UItemStackHandler> outputSlots;
-	private final LazyOptional<BasicEnergyStorage> energy;
+	private final BasicEnergyStorage energy;
+	private final UItemStackHandler ingredientSlots;
+	private final UItemStackHandler outputSlots;
+	
+	private final LazyOptional<BasicEnergyStorage> energyOptional;
+	private final LazyOptional<UItemStackHandler> ingredientSlotsOptional;
+	private final LazyOptional<UItemStackHandler> outputSlotsOptional;
 	
 	private final RecipeData<T> recipeData;
 	
@@ -40,26 +44,22 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 	// Client only value
 	private float percent;
 	
-	public RecipeHandler(IRecipeType<T> recipeType, LazyOptional<BasicEnergyStorage> energy, LazyOptional<UItemStackHandler> ingredientSlots, LazyOptional<UItemStackHandler> outputSlots, RecipeData<T> recipeData, Runnable dirtyMarker) {
+	public RecipeHandler(IRecipeType<T> recipeType, BasicEnergyStorage energy, UItemStackHandler ingredientSlots, UItemStackHandler outputSlots, RecipeData<T> recipeData, Runnable dirtyMarker) {
 		this.energy = energy;
 		this.ingredientSlots = ingredientSlots;
 		this.outputSlots = outputSlots;
 		this.recipeData = recipeData;
 		this.dirtyMarker = dirtyMarker;
-		recipeCache = new RecipeCache<>(recipeType, ingredientSlots.orElseThrow(IllegalStateException::new).getSlots());
+		
+		energyOptional = LazyOptional.of(() -> energy);
+		ingredientSlotsOptional = LazyOptional.of(() -> ingredientSlots);
+		outputSlotsOptional = LazyOptional.of(() -> outputSlots);
+		
+		recipeCache = new RecipeCache<>(recipeType, ingredientSlots.getSlots());
 	}
 	
 	public void update(World world) {
-		// If some lazy optional is invalid we cannot proceed
-		if (!ingredientSlots.isPresent() || !outputSlots.isPresent() || !energy.isPresent()) {
-			time = 0;
-			return;
-		}
-		
-		// Provided slots and energy
-		final RecipeWrapper recipeWrapper = new RecipeWrapper(ingredientSlots.orElseThrow(IllegalStateException::new));
-		final UItemStackHandler outputHandler = outputSlots.orElseThrow(IllegalStateException::new);
-		final BasicEnergyStorage energyStorage = energy.orElseThrow(IllegalStateException::new);
+		final RecipeWrapper recipeWrapper = new RecipeWrapper(ingredientSlots);
 		
 		// Recipe optional
 		final Optional<T> recipeOptional = recipeCache.getRecipe(world, recipeWrapper);
@@ -84,21 +84,21 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 		}
 		
 		// Check if we can process (e.g. output slot is not full)
-		if (!canProcess(recipe, recipeWrapper, outputHandler)) {
+		if (!canProcess(recipe, recipeWrapper, outputSlots)) {
 			time = 0;
 			return;
 		}
 		
 		// If we have no energy for the consumption at the start we cannot proceed
 		if (time == 0) {
-			if (!doConsumtionOnStart(recipe, energyStorage)) {
+			if (!doConsumtionOnStart(recipe, energy)) {
 				time = 0;
 				return;
 			}
 		}
 		
 		// If we have not energy for the consumption every tick we cannot proceed. We will not reset the timer here.
-		if (!doConsumtionPerTick(recipe, energyStorage)) {
+		if (!doConsumtionPerTick(recipe, energy)) {
 			return;
 		}
 		
@@ -108,7 +108,7 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 		// If the time is equal to the total time needed we can process
 		if (time == totalTime) {
 			time = 0;
-			process(recipe, recipeWrapper, outputHandler);
+			process(recipe, recipeWrapper, outputSlots);
 		}
 		dirtyMarker.run();
 	}
@@ -191,22 +191,23 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 	@Override
 	public CompoundNBT serializeNBT() {
 		final CompoundNBT compound = new CompoundNBT();
-		ingredientSlots.ifPresent(handler -> compound.put("ingredient", handler.serializeNBT()));
-		outputSlots.ifPresent(handler -> compound.put("output", handler.serializeNBT()));
+		compound.put("ingredient", ingredientSlots.serializeNBT());
+		compound.put("output", outputSlots.serializeNBT());
 		compound.putInt("time", time);
 		return compound;
 	}
 	
 	@Override
 	public void deserializeNBT(CompoundNBT compound) {
-		ingredientSlots.ifPresent(handler -> handler.deserializeNBT(compound.getCompound("ingredient")));
-		outputSlots.ifPresent(handler -> handler.deserializeNBT(compound.getCompound("output")));
+		ingredientSlots.deserializeNBT(compound.getCompound("ingredient"));
+		outputSlots.deserializeNBT(compound.getCompound("output"));
 		time = compound.getInt("time");
 	}
 	
 	public void invalidate() {
-		ingredientSlots.invalidate();
-		outputSlots.invalidate();
+		energyOptional.invalidate();
+		ingredientSlotsOptional.invalidate();
+		ingredientSlotsOptional.invalidate();
 	}
 	
 	public void sendInitialDataBuffer(PacketBuffer buffer) {
@@ -219,16 +220,28 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 	}
 	
 	// Getter
-	public LazyOptional<BasicEnergyStorage> getEnergy() {
+	public BasicEnergyStorage getEnergy() {
 		return energy;
 	}
 	
-	public LazyOptional<UItemStackHandler> getIngredientSlots() {
+	public UItemStackHandler getIngredientSlots() {
 		return ingredientSlots;
 	}
 	
-	public LazyOptional<UItemStackHandler> getOutputSlots() {
+	public UItemStackHandler getOutputSlots() {
 		return outputSlots;
+	}
+	
+	public LazyOptional<BasicEnergyStorage> getEnergyOptional() {
+		return energyOptional;
+	}
+	
+	public LazyOptional<UItemStackHandler> getIngredientSlotsOptional() {
+		return ingredientSlotsOptional;
+	}
+	
+	public LazyOptional<UItemStackHandler> getOutputSlotsOptional() {
+		return outputSlotsOptional;
 	}
 	
 	public BufferReferenceHolder getPercentTracker() {

@@ -22,7 +22,7 @@ public class ElectricFurnaceScreen extends BasicMachineScreen<ElectricFurnaceCon
 	protected void init() {
 		super.init();
 		final RecipeHandler<?> handler = container.getTileEntity().getRecipeHandler();
-		addButton(new EnergyStorageWidget(guiLeft + 9, guiTop + 20, 54, handler.getEnergy().cast()));
+		addButton(new EnergyStorageWidget(guiLeft + 9, guiTop + 20, 54, handler.getEnergyOptional().cast()));
 		addButton(ProgressWidget.createBasicArrow(guiLeft + 67, guiTop + 39, 42, 17, handler::getPercent));
 	}
 }

@@ -24,7 +24,7 @@ public class BasicMachineContainer<T extends BasicMachineTileEntity<?>> extends 
 	protected void init(boolean server) {
 		final RecipeHandler<?> recipeHandler = tileEntity.getRecipeHandler();
 		addServerToClientTracker(recipeHandler.getPercentTracker());
-		recipeHandler.getEnergy().ifPresent(storage -> addServerToClientTracker(storage.createSyncHandler()));
+		addServerToClientTracker(recipeHandler.getEnergy().createSyncHandler());
 	}
 	
 	protected void addOutputInventory(IItemHandler handler, int inventoryHeight, int inventoryWidth, int x, int y) {

@@ -2,7 +2,6 @@ package info.u_team.u_mod.loot;
 
 import com.google.gson.*;
 
-import info.u_team.u_mod.tileentity.ElectricFurnaceTileEntity;
 import info.u_team.u_team_core.tileentity.UTileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -21,7 +20,6 @@ public class SetTileEntityNBT extends LootFunction {
 		if (context.has(LootParameters.BLOCK_ENTITY)) {
 			final CompoundNBT compound = stack.getOrCreateChildTag("BlockEntityTag");
 			final TileEntity tileEntity = context.get(LootParameters.BLOCK_ENTITY);
-			System.out.println(((ElectricFurnaceTileEntity)tileEntity).getRecipeHandler().getIngredientSlots().isPresent());
 			if (tileEntity instanceof UTileEntity) {
 				((UTileEntity) tileEntity).writeNBT(compound);
 			} else {

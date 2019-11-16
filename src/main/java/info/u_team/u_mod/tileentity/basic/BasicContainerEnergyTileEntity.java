@@ -18,17 +18,13 @@ public abstract class BasicContainerEnergyTileEntity extends BasicEnergyTileEnti
 	// Inital send when container is opened
 	@Override
 	public void sendInitialDataBuffer(PacketBuffer buffer) {
-		if (internalEnergyStorage.isPresent()) {
-			internalEnergyStorage.ifPresent(storage -> buffer.writeInt(storage.getEnergy()));
-		} else {
-			buffer.writeInt(0); // Write data always, because else the reader might corrupt
-		}
+		buffer.writeInt(internalEnergyStorage.getEnergy());
 	}
 	
 	@OnlyIn(Dist.CLIENT)
 	@Override
 	public void handleInitialDataBuffer(PacketBuffer buffer) {
-		internalEnergyStorage.ifPresent(storage -> storage.setEnergy(buffer.readInt()));
+		internalEnergyStorage.setEnergy(buffer.readInt());
 	}
 	
 }
