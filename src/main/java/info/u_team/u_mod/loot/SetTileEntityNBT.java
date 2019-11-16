@@ -2,6 +2,7 @@ package info.u_team.u_mod.loot;
 
 import com.google.gson.*;
 
+import info.u_team.u_mod.UMod;
 import info.u_team.u_team_core.tileentity.UTileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -36,13 +37,10 @@ public class SetTileEntityNBT extends LootFunction {
 	public static class Serializer extends LootFunction.Serializer<SetTileEntityNBT> {
 		
 		public Serializer() {
-			super(new ResourceLocation("set_tileentity_nbt"), SetTileEntityNBT.class);
+			super(new ResourceLocation(UMod.MODID, "set_tileentity_nbt"), SetTileEntityNBT.class);
 		}
 		
-		public void serialize(JsonObject object, SetTileEntityNBT functionClazz, JsonSerializationContext serializationContext) {
-			super.serialize(object, functionClazz, serializationContext);
-		}
-		
+		@Override
 		public SetTileEntityNBT deserialize(JsonObject object, JsonDeserializationContext deserializationContext, ILootCondition[] conditions) {
 			return new SetTileEntityNBT(conditions);
 		}

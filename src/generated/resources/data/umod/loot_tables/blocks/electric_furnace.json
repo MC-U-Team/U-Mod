@@ -16,7 +16,7 @@
 			],
 			"functions": [
 				{
-					"function": "minecraft:set_tileentity_nbt"
+					"function": "umod:set_tileentity_nbt"
 				}
 			]
 		}
