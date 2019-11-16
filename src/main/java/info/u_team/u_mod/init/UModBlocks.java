@@ -3,7 +3,8 @@ package info.u_team.u_mod.init;
 import java.util.List;
 
 import info.u_team.u_mod.UMod;
-import info.u_team.u_mod.block.CrateBlock;
+import info.u_team.u_mod.block.*;
+import info.u_team.u_mod.block.basic.BasicMachineBlock;
 import info.u_team.u_team_core.util.registry.BaseRegistryUtil;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -15,7 +16,11 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 @EventBusSubscriber(bus = Bus.MOD, modid = UMod.MODID)
 public class UModBlocks {
 	
-	public static final CrateBlock CRATE = new CrateBlock("crate");
+	public static final CableBlock CABLE = new CableBlock("cable_test");
+	
+	public static final EnergyStorageBlock ENERGY_STORAGE = new EnergyStorageBlock("energy_storage");
+	
+	public static final BasicMachineBlock ELECTRIC_FURNACE = new BasicMachineBlock("electric_furnace", () -> UModTileEntityTypes.ELECTRIC_FURNACE);
 	
 	@SubscribeEvent
 	public static void register(Register<Block> event) {

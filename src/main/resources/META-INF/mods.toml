@@ -4,7 +4,7 @@ issueTrackerURL="https://github.com/MC-U-Team/U-Mod/issues"
 displayURL="https://u-team.info/mods/umod"
 logoFile="logo.png"
 credits="Team U-Team"
-authors="HyCraftHD, Luc_ZZ, MrTroble"
+authors="HyCraftHD, MrTroble, Luc_ZZ"
 
 [[mods]]
 	modId="umod"
@@ -16,7 +16,7 @@ authors="HyCraftHD, Luc_ZZ, MrTroble"
 	[[dependencies.umod]]
 	    modId="forge"
 	    mandatory=true
-	    versionRange="[28.0.45,)"
+	    versionRange="[28.1.79,)"
 	    ordering="NONE"
 	    side="BOTH"
 	
@@ -30,7 +30,7 @@ authors="HyCraftHD, Luc_ZZ, MrTroble"
 	[[dependencies.umod]]
 	    modId="uteamcore"
 	    mandatory=true
-	    versionRange="[2.7.0.129,)"
+	    versionRange="[2.7.8.138,)"
 	    ordering="NONE"
 	    side="BOTH"
 	    
