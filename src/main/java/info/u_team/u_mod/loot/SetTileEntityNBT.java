@@ -19,12 +19,15 @@ public class SetTileEntityNBT extends LootFunction {
 	
 	public ItemStack doApply(ItemStack stack, LootContext context) {
 		if (context.has(LootParameters.BLOCK_ENTITY)) {
-			final CompoundNBT compound = stack.getOrCreateChildTag("BlockEntityTag");
+			final CompoundNBT compound = new CompoundNBT();
 			final TileEntity tileEntity = context.get(LootParameters.BLOCK_ENTITY);
 			if (tileEntity instanceof UTileEntity) {
 				((UTileEntity) tileEntity).writeNBT(compound);
 			} else {
 				tileEntity.write(compound);
+			}
+			if (!compound.isEmpty()) {
+				stack.setTagInfo("BlockEntityTag", compound);
 			}
 		}
 		return stack;
