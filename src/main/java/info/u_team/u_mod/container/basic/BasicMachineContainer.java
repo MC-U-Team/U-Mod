@@ -35,12 +35,6 @@ public class BasicMachineContainer<T extends BasicMachineTileEntity<?>> extends 
 	}
 	
 	@Override
-	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
-		System.out.println(slotId);
-		return super.slotClick(slotId, dragType, clickTypeIn, player);
-	}
-	
-	@Override
 	public ItemStack transferStackInSlot(PlayerEntity player, int index) {
 		ItemStack remainingStack = ItemStack.EMPTY;
 		final Slot slot = this.inventorySlots.get(index);
