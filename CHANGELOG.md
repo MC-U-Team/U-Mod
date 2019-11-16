@@ -5,3 +5,4 @@ All notable changes to this project will be documented in this file.
 ### Added
  - Added electric furnace
  - Added energy storage and parts of an energy network (wip)
+ - Added many internal utility things
