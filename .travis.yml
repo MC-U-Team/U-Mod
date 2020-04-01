@@ -11,11 +11,6 @@ cache:
 
 jobs:
   include:
-    - stage: "builddeploy"
-      name: "Build and deploy"
-      if: branch = 1.14.4
-      script: gradle build
-    - stage: "buildonly"
+    - stage: "build"
       name: "Build"
-      if: branch != 1.14.4
       script: gradle build
