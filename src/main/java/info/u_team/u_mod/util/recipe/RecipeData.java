@@ -39,7 +39,7 @@ public class RecipeData<T extends IRecipe<IInventory>> {
 	}
 	
 	public static <X extends MachineRecipe> RecipeData<X> getBasicMachine() {
-		return new RecipeData<>(MachineRecipe::getTotalTime, MachineRecipe::getConsumptionOnStart, MachineRecipe::getConsumptionPerTick, MachineRecipe::getOutput);
+		return new RecipeData<>(MachineRecipe::getTotalTime, MachineRecipe::getConsumptionOnStart, MachineRecipe::getConsumptionPerTick, MachineRecipe::getOutputs);
 	}
 	
 	public static <X extends AbstractCookingRecipe> RecipeData<X> getBasicCooking(int defaultConsumptionOnStart, int defaultConsumptionPerTick) {

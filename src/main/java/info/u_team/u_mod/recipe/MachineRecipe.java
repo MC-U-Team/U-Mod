@@ -27,7 +27,7 @@ public abstract class MachineRecipe implements IRecipe<IInventory> {
 	@Override
 	public abstract boolean matches(IInventory inventory, World world);
 	
-	public abstract NonNullList<ItemStack> getOutput(IInventory inventory);
+	public abstract NonNullList<ItemStack> getOutputs(IInventory inventory);
 	
 	@Override
 	public abstract NonNullList<Ingredient> getIngredients();
