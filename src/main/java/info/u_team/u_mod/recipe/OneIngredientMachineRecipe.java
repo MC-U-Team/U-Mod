@@ -1,15 +1,20 @@
 package info.u_team.u_mod.recipe;
 
+import com.google.gson.JsonObject;
+
+import info.u_team.u_mod.util.inventory.SerializeUtil;
+import info.u_team.u_team_core.recipeserializer.URecipeSerializer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.*;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
 
 public class OneIngredientMachineRecipe extends MachineRecipe {
 	
-	private final NonNullList<Ingredient> ingredients;
-	private final NonNullList<ItemStack> outputs;
+	protected final NonNullList<Ingredient> ingredients;
+	protected final NonNullList<ItemStack> outputs;
 	
 	public OneIngredientMachineRecipe(ResourceLocation location, IRecipeType<?> type, IRecipeSerializer<?> serializer, Ingredient ingredient, ItemStack output, int totalTime, int consumptionOnStart, int consumptionPerTick) {
 		super(location, type, serializer, totalTime, consumptionOnStart, consumptionPerTick);
@@ -30,6 +35,50 @@ public class OneIngredientMachineRecipe extends MachineRecipe {
 	@Override
 	public NonNullList<Ingredient> getIngredients() {
 		return ingredients;
+	}
+	
+	public static class Serializer<T extends OneIngredientMachineRecipe> extends URecipeSerializer<T> {
+		
+		private final IFactory<T> factory;
+		
+		public Serializer(String name, IFactory<T> factory) {
+			super(name);
+			this.factory = factory;
+		}
+		
+		@Override
+		public T read(ResourceLocation location, JsonObject json) {
+			final Ingredient ingredient = SerializeUtil.deserializeIngredient(json.get("ingredient"));
+			final ItemStack output = SerializeUtil.deserializeItemStack(json.get("output"));
+			final int totalTime = JSONUtils.getInt(json, "total_time", 200);
+			final int consumptionOnStart = JSONUtils.getInt(json, "consumption_on_start", 0);
+			final int consumptionPerTick = JSONUtils.getInt(json, "consumption_per_tick", 5);
+			return factory.create(location, ingredient, output, totalTime, consumptionOnStart, consumptionPerTick);
+		}
+		
+		@Override
+		public T read(ResourceLocation location, PacketBuffer buffer) {
+			final Ingredient ingredient = Ingredient.read(buffer);
+			final ItemStack output = buffer.readItemStack();
+			final int totalTime = buffer.readInt();
+			final int consumptionOnStart = buffer.readInt();
+			final int consumptionPerTick = buffer.readInt();
+			return factory.create(location, ingredient, output, totalTime, consumptionOnStart, consumptionPerTick);
+		}
+		
+		@Override
+		public void write(PacketBuffer buffer, T recipe) {
+			recipe.ingredients.get(0).write(buffer);
+			buffer.writeItemStack(recipe.outputs.get(0));
+			buffer.writeInt(recipe.totalTime);
+			buffer.writeInt(recipe.consumptionOnStart);
+			buffer.writeInt(recipe.consumptionPerTick);
+		}
+		
+		public static interface IFactory<T extends OneIngredientMachineRecipe> {
+			
+			T create(ResourceLocation location, Ingredient ingredient, ItemStack output, int totalTime, int consumptionOnStart, int consumptionPerTick);
+		}
 	}
 	
 }
