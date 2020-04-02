@@ -16,7 +16,7 @@ public class ShapelessMachineRecipe extends MachineRecipe {
 	private final boolean isSimple;
 	
 	public ShapelessMachineRecipe(ResourceLocation location, IRecipeType<?> type, IRecipeSerializer<?> serializer, NonNullList<Ingredient> ingredients, NonNullList<ItemStack> outputs, int totalTime, int consumptionOnStart, int consumptionPerTick) {
-		super(location, type, serializer, ingredients, outputs, totalTime, consumptionOnStart, consumptionPerTick);
+		super(location, type, serializer, totalTime, consumptionOnStart, consumptionPerTick);
 		this.ingredients = ingredients;
 		this.outputs = outputs;
 		this.isSimple = ingredients.stream().allMatch(Ingredient::isSimple);

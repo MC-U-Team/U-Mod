@@ -15,7 +15,7 @@ public abstract class MachineRecipe implements IRecipe<IInventory> {
 	protected final int consumptionOnStart;
 	protected final int consumptionPerTick;
 	
-	public MachineRecipe(ResourceLocation location, IRecipeType<?> type, IRecipeSerializer<?> serializer, NonNullList<Ingredient> ingredients, NonNullList<ItemStack> outputs, int totalTime, int consumptionOnStart, int consumptionPerTick) {
+	public MachineRecipe(ResourceLocation location, IRecipeType<?> type, IRecipeSerializer<?> serializer, int totalTime, int consumptionOnStart, int consumptionPerTick) {
 		this.location = location;
 		this.type = type;
 		this.serializer = serializer;
