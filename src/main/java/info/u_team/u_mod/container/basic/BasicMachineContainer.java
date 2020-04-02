@@ -47,6 +47,9 @@ public class BasicMachineContainer<T extends BasicMachineTileEntity<?>> extends 
 					return ItemStack.EMPTY;
 				}
 			} else {
+				if (mergeItemStack(stack, 0, playerInventoryStart, false)) {
+					return ItemStack.EMPTY;
+				}
 				if (index >= 27 + playerInventoryStart) {
 					if (!mergeItemStack(stack, playerInventoryStart, 27 + playerInventoryStart, false)) {
 						return ItemStack.EMPTY;
@@ -68,4 +71,88 @@ public class BasicMachineContainer<T extends BasicMachineTileEntity<?>> extends 
 		return remainingStack;
 	}
 	
+	@Override
+	protected boolean mergeItemStack(ItemStack stack, int startIndex, int endIndex, boolean reverseDirection) {
+		boolean flag = false;
+		int i = startIndex;
+		if (reverseDirection) {
+			i = endIndex - 1;
+		}
+		
+		if (stack.isStackable()) {
+			while (!stack.isEmpty()) {
+				if (reverseDirection) {
+					if (i < startIndex) {
+						break;
+					}
+				} else if (i >= endIndex) {
+					break;
+				}
+				
+				final Slot slot = this.inventorySlots.get(i);
+				final ItemStack itemstack = slot.getStack();
+				if (!itemstack.isEmpty() && areItemsAndTagsEqual(stack, itemstack) && slot.isItemValid(stack)) {
+					int j = itemstack.getCount() + stack.getCount();
+					int maxSize = Math.min(slot.getSlotStackLimit(), stack.getMaxStackSize());
+					if (j <= maxSize) {
+						stack.setCount(0);
+						itemstack.setCount(j);
+						slot.onSlotChanged();
+						flag = true;
+					} else if (itemstack.getCount() < maxSize) {
+						stack.shrink(maxSize - itemstack.getCount());
+						itemstack.setCount(maxSize);
+						slot.onSlotChanged();
+						flag = true;
+					}
+				}
+				
+				if (reverseDirection) {
+					--i;
+				} else {
+					++i;
+				}
+			}
+		}
+		
+		if (!stack.isEmpty()) {
+			if (reverseDirection) {
+				i = endIndex - 1;
+			} else {
+				i = startIndex;
+			}
+			
+			while (true) {
+				if (reverseDirection) {
+					if (i < startIndex) {
+						break;
+					}
+				} else if (i >= endIndex) {
+					break;
+				}
+				
+				final Slot slot1 = this.inventorySlots.get(i);
+				final ItemStack itemstack1 = slot1.getStack();
+				if (itemstack1.isEmpty() && slot1.isItemValid(stack)) {
+					if (stack.getCount() > slot1.getSlotStackLimit()) {
+						slot1.putStack(stack.split(slot1.getSlotStackLimit()));
+					} else {
+						slot1.putStack(stack.split(stack.getCount()));
+					}
+					
+					slot1.onSlotChanged();
+					flag = true;
+					break;
+				}
+				
+				if (reverseDirection) {
+					--i;
+				} else {
+					++i;
+				}
+			}
+		}
+		
+		return flag;
+	}
 }
