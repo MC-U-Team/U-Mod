@@ -43,12 +43,12 @@ public class ShapelessMachineRecipe extends MachineRecipe {
 	}
 	
 	@Override
-	public NonNullList<ItemStack> getOutputs(IInventory inventory) {
-		return outputs;
+	public NonNullList<Ingredient> getIngredients() {
+		return ingredients;
 	}
 	
 	@Override
-	public NonNullList<Ingredient> getIngredients() {
-		return ingredients;
+	public NonNullList<ItemStack> getOutputs(IInventory inventory) {
+		return outputs;
 	}
 }
