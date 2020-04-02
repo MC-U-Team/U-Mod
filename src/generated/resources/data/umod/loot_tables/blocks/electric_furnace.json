@@ -16,7 +16,7 @@
 			],
 			"functions": [
 				{
-					"function": "umod:set_tileentity_nbt"
+					"function": "uteamcore:set_tileentity_nbt"
 				}
 			]
 		}
