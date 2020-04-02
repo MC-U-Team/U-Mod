@@ -6,7 +6,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Hand;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.StringTextComponent;
@@ -21,15 +21,16 @@ public class EnergyStorageBlock extends UTileEntityBlock {
 	
 	// TEST ONLY
 	@Override
-	public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-		TileEntity entity = worldIn.getTileEntity(pos);
+	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+		TileEntity entity = world.getTileEntity(pos);
 		if (entity != null) {
 			entity.getCapability(CapabilityEnergy.ENERGY).ifPresent(store -> {
 				player.sendMessage(new StringTextComponent(String.valueOf(store.getEnergyStored())));
 			});
 		}
-		return true;
+		return ActionResultType.SUCCESS;
 	}
+	
 	// I wish I had preprocessors
 	
 }

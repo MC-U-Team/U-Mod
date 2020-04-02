@@ -27,7 +27,7 @@ public class BasicMachineBlock extends UTileEntityBlock {
 	}
 	
 	@Override
-	public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
 		return openContainer(world, pos, player, true);
 	}
 	
