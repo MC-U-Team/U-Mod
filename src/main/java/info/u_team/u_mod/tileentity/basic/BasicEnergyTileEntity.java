@@ -1,11 +1,12 @@
 package info.u_team.u_mod.tileentity.basic;
 
 import info.u_team.u_team_core.energy.BasicEnergyStorage;
+import info.u_team.u_team_core.tileentity.UTickableTileEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.common.util.LazyOptional;
 
-public abstract class BasicEnergyTileEntity extends BasicTickableTileEntity {
+public abstract class BasicEnergyTileEntity extends UTickableTileEntity {
 	
 	protected final BasicEnergyStorage internalEnergyStorage;
 	
