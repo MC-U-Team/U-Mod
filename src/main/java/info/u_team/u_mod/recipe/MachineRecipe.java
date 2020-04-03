@@ -32,7 +32,9 @@ public abstract class MachineRecipe implements IRecipe<IInventory> {
 	
 	public abstract NonNullList<ItemStack> getOutputs();
 	
-	public abstract NonNullList<ItemStack> getOutputs(IInventory inventory);
+	public NonNullList<ItemStack> getOutputs(IInventory inventory) {
+		return getOutputs();
+	}
 	
 	// Getter
 	
