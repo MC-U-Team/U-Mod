@@ -1,6 +1,6 @@
 package info.u_team.u_mod.integration.jei.category;
 
-import java.util.Collections;
+import java.util.*;
 
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 
@@ -11,6 +11,7 @@ import info.u_team.u_mod.screen.CrusherScreen;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
+import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
@@ -67,6 +68,12 @@ public class CrusherRecipeCategoryJei implements IRecipeCategory<OneIngredientMa
 	
 	@Override
 	public void setRecipe(IRecipeLayout recipeLayout, OneIngredientMachineRecipe recipe, IIngredients ingredients) {
+		final IGuiItemStackGroup itemStackGroup = recipeLayout.getItemStacks();
+		itemStackGroup.init(0, true, 44, 39);
+		itemStackGroup.init(1, false, 116, 39);
+		
+		itemStackGroup.set(0, Arrays.asList(recipe.getIngredients().get(0).getMatchingStacks()));
+		itemStackGroup.set(1, recipe.getOutputs().get(0));
 	}
 	
 }
