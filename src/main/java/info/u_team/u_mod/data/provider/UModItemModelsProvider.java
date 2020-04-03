@@ -1,6 +1,7 @@
 package info.u_team.u_mod.data.provider;
 
-import info.u_team.u_mod.init.UModBlocks;
+import static info.u_team.u_mod.init.UModBlocks.*;
+
 import info.u_team.u_team_core.data.*;
 
 public class UModItemModelsProvider extends CommonItemModelsProvider {
@@ -11,6 +12,7 @@ public class UModItemModelsProvider extends CommonItemModelsProvider {
 	
 	@Override
 	protected void registerModels() {
-		simpleBlock(UModBlocks.ELECTRIC_FURNACE);
+		simpleBlock(ELECTRIC_FURNACE);
+		simpleBlock(CRUSHER);
 	}
 }
