@@ -75,8 +75,8 @@ public class OneIngredientMachineRecipe extends MachineRecipe {
 		
 		@Override
 		public void write(PacketBuffer buffer, T recipe) {
-			recipe.ingredients.get(0).write(buffer);
-			buffer.writeItemStack(recipe.outputs.get(0));
+			recipe.getIngredients().get(0).write(buffer);
+			buffer.writeItemStack(recipe.getOutputs().get(0));
 			buffer.writeInt(recipe.totalTime);
 			buffer.writeInt(recipe.consumptionOnStart);
 			buffer.writeInt(recipe.consumptionPerTick);
