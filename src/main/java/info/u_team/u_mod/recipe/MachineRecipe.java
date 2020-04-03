@@ -30,6 +30,8 @@ public abstract class MachineRecipe implements IRecipe<IInventory> {
 	@Override
 	public abstract NonNullList<Ingredient> getIngredients();
 	
+	public abstract NonNullList<ItemStack> getOutputs();
+	
 	public abstract NonNullList<ItemStack> getOutputs(IInventory inventory);
 	
 	// Getter
