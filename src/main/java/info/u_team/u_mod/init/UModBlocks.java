@@ -22,6 +22,8 @@ public class UModBlocks {
 	
 	public static final BasicMachineBlock ELECTRIC_FURNACE = new BasicMachineBlock("electric_furnace", () -> UModTileEntityTypes.ELECTRIC_FURNACE);
 	
+	public static final BasicMachineBlock CRUSHER = new BasicMachineBlock("crusher", () -> UModTileEntityTypes.CRUSHER);
+	
 	@SubscribeEvent
 	public static void register(Register<Block> event) {
 		entries = BaseRegistryUtil.getAllRegistryEntriesAndApplyNames(UMod.MODID, Block.class);
