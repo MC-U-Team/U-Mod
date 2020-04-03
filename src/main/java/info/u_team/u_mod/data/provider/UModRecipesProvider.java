@@ -1,8 +1,8 @@
 package info.u_team.u_mod.data.provider;
 
 import static info.u_team.u_mod.init.UModRecipeSerializers.CRUSHER;
-import static info.u_team.useful_resources.api.type.BlockResourceType.ORE;
-import static info.u_team.useful_resources.api.type.ItemResourceType.CRUSHED_ORE;
+import static info.u_team.useful_resources.api.type.BlockResourceType.*;
+import static info.u_team.useful_resources.api.type.ItemResourceType.*;
 
 import java.util.Map;
 import java.util.function.Consumer;
@@ -43,6 +43,16 @@ public class UModRecipesProvider extends CommonRecipesProvider {
 				OneIngredientMachineRecipeBuilder.machineRecipe(CRUSHER, Ingredient.fromTag(oreTag), crushedItem, 100) //
 						.addCriterion("has_ore", hasItem(oreTag)) //
 						.build(consumer, createLocationForResource(resource, "crusher/crushed_ore_from_stone_ore"));
+			}
+			
+			// NETHER_ORE -> CRUSHED NETHER_ORE
+			if (shouldAddRecipe(resource, NETHER_ORE, CRUSHED_NETHER_ORE)) {
+				final Tag<Item> oreTag = TagUtil.fromBlockTag(NETHER_ORE.getTag(resource));
+				final Item crushedItem = items.get(CRUSHED_NETHER_ORE);
+				
+				OneIngredientMachineRecipeBuilder.machineRecipe(CRUSHER, Ingredient.fromTag(oreTag), crushedItem, 100) //
+						.addCriterion("has_nether_ore", hasItem(oreTag)) //
+						.build(consumer, createLocationForResource(resource, "crusher/crushed_nether_ore_from_nether_ore"));
 			}
 		});
 	}
