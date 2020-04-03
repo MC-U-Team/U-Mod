@@ -19,10 +19,20 @@ public class SerializeUtil {
 	}
 	
 	public static JsonElement serializeItemStack(ItemStack stack) {
-		if (stack.hasTag() || stack.getCount() != 1) {
-			return null;
+		final String itemName = ForgeRegistries.ITEMS.getKey(stack.getItem()).toString();
+		final int count = stack.getCount();
+		if (stack.hasTag() || count != 1) {
+			final JsonObject object = new JsonObject();
+			object.addProperty("item", itemName);
+			if (count != 1) {
+				object.addProperty("count", stack.getCount());
+			}
+			if (stack.hasTag()) {
+				object.addProperty("nbt", stack.getTag().toString());
+			}
+			return object;
 		} else {
-			return new JsonPrimitive(ForgeRegistries.ITEMS.getKey(stack.getItem()).toString());
+			return new JsonPrimitive(itemName);
 		}
 	}
 	
