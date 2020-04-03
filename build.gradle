@@ -110,6 +110,7 @@ sourceSets {
 	main {
 		java {
 			srcDirs += "src/api/java"
+			srcDirs += "src/integration/java"
 		}
 		resources {
 			srcDirs += "src/generated/resources"
