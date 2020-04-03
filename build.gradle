@@ -8,6 +8,7 @@ buildscript {
     dependencies {
         classpath group: "net.minecraftforge.gradle", name: "ForgeGradle", version: "3.+", changing: true
 		classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.4.0"
+		classpath "com.wynprice.cursemaven:CurseMaven:2.1.1"
     }
 }
 
@@ -16,6 +17,7 @@ apply from: "https://gradle-files.u-team.info/default-project.gradle"
 apply plugin: "net.minecraftforge.gradle"
 apply plugin: "eclipse"
 apply plugin: "com.matthewprenger.cursegradle"
+apply plugin: "com.wynprice.cursemaven"
 apply plugin: "maven"
 
 group = "info.u-team"
@@ -118,19 +120,14 @@ sourceSets {
 	}
 }
 
-repositories {
-	flatDir dirs: "libs"
-}
-
 dependencies {
     minecraft getForgeDependency()
     compile getUTeamCoreDependency()
     compile ("info.u-team:useful_resources-${config.forge.mcversion}:${config.usefulresources.version}:dev") 
     compile fg.deobf(getJeiApiDependency())
     runtime fg.deobf(getJeiDependency())
-    fileTree(dir: "libs", include: ["*.jar"]).each {
-    	compile fg.deobf(name: it.getName().replace(".jar", ""))
-    }
+    compile fg.deobf("curse.maven:silent-lib:2873131")
+    compile fg.deobf("curse.maven:silents-mechanisms:2875059")
 }
 
 curseforge {
