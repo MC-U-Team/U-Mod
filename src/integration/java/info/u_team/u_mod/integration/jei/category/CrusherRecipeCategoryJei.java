@@ -1,8 +1,6 @@
 package info.u_team.u_mod.integration.jei.category;
 
-import java.util.*;
-
-import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
+import java.util.Arrays;
 
 import info.u_team.u_mod.UMod;
 import info.u_team.u_mod.init.UModBlocks;
