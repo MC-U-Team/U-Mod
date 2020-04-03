@@ -118,12 +118,19 @@ sourceSets {
 	}
 }
 
+repositories {
+	flatDir dirs: "libs"
+}
+
 dependencies {
     minecraft getForgeDependency()
     compile getUTeamCoreDependency()
     compile ("info.u-team:useful_resources-${config.forge.mcversion}:${config.usefulresources.version}:dev") 
     compile fg.deobf(getJeiApiDependency())
     runtime fg.deobf(getJeiDependency())
+    fileTree(dir: "libs", include: ["*.jar"]).each {
+    	compile fg.deobf(name: it.getName().replace(".jar", ""))
+    }
 }
 
 curseforge {
