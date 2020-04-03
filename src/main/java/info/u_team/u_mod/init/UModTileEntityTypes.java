@@ -16,6 +16,7 @@ public class UModTileEntityTypes {
 	public static final TileEntityType<EnergyStorageTileEntity> ENERGY_STORAGE = UBuilder.create("energy_storage", EnergyStorageTileEntity::new, UModBlocks.ENERGY_STORAGE).build();
 	
 	public static final TileEntityType<ElectricFurnaceTileEntity> ELECTRIC_FURNACE = UBuilder.create("electric_furnace", ElectricFurnaceTileEntity::new, UModBlocks.ELECTRIC_FURNACE).build();
+	public static final TileEntityType<CrusherTileEntity> CRUSHER = UBuilder.create("crusher", CrusherTileEntity::new, UModBlocks.CRUSHER).build();
 	
 	@SubscribeEvent
 	public static void register(Register<TileEntityType<?>> event) {
