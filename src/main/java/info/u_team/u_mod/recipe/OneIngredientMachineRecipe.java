@@ -39,11 +39,6 @@ public class OneIngredientMachineRecipe extends MachineRecipe {
 		return outputs;
 	}
 	
-	@Override
-	public NonNullList<ItemStack> getOutputs(IInventory inventory) {
-		return outputs;
-	}
-	
 	public static class Serializer<T extends OneIngredientMachineRecipe> extends URecipeSerializer<T> {
 		
 		private final IFactory<T> factory;
