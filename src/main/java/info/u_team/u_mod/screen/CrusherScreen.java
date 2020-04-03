@@ -12,7 +12,7 @@ import net.minecraft.util.text.ITextComponent;
 
 public class CrusherScreen extends BasicMachineScreen<CrusherContainer> {
 	
-	private static final ResourceLocation TEXTURE = new ResourceLocation(UMod.MODID, "textures/gui/machine/crusher.png");
+	public static final ResourceLocation TEXTURE = new ResourceLocation(UMod.MODID, "textures/gui/machine/crusher.png");
 	
 	public CrusherScreen(CrusherContainer container, PlayerInventory playerInventory, ITextComponent title) {
 		super(container, playerInventory, title, TEXTURE);
