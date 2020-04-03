@@ -13,7 +13,7 @@ import net.minecraft.advancements.criterion.RecipeUnlockedTrigger;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.*;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.*;
 
 public class OneIngredientMachineRecipeBuilder {
 	
@@ -26,6 +26,10 @@ public class OneIngredientMachineRecipeBuilder {
 	private int consumptionPerTick = 10;
 	
 	private final Advancement.Builder advancementBuilder = Advancement.Builder.builder();
+	
+	public static OneIngredientMachineRecipeBuilder machineRecipe(Serializer<?> serializer, Ingredient ingredient, IItemProvider output, int totalTime) {
+		return machineRecipe(serializer, ingredient, new ItemStack(output), totalTime);
+	}
 	
 	public static OneIngredientMachineRecipeBuilder machineRecipe(Serializer<?> serializer, Ingredient ingredient, ItemStack output, int totalTime) {
 		return new OneIngredientMachineRecipeBuilder(serializer, ingredient, output, totalTime);
