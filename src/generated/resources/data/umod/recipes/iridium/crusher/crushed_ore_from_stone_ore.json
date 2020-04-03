@@ -1,0 +1,10 @@
+{
+	"type": "umod:crusher",
+	"ingredient": {
+		"tag": "forge:stone_ores/iridium"
+	},
+	"output": "usefulresources:iridium_crushed_ore",
+	"total_time": 100,
+	"consumption_on_start": 0,
+	"consumption_per_tick": 10
+}
