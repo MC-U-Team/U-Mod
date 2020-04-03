@@ -1,0 +1,19 @@
+{
+	"variants": {
+		"facing=north": {
+			"model": "umod:block/crusher"
+		},
+		"facing=south": {
+			"model": "umod:block/crusher",
+			"y": 180
+		},
+		"facing=west": {
+			"model": "umod:block/crusher",
+			"y": 270
+		},
+		"facing=east": {
+			"model": "umod:block/crusher",
+			"y": 90
+		}
+	}
+}

@@ -1,4 +1,6 @@
 {
+	"block.umod.crusher": "Crusher",
 	"block.umod.electric_furnace": "Electric Furnace",
+	"container.umod.crusher": "Crusher",
 	"container.umod.electric_furnace": "Electric Furnace"
 }
