@@ -10,8 +10,20 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class SerializeUtil {
 	
+	public static JsonElement serializeIngredient(Ingredient ingredient) {
+		return ingredient.serialize();
+	}
+	
 	public static Ingredient deserializeIngredient(JsonElement json) {
 		return Ingredient.deserialize(json);
+	}
+	
+	public static JsonElement serializeItemStack(ItemStack stack) {
+		if (stack.hasTag() || stack.getCount() != 1) {
+			return null;
+		} else {
+			return new JsonPrimitive(ForgeRegistries.ITEMS.getKey(stack.getItem()).toString());
+		}
 	}
 	
 	public static ItemStack deserializeItemStack(JsonElement json) {
