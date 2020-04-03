@@ -22,8 +22,8 @@ public class OneIngredientMachineRecipeBuilder {
 	private final Ingredient ingredient;
 	private final ItemStack output;
 	private final int totalTime;
-	private int consumptionOnStart;
-	private int consumptionPerTick;
+	private int consumptionOnStart = 0;
+	private int consumptionPerTick = 10;
 	
 	private final Advancement.Builder advancementBuilder = Advancement.Builder.builder();
 	
@@ -32,6 +32,16 @@ public class OneIngredientMachineRecipeBuilder {
 		this.ingredient = ingredient;
 		this.output = output;
 		this.totalTime = totalTime;
+	}
+	
+	public OneIngredientMachineRecipeBuilder setConsumtionOnStart(int consumptionOnStart) {
+		this.consumptionOnStart = consumptionOnStart;
+		return this;
+	}
+	
+	public OneIngredientMachineRecipeBuilder setConsumtionPerTick(int consumptionPerTick) {
+		this.consumptionPerTick = consumptionPerTick;
+		return this;
 	}
 	
 	public OneIngredientMachineRecipeBuilder addCriterion(String name, ICriterionInstance criterion) {
