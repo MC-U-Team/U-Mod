@@ -40,7 +40,7 @@ public class UModRecipesProvider extends CommonRecipesProvider {
 				final Tag<Item> oreTag = TagUtil.fromBlockTag(ORE.getTag(resource));
 				final Item crushedItem = items.get(CRUSHED_ORE);
 				
-				OneIngredientMachineRecipeBuilder.machineRecipe(CRUSHER, Ingredient.fromTag(oreTag), crushedItem, 100) //
+				OneIngredientMachineRecipeBuilder.machineRecipe(CRUSHER, Ingredient.fromTag(oreTag), crushedItem, 2, 100) //
 						.addCriterion("has_ore", hasItem(oreTag)) //
 						.build(consumer, createLocationForResource(resource, "crusher/crushed_ore_from_stone_ore"));
 			}
@@ -50,7 +50,7 @@ public class UModRecipesProvider extends CommonRecipesProvider {
 				final Tag<Item> oreTag = TagUtil.fromBlockTag(NETHER_ORE.getTag(resource));
 				final Item crushedItem = items.get(CRUSHED_NETHER_ORE);
 				
-				OneIngredientMachineRecipeBuilder.machineRecipe(CRUSHER, Ingredient.fromTag(oreTag), crushedItem, 100) //
+				OneIngredientMachineRecipeBuilder.machineRecipe(CRUSHER, Ingredient.fromTag(oreTag), crushedItem, 2, 100) //
 						.addCriterion("has_nether_ore", hasItem(oreTag)) //
 						.build(consumer, createLocationForResource(resource, "crusher/crushed_nether_ore_from_nether_ore"));
 			}
