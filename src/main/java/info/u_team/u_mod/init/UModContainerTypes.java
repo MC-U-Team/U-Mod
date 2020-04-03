@@ -1,7 +1,7 @@
 package info.u_team.u_mod.init;
 
 import info.u_team.u_mod.UMod;
-import info.u_team.u_mod.container.ElectricFurnaceContainer;
+import info.u_team.u_mod.container.*;
 import info.u_team.u_team_core.containertype.UContainerType;
 import info.u_team.u_team_core.util.registry.BaseRegistryUtil;
 import net.minecraft.inventory.container.ContainerType;
@@ -14,6 +14,8 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 public class UModContainerTypes {
 	
 	public static final UContainerType<ElectricFurnaceContainer> ELECTRIC_FURNACE = new UContainerType<>("electric_furnace", ElectricFurnaceContainer::new);
+	
+	public static final UContainerType<CrusherContainer> CRUSHER = new UContainerType<>("crusher", CrusherContainer::new);
 	
 	@SubscribeEvent
 	public static void register(Register<ContainerType<?>> event) {
