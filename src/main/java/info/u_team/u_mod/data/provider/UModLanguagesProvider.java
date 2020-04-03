@@ -1,6 +1,7 @@
 package info.u_team.u_mod.data.provider;
 
-import info.u_team.u_mod.init.UModBlocks;
+import static info.u_team.u_mod.init.UModBlocks.*;
+
 import info.u_team.u_team_core.data.*;
 
 public class UModLanguagesProvider extends CommonLanguagesProvider {
@@ -11,7 +12,10 @@ public class UModLanguagesProvider extends CommonLanguagesProvider {
 	
 	@Override
 	public void addTranslations() {
-		add(UModBlocks.ELECTRIC_FURNACE, "Electric Furnace");
+		add(ELECTRIC_FURNACE, "Electric Furnace");
 		add("container.umod.electric_furnace", "Electric Furnace");
+		
+		add(CRUSHER, "Crusher");
+		add("container.umod.crusher", "Crusher");
 	}
 }
