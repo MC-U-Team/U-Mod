@@ -19,7 +19,7 @@ public class CrusherTileEntity extends BasicMachineTileEntity<OneIngredientMachi
 	
 	@Override
 	public ITextComponent getDisplayName() {
-		return new TranslationTextComponent("container.umod.electric_furnace");
+		return new TranslationTextComponent("container.umod.crusher");
 	}
 	
 	@Override
