@@ -3,7 +3,10 @@
 	"ingredient": {
 		"tag": "forge:stone_ores/sapphire"
 	},
-	"output": "usefulresources:sapphire_crushed_ore",
+	"output": {
+		"item": "usefulresources:sapphire_crushed_ore",
+		"count": 2
+	},
 	"total_time": 100,
 	"consumption_on_start": 0,
 	"consumption_per_tick": 10

@@ -3,7 +3,10 @@
 	"ingredient": {
 		"tag": "forge:stone_ores/gold"
 	},
-	"output": "usefulresources:gold_crushed_ore",
+	"output": {
+		"item": "usefulresources:gold_crushed_ore",
+		"count": 2
+	},
 	"total_time": 100,
 	"consumption_on_start": 0,
 	"consumption_per_tick": 10

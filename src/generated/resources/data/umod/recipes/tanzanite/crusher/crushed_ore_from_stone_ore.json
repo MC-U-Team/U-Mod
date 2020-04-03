@@ -3,7 +3,10 @@
 	"ingredient": {
 		"tag": "forge:stone_ores/tanzanite"
 	},
-	"output": "usefulresources:tanzanite_crushed_ore",
+	"output": {
+		"item": "usefulresources:tanzanite_crushed_ore",
+		"count": 2
+	},
 	"total_time": 100,
 	"consumption_on_start": 0,
 	"consumption_per_tick": 10

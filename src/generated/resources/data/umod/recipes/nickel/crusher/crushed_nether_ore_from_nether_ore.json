@@ -3,7 +3,10 @@
 	"ingredient": {
 		"tag": "forge:nether_ores/nickel"
 	},
-	"output": "usefulresources:nickel_crushed_nether_ore",
+	"output": {
+		"item": "usefulresources:nickel_crushed_nether_ore",
+		"count": 2
+	},
 	"total_time": 100,
 	"consumption_on_start": 0,
 	"consumption_per_tick": 10
