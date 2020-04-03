@@ -27,6 +27,10 @@ public class OneIngredientMachineRecipeBuilder {
 	
 	private final Advancement.Builder advancementBuilder = Advancement.Builder.builder();
 	
+	public static OneIngredientMachineRecipeBuilder machineRecipe(Serializer<?> serializer, Ingredient ingredient, ItemStack output, int totalTime) {
+		return new OneIngredientMachineRecipeBuilder(serializer, ingredient, output, totalTime);
+	}
+	
 	public OneIngredientMachineRecipeBuilder(Serializer<?> serializer, Ingredient ingredient, ItemStack output, int totalTime) {
 		this.serializer = serializer;
 		this.ingredient = ingredient;
