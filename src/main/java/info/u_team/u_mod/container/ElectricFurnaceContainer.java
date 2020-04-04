@@ -24,8 +24,8 @@ public class ElectricFurnaceContainer extends BasicMachineContainer<ElectricFurn
 	protected void init(boolean server) {
 		super.init(server);
 		final RecipeHandler<FurnaceRecipe> recipeHandler = tileEntity.getRecipeHandler();
-		appendInventory(recipeHandler.getIngredientSlots(), 1, 1, 44, 39);
-		appendOutputInventory(recipeHandler.getOutputSlots(), 1, 1, 116, 39);
+		appendInventory(recipeHandler.getIngredientSlots(), 1, 1, 44, 50);
+		appendOutputInventory(recipeHandler.getOutputSlots(), 1, 1, 116, 41);
 		appendPlayerInventory(playerInventory, 8, 92);
 	}
 	
