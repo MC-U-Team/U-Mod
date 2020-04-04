@@ -38,7 +38,7 @@ public class ProgressWidget extends Widget {
 		// Don't play click sound
 	}
 	
-	public static ProgressWidget createBasicArrow(int x, int y, int width, int height, Supplier<Float> progress) {
-		return new ProgressWidget(x, y, width, height, LONG_BASIC_ARROW, progress);
+	public static ProgressWidget createLongBasicArrow(int x, int y, Supplier<Float> progress) {
+		return new ProgressWidget(x, y, 42, 17, LONG_BASIC_ARROW, progress);
 	}
 }
