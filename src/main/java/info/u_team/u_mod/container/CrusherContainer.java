@@ -24,8 +24,8 @@ public class CrusherContainer extends BasicMachineContainer<CrusherTileEntity> {
 	protected void init(boolean server) {
 		super.init(server);
 		final RecipeHandler<OneIngredientMachineRecipe> recipeHandler = tileEntity.getRecipeHandler();
-		appendInventory(recipeHandler.getIngredientSlots(), 1, 1, 44, 39);
-		appendOutputInventory(recipeHandler.getOutputSlots(), 1, 1, 116, 39);
+		appendInventory(recipeHandler.getIngredientSlots(), 1, 1, 44, 50);
+		appendOutputInventory(recipeHandler.getOutputSlots(), 2, 3, 116, 41);
 		appendPlayerInventory(playerInventory, 8, 92);
 	}
 	
