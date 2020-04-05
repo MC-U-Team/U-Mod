@@ -34,6 +34,10 @@ public class BasicMachineContainer<T extends BasicMachineTileEntity<?>> extends 
 		appendInventory(handler, BasicOutputItemHandlerSlot::new, inventoryHeight, inventoryWidth, x, y);
 	}
 	
+	protected void appendUpgradeInventory(IItemHandler handler, int inventoryHeight, int inventoryWidth, int x, int y) {
+		appendInventory(handler, BasicUpgradeItemHandlerSlot::new, inventoryHeight, inventoryWidth, x, y);
+	}
+	
 	@Override
 	public ItemStack transferStackInSlot(PlayerEntity player, int index) {
 		ItemStack remainingStack = ItemStack.EMPTY;
