@@ -7,8 +7,8 @@ import net.minecraft.item.crafting.*;
 
 public class TileEntityRecipeHandler<T extends IRecipe<IInventory>, X extends BasicEnergyTileEntity> extends RecipeHandler<T> {
 	
-	public TileEntityRecipeHandler(X tileEntity, IRecipeType<T> recipeType, int ingredientSize, int outputSize, RecipeData<T> recipeData) {
-		super(recipeType, tileEntity.getInternalEnergyStorage(), new BasicTileEntityStackHandler(ingredientSize, tileEntity), new BasicTileEntityStackHandler(outputSize, tileEntity), recipeData, tileEntity::markDirty);
+	public TileEntityRecipeHandler(X tileEntity, IRecipeType<T> recipeType, int ingredientSize, int outputSize, int upgradeSize, RecipeData<T> recipeData) {
+		super(recipeType, tileEntity.getInternalEnergyStorage(), new BasicTileEntityStackHandler(ingredientSize, tileEntity), new BasicTileEntityStackHandler(outputSize, tileEntity), new BasicTileEntityStackHandler(upgradeSize, tileEntity), recipeData, tileEntity::markDirty);
 	}
 	
 }
