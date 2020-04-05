@@ -218,7 +218,8 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 	public void invalidate() {
 		energyOptional.invalidate();
 		ingredientSlotsOptional.invalidate();
-		ingredientSlotsOptional.invalidate();
+		outputSlotsOptional.invalidate();
+		upgradeSlotsOptional.invalidate();
 	}
 	
 	public void sendInitialDataBuffer(PacketBuffer buffer) {
