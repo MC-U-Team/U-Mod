@@ -5,10 +5,16 @@ import java.util.stream.IntStream;
 import info.u_team.u_team_core.inventory.TileEntityUItemStackHandler;
 import net.minecraft.tileentity.TileEntity;
 
-public class BasicTileEntityStackHandler extends TileEntityUItemStackHandler {
+public class ObservableTileEntityStackHandler extends TileEntityUItemStackHandler {
 	
-	public BasicTileEntityStackHandler(int size, TileEntity tileEntity) {
+	public ObservableTileEntityStackHandler(int size, TileEntity tileEntity) {
 		super(size, tileEntity);
+	}
+	
+	@Override
+	protected void onContentsChanged(int slot) {
+		super.onContentsChanged(slot);
+		
 	}
 	
 	public boolean isEmpty() {
