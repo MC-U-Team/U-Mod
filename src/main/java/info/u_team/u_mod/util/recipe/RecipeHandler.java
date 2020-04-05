@@ -1,8 +1,10 @@
 package info.u_team.u_mod.util.recipe;
 
-import java.util.Optional;
-import java.util.function.BiFunction;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
+import java.util.function.*;
 
+import info.u_team.u_mod.item.basic.BasicMachineUpgradeItem;
 import info.u_team.u_mod.util.ExtendedBufferReferenceHolder;
 import info.u_team.u_team_core.api.sync.BufferReferenceHolder;
 import info.u_team.u_team_core.energy.BasicEnergyStorage;
@@ -77,8 +79,28 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 		
 		// Get recipe
 		final T recipe = recipeOptional.get();
+		
+		// Get all upgrade functions
+		final List<Function<Integer, Integer>> timeFunctions = new ArrayList<>();
+		final List<Function<Integer, Integer>> startConsumptionFunctions = new ArrayList<>();
+		final List<Function<Integer, Integer>> tickConsumptionFunctions = new ArrayList<>();
+		
+		for (int index = 0; index < upgradeSlots.getSlots(); index++) {
+			final ItemStack stack = upgradeSlots.getStackInSlot(index);
+			if (stack.getItem() instanceof BasicMachineUpgradeItem) {
+				final BasicMachineUpgradeItem item = (BasicMachineUpgradeItem) stack.getItem();
+				timeFunctions.add(item.applyTimeUpgrade(stack.getCount()));
+				startConsumptionFunctions.add(item.applyStartConsumptionUpgrade(stack.getCount()));
+				tickConsumptionFunctions.add(item.applyTickConsumptionUpgrade(stack.getCount()));
+			}
+		}
+		
 		// Set the total time to the total time from the recipe (trough the function for modifiers)
 		totalTime = totalTimeModifier.apply(recipe, recipeData.getTotalTime(recipe));
+		
+		for (int index = 0; index < timeFunctions.size(); index++) {
+			totalTime = timeFunctions.get(index).apply(totalTime);
+		}
 		
 		// Check if the recipe is valid when the timer starts
 		if (time == 0) {
