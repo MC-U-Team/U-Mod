@@ -4,21 +4,19 @@ import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.IntStream;
 
-import info.u_team.u_team_core.inventory.TileEntityUItemStackHandler;
-import net.minecraft.tileentity.TileEntity;
+import info.u_team.u_team_core.inventory.UItemStackHandler;
 
-public class ObservableTileEntityStackHandler extends TileEntityUItemStackHandler {
+public class ObservableStackHandler extends UItemStackHandler {
 	
 	private final List<Consumer<Integer>> contentChangedObserverList;
 	
-	public ObservableTileEntityStackHandler(int size, TileEntity tileEntity) {
-		super(size, tileEntity);
+	public ObservableStackHandler(int size) {
+		super(size);
 		contentChangedObserverList = new ArrayList<>();
 	}
 	
 	@Override
 	protected void onContentsChanged(int slot) {
-		super.onContentsChanged(slot);
 		contentChangedObserverList.forEach(entry -> entry.accept(slot));
 	}
 	
