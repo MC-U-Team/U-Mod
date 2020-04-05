@@ -24,10 +24,12 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 	private final BasicEnergyStorage energy;
 	private final UItemStackHandler ingredientSlots;
 	private final UItemStackHandler outputSlots;
+	private final UItemStackHandler upgradeSlots;
 	
 	private final LazyOptional<BasicEnergyStorage> energyOptional;
 	private final LazyOptional<UItemStackHandler> ingredientSlotsOptional;
 	private final LazyOptional<UItemStackHandler> outputSlotsOptional;
+	private final LazyOptional<UItemStackHandler> upgradeSlotsOptional;
 	
 	private final RecipeData<T> recipeData;
 	
@@ -45,16 +47,18 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 	// Client only value
 	private float percent;
 	
-	public RecipeHandler(IRecipeType<T> recipeType, BasicEnergyStorage energy, UItemStackHandler ingredientSlots, UItemStackHandler outputSlots, RecipeData<T> recipeData, Runnable dirtyMarker) {
+	public RecipeHandler(IRecipeType<T> recipeType, BasicEnergyStorage energy, UItemStackHandler ingredientSlots, UItemStackHandler outputSlots, UItemStackHandler upgradeSlots, RecipeData<T> recipeData, Runnable dirtyMarker) {
 		this.energy = energy;
 		this.ingredientSlots = ingredientSlots;
 		this.outputSlots = outputSlots;
+		this.upgradeSlots = upgradeSlots;
 		this.recipeData = recipeData;
 		this.dirtyMarker = dirtyMarker;
 		
 		energyOptional = LazyOptional.of(() -> energy);
 		ingredientSlotsOptional = LazyOptional.of(() -> ingredientSlots);
 		outputSlotsOptional = LazyOptional.of(() -> outputSlots);
+		upgradeSlotsOptional = LazyOptional.of(() -> upgradeSlots);
 		
 		recipeCache = new RecipeCache<>(recipeType, ingredientSlots.getSlots());
 	}
