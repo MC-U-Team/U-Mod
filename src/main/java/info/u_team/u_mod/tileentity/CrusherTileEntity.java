@@ -12,7 +12,7 @@ import net.minecraft.util.text.*;
 public class CrusherTileEntity extends BasicMachineTileEntity<OneIngredientMachineRecipe> {
 	
 	public CrusherTileEntity() {
-		super(UModTileEntityTypes.CRUSHER, 20000, 100, 0, UModRecipeTypes.CRUSHER, 1, 1, RecipeData.getBasicMachine());
+		super(UModTileEntityTypes.CRUSHER, 20000, 100, 0, UModRecipeTypes.CRUSHER, 1, 6, RecipeData.getBasicMachine());
 	}
 	
 	// Container
