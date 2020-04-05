@@ -200,8 +200,8 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 	@Override
 	public CompoundNBT serializeNBT() {
 		final CompoundNBT compound = new CompoundNBT();
-		compound.put("ingredient", ingredientSlots.serializeNBT());
-		compound.put("output", outputSlots.serializeNBT());
+		compound.put("ingredients", ingredientSlots.serializeNBT());
+		compound.put("outputs", outputSlots.serializeNBT());
 		compound.put("upgrades", upgradeSlots.serializeNBT());
 		compound.putInt("time", time);
 		return compound;
@@ -209,8 +209,8 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 	
 	@Override
 	public void deserializeNBT(CompoundNBT compound) {
-		ingredientSlots.deserializeNBT(compound.getCompound("ingredient"));
-		outputSlots.deserializeNBT(compound.getCompound("output"));
+		ingredientSlots.deserializeNBT(compound.getCompound("ingredients"));
+		outputSlots.deserializeNBT(compound.getCompound("outputs"));
 		upgradeSlots.deserializeNBT(compound.getCompound("upgrades"));
 		time = compound.getInt("time");
 	}
