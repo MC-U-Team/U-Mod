@@ -20,9 +20,9 @@ public abstract class BasicMachineTileEntity<T extends IRecipe<IInventory>> exte
 	
 	protected final LazyOptional<InputOutputHandlerWrapper> slotsWrapperOptional;
 	
-	public BasicMachineTileEntity(TileEntityType<?> type, int capacity, int maxReceive, int maxExtract, IRecipeType<T> recipeType, int ingredientSize, int outputSize, RecipeData<T> recipeData) {
+	public BasicMachineTileEntity(TileEntityType<?> type, int capacity, int maxReceive, int maxExtract, IRecipeType<T> recipeType, int ingredientSize, int outputSize, int upgradeSize, RecipeData<T> recipeData) {
 		super(type, capacity, maxReceive, maxExtract);
-		recipeHandler = new TileEntityRecipeHandler<T, BasicEnergyTileEntity>(this, recipeType, ingredientSize, outputSize, recipeData);
+		recipeHandler = new TileEntityRecipeHandler<T, BasicEnergyTileEntity>(this, recipeType, ingredientSize, outputSize, upgradeSize, recipeData);
 		slotsWrapperOptional = LazyOptional.of(() -> new InputOutputHandlerWrapper(recipeHandler.getIngredientSlots(), recipeHandler.getOutputSlots()));
 	}
 	
