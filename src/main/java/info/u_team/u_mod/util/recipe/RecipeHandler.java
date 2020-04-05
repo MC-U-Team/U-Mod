@@ -16,6 +16,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.*;
 import net.minecraftforge.common.util.*;
+import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSerializable<CompoundNBT> {
@@ -143,23 +144,10 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 	
 	protected boolean canProcess(T recipe, RecipeWrapper recipeWrapper, UItemStackHandler outputHandler) {
 		final NonNullList<ItemStack> recipeOutputs = recipeData.getRecipeOutputs(recipe, recipeWrapper);
-		for (int index = 0; index < recipeOutputs.size(); index++) {
-			final ItemStack recipeOutput = recipeOutputs.get(index);
-			final ItemStack slotOutput = outputHandler.getStackInSlot(index);
-			
-			// Logic copied from furnace
-			if (slotOutput.isEmpty()) {
-				continue;
-			} else if (!slotOutput.isItemEqual(recipeOutput)) {
+		for (int recipeIndex = 0; recipeIndex < recipeOutputs.size(); recipeIndex++) {
+			final ItemStack recipeOutput = recipeOutputs.get(recipeIndex);
+			if (!ItemHandlerHelper.insertItemStacked(outputHandler, recipeOutput, true).isEmpty()) {
 				return false;
-			} else if (slotOutput.getCount() + recipeOutput.getCount() <= outputHandler.getSlotLimit(index) && slotOutput.getCount() + recipeOutput.getCount() <= slotOutput.getMaxStackSize()) {
-				continue;
-			} else {
-				if (slotOutput.getCount() + recipeOutput.getCount() <= recipeOutput.getMaxStackSize()) {
-					continue;
-				} else {
-					return false;
-				}
 			}
 		}
 		return true;
@@ -174,12 +162,7 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 			if (recipeOutput.isEmpty()) {
 				continue;
 			}
-			final ItemStack slotOutput = outputHandler.getStackInSlot(index);
-			if (slotOutput.isEmpty()) {
-				outputHandler.setStackInSlot(0, recipeOutput.copy());
-			} else if (slotOutput.getItem() == recipeOutput.getItem()) {
-				slotOutput.grow(recipeOutput.getCount());
-			}
+			System.out.println(ItemHandlerHelper.insertItemStacked(outputHandler, recipeOutput, false));
 		}
 		// Remove from ingredient
 		for (int index = 0; index < recipeWrapper.getSizeInventory(); index++) {
