@@ -5,7 +5,6 @@ import java.util.stream.IntStream;
 import info.u_team.u_team_core.inventory.TileEntityUItemStackHandler;
 import net.minecraft.tileentity.TileEntity;
 
-// TODO Do this in uteamcore
 public class BasicTileEntityStackHandler extends TileEntityUItemStackHandler {
 	
 	public BasicTileEntityStackHandler(int size, TileEntity tileEntity) {
