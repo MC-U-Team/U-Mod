@@ -133,7 +133,7 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 		time++;
 		
 		// If the time is equal to the total time needed we can process
-		if (time == totalTime) {
+		if (time >= totalTime) {
 			time = 0;
 			process(recipe, recipeWrapper, outputSlots);
 		}
