@@ -1,6 +1,6 @@
 package info.u_team.u_mod.tileentity.basic;
 
-import info.u_team.u_mod.util.inventory.*;
+import info.u_team.u_mod.util.inventory.InputOutputHandlerWrapper;
 import info.u_team.u_mod.util.recipe.*;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.crafting.*;
