@@ -11,7 +11,7 @@ import net.minecraftforge.items.IItemHandler;
 
 public class BasicMachineContainer<T extends BasicMachineTileEntity<?>> extends UTileEntityContainer<T> {
 	
-	protected int playerInventoryStart = 7; // set standard to 7
+	protected int playerInventoryStart = 10; // set standard to 10
 	
 	// Client
 	public BasicMachineContainer(ContainerType<?> type, int id, PlayerInventory playerInventory, PacketBuffer buffer) {
