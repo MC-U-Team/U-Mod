@@ -219,6 +219,10 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 		return outputSlots;
 	}
 	
+	public UItemStackHandler getUpgradeSlots() {
+		return upgradeSlots;
+	}
+	
 	public LazyOptional<BasicEnergyStorage> getEnergyOptional() {
 		return energyOptional;
 	}
@@ -229,6 +233,10 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 	
 	public LazyOptional<UItemStackHandler> getOutputSlotsOptional() {
 		return outputSlotsOptional;
+	}
+	
+	public LazyOptional<UItemStackHandler> getUpgradeSlotsOptional() {
+		return upgradeSlotsOptional;
 	}
 	
 	public BufferReferenceHolder getPercentTracker() {
