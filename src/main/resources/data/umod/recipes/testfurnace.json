@@ -1,0 +1,9 @@
+{
+	"type": "minecraft:smelting",
+	"ingredient": {
+		"item": "umod:crusher"
+	},
+	"result": "minecraft:brick",
+	"experience": 0.3,
+	"cookingtime": 5
+}

@@ -12,50 +12,48 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
+import net.minecraft.world.*;
 import net.minecraftforge.energy.CapabilityEnergy;
 
 public class CableBlock extends UBlock {
-
+	
 	public CableBlock(String name) {
 		super(name, UModItemGroups.GROUP, Properties.create(Material.IRON));
 	}
-
+	
 	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
 		Arrays.stream(Direction.values()).forEach(dir -> onNeighborChange(state, worldIn, pos, pos.offset(dir)));
 	}
-
+	
 	@Override
 	public boolean canBeConnectedTo(BlockState state, IBlockReader world, BlockPos pos, Direction facing) {
 		TileEntity entity = world.getTileEntity(pos);
 		return entity != null && entity.getCapability(CapabilityEnergy.ENERGY, facing.getOpposite()).isPresent();
 	}
-
+	
 	// TODO AABB
-
+	
 	@Override
 	public void onNeighborChange(BlockState state, IWorldReader world, BlockPos pos, BlockPos neighbor) {
-		if(world.isRemote()) return;
+		if (world.isRemote())
+			return;
 		TileEntity entity = world.getTileEntity(neighbor);
- 		if (entity == null) {
-			if(EnergySystem.POSITIONS.contains(neighbor))
+		if (entity == null) {
+			if (EnergySystem.POSITIONS.contains(neighbor))
 				EnergySystem.POSITIONS.remove(neighbor);
 			return;
 		}
-		if(checkIsOutput(entity, offset(pos, neighbor))) {
-			if(!EnergySystem.POSITIONS.contains(neighbor))
+		if (checkIsOutput(entity, offset(pos, neighbor))) {
+			if (!EnergySystem.POSITIONS.contains(neighbor))
 				EnergySystem.POSITIONS.add(neighbor);
 		}
 	}
 	
 	private boolean checkIsOutput(TileEntity entity, Direction dir) {
-		return entity.getCapability(CapabilityEnergy.ENERGY, dir)
-				.filter(store -> store.canReceive()).isPresent();
+		return entity.getCapability(CapabilityEnergy.ENERGY, dir).filter(store -> store.canReceive()).isPresent();
 	}
-
+	
 	// This gets the direction between 2 vectors
 	private Direction offset(BlockPos pos, BlockPos neighbor) {
 		BlockPos delta = pos.subtract(neighbor); /* TODO there has to be a better way */

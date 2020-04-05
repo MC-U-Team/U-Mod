@@ -1,6 +1,6 @@
 package info.u_team.u_mod.integration.jei;
 
-import java.util.*;
+import java.util.Collection;
 
 import info.u_team.u_mod.UMod;
 import info.u_team.u_mod.init.*;

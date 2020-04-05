@@ -1,7 +1,7 @@
 package info.u_team.u_mod.init;
 
 import info.u_team.u_mod.UMod;
-import info.u_team.u_mod.recipe.*;
+import info.u_team.u_mod.recipe.OneIngredientMachineRecipe;
 import net.minecraft.item.crafting.*;
 
 public class UModRecipeTypes {
