@@ -146,7 +146,7 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 		final NonNullList<ItemStack> recipeOutputs = recipeData.getRecipeOutputs(recipe, recipeWrapper);
 		for (int recipeIndex = 0; recipeIndex < recipeOutputs.size(); recipeIndex++) {
 			final ItemStack recipeOutput = recipeOutputs.get(recipeIndex);
-			if (!ItemHandlerHelper.insertItemStacked(outputHandler, recipeOutput, true).isEmpty()) {
+			if (!ItemHandlerHelper.insertItemStacked(outputHandler, recipeOutput.copy(), true).isEmpty()) {
 				return false;
 			}
 		}
@@ -162,7 +162,7 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 			if (recipeOutput.isEmpty()) {
 				continue;
 			}
-			System.out.println(ItemHandlerHelper.insertItemStacked(outputHandler, recipeOutput, false));
+			System.out.println(ItemHandlerHelper.insertItemStacked(outputHandler, recipeOutput.copy(), false));
 		}
 		// Remove from ingredient
 		for (int index = 0; index < recipeWrapper.getSizeInventory(); index++) {
