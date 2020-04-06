@@ -1,0 +1,13 @@
+{
+	"type": "umod:crusher",
+	"ingredient": {
+		"item": "umod:crusher"
+	},
+	"output": {
+		"item": "usefulresources:aluminum_crushed_nether_ore",
+		"count": 10
+	},
+	"total_time": 5,
+	"consumption_on_start": 0,
+	"consumption_per_tick": 10
+}
