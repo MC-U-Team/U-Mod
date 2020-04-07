@@ -18,7 +18,7 @@ public class ObservableStackHandler extends UItemStackHandler {
 	
 	@Override
 	public void setStackInSlot(int slot, ItemStack stack) {
-		final ItemStack previousStack = getStackInSlot(slot);
+		final ItemStack previousStack = getStackInSlot(slot).copy();
 		super.setStackInSlot(slot, stack);
 		if (hasStackChanged(previousStack, stack)) {
 			itemChanged(slot);
@@ -27,9 +27,9 @@ public class ObservableStackHandler extends UItemStackHandler {
 	
 	@Override
 	public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-		final ItemStack previousStack = getStackInSlot(slot);
+		final ItemStack previousStack = getStackInSlot(slot).copy();
 		final ItemStack toReturn = super.insertItem(slot, stack, simulate);
-		if (hasStackChanged(previousStack, getStackInSlot(slot))) {
+		if (!simulate && hasStackChanged(previousStack, getStackInSlot(slot))) {
 			itemChanged(slot);
 		}
 		return toReturn;
@@ -37,7 +37,7 @@ public class ObservableStackHandler extends UItemStackHandler {
 	
 	@Override
 	public ItemStack extractItem(int slot, int amount, boolean simulate) {
-		final ItemStack previousStack = getStackInSlot(slot);
+		final ItemStack previousStack = getStackInSlot(slot).copy();
 		final ItemStack toReturn = super.extractItem(slot, amount, simulate);
 		if (hasStackChanged(previousStack, getStackInSlot(slot))) {
 			itemChanged(slot);
