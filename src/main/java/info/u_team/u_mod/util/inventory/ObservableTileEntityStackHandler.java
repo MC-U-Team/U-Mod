@@ -12,9 +12,12 @@ public class ObservableTileEntityStackHandler extends ObservableStackHandler {
 	}
 	
 	@Override
-	protected void onContentsChanged(int slot) {
+	protected void itemChanged(int slot) {
 		tileEntity.markDirty();
-		super.onContentsChanged(slot);
+		super.itemChanged(slot);
+		if (!tileEntity.getWorld().isRemote()) {
+			System.out.println(tileEntity + " -> " + slot + " changed XOXOX");
+		}
 	}
 	
 }
