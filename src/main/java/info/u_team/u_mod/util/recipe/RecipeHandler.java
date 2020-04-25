@@ -67,6 +67,12 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 	public void update(World world) {
 		final RecipeWrapper recipeWrapper = new RecipeWrapper(ingredientSlots);
 		
+		// If slots are empty there could be no recipe
+		if (recipeWrapper.isEmpty()) {
+			time = 0;
+			return;
+		}
+		
 		// Recipe optional
 		final Optional<T> recipeOptional = recipeCache.getRecipe(world, recipeWrapper);
 		
