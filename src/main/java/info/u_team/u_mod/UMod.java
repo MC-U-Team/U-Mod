@@ -11,5 +11,4 @@ public class UMod {
 	public UMod() {
 		JarSignVerifier.checkSigned(MODID);
 	}
-	
 }
