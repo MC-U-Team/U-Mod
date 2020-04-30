@@ -4,7 +4,7 @@ import info.u_team.u_mod.UMod;
 import info.u_team.u_mod.container.CrusherContainer;
 import info.u_team.u_mod.gui.ProgressWidget;
 import info.u_team.u_mod.screen.basic.BasicMachineScreen;
-import info.u_team.u_mod.util.recipe.RecipeHandler;
+import info.u_team.u_mod.tileentity.CrusherTileEntity;
 import info.u_team.u_team_core.gui.elements.EnergyStorageWidget;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
@@ -21,8 +21,8 @@ public class CrusherScreen extends BasicMachineScreen<CrusherContainer> {
 	@Override
 	protected void init() {
 		super.init();
-		final RecipeHandler<?> handler = container.getTileEntity().getRecipeHandler();
-		addButton(new EnergyStorageWidget(guiLeft + 9, guiTop + 20, 54, handler.getEnergyOptional().cast()));
-		addButton(ProgressWidget.createLongBasicArrow(guiLeft + 67, guiTop + 50, handler::getPercent));
+		final CrusherTileEntity handler = container.getTileEntity();
+		addButton(new EnergyStorageWidget(guiLeft + 9, guiTop + 20, 54, handler::getInternalEnergyStorage));
+		addButton(ProgressWidget.createLongBasicArrow(guiLeft + 67, guiTop + 50, handler.getRecipeHandler()::getPercent));
 	}
 }
