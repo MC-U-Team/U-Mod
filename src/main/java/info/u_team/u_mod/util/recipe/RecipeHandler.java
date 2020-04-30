@@ -42,7 +42,7 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 	// Client only value
 	private float percent;
 	
-	public RecipeHandler(IRecipeType<T> recipeType, int ingredientSize, LazyOptional<BasicEnergyStorage> energyOptional, LazyOptional<UItemStackHandler> ingredientSlotsOptional, LazyOptional<UItemStackHandler> outputSlotsOptional, LazyOptional<UItemStackHandler> upgradeSlotsOptional, RecipeData<T> recipeData, Runnable dirtyMarker) {
+	public RecipeHandler(IRecipeType<T> recipeType, LazyOptional<BasicEnergyStorage> energyOptional, int ingredientSize, LazyOptional<UItemStackHandler> ingredientSlotsOptional, LazyOptional<UItemStackHandler> outputSlotsOptional, LazyOptional<UItemStackHandler> upgradeSlotsOptional, RecipeData<T> recipeData, Runnable dirtyMarker) {
 		this.energyOptional = energyOptional;
 		this.ingredientSlotsOptional = ingredientSlotsOptional;
 		this.outputSlotsOptional = outputSlotsOptional;
