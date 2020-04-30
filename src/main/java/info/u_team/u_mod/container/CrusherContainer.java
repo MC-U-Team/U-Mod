@@ -23,6 +23,7 @@ public class CrusherContainer extends BasicMachineContainer<CrusherTileEntity> {
 		super.init(server);
 		appendInventory(tileEntity.getIngredientSlots(), 1, 1, 44, 50);
 		appendOutputInventory(tileEntity.getOutputSlots(), 2, 3, 116, 41);
+		appendUpgradeInventory(tileEntity.getUpgradeSlots(), 1, 3, 116, 8);
 		appendPlayerInventory(playerInventory, 8, 92);
 	}
 	
