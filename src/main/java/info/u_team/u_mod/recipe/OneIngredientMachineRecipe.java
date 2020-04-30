@@ -35,6 +35,11 @@ public class OneIngredientMachineRecipe extends MachineRecipe {
 	}
 	
 	@Override
+	public NonNullList<ItemStack> getPossibleOutputs() {
+		return outputs; // TODO Add possible outputs here
+	}
+	
+	@Override
 	public NonNullList<ItemStack> getOutputs() {
 		return outputs;
 	}
