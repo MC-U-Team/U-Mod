@@ -13,12 +13,14 @@ public class RecipeData<T extends IRecipe<IInventory>> {
 	private final Function<T, Integer> totalTimeFunction;
 	private final Function<T, Integer> consumptionOnStartFunction;
 	private final Function<T, Integer> consumptionPerTickFunction;
+	private final BiFunction<T, IInventory, NonNullList<ItemStack>> possibleRecipeOutputsFunction;
 	private final BiFunction<T, IInventory, NonNullList<ItemStack>> recipeOutputsFunction;
 	
-	public RecipeData(Function<T, Integer> totalTimeFunction, Function<T, Integer> consumptionOnStartFunction, Function<T, Integer> consumptionPerTickFunction, BiFunction<T, IInventory, NonNullList<ItemStack>> recipeOutputsFunction) {
+	public RecipeData(Function<T, Integer> totalTimeFunction, Function<T, Integer> consumptionOnStartFunction, Function<T, Integer> consumptionPerTickFunction, BiFunction<T, IInventory, NonNullList<ItemStack>> possibleRecipeOutputsFunction, BiFunction<T, IInventory, NonNullList<ItemStack>> recipeOutputsFunction) {
 		this.totalTimeFunction = totalTimeFunction;
 		this.consumptionOnStartFunction = consumptionOnStartFunction;
 		this.consumptionPerTickFunction = consumptionPerTickFunction;
+		this.possibleRecipeOutputsFunction = possibleRecipeOutputsFunction;
 		this.recipeOutputsFunction = recipeOutputsFunction;
 	}
 	
@@ -34,15 +36,19 @@ public class RecipeData<T extends IRecipe<IInventory>> {
 		return consumptionPerTickFunction.apply(recipe);
 	}
 	
+	public NonNullList<ItemStack> getPossibleRecipeOutputs(T recipe, IInventory inventory) {
+		return possibleRecipeOutputsFunction.apply(recipe, inventory);
+	}
+	
 	public NonNullList<ItemStack> getRecipeOutputs(T recipe, IInventory inventory) {
 		return recipeOutputsFunction.apply(recipe, inventory);
 	}
 	
 	public static <X extends MachineRecipe> RecipeData<X> getBasicMachine() {
-		return new RecipeData<>(MachineRecipe::getTotalTime, MachineRecipe::getConsumptionOnStart, MachineRecipe::getConsumptionPerTick, MachineRecipe::getOutputs);
+		return new RecipeData<>(MachineRecipe::getTotalTime, MachineRecipe::getConsumptionOnStart, MachineRecipe::getConsumptionPerTick, MachineRecipe::getPossibleOutputs, MachineRecipe::getOutputs);
 	}
 	
 	public static <X extends AbstractCookingRecipe> RecipeData<X> getBasicCooking(int defaultConsumptionOnStart, int defaultConsumptionPerTick) {
-		return new RecipeData<>(AbstractCookingRecipe::getCookTime, recipe -> defaultConsumptionOnStart, recipe -> defaultConsumptionPerTick, (recipe, inventory) -> NonNullList.from(ItemStack.EMPTY, recipe.getCraftingResult(inventory)));
+		return new RecipeData<>(AbstractCookingRecipe::getCookTime, recipe -> defaultConsumptionOnStart, recipe -> defaultConsumptionPerTick, (recipe, inventory) -> NonNullList.from(ItemStack.EMPTY, recipe.getCraftingResult(inventory)), (recipe, inventory) -> NonNullList.from(ItemStack.EMPTY, recipe.getCraftingResult(inventory)));
 	}
 }
