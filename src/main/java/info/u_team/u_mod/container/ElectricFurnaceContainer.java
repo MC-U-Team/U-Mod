@@ -3,9 +3,7 @@ package info.u_team.u_mod.container;
 import info.u_team.u_mod.container.basic.BasicMachineContainer;
 import info.u_team.u_mod.init.UModContainerTypes;
 import info.u_team.u_mod.tileentity.ElectricFurnaceTileEntity;
-import info.u_team.u_mod.util.recipe.RecipeHandler;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.crafting.FurnaceRecipe;
 import net.minecraft.network.PacketBuffer;
 
 public class ElectricFurnaceContainer extends BasicMachineContainer<ElectricFurnaceTileEntity> {
@@ -23,10 +21,9 @@ public class ElectricFurnaceContainer extends BasicMachineContainer<ElectricFurn
 	@Override
 	protected void init(boolean server) {
 		super.init(server);
-		final RecipeHandler<FurnaceRecipe> recipeHandler = tileEntity.getRecipeHandler();
-		appendInventory(recipeHandler.getIngredientSlots(), 1, 1, 44, 50);
-		appendOutputInventory(recipeHandler.getOutputSlots(), 2, 3, 116, 41);
-		appendUpgradeInventory(recipeHandler.getUpgradeSlots(), 1, 3, 116, 8);
+		appendInventory(tileEntity.getIngredientSlots(), 1, 1, 44, 50);
+		appendOutputInventory(tileEntity.getOutputSlots(), 2, 3, 116, 41);
+		appendUpgradeInventory(tileEntity.getUpgradeSlots(), 1, 3, 116, 8);
 		appendPlayerInventory(playerInventory, 8, 92);
 	}
 	

@@ -1,7 +1,6 @@
 package info.u_team.u_mod.container.basic;
 
 import info.u_team.u_mod.tileentity.basic.BasicMachineTileEntity;
-import info.u_team.u_mod.util.recipe.RecipeHandler;
 import info.u_team.u_team_core.container.UTileEntityContainer;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.container.*;
@@ -25,9 +24,8 @@ public class BasicMachineContainer<T extends BasicMachineTileEntity<?>> extends 
 	
 	@Override
 	protected void init(boolean server) {
-		final RecipeHandler<?> recipeHandler = tileEntity.getRecipeHandler();
-		addServerToClientTracker(recipeHandler.getPercentTracker());
-		addServerToClientTracker(recipeHandler.getEnergy().createSyncHandler());
+		addServerToClientTracker(tileEntity.getRecipeHandler().getPercentTracker());
+		addServerToClientTracker(tileEntity.getInternalEnergyStorage().createSyncHandler());
 	}
 	
 	protected void appendOutputInventory(IItemHandler handler, int inventoryHeight, int inventoryWidth, int x, int y) {
