@@ -1,9 +1,8 @@
 package info.u_team.u_mod.util.recipe;
 
-import java.util.*;
-import java.util.function.*;
+import java.util.Optional;
+import java.util.function.BiFunction;
 
-import info.u_team.u_mod.item.basic.BasicMachineUpgradeItem;
 import info.u_team.u_mod.util.ExtendedBufferReferenceHolder;
 import info.u_team.u_team_core.api.sync.BufferReferenceHolder;
 import info.u_team.u_team_core.energy.BasicEnergyStorage;
@@ -21,11 +20,6 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSerializable<CompoundNBT> {
-	
-	private final BasicEnergyStorage energy;
-	private final UItemStackHandler ingredientSlots;
-	private final UItemStackHandler outputSlots;
-	private final UItemStackHandler upgradeSlots;
 	
 	private final LazyOptional<BasicEnergyStorage> energyOptional;
 	private final LazyOptional<UItemStackHandler> ingredientSlotsOptional;
@@ -48,28 +42,32 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 	// Client only value
 	private float percent;
 	
-	public RecipeHandler(IRecipeType<T> recipeType, BasicEnergyStorage energy, UItemStackHandler ingredientSlots, UItemStackHandler outputSlots, UItemStackHandler upgradeSlots, RecipeData<T> recipeData, Runnable dirtyMarker) {
-		this.energy = energy;
-		this.ingredientSlots = ingredientSlots;
-		this.outputSlots = outputSlots;
-		this.upgradeSlots = upgradeSlots;
+	public RecipeHandler(IRecipeType<T> recipeType, int ingredientSize, LazyOptional<BasicEnergyStorage> energyOptional, LazyOptional<UItemStackHandler> ingredientSlotsOptional, LazyOptional<UItemStackHandler> outputSlotsOptional, LazyOptional<UItemStackHandler> upgradeSlotsOptional, RecipeData<T> recipeData, Runnable dirtyMarker) {
+		this.energyOptional = energyOptional;
+		this.ingredientSlotsOptional = ingredientSlotsOptional;
+		this.outputSlotsOptional = outputSlotsOptional;
+		this.upgradeSlotsOptional = upgradeSlotsOptional;
+		
 		this.recipeData = recipeData;
 		this.dirtyMarker = dirtyMarker;
-		
-		energyOptional = LazyOptional.of(() -> energy);
-		ingredientSlotsOptional = LazyOptional.of(() -> ingredientSlots);
-		outputSlotsOptional = LazyOptional.of(() -> outputSlots);
-		upgradeSlotsOptional = LazyOptional.of(() -> upgradeSlots);
-		
-		recipeCache = new RecipeCache<>(recipeType, ingredientSlots.getSlots());
+		recipeCache = new RecipeCache<>(recipeType, ingredientSize);
 	}
 	
 	public void update(World world) {
-		final RecipeWrapper recipeWrapper = new RecipeWrapper(ingredientSlots);
+		// If one lazy optional is not present we will fail. We will not include the upgrade slots here as they are not
+		// necessary to process items
+		if (!energyOptional.isPresent() || !ingredientSlotsOptional.isPresent() || !outputSlotsOptional.isPresent()) {
+			resetTimeAndMarkDirty();
+			return;
+		}
 		
-		// If slots are empty there could be no recipe
+		final BasicEnergyStorage energy = energyOptional.orElseThrow(AssertionError::new);
+		final RecipeWrapper recipeWrapper = new RecipeWrapper(ingredientSlotsOptional.orElseThrow(AssertionError::new));
+		final UItemStackHandler outputSlots = outputSlotsOptional.orElseThrow(AssertionError::new);
+		
+		// If input slots are empty there could be no recipe
 		if (recipeWrapper.isEmpty()) {
-			time = 0;
+			resetTimeAndMarkDirty();
 			return;
 		}
 		
@@ -85,48 +83,22 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 		// Get recipe
 		final T recipe = recipeOptional.get();
 		
-		// Get all upgrade functions
-		final List<Function<Integer, Integer>> timeFunctions = new ArrayList<>();
-		final List<Function<Integer, Integer>> startConsumptionFunctions = new ArrayList<>();
-		final List<Function<Integer, Integer>> tickConsumptionFunctions = new ArrayList<>();
-		
-		for (int index = 0; index < upgradeSlots.getSlots(); index++) {
-			final ItemStack stack = upgradeSlots.getStackInSlot(index);
-			if (stack.getItem() instanceof BasicMachineUpgradeItem) {
-				final BasicMachineUpgradeItem item = (BasicMachineUpgradeItem) stack.getItem();
-				timeFunctions.add(item.applyTimeUpgrade(stack.getCount()));
-				startConsumptionFunctions.add(item.applyStartConsumptionUpgrade(stack.getCount()));
-				tickConsumptionFunctions.add(item.applyTickConsumptionUpgrade(stack.getCount()));
-			}
-		}
-		
 		// Set the total time to the total time from the recipe (trough the function for modifiers)
 		totalTime = totalTimeModifier.apply(recipe, recipeData.getTotalTime(recipe));
 		
-		for (int index = 0; index < timeFunctions.size(); index++) {
-			totalTime = timeFunctions.get(index).apply(totalTime);
-		}
-		
-		// Check if the recipe is valid when the timer starts
 		if (time == 0) {
-			if (!isRecipeValid(recipe, recipeWrapper)) {
-				time = 0;
+			// Check if we can process (e.g. output slot is not full)
+			if (!canProcess(recipe, recipeWrapper, outputSlots)) {
 				return;
 			}
-		}
-		
-		// Check if we can process (e.g. output slot is not full)
-		if (!canProcess(recipe, recipeWrapper, outputSlots)) {
-			time = 0;
-			return;
-		}
-		
-		// If we have no energy for the consumption at the start we cannot proceed
-		if (time == 0) {
+			
+			// If we have no energy for the consumption at the start we cannot proceed
 			if (!doConsumtionOnStart(recipe, energy)) {
-				time = 0;
 				return;
 			}
+			
+			// Mark the consumption on start dirty
+			dirtyMarker.run();
 		}
 		
 		// If we have not energy for the consumption every tick we cannot proceed. We will not reset the timer here.
@@ -142,21 +114,16 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 			time = 0;
 			process(recipe, recipeWrapper, outputSlots);
 		}
+		
+		// Mark the consumption per tick and the time dirty
 		dirtyMarker.run();
 	}
 	
 	private void resetTimeAndMarkDirty() {
-		time = 0;
-		dirtyMarker.run();
-	}
-	
-	protected boolean doConsumtionPerTick(T recipe, BasicEnergyStorage energyStorage) {
-		final int consumtion = recipeData.getConsumptionPerTick(recipe);
-		if (energyStorage.getEnergy() >= consumtion) {
-			energyStorage.addEnergy(-consumtion);
-			return true;
+		if (time != 0) {
+			time = 0;
+			dirtyMarker.run();
 		}
-		return false;
 	}
 	
 	protected boolean doConsumtionOnStart(T recipe, BasicEnergyStorage energyStorage) {
@@ -168,15 +135,19 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 		return false;
 	}
 	
-	protected boolean isRecipeValid(T recipe, RecipeWrapper recipeWrapper) {
-		final NonNullList<ItemStack> recipeOutputs = recipeData.getRecipeOutputs(recipe, recipeWrapper);
-		return !recipeOutputs.isEmpty() && !recipeOutputs.stream().allMatch(ItemStack::isEmpty);
+	protected boolean doConsumtionPerTick(T recipe, BasicEnergyStorage energyStorage) {
+		final int consumtion = recipeData.getConsumptionPerTick(recipe);
+		if (energyStorage.getEnergy() >= consumtion) {
+			energyStorage.addEnergy(-consumtion);
+			return true;
+		}
+		return false;
 	}
 	
 	protected boolean canProcess(T recipe, RecipeWrapper recipeWrapper, UItemStackHandler outputHandler) {
-		final NonNullList<ItemStack> recipeOutputs = recipeData.getRecipeOutputs(recipe, recipeWrapper);
-		for (int recipeIndex = 0; recipeIndex < recipeOutputs.size(); recipeIndex++) {
-			final ItemStack recipeOutput = recipeOutputs.get(recipeIndex);
+		final NonNullList<ItemStack> recipeOutputs = recipeData.getPossibleRecipeOutputs(recipe, recipeWrapper);
+		for (int index = 0; index < recipeOutputs.size(); index++) {
+			final ItemStack recipeOutput = recipeOutputs.get(index);
 			if (!ItemHandlerHelper.insertItemStacked(outputHandler, recipeOutput.copy(), true).isEmpty()) {
 				return false;
 			}
@@ -189,11 +160,9 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 		// Add to output
 		for (int index = 0; index < recipeOutputs.size(); index++) {
 			final ItemStack recipeOutput = recipeOutputs.get(index);
-			// If recipe output is empty we continue the loop
-			if (recipeOutput.isEmpty()) {
-				continue;
+			if (!recipeOutput.isEmpty()) {
+				ItemHandlerHelper.insertItemStacked(outputHandler, recipeOutput.copy(), false);
 			}
-			System.out.println(ItemHandlerHelper.insertItemStacked(outputHandler, recipeOutput.copy(), false));
 		}
 		// Remove from ingredient
 		for (int index = 0; index < recipeWrapper.getSizeInventory(); index++) {
@@ -205,26 +174,13 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 	@Override
 	public CompoundNBT serializeNBT() {
 		final CompoundNBT compound = new CompoundNBT();
-		compound.put("ingredients", ingredientSlots.serializeNBT());
-		compound.put("outputs", outputSlots.serializeNBT());
-		compound.put("upgrades", upgradeSlots.serializeNBT());
 		compound.putInt("time", time);
 		return compound;
 	}
 	
 	@Override
 	public void deserializeNBT(CompoundNBT compound) {
-		ingredientSlots.deserializeNBT(compound.getCompound("ingredients"));
-		outputSlots.deserializeNBT(compound.getCompound("outputs"));
-		upgradeSlots.deserializeNBT(compound.getCompound("upgrades"));
 		time = compound.getInt("time");
-	}
-	
-	public void invalidate() {
-		energyOptional.invalidate();
-		ingredientSlotsOptional.invalidate();
-		outputSlotsOptional.invalidate();
-		upgradeSlotsOptional.invalidate();
 	}
 	
 	public void sendInitialDataBuffer(PacketBuffer buffer) {
@@ -234,39 +190,6 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 	@OnlyIn(Dist.CLIENT)
 	public void handleInitialDataBuffer(PacketBuffer buffer) {
 		percent = buffer.readFloat();
-	}
-	
-	// Getter
-	public BasicEnergyStorage getEnergy() {
-		return energy;
-	}
-	
-	public UItemStackHandler getIngredientSlots() {
-		return ingredientSlots;
-	}
-	
-	public UItemStackHandler getOutputSlots() {
-		return outputSlots;
-	}
-	
-	public UItemStackHandler getUpgradeSlots() {
-		return upgradeSlots;
-	}
-	
-	public LazyOptional<BasicEnergyStorage> getEnergyOptional() {
-		return energyOptional;
-	}
-	
-	public LazyOptional<UItemStackHandler> getIngredientSlotsOptional() {
-		return ingredientSlotsOptional;
-	}
-	
-	public LazyOptional<UItemStackHandler> getOutputSlotsOptional() {
-		return outputSlotsOptional;
-	}
-	
-	public LazyOptional<UItemStackHandler> getUpgradeSlotsOptional() {
-		return upgradeSlotsOptional;
 	}
 	
 	public BufferReferenceHolder getPercentTracker() {
