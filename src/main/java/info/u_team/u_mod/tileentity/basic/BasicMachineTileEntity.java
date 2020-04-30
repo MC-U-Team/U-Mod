@@ -2,6 +2,7 @@ package info.u_team.u_mod.tileentity.basic;
 
 import info.u_team.u_mod.util.inventory.InputOutputHandlerWrapper;
 import info.u_team.u_mod.util.recipe.*;
+import info.u_team.u_team_core.inventory.*;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.crafting.*;
 import net.minecraft.nbt.CompoundNBT;
@@ -16,14 +17,31 @@ import net.minecraftforge.items.CapabilityItemHandler;
 
 public abstract class BasicMachineTileEntity<T extends IRecipe<IInventory>> extends BasicContainerEnergyTileEntity {
 	
+	protected final UItemStackHandler ingredientSlots;
+	protected final UItemStackHandler outputSlots;
+	protected final UItemStackHandler upgradeSlots;
+	
+	protected final LazyOptional<UItemStackHandler> ingredientSlotsOptional;
+	protected final LazyOptional<UItemStackHandler> outputSlotsOptional;
+	protected final LazyOptional<UItemStackHandler> upgradeSlotsOptional;
+	
 	protected final RecipeHandler<T> recipeHandler;
 	
 	protected final LazyOptional<InputOutputHandlerWrapper> slotsWrapperOptional;
 	
 	public BasicMachineTileEntity(TileEntityType<?> type, int capacity, int maxReceive, int maxExtract, IRecipeType<T> recipeType, int ingredientSize, int outputSize, int upgradeSize, RecipeData<T> recipeData) {
 		super(type, capacity, maxReceive, maxExtract);
-		recipeHandler = new TileEntityRecipeHandler<T, BasicEnergyTileEntity>(this, recipeType, ingredientSize, outputSize, upgradeSize, recipeData);
-		slotsWrapperOptional = LazyOptional.of(() -> new InputOutputHandlerWrapper(recipeHandler.getIngredientSlots(), recipeHandler.getOutputSlots()));
+		
+		ingredientSlots = new TileEntityUItemStackHandler(ingredientSize, this);
+		outputSlots = new TileEntityUItemStackHandler(outputSize, this);
+		upgradeSlots = new TileEntityUItemStackHandler(upgradeSize, this);
+		
+		ingredientSlotsOptional = LazyOptional.of(() -> ingredientSlots);
+		outputSlotsOptional = LazyOptional.of(() -> outputSlots);
+		upgradeSlotsOptional = LazyOptional.of(() -> upgradeSlots);
+		
+		recipeHandler = new TileEntityRecipeHandler<T, BasicEnergyTileEntity>(this, recipeType, ingredientSize, ingredientSlotsOptional, outputSlotsOptional, upgradeSlotsOptional, recipeData);
+		slotsWrapperOptional = LazyOptional.of(() -> new InputOutputHandlerWrapper(ingredientSlots, outputSlots));
 	}
 	
 	// Tick
@@ -37,13 +55,19 @@ public abstract class BasicMachineTileEntity<T extends IRecipe<IInventory>> exte
 	@Override
 	public void writeNBT(CompoundNBT compound) {
 		super.writeNBT(compound);
-		compound.put("recipe_data", recipeHandler.serializeNBT());
+		compound.put("ingredients", ingredientSlots.serializeNBT());
+		compound.put("outputs", outputSlots.serializeNBT());
+		compound.put("upgrades", upgradeSlots.serializeNBT());
+		compound.put("recipe", recipeHandler.serializeNBT());
 	}
 	
 	@Override
 	public void readNBT(CompoundNBT compound) {
 		super.readNBT(compound);
-		recipeHandler.deserializeNBT(compound.getCompound("recipe_data"));
+		ingredientSlots.deserializeNBT(compound.getCompound("ingredients"));
+		outputSlots.deserializeNBT(compound.getCompound("outputs"));
+		upgradeSlots.deserializeNBT(compound.getCompound("upgrades"));
+		recipeHandler.deserializeNBT(compound.getCompound("recipe"));
 	}
 	
 	// Invalidate lazy optional
@@ -51,7 +75,9 @@ public abstract class BasicMachineTileEntity<T extends IRecipe<IInventory>> exte
 	@Override
 	public void remove() {
 		super.remove();
-		recipeHandler.invalidate();
+		ingredientSlotsOptional.invalidate();
+		outputSlotsOptional.invalidate();
+		upgradeSlotsOptional.invalidate();
 		slotsWrapperOptional.invalidate();
 	}
 	
@@ -70,6 +96,19 @@ public abstract class BasicMachineTileEntity<T extends IRecipe<IInventory>> exte
 	}
 	
 	// Getter
+	
+	public UItemStackHandler getIngredientSlots() {
+		return ingredientSlots;
+	}
+	
+	public UItemStackHandler getOutputSlots() {
+		return outputSlots;
+	}
+	
+	public UItemStackHandler getUpgradeSlots() {
+		return upgradeSlots;
+	}
+	
 	public RecipeHandler<T> getRecipeHandler() {
 		return recipeHandler;
 	}
