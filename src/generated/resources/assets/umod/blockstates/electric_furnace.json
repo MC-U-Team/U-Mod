@@ -1,18 +1,33 @@
 {
 	"variants": {
-		"facing=north": {
+		"facing=north,working=false": {
 			"model": "umod:block/electric_furnace"
 		},
-		"facing=south": {
+		"facing=south,working=false": {
 			"model": "umod:block/electric_furnace",
 			"y": 180
 		},
-		"facing=west": {
+		"facing=west,working=false": {
 			"model": "umod:block/electric_furnace",
 			"y": 270
 		},
-		"facing=east": {
+		"facing=east,working=false": {
 			"model": "umod:block/electric_furnace",
+			"y": 90
+		},
+		"facing=north,working=true": {
+			"model": "umod:block/electric_furnace_working"
+		},
+		"facing=south,working=true": {
+			"model": "umod:block/electric_furnace_working",
+			"y": 180
+		},
+		"facing=west,working=true": {
+			"model": "umod:block/electric_furnace_working",
+			"y": 270
+		},
+		"facing=east,working=true": {
+			"model": "umod:block/electric_furnace_working",
 			"y": 90
 		}
 	}
