@@ -8,7 +8,7 @@ import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.DirectionProperty;
+import net.minecraft.state.*;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntityType;
@@ -21,9 +21,13 @@ public class BasicMachineBlock extends UTileEntityBlock {
 	
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 	
+	public static final BooleanProperty WORKING = BooleanProperty.create("working");
+	
+	public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
+	
 	public BasicMachineBlock(String name, Supplier<TileEntityType<?>> tileEntityType) {
 		super(name, UModItemGroups.GROUP, Properties.create(Material.IRON).harvestTool(ToolType.PICKAXE).harvestLevel(2).sound(SoundType.METAL).hardnessAndResistance(2.6F, 100F), tileEntityType);
-		setDefaultState(getDefaultState().with(FACING, Direction.NORTH));
+		setDefaultState(getDefaultState().with(FACING, Direction.NORTH).with(WORKING, false).with(POWERED, false));
 	}
 	
 	@Override
@@ -40,7 +44,7 @@ public class BasicMachineBlock extends UTileEntityBlock {
 	
 	@Override
 	protected void fillStateContainer(Builder<Block, BlockState> builder) {
-		builder.add(FACING);
+		builder.add(FACING, WORKING, POWERED);
 	}
 	
 	@Override
