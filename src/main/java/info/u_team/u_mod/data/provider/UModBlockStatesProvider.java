@@ -22,8 +22,9 @@ public class UModBlockStatesProvider extends CommonBlockStatesProvider {
 	private void addMachine(BasicMachineBlock block) {
 		final String path = block.getRegistryName().getPath();
 		getVariantBuilder(block).forAllStatesExcept(state -> {
+			final String workingState = state.get(BasicMachineBlock.WORKING) ? "_working" : "";
 			return ConfiguredModel.builder() //
-					.modelFile(cubeFacing(path, modBlockLoc("machine/" + path + "_front" + (state.get(BasicMachineBlock.WORKING) ? "_working" : "")), modBlockLoc("machine/side"))) //
+					.modelFile(cubeFacing(path + workingState, modBlockLoc("machine/" + path + "_front" + workingState), modBlockLoc("machine/side"))) //
 					.rotationY(((int) state.get(BasicMachineBlock.FACING).getHorizontalAngle() + 180) % 360).build();
 		}, BasicMachineBlock.POWERED);
 	}
