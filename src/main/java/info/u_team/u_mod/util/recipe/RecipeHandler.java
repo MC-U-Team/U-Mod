@@ -3,10 +3,11 @@ package info.u_team.u_mod.util.recipe;
 import java.util.Optional;
 import java.util.function.BiFunction;
 
-import info.u_team.u_mod.util.ExtendedBufferReferenceHolder;
+import info.u_team.u_mod.util.*;
 import info.u_team.u_team_core.api.sync.BufferReferenceHolder;
 import info.u_team.u_team_core.energy.BasicEnergyStorage;
 import info.u_team.u_team_core.inventory.UItemStackHandler;
+import it.unimi.dsi.fastutil.booleans.BooleanConsumer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.*;
@@ -27,22 +28,23 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 	private final LazyOptional<UItemStackHandler> upgradeSlotsOptional;
 	
 	private final RecipeData<T> recipeData;
-	
 	private final RecipeCache<T> recipeCache;
 	
 	private final Runnable dirtyMarker;
+	
+	// private final Float2FloatFunction workingCallback;
 	
 	private BiFunction<T, Integer, Integer> totalTimeModifier = (recipe, totalTime) -> totalTime;
 	
 	private int totalTime;
 	private int time;
 	
-	private final BufferReferenceHolder percentTracker = ExtendedBufferReferenceHolder.createFloatHolder(() -> time / (float) totalTime, value -> percent = value);
+	private final BufferReferenceHolder percentTracker = ExtendedBufferReferenceHolder.createFloatHolder(() -> MathUtil.valueInRange(0, 1, time / (float) totalTime), value -> percent = value);
 	
 	// Client only value
 	private float percent;
 	
-	public RecipeHandler(IRecipeType<T> recipeType, LazyOptional<BasicEnergyStorage> energyOptional, int ingredientSize, LazyOptional<UItemStackHandler> ingredientSlotsOptional, LazyOptional<UItemStackHandler> outputSlotsOptional, LazyOptional<UItemStackHandler> upgradeSlotsOptional, RecipeData<T> recipeData, Runnable dirtyMarker) {
+	public RecipeHandler(IRecipeType<T> recipeType, LazyOptional<BasicEnergyStorage> energyOptional, int ingredientSize, LazyOptional<UItemStackHandler> ingredientSlotsOptional, LazyOptional<UItemStackHandler> outputSlotsOptional, LazyOptional<UItemStackHandler> upgradeSlotsOptional, RecipeData<T> recipeData, Runnable dirtyMarker, BooleanConsumer workingCalback) {
 		this.energyOptional = energyOptional;
 		this.ingredientSlotsOptional = ingredientSlotsOptional;
 		this.outputSlotsOptional = outputSlotsOptional;
@@ -50,6 +52,8 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 		
 		this.recipeData = recipeData;
 		this.dirtyMarker = dirtyMarker;
+		// this.workingCallback = workingCalback;
+		
 		recipeCache = new RecipeCache<>(recipeType, ingredientSize);
 	}
 	
@@ -184,12 +188,12 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 	}
 	
 	public void sendInitialDataBuffer(PacketBuffer buffer) {
-		buffer.writeFloat(time / (float) totalTime);
+		percentTracker.get().writeBytes(buffer);
 	}
 	
 	@OnlyIn(Dist.CLIENT)
 	public void handleInitialDataBuffer(PacketBuffer buffer) {
-		percent = buffer.readFloat();
+		percentTracker.set(buffer);
 	}
 	
 	public BufferReferenceHolder getPercentTracker() {
