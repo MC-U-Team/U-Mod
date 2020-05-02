@@ -35,6 +35,19 @@ public class BasicMachineBlock extends UTileEntityBlock {
 		return openContainer(world, pos, player, true);
 	}
 	
+	// Redstone powered state
+	
+	@Override
+	public void neighborChanged(BlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
+		if (world.isRemote) {
+			return;
+		}
+		final boolean powered = state.get(POWERED);
+		if (powered != world.isBlockPowered(pos)) {
+			world.setBlockState(pos, state.cycle(POWERED), 2);
+		}
+	}
+	
 	// Facing
 	
 	@Override
