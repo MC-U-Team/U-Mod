@@ -168,12 +168,12 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 	}
 	
 	public void sendInitialDataBuffer(PacketBuffer buffer) {
-		percentTracker.get().writeBytes(buffer);
+		buffer.writeFloat(MathUtil.valueInRange(0, 1, time / (float) totalTime));
 	}
 	
 	@OnlyIn(Dist.CLIENT)
 	public void handleInitialDataBuffer(PacketBuffer buffer) {
-		percentTracker.set(buffer);
+		percent = buffer.readFloat();
 	}
 	
 	public BufferReferenceHolder getPercentTracker() {
