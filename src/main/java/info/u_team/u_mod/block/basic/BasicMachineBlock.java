@@ -52,7 +52,7 @@ public class BasicMachineBlock extends UTileEntityBlock {
 	
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		return getDefaultState().with(FACING, context.getPlacementHorizontalFacing().getOpposite());
+		return getDefaultState().with(FACING, context.getPlacementHorizontalFacing().getOpposite()).with(POWERED, context.getWorld().isBlockPowered(context.getPos()));
 	}
 	
 	@Override
