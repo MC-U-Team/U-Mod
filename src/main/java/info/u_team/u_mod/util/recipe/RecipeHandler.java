@@ -32,7 +32,7 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 	
 	private final Runnable dirtyMarker;
 	
-	// private final Float2FloatFunction workingCallback;
+	private final BooleanConsumer workingCallback;
 	
 	private BiFunction<T, Integer, Integer> totalTimeModifier = (recipe, totalTime) -> totalTime;
 	
@@ -44,7 +44,7 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 	// Client only value
 	private float percent;
 	
-	public RecipeHandler(IRecipeType<T> recipeType, LazyOptional<BasicEnergyStorage> energyOptional, int ingredientSize, LazyOptional<UItemStackHandler> ingredientSlotsOptional, LazyOptional<UItemStackHandler> outputSlotsOptional, LazyOptional<UItemStackHandler> upgradeSlotsOptional, RecipeData<T> recipeData, Runnable dirtyMarker, BooleanConsumer workingCalback) {
+	public RecipeHandler(IRecipeType<T> recipeType, LazyOptional<BasicEnergyStorage> energyOptional, int ingredientSize, LazyOptional<UItemStackHandler> ingredientSlotsOptional, LazyOptional<UItemStackHandler> outputSlotsOptional, LazyOptional<UItemStackHandler> upgradeSlotsOptional, RecipeData<T> recipeData, Runnable dirtyMarker, BooleanConsumer workingCallback) {
 		this.energyOptional = energyOptional;
 		this.ingredientSlotsOptional = ingredientSlotsOptional;
 		this.outputSlotsOptional = outputSlotsOptional;
@@ -52,7 +52,7 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 		
 		this.recipeData = recipeData;
 		this.dirtyMarker = dirtyMarker;
-		// this.workingCallback = workingCalback;
+		this.workingCallback = workingCallback;
 		
 		recipeCache = new RecipeCache<>(recipeType, ingredientSize);
 	}
@@ -61,7 +61,8 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 		// If one lazy optional is not present we will fail. We will not include the upgrade slots here as they are not
 		// necessary to process items
 		if (!energyOptional.isPresent() || !ingredientSlotsOptional.isPresent() || !outputSlotsOptional.isPresent()) {
-			resetTimeAndMarkDirty();
+			time = 0;
+			workingCallback.accept(false);
 			return;
 		}
 		
@@ -71,7 +72,8 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 		
 		// If input slots are empty there could be no recipe
 		if (recipeWrapper.isEmpty()) {
-			resetTimeAndMarkDirty();
+			time = 0;
+			workingCallback.accept(false);
 			return;
 		}
 		
@@ -80,75 +82,53 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 		
 		// If no recipe was found we cannot proceed
 		if (!recipeOptional.isPresent()) {
-			resetTimeAndMarkDirty();
+			time = 0;
+			workingCallback.accept(false);
 			return;
 		}
 		
 		// Get recipe
 		final T recipe = recipeOptional.get();
 		
-		// Set the total time to the total time from the recipe (trough the function for modifiers)
-		totalTime = totalTimeModifier.apply(recipe, recipeData.getTotalTime(recipe));
-		
+		if (canRun(recipe, recipeWrapper, outputSlots, energy)) {
+			// Set the total time to the total time from the recipe (trough the function for modifiers)
+			totalTime = totalTimeModifier.apply(recipe, recipeData.getTotalTime(recipe));
+			
+			if (time == 0) {
+				energy.removeEnergy(recipeData.getConsumptionOnStart(recipe)); // Remove energy for start
+			}
+			
+			energy.removeEnergy(recipeData.getConsumptionPerTick(recipe)); // Remove energy per tick
+			
+			// Increase the processing time by one
+			time++;
+			
+			// If the time is equal to the total time needed we can process
+			if (time >= totalTime) {
+				time = 0;
+				process(recipe, recipeWrapper, outputSlots);
+			}
+			
+			// Mark the consumption per tick and the time dirty
+			dirtyMarker.run();
+			
+			workingCallback.accept(true);
+		} else {
+			workingCallback.accept(false);
+		}
+	}
+	
+	protected boolean canRun(T recipe, RecipeWrapper recipeWrapper, UItemStackHandler outputHandler, BasicEnergyStorage energyStorage) {
+		boolean isRecipeReadyToStart;
 		if (time == 0) {
-			// Check if we can process (e.g. output slot is not full)
-			if (!canProcess(recipe, recipeWrapper, outputSlots)) {
-				return;
-			}
-			
-			// If we have no energy for the consumption at the start we cannot proceed
-			if (!doConsumtionOnStart(recipe, energy)) {
-				return;
-			}
-			
-			// Mark the consumption on start dirty
-			dirtyMarker.run();
+			isRecipeReadyToStart = canStartProcess(recipe, recipeWrapper, outputHandler) && recipeData.getConsumptionOnStart(recipe) <= energyStorage.getEnergy();
+		} else {
+			isRecipeReadyToStart = true; // The recipe has already started, so the conditions must be true
 		}
-		
-		// If we have not energy for the consumption every tick we cannot proceed. We will not reset the timer here.
-		if (!doConsumtionPerTick(recipe, energy)) {
-			return;
-		}
-		
-		// Increase the processing time by one
-		time++;
-		
-		// If the time is equal to the total time needed we can process
-		if (time >= totalTime) {
-			time = 0;
-			process(recipe, recipeWrapper, outputSlots);
-		}
-		
-		// Mark the consumption per tick and the time dirty
-		dirtyMarker.run();
+		return isRecipeReadyToStart && recipeData.getConsumptionPerTick(recipe) <= energyStorage.getEnergy();
 	}
 	
-	private void resetTimeAndMarkDirty() {
-		if (time != 0) {
-			time = 0;
-			dirtyMarker.run();
-		}
-	}
-	
-	protected boolean doConsumtionOnStart(T recipe, BasicEnergyStorage energyStorage) {
-		final int consumtion = recipeData.getConsumptionOnStart(recipe);
-		if (energyStorage.getEnergy() >= consumtion) {
-			energyStorage.addEnergy(-consumtion);
-			return true;
-		}
-		return false;
-	}
-	
-	protected boolean doConsumtionPerTick(T recipe, BasicEnergyStorage energyStorage) {
-		final int consumtion = recipeData.getConsumptionPerTick(recipe);
-		if (energyStorage.getEnergy() >= consumtion) {
-			energyStorage.addEnergy(-consumtion);
-			return true;
-		}
-		return false;
-	}
-	
-	protected boolean canProcess(T recipe, RecipeWrapper recipeWrapper, UItemStackHandler outputHandler) {
+	protected boolean canStartProcess(T recipe, RecipeWrapper recipeWrapper, UItemStackHandler outputHandler) {
 		final NonNullList<ItemStack> recipeOutputs = recipeData.getPossibleRecipeOutputs(recipe, recipeWrapper);
 		for (int index = 0; index < recipeOutputs.size(); index++) {
 			final ItemStack recipeOutput = recipeOutputs.get(index);
