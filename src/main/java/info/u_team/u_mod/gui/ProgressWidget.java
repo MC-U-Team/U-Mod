@@ -12,7 +12,7 @@ import net.minecraftforge.api.distmarker.*;
 @OnlyIn(Dist.CLIENT)
 public class ProgressWidget extends Widget {
 	
-	private static final ResourceLocation LONG_BASIC_ARROW = new ResourceLocation(UMod.MODID, "textures/gui/progress/long_basic_arrow.png");
+	public static final ResourceLocation LONG_BASIC_ARROW = new ResourceLocation(UMod.MODID, "textures/gui/progress/long_basic_arrow.png");
 	
 	public final ResourceLocation texture;
 	
