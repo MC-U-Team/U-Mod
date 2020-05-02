@@ -12,7 +12,7 @@ public class TileEntityRecipeHandler<T extends IRecipe<IInventory>, X extends Ba
 	public TileEntityRecipeHandler(X tileEntity, IRecipeType<T> recipeType, int ingredientSize, LazyOptional<UItemStackHandler> ingredientSlotsOptional, LazyOptional<UItemStackHandler> outputSlotsOptional, LazyOptional<UItemStackHandler> upgradeSlotsOptional, RecipeData<T> recipeData) {
 		super(recipeType, tileEntity.getInternalEnergyStorageOptional(), ingredientSize, ingredientSlotsOptional, outputSlotsOptional, upgradeSlotsOptional, recipeData, tileEntity::markDirty, newState -> {
 			if (newState != tileEntity.getBlockState().get(BasicMachineBlock.WORKING)) {
-				tileEntity.getWorld().setBlockState(tileEntity.getPos(), tileEntity.getBlockState(), 3);
+				tileEntity.getWorld().setBlockState(tileEntity.getPos(), tileEntity.getBlockState().with(BasicMachineBlock.WORKING, newState), 3);
 				tileEntity.updateContainingBlockInfo();
 			}
 		});
