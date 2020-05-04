@@ -108,9 +108,9 @@ public class FluidIngredient implements Predicate<FluidStack> {
 		final JsonElement ingredientJsonElement = jsonObject.get("fluids");
 		
 		if (ingredientJsonElement.isJsonObject()) {
-			return new FluidIngredient(amount, Stream.of(deserializeFluidList(jsonElement.getAsJsonObject())));
-		} else if (jsonElement.isJsonArray()) {
-			final JsonArray jsonArray = jsonElement.getAsJsonArray();
+			return new FluidIngredient(amount, Stream.of(deserializeFluidList(ingredientJsonElement.getAsJsonObject())));
+		} else if (ingredientJsonElement.isJsonArray()) {
+			final JsonArray jsonArray = ingredientJsonElement.getAsJsonArray();
 			if (jsonArray.size() == 0) {
 				throw new JsonSyntaxException("Fluid array cannot be empty, at least one fluid must be defined");
 			} else {
