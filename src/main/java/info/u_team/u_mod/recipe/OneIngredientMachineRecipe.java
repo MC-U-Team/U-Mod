@@ -60,7 +60,7 @@ public class OneIngredientMachineRecipe extends MachineRecipe {
 		
 		@Override
 		public T read(ResourceLocation location, JsonObject json) {
-			final Ingredient ingredient = SerializeUtil.deserializeIngredient(json.get("ingredient"));
+			final Ingredient ingredient = SerializeUtil.deserializeItemIngredient(json.get("ingredient"));
 			final ItemStack output = SerializeUtil.deserializeItemStack(json.get("output"));
 			final int totalTime = JSONUtils.getInt(json, "total_time", 200);
 			final int consumptionOnStart = JSONUtils.getInt(json, "consumption_on_start", 0);

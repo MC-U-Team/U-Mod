@@ -101,7 +101,7 @@ public class OneIngredientMachineRecipeBuilder {
 		
 		@Override
 		public void serialize(JsonObject json) {
-			json.add("ingredient", SerializeUtil.serializeIngredient(ingredient));
+			json.add("ingredient", SerializeUtil.serializeItemIngredient(ingredient));
 			json.add("output", SerializeUtil.serializeItemStack(output));
 			json.addProperty("total_time", totalTime);
 			json.addProperty("consumption_on_start", consumptionOnStart);
