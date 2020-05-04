@@ -1,7 +1,7 @@
 package info.u_team.u_mod.api;
 
 import java.util.Arrays;
-import java.util.stream.Stream;
+import java.util.stream.*;
 
 import com.google.gson.*;
 
@@ -9,7 +9,7 @@ import net.minecraft.item.*;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tags.Tag;
-import net.minecraft.util.IItemProvider;
+import net.minecraft.util.*;
 import net.minecraftforge.common.crafting.*;
 
 public class ItemIngredient extends Ingredient {
@@ -69,8 +69,28 @@ public class ItemIngredient extends Ingredient {
 		public static final Serializer INSTANCE = new Serializer();
 		
 		@Override
-		public ItemIngredient parse(JsonObject json) {
-			return null;
+		public ItemIngredient parse(JsonObject jsonObject) {
+			if (!jsonObject.has("amount") || !jsonObject.has("items")) {
+				throw new JsonSyntaxException("Expected amount and items");
+			}
+			
+			final int amount = JSONUtils.getInt(jsonObject, "amount");
+			final JsonElement ingredientJsonElement = jsonObject.get("items");
+			
+			if (ingredientJsonElement.isJsonObject()) {
+				return new ItemIngredient(amount, Stream.of(deserializeItemList(ingredientJsonElement.getAsJsonObject())));
+			} else if (ingredientJsonElement.isJsonArray()) {
+				final JsonArray jsonArray = ingredientJsonElement.getAsJsonArray();
+				if (jsonArray.size() == 0) {
+					throw new JsonSyntaxException("Item array cannot be empty, at least one item must be defined");
+				} else {
+					return new ItemIngredient(amount, StreamSupport.stream(jsonArray.spliterator(), false).map((jsonArrayElement) -> {
+						return deserializeItemList(JSONUtils.getJsonObject(jsonArrayElement, "item"));
+					}));
+				}
+			} else {
+				throw new JsonSyntaxException("Expected item to be object or array of objects");
+			}
 		}
 		
 		@Override
