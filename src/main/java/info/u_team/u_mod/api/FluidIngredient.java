@@ -18,7 +18,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class FluidIngredient implements Predicate<FluidStack> {
 	
 	private final IFluidList[] acceptedFluids;
-	public final FluidStack[] matchingFluids;
+	public final FluidStack[] matchingFluids; // TODO
 	private final int amount;
 	
 	public static FluidIngredient fromFluids(int amount, Fluid... fluids) {
