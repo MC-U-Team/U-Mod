@@ -57,7 +57,10 @@ public class ItemIngredient extends Ingredient {
 	
 	@Override
 	public JsonElement serialize() {
-		return super.serialize();
+		final JsonObject jsonObject = new JsonObject();
+		jsonObject.addProperty("amount", amount);
+		jsonObject.add("items", super.serialize());
+		return jsonObject;
 	}
 	
 	public static class Serializer implements IIngredientSerializer<ItemIngredient> {
