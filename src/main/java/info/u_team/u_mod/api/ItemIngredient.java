@@ -10,7 +10,7 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tags.Tag;
 import net.minecraft.util.IItemProvider;
-import net.minecraftforge.common.crafting.IIngredientSerializer;
+import net.minecraftforge.common.crafting.*;
 
 public class ItemIngredient extends Ingredient {
 	
@@ -58,6 +58,7 @@ public class ItemIngredient extends Ingredient {
 	@Override
 	public JsonElement serialize() {
 		final JsonObject jsonObject = new JsonObject();
+		jsonObject.addProperty("type", CraftingHelper.getID(Serializer.INSTANCE).toString());
 		jsonObject.addProperty("amount", amount);
 		jsonObject.add("items", super.serialize());
 		return jsonObject;
@@ -68,12 +69,12 @@ public class ItemIngredient extends Ingredient {
 		public static final Serializer INSTANCE = new Serializer();
 		
 		@Override
-		public ItemIngredient parse(PacketBuffer buffer) {
+		public ItemIngredient parse(JsonObject json) {
 			return null;
 		}
 		
 		@Override
-		public ItemIngredient parse(JsonObject json) {
+		public ItemIngredient parse(PacketBuffer buffer) {
 			return null;
 		}
 		
