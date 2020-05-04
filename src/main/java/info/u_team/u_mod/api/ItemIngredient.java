@@ -56,6 +56,11 @@ public class ItemIngredient extends Ingredient {
 	}
 	
 	@Override
+	public IIngredientSerializer<? extends Ingredient> getSerializer() {
+		return Serializer.INSTANCE;
+	}
+	
+	@Override
 	public JsonElement serialize() {
 		final JsonObject jsonObject = new JsonObject();
 		jsonObject.addProperty("type", CraftingHelper.getID(Serializer.INSTANCE).toString());
