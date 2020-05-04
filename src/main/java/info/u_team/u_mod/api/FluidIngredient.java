@@ -60,8 +60,8 @@ public class FluidIngredient implements Predicate<FluidStack> {
 		buffer.writeInt(amount);
 		buffer.writeVarInt(matchingFluids.length);
 		
-		for (int index = 0; index < matchingFluids.length; ++index) {
-			buffer.writeFluidStack(matchingFluids[index]);
+		for (FluidStack stack : matchingFluids) {
+			buffer.writeFluidStack(stack);
 		}
 	}
 	
