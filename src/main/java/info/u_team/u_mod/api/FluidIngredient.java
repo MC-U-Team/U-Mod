@@ -79,14 +79,14 @@ public class FluidIngredient implements Predicate<FluidStack> {
 		jsonObject.addProperty("amount", amount);
 		
 		if (acceptedFluids.length == 1) {
-			jsonObject.add("ingredient", acceptedFluids[0].serialize());
+			jsonObject.add("fluids", acceptedFluids[0].serialize());
 		} else {
 			final JsonArray jsonArray = new JsonArray();
 			
 			for (IFluidList list : acceptedFluids) {
 				jsonArray.add(list.serialize());
 			}
-			jsonObject.add("ingredient", jsonArray);
+			jsonObject.add("fluids", jsonArray);
 		}
 		return jsonObject;
 	}
@@ -100,12 +100,12 @@ public class FluidIngredient implements Predicate<FluidStack> {
 		
 		final JsonObject jsonObject = jsonElement.getAsJsonObject();
 		
-		if (!jsonObject.has("amount") || !jsonObject.has("ingredient")) {
-			throw new JsonSyntaxException("Expected amount and ingredient");
+		if (!jsonObject.has("amount") || !jsonObject.has("fluids")) {
+			throw new JsonSyntaxException("Expected amount and fluids");
 		}
 		
 		final int amount = JSONUtils.getInt(jsonObject, "amount");
-		final JsonElement ingredientJsonElement = jsonObject.get("ingredient");
+		final JsonElement ingredientJsonElement = jsonObject.get("fluids");
 		
 		if (ingredientJsonElement.isJsonObject()) {
 			return new FluidIngredient(amount, Stream.of(deserializeFluidList(jsonElement.getAsJsonObject())));
