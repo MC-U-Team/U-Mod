@@ -3,10 +3,14 @@ package info.u_team.u_mod.api;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
+import com.google.gson.*;
+
 import net.minecraft.item.*;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.tags.Tag;
 import net.minecraft.util.IItemProvider;
+import net.minecraftforge.common.crafting.IIngredientSerializer;
 
 public class ItemIngredient extends Ingredient {
 	
@@ -48,6 +52,31 @@ public class ItemIngredient extends Ingredient {
 				}
 			}
 			return false;
+		}
+	}
+	
+	@Override
+	public JsonElement serialize() {
+		return super.serialize();
+	}
+	
+	public static class Serializer implements IIngredientSerializer<ItemIngredient> {
+		
+		public static final Serializer INSTANCE = new Serializer();
+		
+		@Override
+		public ItemIngredient parse(PacketBuffer buffer) {
+			return null;
+		}
+		
+		@Override
+		public ItemIngredient parse(JsonObject json) {
+			return null;
+		}
+		
+		@Override
+		public void write(PacketBuffer buffer, ItemIngredient ingredient) {
+			
 		}
 	}
 }
