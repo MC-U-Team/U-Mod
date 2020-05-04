@@ -16,21 +16,16 @@ public class ItemIngredient extends Ingredient {
 	
 	private final int amount;
 	
-	public static Ingredient fromItems(int amount, IItemProvider... items) {
-		return fromItemListStream(amount, Arrays.stream(items).map((item) -> new SingleItemList(new ItemStack(item))));
+	public static ItemIngredient fromItems(int amount, IItemProvider... items) {
+		return new ItemIngredient(amount, Arrays.stream(items).map((item) -> new SingleItemList(new ItemStack(item))));
 	}
 	
-	public static Ingredient fromStacks(int amount, ItemStack... stacks) {
-		return fromItemListStream(amount, Arrays.stream(stacks).map((stack) -> new SingleItemList(stack)));
+	public static ItemIngredient fromStacks(int amount, ItemStack... stacks) {
+		return new ItemIngredient(amount, Arrays.stream(stacks).map((stack) -> new SingleItemList(stack)));
 	}
 	
-	public static Ingredient fromTag(int amount, Tag<Item> tag) {
-		return fromItemListStream(amount, Stream.of(new Ingredient.TagList(tag)));
-	}
-	
-	public static Ingredient fromItemListStream(int amount, Stream<? extends IItemList> stream) {
-		Ingredient ingredient = new ItemIngredient(amount, stream);
-		return ingredient.acceptedItems.length == 0 ? EMPTY : ingredient;
+	public static ItemIngredient fromTag(int amount, Tag<Item> tag) {
+		return new ItemIngredient(amount, Stream.of(new Ingredient.TagList(tag)));
 	}
 	
 	protected ItemIngredient(int amount, Stream<? extends IItemList> stream) {
@@ -80,12 +75,21 @@ public class ItemIngredient extends Ingredient {
 		
 		@Override
 		public ItemIngredient parse(PacketBuffer buffer) {
-			return null;
+			final int amount = buffer.readInt();
+			final int length = buffer.readVarInt();
+			
+			return new ItemIngredient(amount, Stream.generate(() -> new SingleItemList(buffer.readItemStack())).limit(length));
 		}
 		
 		@Override
 		public void write(PacketBuffer buffer, ItemIngredient ingredient) {
+			final ItemStack[] items = ingredient.getMatchingStacks();
+			buffer.writeInt(ingredient.amount);
+			buffer.writeVarInt(items.length);
 			
+			for (ItemStack stack : items) {
+				buffer.writeItemStack(stack);
+			}
 		}
 	}
 }
