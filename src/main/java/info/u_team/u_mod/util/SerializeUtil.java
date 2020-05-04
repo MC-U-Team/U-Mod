@@ -1,4 +1,4 @@
-package info.u_team.u_mod.util.inventory;
+package info.u_team.u_mod.util;
 
 import com.google.gson.*;
 

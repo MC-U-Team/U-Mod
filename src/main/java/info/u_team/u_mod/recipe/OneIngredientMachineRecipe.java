@@ -4,7 +4,7 @@ import java.util.function.Function;
 
 import com.google.gson.JsonObject;
 
-import info.u_team.u_mod.util.inventory.SerializeUtil;
+import info.u_team.u_mod.util.SerializeUtil;
 import info.u_team.u_team_core.recipeserializer.URecipeSerializer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
