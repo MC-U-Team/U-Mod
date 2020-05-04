@@ -2,6 +2,7 @@ package info.u_team.u_mod.util;
 
 import com.google.gson.*;
 
+import info.u_team.u_mod.api.FluidIngredient;
 import net.minecraft.item.*;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
@@ -16,6 +17,14 @@ public class SerializeUtil {
 	
 	public static Ingredient deserializeItemIngredient(JsonElement json) {
 		return Ingredient.deserialize(json);
+	}
+	
+	public static JsonElement serializeFluidIngredient(FluidIngredient ingredient) {
+		return ingredient.serialize();
+	}
+	
+	public static FluidIngredient deserializeFluidIngredient(JsonElement json) {
+		return FluidIngredient.deserialize(json);
 	}
 	
 	public static JsonElement serializeItemStack(ItemStack stack) {
