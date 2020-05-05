@@ -57,6 +57,10 @@ public class FluidIngredient implements Predicate<FluidStack> {
 		}
 	}
 	
+	public int getAmount() {
+		return amount;
+	}
+	
 	// Network write
 	public void write(PacketBuffer buffer) {
 		buffer.writeInt(amount);
