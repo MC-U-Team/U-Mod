@@ -1,9 +1,12 @@
 package info.u_team.u_mod.init;
 
 import info.u_team.u_mod.UMod;
+import info.u_team.u_mod.api.ItemIngredient;
 import info.u_team.u_mod.recipe.OneIngredientMachineRecipe;
 import info.u_team.u_team_core.util.registry.BaseRegistryUtil;
 import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -17,6 +20,7 @@ public class UModRecipeSerializers {
 	@SubscribeEvent
 	public static void register(Register<IRecipeSerializer<?>> event) {
 		BaseRegistryUtil.getAllGenericRegistryEntriesAndApplyNames(UMod.MODID, IRecipeSerializer.class).forEach(event.getRegistry()::register);
+		CraftingHelper.register(new ResourceLocation(UMod.MODID, "item"), ItemIngredient.Serializer.INSTANCE);
 	}
 	
 }
