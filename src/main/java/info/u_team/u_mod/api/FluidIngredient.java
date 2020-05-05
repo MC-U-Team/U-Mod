@@ -17,6 +17,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class FluidIngredient implements Predicate<FluidStack> {
 	
+	public static final FluidIngredient EMPTY = new FluidIngredient(0, Stream.empty());
+	
 	private final IFluidList[] acceptedFluids;
 	private final FluidStack[] matchingFluids;
 	private final int amount;
