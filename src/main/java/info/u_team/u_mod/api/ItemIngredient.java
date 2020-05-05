@@ -14,6 +14,8 @@ import net.minecraftforge.common.crafting.*;
 
 public class ItemIngredient extends Ingredient {
 	
+	public static final ItemIngredient EMPTY = new ItemIngredient(0, Stream.empty());
+	
 	private final int amount;
 	
 	public static ItemIngredient fromItems(int amount, IItemProvider... items) {
