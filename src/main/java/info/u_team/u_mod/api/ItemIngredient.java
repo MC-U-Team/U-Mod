@@ -52,6 +52,10 @@ public class ItemIngredient extends Ingredient {
 		}
 	}
 	
+	public int getAmount() {
+		return amount;
+	}
+	
 	@Override
 	public IIngredientSerializer<? extends Ingredient> getSerializer() {
 		return Serializer.INSTANCE;
