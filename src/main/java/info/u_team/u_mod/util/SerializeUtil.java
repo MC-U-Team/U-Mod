@@ -2,7 +2,7 @@ package info.u_team.u_mod.util;
 
 import com.google.gson.*;
 
-import info.u_team.u_mod.api.FluidIngredient;
+import info.u_team.u_mod.api.ingredient.FluidIngredient;
 import net.minecraft.item.*;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;

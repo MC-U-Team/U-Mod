@@ -1,4 +1,4 @@
-package info.u_team.u_mod.api;
+package info.u_team.u_mod.api.ingredient;
 
 import java.util.Arrays;
 import java.util.stream.*;

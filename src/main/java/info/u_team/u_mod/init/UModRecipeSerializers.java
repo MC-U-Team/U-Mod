@@ -1,7 +1,7 @@
 package info.u_team.u_mod.init;
 
 import info.u_team.u_mod.UMod;
-import info.u_team.u_mod.api.ItemIngredient;
+import info.u_team.u_mod.api.ingredient.ItemIngredient;
 import info.u_team.u_mod.recipe.OneIngredientMachineRecipe;
 import info.u_team.u_team_core.util.registry.BaseRegistryUtil;
 import net.minecraft.item.crafting.IRecipeSerializer;
