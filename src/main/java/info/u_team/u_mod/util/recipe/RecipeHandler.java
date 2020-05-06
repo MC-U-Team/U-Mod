@@ -23,8 +23,8 @@ import net.minecraftforge.items.wrapper.RecipeWrapper;
 public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSerializable<CompoundNBT> {
 	
 	private final LazyOptional<BasicEnergyStorage> energyOptional;
-	private final LazyOptional<UItemStackHandler> ingredientSlotsOptional;
-	private final LazyOptional<UItemStackHandler> outputSlotsOptional;
+	private final LazyOptional<UItemStackHandler> itemIngredientSlotsOptional;
+	private final LazyOptional<UItemStackHandler> itemOutputSlotsOptional;
 	private final LazyOptional<UItemStackHandler> upgradeSlotsOptional;
 	
 	private final RecipeData<T> recipeData;
@@ -44,10 +44,10 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 	// Client only value
 	private float percent;
 	
-	public RecipeHandler(IRecipeType<T> recipeType, LazyOptional<BasicEnergyStorage> energyOptional, int ingredientSize, LazyOptional<UItemStackHandler> ingredientSlotsOptional, LazyOptional<UItemStackHandler> outputSlotsOptional, LazyOptional<UItemStackHandler> upgradeSlotsOptional, RecipeData<T> recipeData, Runnable dirtyMarker, BooleanConsumer workingCallback) {
+	public RecipeHandler(IRecipeType<T> recipeType, LazyOptional<BasicEnergyStorage> energyOptional, int ingredientSize, LazyOptional<UItemStackHandler> itemIngredientSlotsOptional, LazyOptional<UItemStackHandler> itemOutputSlotsOptional, LazyOptional<UItemStackHandler> upgradeSlotsOptional, RecipeData<T> recipeData, Runnable dirtyMarker, BooleanConsumer workingCallback) {
 		this.energyOptional = energyOptional;
-		this.ingredientSlotsOptional = ingredientSlotsOptional;
-		this.outputSlotsOptional = outputSlotsOptional;
+		this.itemIngredientSlotsOptional = itemIngredientSlotsOptional;
+		this.itemOutputSlotsOptional = itemOutputSlotsOptional;
 		this.upgradeSlotsOptional = upgradeSlotsOptional;
 		
 		this.recipeData = recipeData;
@@ -60,15 +60,15 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 	public void update(World world) {
 		// If one lazy optional is not present we will fail. We will not include the upgrade slots here as they are not
 		// necessary to process items
-		if (!energyOptional.isPresent() || !ingredientSlotsOptional.isPresent() || !outputSlotsOptional.isPresent()) {
+		if (!energyOptional.isPresent() || !itemIngredientSlotsOptional.isPresent() || !itemOutputSlotsOptional.isPresent()) {
 			time = 0;
 			workingCallback.accept(false);
 			return;
 		}
 		
 		final BasicEnergyStorage energy = energyOptional.orElseThrow(AssertionError::new);
-		final RecipeWrapper recipeWrapper = new RecipeWrapper(ingredientSlotsOptional.orElseThrow(AssertionError::new));
-		final UItemStackHandler outputSlots = outputSlotsOptional.orElseThrow(AssertionError::new);
+		final RecipeWrapper recipeWrapper = new RecipeWrapper(itemIngredientSlotsOptional.orElseThrow(AssertionError::new));
+		final UItemStackHandler outputSlots = itemOutputSlotsOptional.orElseThrow(AssertionError::new);
 		
 		// If input slots are empty there could be no recipe
 		if (recipeWrapper.isEmpty()) {
