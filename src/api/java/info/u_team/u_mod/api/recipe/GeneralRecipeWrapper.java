@@ -3,6 +3,7 @@ package info.u_team.u_mod.api.recipe;
 import info.u_team.u_mod.api.inventory.IGeneralInventory;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
@@ -11,6 +12,10 @@ public class GeneralRecipeWrapper implements IGeneralInventory {
 	
 	protected final IItemHandlerModifiable itemInventory;
 	protected final IFluidHandler fluidInventory;
+	
+	public GeneralRecipeWrapper(LazyOptional<IItemHandlerModifiable> itemInventoryOptional, LazyOptional<IFluidHandler> fluidInventoryOptional) {
+		this(itemInventoryOptional.orElse(null), fluidInventoryOptional.orElse(null));
+	}
 	
 	public GeneralRecipeWrapper(IItemHandlerModifiable itemInventory, IFluidHandler fluidInventory) {
 		this.itemInventory = itemInventory;
