@@ -5,4 +5,8 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public interface IGeneralInventory extends IInventory, IFluidHandler {
 	
+	boolean hasItems();
+	
+	boolean hasFluids();
+	
 }
