@@ -9,4 +9,17 @@ public interface IGeneralInventory extends IInventory, IFluidHandler {
 	
 	boolean hasFluids();
 	
+	boolean isItemsEmpty();
+	
+	boolean isFluidsEmpty();
+	
+	@Override
+	default boolean isEmpty() {
+		return isItemsEmpty();
+	}
+	
+	default boolean isAllEmpty() {
+		return isItemsEmpty() && isFluidsEmpty();
+	}
+	
 }
