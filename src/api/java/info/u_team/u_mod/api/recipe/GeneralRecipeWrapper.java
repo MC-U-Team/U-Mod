@@ -17,6 +17,8 @@ public class GeneralRecipeWrapper implements IGeneralInventory {
 		this.fluidInventory = fluidInventory;
 	}
 	
+	// Item inventory
+	
 	@Override
 	public int getSizeInventory() {
 		return itemInventory.getSlots();
@@ -67,6 +69,8 @@ public class GeneralRecipeWrapper implements IGeneralInventory {
 			itemInventory.setStackInSlot(index, ItemStack.EMPTY);
 		}
 	}
+	
+	// Fluid inventory
 	
 	@Override
 	public int getTanks() {
