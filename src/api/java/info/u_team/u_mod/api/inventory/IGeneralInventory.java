@@ -1,4 +1,4 @@
-package info.u_team.u_mod.api.fluid;
+package info.u_team.u_mod.api.inventory;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraftforge.fluids.capability.IFluidHandler;
