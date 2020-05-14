@@ -1,58 +1,90 @@
 package info.u_team.u_mod.util;
 
+import info.u_team.u_mod.api.InteractionType;
+import info.u_team.u_mod.api.fluid.*;
 import net.minecraft.nbt.*;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler;
 
-public class UFluidStackHandler implements IFluidHandler, INBTSerializable<CompoundNBT> {
+public class UFluidStackHandler implements IExtendedFluidHandler, INBTSerializable<CompoundNBT> {
 	
 	protected final NonNullList<FluidStack> stacks;
 	
+	protected final int capacity;
+	
 	public UFluidStackHandler(int size) {
+		this(size, 64_000);
+	}
+	
+	public UFluidStackHandler(int size, int capacity) {
 		stacks = NonNullList.withSize(size, FluidStack.EMPTY);
+		this.capacity = capacity;
 	}
 	
 	@Override
 	public int getTanks() {
-		return 0;
+		return stacks.size();
 	}
 	
 	@Override
 	public FluidStack getFluidInTank(int tank) {
-		return null;
+		return stacks.get(tank);
 	}
 	
 	@Override
 	public int getTankCapacity(int tank) {
-		return 0;
+		return capacity;
 	}
 	
 	@Override
 	public boolean isFluidValid(int tank, FluidStack stack) {
-		return false;
+		return true;
 	}
 	
 	@Override
-	public int fill(FluidStack resource, FluidAction action) {
-		return 0;
+	public void setFluidInTank(int tank, FluidStack stack) {
+		stacks.set(tank, stack);
 	}
 	
 	@Override
-	public FluidStack drain(FluidStack resource, FluidAction action) {
+	public FluidStack insertFluid(int tank, FluidStack stack, InteractionType action) {
+		if (stack.isEmpty())
+			return FluidStack.EMPTY;
+		
+		if (!isFluidValid(tank, stack))
+			return stack;
+		
+		FluidStack existing = this.stacks.get(tank);
+		
+		int limit = getTankCapacity(tank);
+		
+		if (!existing.isEmpty()) {
+			if (!FluidHandlerHelper.canFluidStacksStack(stack, existing))
+				return stack;
+			
+			limit -= existing.getAmount();
+		}
+		
+		if (limit <= 0)
+			return stack;
+		
+		boolean reachedLimit = stack.getAmount() > limit;
+		
+		if (action.isExecute()) {
+			if (existing.isEmpty()) {
+				stacks.set(tank, reachedLimit ? FluidHandlerHelper.copyStackWithSize(stack, limit) : stack);
+			} else {
+				existing.grow(reachedLimit ? limit : stack.getAmount());
+			}
+		}
+		
+		return reachedLimit ? FluidHandlerHelper.copyStackWithSize(stack, stack.getAmount() - limit) : FluidStack.EMPTY;
+	}
+	
+	@Override
+	public FluidStack extractFluid(int tank, int amount, InteractionType action) {
 		return null;
-	}
-	
-	@Override
-	public FluidStack drain(int maxDrain, FluidAction action) {
-		return null;
-	}
-	
-	protected void onLoad() {
-	}
-	
-	protected void onContentsChanged(int slot) {
 	}
 	
 	@Override
@@ -88,7 +120,5 @@ public class UFluidStackHandler implements IFluidHandler, INBTSerializable<Compo
 				stacks.set(slot, FluidStack.loadFluidStackFromNBT(slotCompound));
 			}
 		}
-		onLoad();
 	}
-	
 }
