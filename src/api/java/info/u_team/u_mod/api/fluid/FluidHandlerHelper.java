@@ -11,4 +11,12 @@ public class FluidHandlerHelper {
 		return (!a.hasTag() || a.getTag().equals(b.getTag()));
 	}
 	
+	public static FluidStack copyStackWithSize(FluidStack stack, int size) {
+		if (size == 0)
+			return FluidStack.EMPTY;
+		final FluidStack copy = stack.copy();
+		copy.setAmount(size);
+		return copy;
+	}
+	
 }
