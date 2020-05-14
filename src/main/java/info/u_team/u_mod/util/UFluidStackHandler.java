@@ -55,7 +55,7 @@ public class UFluidStackHandler implements IExtendedFluidHandler, INBTSerializab
 		if (!isFluidValid(tank, stack))
 			return stack;
 		
-		FluidStack existing = this.stacks.get(tank);
+		FluidStack existing = stacks.get(tank);
 		
 		int limit = getTankCapacity(tank);
 		
@@ -84,7 +84,30 @@ public class UFluidStackHandler implements IExtendedFluidHandler, INBTSerializab
 	
 	@Override
 	public FluidStack extractFluid(int tank, int amount, InteractionType action) {
-		return null;
+		if (amount == 0)
+			return FluidStack.EMPTY;
+		
+		FluidStack existing = stacks.get(tank);
+		
+		if (existing.isEmpty())
+			return FluidStack.EMPTY;
+		
+		int toExtract = amount;
+		
+		if (existing.getAmount() <= toExtract) {
+			if (action.isExecute()) {
+				stacks.set(tank, FluidStack.EMPTY);
+				return existing;
+			} else {
+				return existing.copy();
+			}
+		} else {
+			if (action.isExecute()) {
+				stacks.set(tank, FluidHandlerHelper.copyStackWithSize(existing, existing.getAmount() - toExtract));
+			}
+			
+			return FluidHandlerHelper.copyStackWithSize(existing, toExtract);
+		}
 	}
 	
 	@Override
