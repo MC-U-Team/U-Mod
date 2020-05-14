@@ -17,6 +17,10 @@ public enum InteractionType {
 		return simulate;
 	}
 	
+	public boolean isExecute() {
+		return !simulate;
+	}
+	
 	public static InteractionType fromBoolean(boolean simulate) {
 		return simulate ? SIMULATE : EXECUTE;
 	}
