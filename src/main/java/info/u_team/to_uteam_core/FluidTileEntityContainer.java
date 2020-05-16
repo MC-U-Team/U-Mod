@@ -6,7 +6,7 @@ import com.google.common.collect.Lists;
 
 import info.u_team.u_team_core.container.UTileEntityContainer;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.ContainerType;
+import net.minecraft.inventory.container.*;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
@@ -44,6 +44,11 @@ public class FluidTileEntityContainer<T extends TileEntity> extends UTileEntityC
 			list.add(fluidSlots.get(index).getStack());
 		}
 		return list;
+	}
+	
+	@Override
+	public void addListener(IContainerListener listener) {
+		super.addListener(listener);
 	}
 	
 	@Override
