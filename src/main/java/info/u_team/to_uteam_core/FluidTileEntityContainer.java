@@ -46,6 +46,20 @@ public class FluidTileEntityContainer<T extends TileEntity> extends UTileEntityC
 		return list;
 	}
 	
+	public FluidSlot getFluidSlot(int slot) {
+		return fluidSlots.get(slot);
+	}
+	
+	public void putFluidStackInSlot(int slot, FluidStack stack) {
+		getFluidSlot(slot).putStack(stack);
+	}
+	
+	public void setAllFluidSlots(List<FluidStack> list) {
+		for (int index = 0; index < list.size(); index++) {
+			getFluidSlot(index).putStack(list.get(index));
+		}
+	}
+	
 	@Override
 	public void addListener(IContainerListener listener) {
 		super.addListener(listener);
