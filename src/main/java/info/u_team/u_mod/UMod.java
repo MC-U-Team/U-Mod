@@ -1,5 +1,6 @@
 package info.u_team.u_mod;
 
+import info.u_team.to_uteam_core.TestNetwork;
 import info.u_team.u_team_core.util.verify.JarSignVerifier;
 import net.minecraftforge.fml.common.Mod;
 
@@ -10,5 +11,6 @@ public class UMod {
 	
 	public UMod() {
 		JarSignVerifier.checkSigned(MODID);
+		TestNetwork.construct();
 	}
 }
