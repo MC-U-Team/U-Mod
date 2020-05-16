@@ -50,7 +50,7 @@ public class FluidTileEntityContainer<T extends TileEntity> extends UTileEntityC
 		return fluidSlots.get(slot);
 	}
 	
-	public void putFluidStackInSlot(int slot, FluidStack stack) {
+	public void setFluidStackInSlot(int slot, FluidStack stack) {
 		getFluidSlot(slot).putStack(stack);
 	}
 	
