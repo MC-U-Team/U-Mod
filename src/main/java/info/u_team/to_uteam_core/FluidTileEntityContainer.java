@@ -46,4 +46,19 @@ public class FluidTileEntityContainer<T extends TileEntity> extends UTileEntityC
 		return list;
 	}
 	
+	@Override
+	public void detectAndSendChanges() {
+		for (int index = 0; index < fluidSlots.size(); index++) {
+			final FluidStack stackSlot = fluidSlots.get(index).getStack();
+			final FluidStack stackSynced = fluidStacks.get(index);
+			if (!stackSynced.isFluidStackIdentical(stackSlot)) {
+				final FluidStack stackNewSynced = stackSlot.copy();
+				fluidStacks.set(index, stackNewSynced);
+				// for (IContainerListener icontainerlistener : this.listeners) {
+				// icontainerlistener.sendSlotContents(this, index, stackNewSynced);
+				// }
+				// TODO SEND packet
+			}
+		}
+	}
 }
