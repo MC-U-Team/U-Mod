@@ -80,4 +80,8 @@ public class FluidTileEntityContainer<T extends TileEntity> extends UTileEntityC
 			}
 		}
 	}
+	
+	public List<FluidSlot> getFluidSlots() {
+		return fluidSlots;
+	}
 }
