@@ -24,6 +24,7 @@ public class BasicMachineScreen<T extends BasicMachineContainer<?>> extends Flui
 	
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 		font.drawString(title.getFormattedText(), 8, 6, 0x404040);
 		font.drawString(playerInventory.getDisplayName().getFormattedText(), 8, ySize - 94, 0x404040);
 	}
