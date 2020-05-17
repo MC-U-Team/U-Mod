@@ -24,6 +24,8 @@ public class FluidContainerScreen<T extends FluidTileEntityContainer<?>> extends
 		final int y = slot.getY();
 		final FluidStack stack = slot.getStack();
 		// TODO
+		
+		System.out.println(stack);
 	}
 	
 }

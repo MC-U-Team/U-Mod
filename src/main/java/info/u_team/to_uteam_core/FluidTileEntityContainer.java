@@ -14,23 +14,21 @@ import net.minecraft.util.NonNullList;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.network.*;
 
-public class FluidTileEntityContainer<T extends TileEntity> extends UTileEntityContainer<T> {
+public abstract class FluidTileEntityContainer<T extends TileEntity> extends UTileEntityContainer<T> {
 	
 	private final NonNullList<FluidStack> fluidStacks = NonNullList.create();
 	private final List<FluidSlot> fluidSlots = Lists.newArrayList();
 	
 	// Client
 	public FluidTileEntityContainer(ContainerType<?> type, int id, PlayerInventory playerInventory, PacketBuffer buffer) {
-		super(type, id, playerInventory, buffer);
+		super(type, id, playerInventory, buffer, false);
+		init(false);
 	}
 	
 	// Server
 	public FluidTileEntityContainer(ContainerType<?> type, int id, PlayerInventory playerInventory, T tileEntity) {
-		super(type, id, playerInventory, tileEntity);
-	}
-	
-	@Override
-	protected void init(boolean server) {
+		super(type, id, playerInventory, tileEntity, false);
+		init(true);
 	}
 	
 	protected FluidSlot addFluidSlot(FluidSlot slot) {
