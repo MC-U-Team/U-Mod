@@ -16,6 +16,7 @@ public class UModScreens {
 	public static void register(FMLClientSetupEvent event) {
 		ScreenManager.registerFactory(UModContainerTypes.ELECTRIC_FURNACE, ElectricFurnaceScreen::new);
 		ScreenManager.registerFactory(UModContainerTypes.CRUSHER, CrusherScreen::new);
+		ScreenManager.registerFactory(UModContainerTypes.ORE_WASHER, OreWasherScreen::new);
 	}
 	
 }

@@ -14,8 +14,8 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 public class UModContainerTypes {
 	
 	public static final UContainerType<ElectricFurnaceContainer> ELECTRIC_FURNACE = new UContainerType<>("electric_furnace", ElectricFurnaceContainer::new);
-	
 	public static final UContainerType<CrusherContainer> CRUSHER = new UContainerType<>("crusher", CrusherContainer::new);
+	public static final UContainerType<OreWasherContainer> ORE_WASHER = new UContainerType<>("ore_washer", OreWasherContainer::new);
 	
 	@SubscribeEvent
 	public static void register(Register<ContainerType<?>> event) {

@@ -21,8 +21,8 @@ public class UModBlocks {
 	public static final EnergyStorageBlock ENERGY_STORAGE = new EnergyStorageBlock("energy_storage");
 	
 	public static final BasicMachineBlock ELECTRIC_FURNACE = new BasicMachineBlock("electric_furnace", () -> UModTileEntityTypes.ELECTRIC_FURNACE);
-	
 	public static final BasicMachineBlock CRUSHER = new BasicMachineBlock("crusher", () -> UModTileEntityTypes.CRUSHER);
+	public static final BasicMachineBlock ORE_WASHER = new BasicMachineBlock("ore_washer", () -> UModTileEntityTypes.ORE_WASHER);
 	
 	@SubscribeEvent
 	public static void register(Register<Block> event) {
