@@ -1,5 +1,7 @@
 package info.u_team.u_mod.tileentity;
 
+import java.util.*;
+
 import info.u_team.u_mod.container.OreWasherContainer;
 import info.u_team.u_mod.init.*;
 import info.u_team.u_mod.recipe.OneIngredientMachineRecipe;
@@ -7,11 +9,11 @@ import info.u_team.u_mod.tileentity.basic.BasicMachineTileEntity;
 import info.u_team.u_mod.util.UFluidStackHandler;
 import info.u_team.u_mod.util.recipe.RecipeData;
 import net.minecraft.entity.player.*;
-import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.util.text.*;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class OreWasherTileEntity extends BasicMachineTileEntity<OneIngredientMachineRecipe> {
 	
@@ -23,7 +25,6 @@ public class OreWasherTileEntity extends BasicMachineTileEntity<OneIngredientMac
 		super(UModTileEntityTypes.ORE_WASHER, 20000, 100, 0, UModRecipeTypes.CRUSHER, 1, 6, 3, RecipeData.getBasicMachine());
 		
 		fluidIngredientSlots = new UFluidStackHandler(1);
-		fluidIngredientSlots.setFluidInTank(0, new FluidStack(Fluids.WATER, 1000));
 		
 		fluidIngredientSlotsOptional = LazyOptional.of(() -> fluidIngredientSlots);
 	}
@@ -43,5 +44,33 @@ public class OreWasherTileEntity extends BasicMachineTileEntity<OneIngredientMac
 	// TODO test
 	public UFluidStackHandler getFluidIngredientSlots() {
 		return fluidIngredientSlots;
+	}
+	
+	int i = 0;
+	
+	@Override
+	protected void tickServer() {
+		super.tickServer();
+		if (i % 10 == 0) {
+			fluidIngredientSlots.setFluidInTank(0, new FluidStack(choice(ForgeRegistries.FLUIDS.getValues(), new Random()), 1000));
+			i++;
+		}
+	}
+	
+	public static <E> E choice(Collection<? extends E> coll, Random rand) {
+		if (coll.size() == 0) {
+			return null;
+		}
+		
+		int index = rand.nextInt(coll.size());
+		if (coll instanceof List) {
+			return ((List<? extends E>) coll).get(index);
+		} else {
+			Iterator<? extends E> iter = coll.iterator();
+			for (int i = 0; i < index; i++) {
+				iter.next();
+			}
+			return iter.next();
+		}
 	}
 }
