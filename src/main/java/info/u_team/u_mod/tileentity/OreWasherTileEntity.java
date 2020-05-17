@@ -7,9 +7,11 @@ import info.u_team.u_mod.tileentity.basic.BasicMachineTileEntity;
 import info.u_team.u_mod.util.UFluidStackHandler;
 import info.u_team.u_mod.util.recipe.RecipeData;
 import net.minecraft.entity.player.*;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.util.text.*;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidStack;
 
 public class OreWasherTileEntity extends BasicMachineTileEntity<OneIngredientMachineRecipe> {
 	
@@ -21,6 +23,7 @@ public class OreWasherTileEntity extends BasicMachineTileEntity<OneIngredientMac
 		super(UModTileEntityTypes.ORE_WASHER, 20000, 100, 0, UModRecipeTypes.CRUSHER, 1, 6, 3, RecipeData.getBasicMachine());
 		
 		fluidIngredientSlots = new UFluidStackHandler(1);
+		fluidIngredientSlots.setFluidInTank(0, new FluidStack(Fluids.WATER, 1000));
 		
 		fluidIngredientSlotsOptional = LazyOptional.of(() -> fluidIngredientSlots);
 	}
