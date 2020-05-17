@@ -1,16 +1,18 @@
 package info.u_team.to_uteam_core;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.google.common.collect.Lists;
 
 import info.u_team.u_team_core.container.UTileEntityContainer;
-import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.entity.player.*;
 import net.minecraft.inventory.container.*;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.*;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fml.network.*;
 
 public class FluidTileEntityContainer<T extends TileEntity> extends UTileEntityContainer<T> {
 	
@@ -63,6 +65,9 @@ public class FluidTileEntityContainer<T extends TileEntity> extends UTileEntityC
 	@Override
 	public void addListener(IContainerListener listener) {
 		super.addListener(listener);
+		if (listener instanceof ServerPlayerEntity) {
+			TestNetwork.NETWORK.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) listener), new FluidSetAllContainerMessage(windowId, getFluids()));
+		}
 	}
 	
 	@Override
@@ -73,10 +78,13 @@ public class FluidTileEntityContainer<T extends TileEntity> extends UTileEntityC
 			if (!stackSynced.isFluidStackIdentical(stackSlot)) {
 				final FluidStack stackNewSynced = stackSlot.copy();
 				fluidStacks.set(index, stackNewSynced);
-				// for (IContainerListener icontainerlistener : this.listeners) {
-				// icontainerlistener.sendSlotContents(this, index, stackNewSynced);
-				// }
-				// TODO SEND packet
+				
+				final List<NetworkManager> networkManagers = listeners.stream() //
+						.filter(listener -> listener instanceof ServerPlayerEntity) //
+						.map(listener -> ((ServerPlayerEntity) listener).connection.getNetworkManager()) //
+						.collect(Collectors.toList());
+				
+				TestNetwork.NETWORK.send(PacketDistributor.NMLIST.with(() -> networkManagers), new FluidSetSlotContainerMessage(windowId, index, stackNewSynced));
 			}
 		}
 	}
