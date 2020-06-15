@@ -18,5 +18,6 @@ public class UModLootTablesProvider extends CommonLootTablesProvider {
 	protected void registerLootTables(BiConsumer<ResourceLocation, LootTable> consumer) {
 		registerBlock(ELECTRIC_FURNACE, addTileEntityBlockLootTable(ELECTRIC_FURNACE), consumer);
 		registerBlock(CRUSHER, addTileEntityBlockLootTable(CRUSHER), consumer);
+		registerBlock(ORE_WASHER, addTileEntityBlockLootTable(ORE_WASHER), consumer);
 	}
 }
