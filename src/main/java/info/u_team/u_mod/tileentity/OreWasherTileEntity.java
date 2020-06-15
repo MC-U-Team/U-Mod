@@ -29,7 +29,7 @@ public class OreWasherTileEntity extends BasicMachineTileEntity<OneIngredientMac
 	
 	@Override
 	public ITextComponent getDisplayName() {
-		return new TranslationTextComponent("container.umod.crusher");
+		return new TranslationTextComponent("container.umod.orewasher");
 	}
 	
 	@Override
