@@ -17,6 +17,7 @@ public class UModBlockStatesProvider extends CommonBlockStatesProvider {
 	protected void registerStatesAndModels() {
 		addMachine(ELECTRIC_FURNACE);
 		addMachine(CRUSHER);
+		addMachine(ORE_WASHER);
 	}
 	
 	private void addMachine(BasicMachineBlock block) {
