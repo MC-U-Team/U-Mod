@@ -21,6 +21,7 @@ public class UModBlockStatesProvider extends CommonBlockStatesProvider {
 	
 	private void addMachine(BasicMachineBlock block) {
 		final String path = block.getRegistryName().getPath();
+		
 		getVariantBuilder(block).forAllStatesExcept(state -> {
 			final String workingState = state.get(BasicMachineBlock.WORKING) ? "_working" : "";
 			return ConfiguredModel.builder() //
