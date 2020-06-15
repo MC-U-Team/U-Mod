@@ -2,7 +2,7 @@
 	"block.umod.crusher": "Crusher",
 	"block.umod.electric_furnace": "Electric Furnace",
 	"block.umod.ore_washer": "Ore Washer",
-	"container.ore_washer.crusher": "Ore Washer",
 	"container.umod.crusher": "Crusher",
-	"container.umod.electric_furnace": "Electric Furnace"
+	"container.umod.electric_furnace": "Electric Furnace",
+	"container.umod.ore_washer": "Ore Washer"
 }
