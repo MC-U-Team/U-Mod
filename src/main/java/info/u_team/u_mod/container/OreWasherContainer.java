@@ -1,6 +1,6 @@
 package info.u_team.u_mod.container;
 
-import info.u_team.u_mod.container.basic.BasicMachineContainer;
+import info.u_team.u_mod.container.basic.*;
 import info.u_team.u_mod.init.UModContainerTypes;
 import info.u_team.u_mod.tileentity.OreWasherTileEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -27,7 +27,7 @@ public class OreWasherContainer extends BasicMachineContainer<OreWasherTileEntit
 		appendUpgradeInventory(tileEntity.getUpgradeSlots(), 1, 3, 116, 8);
 		appendPlayerInventory(playerInventory, 8, 92);
 		appendFluidInventory(tileEntity.getFluidIngredientSlots(), 1, 1, 44, 59);
-		appendFluidInventory(tileEntity.getFluidOutputSlots(), 1, 1, 152, 59);
+		appendFluidInventory(tileEntity.getFluidOutputSlots(), BasicFluidOutputSlot::new, 1, 1, 152, 59);
 	}
 	
 }
