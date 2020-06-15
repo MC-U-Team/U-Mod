@@ -1,7 +1,5 @@
 package info.u_team.u_mod.tileentity;
 
-import java.util.*;
-
 import info.u_team.u_mod.container.OreWasherContainer;
 import info.u_team.u_mod.init.*;
 import info.u_team.u_mod.recipe.OneIngredientMachineRecipe;
@@ -12,8 +10,6 @@ import net.minecraft.entity.player.*;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.util.text.*;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class OreWasherTileEntity extends BasicMachineTileEntity<OneIngredientMachineRecipe> {
 	
@@ -41,36 +37,7 @@ public class OreWasherTileEntity extends BasicMachineTileEntity<OneIngredientMac
 		return new OreWasherContainer(id, playerInventory, this);
 	}
 	
-	// TODO test
 	public UFluidStackHandler getFluidIngredientSlots() {
 		return fluidIngredientSlots;
-	}
-	
-	int i = 0;
-	
-	@Override
-	protected void tickServer() {
-		super.tickServer();
-		if (i % 50 == 0) {
-			fluidIngredientSlots.setFluidInTank(0, new FluidStack(choice(ForgeRegistries.FLUIDS.getValues(), new Random()), 1000));
-		}
-		i++;
-	}
-	
-	public static <E> E choice(Collection<? extends E> coll, Random rand) {
-		if (coll.size() == 0) {
-			return null;
-		}
-		
-		int index = rand.nextInt(coll.size());
-		if (coll instanceof List) {
-			return ((List<? extends E>) coll).get(index);
-		} else {
-			Iterator<? extends E> iter = coll.iterator();
-			for (int i = 0; i < index; i++) {
-				iter.next();
-			}
-			return iter.next();
-		}
 	}
 }
