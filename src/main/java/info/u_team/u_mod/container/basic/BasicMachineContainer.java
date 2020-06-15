@@ -1,14 +1,14 @@
 package info.u_team.u_mod.container.basic;
 
-import info.u_team.to_uteam_core.FluidTileEntityContainer;
 import info.u_team.u_mod.tileentity.basic.BasicMachineTileEntity;
+import info.u_team.u_team_core.container.UTileEntityContainer;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.container.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.items.IItemHandler;
 
-public class BasicMachineContainer<T extends BasicMachineTileEntity<?>> extends FluidTileEntityContainer<T> {
+public class BasicMachineContainer<T extends BasicMachineTileEntity<?>> extends UTileEntityContainer<T> {
 	
 	protected int playerInventoryStart = 10; // set standard to 10
 	
