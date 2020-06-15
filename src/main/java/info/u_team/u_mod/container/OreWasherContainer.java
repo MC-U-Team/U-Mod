@@ -21,11 +21,13 @@ public class OreWasherContainer extends BasicMachineContainer<OreWasherTileEntit
 	@Override
 	protected void init(boolean server) {
 		super.init(server);
-		appendFluidInventory(tileEntity.getFluidIngredientSlots(), 1, 1, 20, 20);
-		appendInventory(tileEntity.getIngredientSlots(), 1, 1, 44, 50);
-		appendOutputInventory(tileEntity.getOutputSlots(), 2, 3, 116, 41);
+		appendInventory(tileEntity.getIngredientSlots(), 1, 1, 44, 41);
+		appendOutputInventory(tileEntity.getOutputSlots(), 1, 3, 116, 41);
+		appendOutputInventory(tileEntity.getOutputSlots(), 1, 2, 116, 59); // TODO wrong index (must be fixed in uteamcore though)
 		appendUpgradeInventory(tileEntity.getUpgradeSlots(), 1, 3, 116, 8);
 		appendPlayerInventory(playerInventory, 8, 92);
+		appendFluidInventory(tileEntity.getFluidIngredientSlots(), 1, 1, 44, 59);
+		appendFluidInventory(tileEntity.getFluidOutputSlots(), 1, 1, 152, 59);
 	}
 	
 }
