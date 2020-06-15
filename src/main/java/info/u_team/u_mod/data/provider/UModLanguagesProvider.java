@@ -17,5 +17,8 @@ public class UModLanguagesProvider extends CommonLanguagesProvider {
 		
 		add(CRUSHER, "Crusher");
 		add("container.umod.crusher", "Crusher");
+		
+		add(ORE_WASHER, "Ore Washer");
+		add("container.ore_washer.crusher", "Ore Washer");
 	}
 }
