@@ -73,6 +73,7 @@ public class BasicMachineContainer<T extends BasicMachineTileEntity<?>> extends 
 		return remainingStack;
 	}
 	
+	// TODO remove?
 	@Override
 	protected boolean mergeItemStack(ItemStack stack, int startIndex, int endIndex, boolean reverseDirection) {
 		boolean flag = false;
