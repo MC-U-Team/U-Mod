@@ -3,7 +3,7 @@ package info.u_team.u_mod.util.recipe;
 import java.util.Optional;
 import java.util.function.BiFunction;
 
-import info.u_team.u_mod.util.*;
+import info.u_team.u_mod.util.MathUtil;
 import info.u_team.u_team_core.api.sync.BufferReferenceHolder;
 import info.u_team.u_team_core.energy.BasicEnergyStorage;
 import info.u_team.u_team_core.inventory.UItemStackHandler;
@@ -39,7 +39,7 @@ public class RecipeHandler<T extends IRecipe<IInventory>> implements INBTSeriali
 	private int totalTime;
 	private int time;
 	
-	private final BufferReferenceHolder percentTracker = ExtendedBufferReferenceHolder.createFloatHolder(() -> MathUtil.valueInRange(0, 1, time / (float) totalTime), value -> percent = value);
+	private final BufferReferenceHolder percentTracker = BufferReferenceHolder.createFloatHolder(() -> MathUtil.valueInRange(0, 1, time / (float) totalTime), value -> percent = value);
 	
 	// Client only value
 	private float percent;
