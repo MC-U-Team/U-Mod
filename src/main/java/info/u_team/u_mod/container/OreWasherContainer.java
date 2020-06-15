@@ -1,9 +1,9 @@
 package info.u_team.u_mod.container;
 
-import info.u_team.to_uteam_core.FluidSlot;
 import info.u_team.u_mod.container.basic.BasicMachineContainer;
 import info.u_team.u_mod.init.UModContainerTypes;
 import info.u_team.u_mod.tileentity.OreWasherTileEntity;
+import info.u_team.u_team_core.container.FluidSlot;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.network.PacketBuffer;
 

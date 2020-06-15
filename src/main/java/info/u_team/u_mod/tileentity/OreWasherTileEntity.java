@@ -6,8 +6,8 @@ import info.u_team.u_mod.container.OreWasherContainer;
 import info.u_team.u_mod.init.*;
 import info.u_team.u_mod.recipe.OneIngredientMachineRecipe;
 import info.u_team.u_mod.tileentity.basic.BasicMachineTileEntity;
-import info.u_team.u_mod.util.UFluidStackHandler;
 import info.u_team.u_mod.util.recipe.RecipeData;
+import info.u_team.u_team_core.inventory.UFluidStackHandler;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.util.text.*;
@@ -51,10 +51,10 @@ public class OreWasherTileEntity extends BasicMachineTileEntity<OneIngredientMac
 	@Override
 	protected void tickServer() {
 		super.tickServer();
-		if (i % 10 == 0) {
+		if (i % 50 == 0) {
 			fluidIngredientSlots.setFluidInTank(0, new FluidStack(choice(ForgeRegistries.FLUIDS.getValues(), new Random()), 1000));
-			i++;
 		}
+		i++;
 	}
 	
 	public static <E> E choice(Collection<? extends E> coll, Random rand) {
