@@ -14,5 +14,6 @@ public class UModItemModelsProvider extends CommonItemModelsProvider {
 	protected void registerModels() {
 		simpleBlock(ELECTRIC_FURNACE);
 		simpleBlock(CRUSHER);
+		simpleBlock(ORE_WASHER);
 	}
 }
