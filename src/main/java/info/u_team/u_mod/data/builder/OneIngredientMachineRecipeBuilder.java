@@ -6,7 +6,7 @@ import com.google.gson.JsonObject;
 
 import info.u_team.u_mod.recipe.OneIngredientMachineRecipe;
 import info.u_team.u_mod.recipe.OneIngredientMachineRecipe.Serializer;
-import info.u_team.u_mod.util.SerializeUtil;
+import info.u_team.u_team_core.util.SerializeUtil;
 import net.minecraft.advancements.*;
 import net.minecraft.advancements.Advancement.Builder;
 import net.minecraft.advancements.criterion.RecipeUnlockedTrigger;
