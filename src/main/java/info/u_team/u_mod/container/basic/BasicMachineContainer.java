@@ -29,11 +29,11 @@ public class BasicMachineContainer<T extends BasicMachineTileEntity<?>> extends 
 	}
 	
 	protected void appendOutputInventory(IItemHandler handler, int inventoryHeight, int inventoryWidth, int x, int y) {
-		appendInventory(handler, BasicOutputItemHandlerSlot::new, inventoryHeight, inventoryWidth, x, y);
+		appendInventory(handler, BasicItemOutputSlot::new, inventoryHeight, inventoryWidth, x, y);
 	}
 	
 	protected void appendUpgradeInventory(IItemHandler handler, int inventoryHeight, int inventoryWidth, int x, int y) {
-		appendInventory(handler, BasicUpgradeItemHandlerSlot::new, inventoryHeight, inventoryWidth, x, y);
+		appendInventory(handler, BasicItemUpgradeSlot::new, inventoryHeight, inventoryWidth, x, y);
 	}
 	
 	@Override
