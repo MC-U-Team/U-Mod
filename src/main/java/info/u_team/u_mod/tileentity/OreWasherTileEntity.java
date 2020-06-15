@@ -14,15 +14,19 @@ import net.minecraftforge.common.util.LazyOptional;
 public class OreWasherTileEntity extends BasicMachineTileEntity<OneIngredientMachineRecipe> {
 	
 	protected final UFluidStackHandler fluidIngredientSlots;
+	protected final UFluidStackHandler fluidOutputSlots;
 	
 	protected final LazyOptional<UFluidStackHandler> fluidIngredientSlotsOptional;
+	protected final LazyOptional<UFluidStackHandler> fluidOutputSlotsOptional;
 	
 	public OreWasherTileEntity() {
 		super(UModTileEntityTypes.ORE_WASHER, 20000, 100, 0, UModRecipeTypes.CRUSHER, 1, 6, 3, RecipeData.getBasicMachine());
 		
 		fluidIngredientSlots = new UFluidStackHandler(1);
+		fluidOutputSlots = new UFluidStackHandler(1);
 		
 		fluidIngredientSlotsOptional = LazyOptional.of(() -> fluidIngredientSlots);
+		fluidOutputSlotsOptional = LazyOptional.of(() -> fluidOutputSlots);
 	}
 	
 	// Container
@@ -39,5 +43,9 @@ public class OreWasherTileEntity extends BasicMachineTileEntity<OneIngredientMac
 	
 	public UFluidStackHandler getFluidIngredientSlots() {
 		return fluidIngredientSlots;
+	}
+	
+	public UFluidStackHandler getFluidOutputSlots() {
+		return fluidOutputSlots;
 	}
 }
