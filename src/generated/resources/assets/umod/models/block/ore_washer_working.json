@@ -1,0 +1,8 @@
+{
+	"parent": "uteamcore:block/facing",
+	"textures": {
+		"particle": "umod:block/machine/side",
+		"front": "umod:block/machine/ore_washer_front_working",
+		"side": "umod:block/machine/side"
+	}
+}
