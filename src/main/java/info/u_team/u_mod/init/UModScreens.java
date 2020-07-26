@@ -2,7 +2,7 @@ package info.u_team.u_mod.init;
 
 import info.u_team.u_mod.UMod;
 import info.u_team.u_mod.screen.*;
-import net.minecraft.client.gui.ScreenManager;
+import info.u_team.u_team_core.util.registry.*;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -14,9 +14,10 @@ public class UModScreens {
 	
 	@SubscribeEvent
 	public static void register(FMLClientSetupEvent event) {
-		ScreenManager.registerFactory(UModContainerTypes.ELECTRIC_FURNACE, ElectricFurnaceScreen::new);
-		ScreenManager.registerFactory(UModContainerTypes.CRUSHER, CrusherScreen::new);
-		ScreenManager.registerFactory(UModContainerTypes.ORE_WASHER, OreWasherScreen::new);
+		MainThreadWorker.run(() -> {
+			ClientRegistry.registerScreen(UModContainerTypes.ELECTRIC_FURNACE, ElectricFurnaceScreen::new);
+			ClientRegistry.registerScreen(UModContainerTypes.CRUSHER, CrusherScreen::new);
+			ClientRegistry.registerScreen(UModContainerTypes.ORE_WASHER, OreWasherScreen::new);
+		});
 	}
-	
 }
