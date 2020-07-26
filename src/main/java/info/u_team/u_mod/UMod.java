@@ -20,5 +20,6 @@ public class UMod {
 		BusRegister.registerMod(UModContainerTypes::register);
 		BusRegister.registerMod(UModItems::register);
 		BusRegister.registerMod(UModRecipeSerializers::register);
+		BusRegister.registerMod(UModTileEntityTypes::register);
 	}
 }
