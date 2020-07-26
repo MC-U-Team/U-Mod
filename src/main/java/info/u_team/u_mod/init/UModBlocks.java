@@ -11,7 +11,7 @@ public class UModBlocks {
 	
 	public static final BlockDeferredRegister BLOCKS = BlockDeferredRegister.create(UMod.MODID);
 	
-	public static final BlockRegistryObject<CableBlock, BlockItem> CABLE = BLOCKS.register("cable_test", () -> new CableBlock("cable_test"));
+	public static final BlockRegistryObject<CableBlock, BlockItem> CABLE = BLOCKS.register("cable_test", CableBlock::new);
 	
 	public static final BlockRegistryObject<EnergyStorageBlock, BlockItem> ENERGY_STORAGE = BLOCKS.register("energy_storage", () -> new EnergyStorageBlock("energy_storage"));
 	

@@ -17,8 +17,8 @@ import net.minecraftforge.energy.CapabilityEnergy;
 
 public class CableBlock extends UBlock {
 	
-	public CableBlock(String name) {
-		super(name, UModItemGroups.GROUP, Properties.create(Material.IRON));
+	public CableBlock() {
+		super(UModItemGroups.GROUP, Properties.create(Material.IRON));
 	}
 	
 	@Override
