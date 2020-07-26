@@ -25,8 +25,8 @@ public class BasicMachineBlock extends UTileEntityBlock {
 	
 	public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
 	
-	public BasicMachineBlock(String name, Supplier<TileEntityType<?>> tileEntityType) {
-		super(name, UModItemGroups.GROUP, Properties.create(Material.IRON).harvestTool(ToolType.PICKAXE).harvestLevel(2).sound(SoundType.METAL).hardnessAndResistance(2.6F, 100F), tileEntityType);
+	public BasicMachineBlock(Supplier<TileEntityType<?>> tileEntityType) {
+		super(UModItemGroups.GROUP, Properties.create(Material.IRON).harvestTool(ToolType.PICKAXE).harvestLevel(2).sound(SoundType.METAL).hardnessAndResistance(2.6F, 100F), tileEntityType);
 		setDefaultState(getDefaultState().with(FACING, Direction.NORTH).with(WORKING, false).with(POWERED, false));
 	}
 	

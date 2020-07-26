@@ -15,9 +15,9 @@ public class UModBlocks {
 	
 	public static final BlockRegistryObject<EnergyStorageBlock, BlockItem> ENERGY_STORAGE = BLOCKS.register("energy_storage", EnergyStorageBlock::new);
 	
-	public static final BlockRegistryObject<BasicMachineBlock, BlockItem> ELECTRIC_FURNACE = BLOCKS.register("electric_furnace", () -> new BasicMachineBlock("electric_furnace", () -> UModTileEntityTypes.ELECTRIC_FURNACE));
-	public static final BlockRegistryObject<BasicMachineBlock, BlockItem> CRUSHER = BLOCKS.register("crusher", () -> new BasicMachineBlock("crusher", () -> UModTileEntityTypes.CRUSHER));
-	public static final BlockRegistryObject<BasicMachineBlock, BlockItem> ORE_WASHER = BLOCKS.register("ore_washer", () -> new BasicMachineBlock("ore_washer", () -> UModTileEntityTypes.ORE_WASHER));
+	public static final BlockRegistryObject<BasicMachineBlock, BlockItem> ELECTRIC_FURNACE = BLOCKS.register("electric_furnace", () -> new BasicMachineBlock(() -> UModTileEntityTypes.ELECTRIC_FURNACE));
+	public static final BlockRegistryObject<BasicMachineBlock, BlockItem> CRUSHER = BLOCKS.register("crusher", () -> new BasicMachineBlock(() -> UModTileEntityTypes.CRUSHER));
+	public static final BlockRegistryObject<BasicMachineBlock, BlockItem> ORE_WASHER = BLOCKS.register("ore_washer", () -> new BasicMachineBlock(() -> UModTileEntityTypes.ORE_WASHER));
 	
 	public static void register(IEventBus bus) {
 		BLOCKS.register(bus);
