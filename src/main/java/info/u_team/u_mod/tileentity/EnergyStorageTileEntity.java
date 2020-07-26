@@ -6,6 +6,6 @@ import info.u_team.u_mod.tileentity.basic.BasicEnergyTileEntity;
 public class EnergyStorageTileEntity extends BasicEnergyTileEntity {
 	
 	public EnergyStorageTileEntity() {
-		super(null, 1000, 10, 10, 1000);
+		super(UModTileEntityTypes.ENERGY_STORAGE.get(), 1000, 10, 10, 1000);
 	}
 }
