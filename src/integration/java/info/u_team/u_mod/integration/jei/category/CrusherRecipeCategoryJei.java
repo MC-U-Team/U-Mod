@@ -32,7 +32,7 @@ public class CrusherRecipeCategoryJei implements IRecipeCategory<OneIngredientMa
 		title = I18n.format("jei.umod.category.crusher");
 		
 		background = helper.createDrawable(CrusherScreen.TEXTURE, 39, 36, 134, 44);
-		icon = helper.createDrawableIngredient(new ItemStack(UModBlocks.CRUSHER));
+		icon = helper.createDrawableIngredient(new ItemStack(UModBlocks.CRUSHER.get()));
 		arrow = helper.drawableBuilder(ProgressWidget.LONG_BASIC_ARROW, 0, 18, 42, 18).setTextureSize(42, 37).buildAnimated(200, IDrawableAnimated.StartDirection.LEFT, false);
 	}
 	

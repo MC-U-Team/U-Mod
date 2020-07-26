@@ -38,8 +38,8 @@ public class UModJeiPlugin implements IModPlugin {
 	
 	@Override
 	public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-		registration.addRecipeCatalyst(new ItemStack(UModBlocks.ELECTRIC_FURNACE), VanillaRecipeCategoryUid.FURNACE);
-		registration.addRecipeCatalyst(new ItemStack(UModBlocks.CRUSHER), CrusherRecipeCategoryJei.ID);
+		registration.addRecipeCatalyst(new ItemStack(UModBlocks.ELECTRIC_FURNACE.get()), VanillaRecipeCategoryUid.FURNACE);
+		registration.addRecipeCatalyst(new ItemStack(UModBlocks.CRUSHER.get()), CrusherRecipeCategoryJei.ID);
 	}
 	
 	private static <C extends IInventory, T extends IRecipe<C>> Collection<IRecipe<C>> getRecipes(IRecipeType<T> type) {
