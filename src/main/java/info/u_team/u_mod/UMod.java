@@ -1,6 +1,6 @@
 package info.u_team.u_mod;
 
-import info.u_team.u_mod.init.UModBlocks;
+import info.u_team.u_mod.init.*;
 import info.u_team.u_team_core.util.registry.BusRegister;
 import info.u_team.u_team_core.util.verify.JarSignVerifier;
 import net.minecraftforge.fml.common.Mod;
@@ -17,5 +17,6 @@ public class UMod {
 	
 	private void register() {
 		BusRegister.registerMod(UModBlocks::register);
+		BusRegister.registerMod(UModContainerTypes::register);
 	}
 }
