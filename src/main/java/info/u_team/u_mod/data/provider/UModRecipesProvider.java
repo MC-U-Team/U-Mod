@@ -12,6 +12,7 @@ import info.u_team.u_mod.data.builder.OneIngredientMachineRecipeBuilder;
 import info.u_team.u_team_core.data.*;
 import info.u_team.u_team_core.util.TagUtil;
 import info.u_team.useful_resources.api.ResourceRegistry;
+import info.u_team.useful_resources.api.registry.RegistryEntry;
 import info.u_team.useful_resources.api.resource.IResource;
 import info.u_team.useful_resources.api.type.*;
 import net.minecraft.block.Block;
@@ -32,15 +33,15 @@ public class UModRecipesProvider extends CommonRecipesProvider {
 		// Add resource recipes
 		
 		ResourceRegistry.getResources().forEach(resource -> {
-			final Map<BlockResourceType, Block> blocks = resource.getBlocks();
-			final Map<ItemResourceType, Item> items = resource.getItems();
+			final Map<BlockResourceType, RegistryEntry<Block>> blocks = resource.getBlocks();
+			final Map<ItemResourceType, RegistryEntry<Item>> items = resource.getItems();
 			
 			// ORE -> CRUSHED ORE
 			if (shouldAddRecipe(resource, ORE, CRUSHED_ORE)) {
 				final Tag<Item> oreTag = TagUtil.fromBlockTag(ORE.getTag(resource));
-				final Item crushedItem = items.get(CRUSHED_ORE);
+				final Item crushedItem = items.get(CRUSHED_ORE).get();
 				
-				OneIngredientMachineRecipeBuilder.machineRecipe(CRUSHER, Ingredient.fromTag(oreTag), crushedItem, 2, 100) //
+				OneIngredientMachineRecipeBuilder.machineRecipe(CRUSHER.get(), Ingredient.fromTag(oreTag), crushedItem, 2, 100) //
 						.addCriterion("has_ore", hasItem(oreTag)) //
 						.build(consumer, createLocationForResource(resource, "crusher/crushed_ore_from_stone_ore"));
 			}
@@ -48,9 +49,9 @@ public class UModRecipesProvider extends CommonRecipesProvider {
 			// NETHER_ORE -> CRUSHED NETHER_ORE
 			if (shouldAddRecipe(resource, NETHER_ORE, CRUSHED_NETHER_ORE)) {
 				final Tag<Item> oreTag = TagUtil.fromBlockTag(NETHER_ORE.getTag(resource));
-				final Item crushedItem = items.get(CRUSHED_NETHER_ORE);
+				final Item crushedItem = items.get(CRUSHED_NETHER_ORE).get();
 				
-				OneIngredientMachineRecipeBuilder.machineRecipe(CRUSHER, Ingredient.fromTag(oreTag), crushedItem, 2, 100) //
+				OneIngredientMachineRecipeBuilder.machineRecipe(CRUSHER.get(), Ingredient.fromTag(oreTag), crushedItem, 2, 100) //
 						.addCriterion("has_nether_ore", hasItem(oreTag)) //
 						.build(consumer, createLocationForResource(resource, "crusher/crushed_nether_ore_from_nether_ore"));
 			}

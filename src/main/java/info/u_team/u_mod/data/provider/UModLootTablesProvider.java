@@ -16,8 +16,8 @@ public class UModLootTablesProvider extends CommonLootTablesProvider {
 	
 	@Override
 	protected void registerLootTables(BiConsumer<ResourceLocation, LootTable> consumer) {
-		registerBlock(ELECTRIC_FURNACE, addTileEntityBlockLootTable(ELECTRIC_FURNACE), consumer);
-		registerBlock(CRUSHER, addTileEntityBlockLootTable(CRUSHER), consumer);
-		registerBlock(ORE_WASHER, addTileEntityBlockLootTable(ORE_WASHER), consumer);
+		registerBlock(ELECTRIC_FURNACE, addTileEntityBlockLootTable(ELECTRIC_FURNACE.get()), consumer);
+		registerBlock(CRUSHER, addTileEntityBlockLootTable(CRUSHER.get()), consumer);
+		registerBlock(ORE_WASHER, addTileEntityBlockLootTable(ORE_WASHER.get()), consumer);
 	}
 }

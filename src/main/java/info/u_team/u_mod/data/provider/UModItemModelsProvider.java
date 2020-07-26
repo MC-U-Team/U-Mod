@@ -12,8 +12,8 @@ public class UModItemModelsProvider extends CommonItemModelsProvider {
 	
 	@Override
 	protected void registerModels() {
-		simpleBlock(ELECTRIC_FURNACE);
-		simpleBlock(CRUSHER);
-		simpleBlock(ORE_WASHER);
+		simpleBlock(ELECTRIC_FURNACE.get());
+		simpleBlock(CRUSHER.get());
+		simpleBlock(ORE_WASHER.get());
 	}
 }

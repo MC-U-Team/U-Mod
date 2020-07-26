@@ -15,9 +15,9 @@ public class UModBlockStatesProvider extends CommonBlockStatesProvider {
 	
 	@Override
 	protected void registerStatesAndModels() {
-		addMachine(ELECTRIC_FURNACE);
-		addMachine(CRUSHER);
-		addMachine(ORE_WASHER);
+		addMachine(ELECTRIC_FURNACE.get());
+		addMachine(CRUSHER.get());
+		addMachine(ORE_WASHER.get());
 	}
 	
 	private void addMachine(BasicMachineBlock block) {

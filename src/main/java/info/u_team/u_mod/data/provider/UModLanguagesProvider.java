@@ -12,13 +12,13 @@ public class UModLanguagesProvider extends CommonLanguagesProvider {
 	
 	@Override
 	public void addTranslations() {
-		add(ELECTRIC_FURNACE, "Electric Furnace");
+		addBlock(ELECTRIC_FURNACE, "Electric Furnace");
 		add("container.umod.electric_furnace", "Electric Furnace");
 		
-		add(CRUSHER, "Crusher");
+		addBlock(CRUSHER, "Crusher");
 		add("container.umod.crusher", "Crusher");
 		
-		add(ORE_WASHER, "Ore Washer");
+		addBlock(ORE_WASHER, "Ore Washer");
 		add("container.umod.ore_washer", "Ore Washer");
 	}
 }
