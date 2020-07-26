@@ -18,5 +18,6 @@ public class UMod {
 	private void register() {
 		BusRegister.registerMod(UModBlocks::register);
 		BusRegister.registerMod(UModContainerTypes::register);
+		BusRegister.registerMod(UModItems::register);
 	}
 }
