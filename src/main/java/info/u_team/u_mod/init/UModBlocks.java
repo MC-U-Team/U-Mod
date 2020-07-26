@@ -13,7 +13,7 @@ public class UModBlocks {
 	
 	public static final BlockRegistryObject<CableBlock, BlockItem> CABLE = BLOCKS.register("cable_test", CableBlock::new);
 	
-	public static final BlockRegistryObject<EnergyStorageBlock, BlockItem> ENERGY_STORAGE = BLOCKS.register("energy_storage", () -> new EnergyStorageBlock("energy_storage"));
+	public static final BlockRegistryObject<EnergyStorageBlock, BlockItem> ENERGY_STORAGE = BLOCKS.register("energy_storage", EnergyStorageBlock::new);
 	
 	public static final BlockRegistryObject<BasicMachineBlock, BlockItem> ELECTRIC_FURNACE = BLOCKS.register("electric_furnace", () -> new BasicMachineBlock("electric_furnace", () -> UModTileEntityTypes.ELECTRIC_FURNACE));
 	public static final BlockRegistryObject<BasicMachineBlock, BlockItem> CRUSHER = BLOCKS.register("crusher", () -> new BasicMachineBlock("crusher", () -> UModTileEntityTypes.CRUSHER));
