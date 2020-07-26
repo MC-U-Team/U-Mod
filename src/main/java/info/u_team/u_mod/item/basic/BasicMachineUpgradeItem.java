@@ -10,8 +10,8 @@ public abstract class BasicMachineUpgradeItem extends UItem {
 	
 	protected final int maxStackSize;
 	
-	public BasicMachineUpgradeItem(String name, int maxStackSize, Rarity rarity) {
-		super(name, UModItemGroups.GROUP, new Properties().maxStackSize(maxStackSize).rarity(rarity));
+	public BasicMachineUpgradeItem(int maxStackSize, Rarity rarity) {
+		super(UModItemGroups.GROUP, new Properties().maxStackSize(maxStackSize).rarity(rarity));
 		this.maxStackSize = maxStackSize;
 	}
 	

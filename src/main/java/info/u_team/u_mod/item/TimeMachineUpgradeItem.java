@@ -7,8 +7,8 @@ import net.minecraft.item.Rarity;
 
 public class TimeMachineUpgradeItem extends BasicMachineUpgradeItem {
 	
-	public TimeMachineUpgradeItem(String name, int maxStackSize, Rarity rarity) {
-		super(name, maxStackSize, rarity);
+	public TimeMachineUpgradeItem(int maxStackSize, Rarity rarity) {
+		super(maxStackSize, rarity);
 	}
 	
 	@Override
