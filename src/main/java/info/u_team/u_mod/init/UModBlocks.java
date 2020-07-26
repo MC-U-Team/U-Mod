@@ -1,20 +1,14 @@
 package info.u_team.u_mod.init;
 
-import java.util.List;
-
 import info.u_team.u_mod.UMod;
 import info.u_team.u_mod.block.*;
 import info.u_team.u_mod.block.basic.BasicMachineBlock;
-import info.u_team.u_team_core.util.registry.BaseRegistryUtil;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import info.u_team.u_team_core.util.registry.BlockDeferredRegister;
+import net.minecraftforge.eventbus.api.IEventBus;
 
-@EventBusSubscriber(bus = Bus.MOD, modid = UMod.MODID)
 public class UModBlocks {
+	
+	public static final BlockDeferredRegister BLOCKS = BlockDeferredRegister.create(UMod.MODID);
 	
 	public static final CableBlock CABLE = new CableBlock("cable_test");
 	
@@ -24,19 +18,8 @@ public class UModBlocks {
 	public static final BasicMachineBlock CRUSHER = new BasicMachineBlock("crusher", () -> UModTileEntityTypes.CRUSHER);
 	public static final BasicMachineBlock ORE_WASHER = new BasicMachineBlock("ore_washer", () -> UModTileEntityTypes.ORE_WASHER);
 	
-	@SubscribeEvent
-	public static void register(Register<Block> event) {
-		entries = BaseRegistryUtil.getAllRegistryEntriesAndApplyNames(UMod.MODID, Block.class);
-		entries.forEach(event.getRegistry()::register);
+	public static void register(IEventBus bus) {
+		BLOCKS.register(bus);
 	}
-	
-	@SubscribeEvent
-	public static void registerBlockItem(Register<Item> event) {
-		BaseRegistryUtil.getBlockItems(entries).forEach(event.getRegistry()::register);
-		entries = null; // Dereference list as it is no longer needed
-	}
-	
-	// Just a cache for the block item registry for performance
-	private static List<Block> entries;
 	
 }
