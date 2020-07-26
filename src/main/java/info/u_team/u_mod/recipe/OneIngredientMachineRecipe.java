@@ -49,12 +49,11 @@ public class OneIngredientMachineRecipe extends MachineRecipe {
 		private final IFactory<T> factory;
 		
 		@SuppressWarnings("unchecked")
-		public Serializer(String name, IRecipeType<T> type) {
-			this(name, serializer -> (location, ingredient, output, totalTime, consumptionOnStart, consumptionPerTick) -> (T) new OneIngredientMachineRecipe(location, type, serializer, ingredient, output, totalTime, consumptionOnStart, consumptionPerTick));
+		public Serializer(IRecipeType<T> type) {
+			this(serializer -> (location, ingredient, output, totalTime, consumptionOnStart, consumptionPerTick) -> (T) new OneIngredientMachineRecipe(location, type, serializer, ingredient, output, totalTime, consumptionOnStart, consumptionPerTick));
 		}
 		
-		public Serializer(String name, Function<Serializer<T>, IFactory<T>> function) {
-			super(name);
+		public Serializer(Function<Serializer<T>, IFactory<T>> function) {
 			factory = function.apply(this);
 		}
 		
