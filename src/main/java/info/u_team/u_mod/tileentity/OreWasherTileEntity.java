@@ -20,7 +20,7 @@ public class OreWasherTileEntity extends BasicMachineTileEntity<OneIngredientMac
 	protected final LazyOptional<UFluidStackHandler> fluidOutputSlotsOptional;
 	
 	public OreWasherTileEntity() {
-		super(UModTileEntityTypes.ORE_WASHER, 20000, 100, 0, UModRecipeTypes.CRUSHER, 1, 6, 3, RecipeData.getBasicMachine());
+		super(UModTileEntityTypes.ORE_WASHER.get(), 20000, 100, 0, UModRecipeTypes.CRUSHER, 1, 6, 3, RecipeData.getBasicMachine());
 		
 		fluidIngredientSlots = new TileEntityUFluidStackHandler(1, this);
 		fluidOutputSlots = new TileEntityUFluidStackHandler(1, this);

@@ -2,19 +2,18 @@ package info.u_team.u_mod.init;
 
 import info.u_team.u_mod.UMod;
 import info.u_team.u_mod.tileentity.*;
-import info.u_team.u_team_core.tileentitytype.UTileEntityType.UBuilder;
-import info.u_team.u_team_core.util.registry.CommonDeferredRegister;
+import info.u_team.u_team_core.util.registry.TileEntityTypeDeferredRegister;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.fml.RegistryObject;
 
 public class UModTileEntityTypes {
 	
-	public static final CommonDeferredRegister<TileEntityType<?>> TILE_ENTITY_TYPES = CommonDeferredRegister.create(ForgeRegistries.TILE_ENTITIES, UMod.MODID);
+	public static final TileEntityTypeDeferredRegister TILE_ENTITY_TYPES = TileEntityTypeDeferredRegister.create(UMod.MODID);
 	
-	public static final TileEntityType<ElectricFurnaceTileEntity> ELECTRIC_FURNACE = UBuilder.create("electric_furnace", ElectricFurnaceTileEntity::new, UModBlocks.ELECTRIC_FURNACE).build();
-	public static final TileEntityType<CrusherTileEntity> CRUSHER = UBuilder.create("crusher", CrusherTileEntity::new, UModBlocks.CRUSHER).build();
-	public static final TileEntityType<OreWasherTileEntity> ORE_WASHER = UBuilder.create("ore_washer", OreWasherTileEntity::new, UModBlocks.ORE_WASHER).build();
+	public static final RegistryObject<TileEntityType<ElectricFurnaceTileEntity>> ELECTRIC_FURNACE = TILE_ENTITY_TYPES.register("electric_furnace", () -> TileEntityType.Builder.create(ElectricFurnaceTileEntity::new, UModBlocks.ELECTRIC_FURNACE.get()));
+	public static final RegistryObject<TileEntityType<CrusherTileEntity>> CRUSHER = TILE_ENTITY_TYPES.register("crusher", () -> TileEntityType.Builder.create(CrusherTileEntity::new, UModBlocks.CRUSHER.get()));
+	public static final RegistryObject<TileEntityType<OreWasherTileEntity>> ORE_WASHER = TILE_ENTITY_TYPES.register("ore_washer", () -> TileEntityType.Builder.create(OreWasherTileEntity::new, UModBlocks.ORE_WASHER.get()));
 	
 	public static void register(IEventBus bus) {
 		TILE_ENTITY_TYPES.register(bus);
