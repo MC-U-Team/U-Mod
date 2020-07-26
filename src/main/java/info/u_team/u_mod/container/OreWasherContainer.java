@@ -10,12 +10,12 @@ public class OreWasherContainer extends BasicMachineContainer<OreWasherTileEntit
 	
 	// Client
 	public OreWasherContainer(int id, PlayerInventory playerInventory, PacketBuffer buffer) {
-		super(UModContainerTypes.ORE_WASHER, id, playerInventory, buffer);
+		super(UModContainerTypes.ORE_WASHER.get(), id, playerInventory, buffer);
 	}
 	
 	// Server
 	public OreWasherContainer(int id, PlayerInventory playerInventory, OreWasherTileEntity tileEntity) {
-		super(UModContainerTypes.ORE_WASHER, id, playerInventory, tileEntity);
+		super(UModContainerTypes.ORE_WASHER.get(), id, playerInventory, tileEntity);
 	}
 	
 	@Override

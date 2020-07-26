@@ -10,12 +10,12 @@ public class CrusherContainer extends BasicMachineContainer<CrusherTileEntity> {
 	
 	// Client
 	public CrusherContainer(int id, PlayerInventory playerInventory, PacketBuffer buffer) {
-		super(UModContainerTypes.CRUSHER, id, playerInventory, buffer);
+		super(UModContainerTypes.CRUSHER.get(), id, playerInventory, buffer);
 	}
 	
 	// Server
 	public CrusherContainer(int id, PlayerInventory playerInventory, CrusherTileEntity tileEntity) {
-		super(UModContainerTypes.CRUSHER, id, playerInventory, tileEntity);
+		super(UModContainerTypes.CRUSHER.get(), id, playerInventory, tileEntity);
 	}
 	
 	@Override

@@ -15,7 +15,7 @@ import net.minecraftforge.energy.CapabilityEnergy;
 public class EnergyStorageBlock extends UTileEntityBlock {
 	
 	public EnergyStorageBlock() {
-		super(UModItemGroups.GROUP, Properties.create(Material.IRON), () -> UModTileEntityTypes.ENERGY_STORAGE);
+		super(UModItemGroups.GROUP, Properties.create(Material.IRON), UModTileEntityTypes.ENERGY_STORAGE);
 	}
 	
 	// TEST ONLY

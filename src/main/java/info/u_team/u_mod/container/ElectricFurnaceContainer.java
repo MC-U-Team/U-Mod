@@ -10,12 +10,12 @@ public class ElectricFurnaceContainer extends BasicMachineContainer<ElectricFurn
 	
 	// Client
 	public ElectricFurnaceContainer(int id, PlayerInventory playerInventory, PacketBuffer buffer) {
-		super(UModContainerTypes.ELECTRIC_FURNACE, id, playerInventory, buffer);
+		super(UModContainerTypes.ELECTRIC_FURNACE.get(), id, playerInventory, buffer);
 	}
 	
 	// Server
 	public ElectricFurnaceContainer(int id, PlayerInventory playerInventory, ElectricFurnaceTileEntity tileEntity) {
-		super(UModContainerTypes.ELECTRIC_FURNACE, id, playerInventory, tileEntity);
+		super(UModContainerTypes.ELECTRIC_FURNACE.get(), id, playerInventory, tileEntity);
 	}
 	
 	@Override
